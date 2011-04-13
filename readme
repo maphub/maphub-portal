@@ -3,12 +3,19 @@ Welcome to the MapHub Portal project (suggestions for better names welcome!)
 
 BASICS
 ------
-This is a Grails project (http://grails.org/)
-
+This is a Grails project. You need to download Grails from http://grails.org/ 
+and set it up on your machine. (Don't forget to create a GRAILS_HOME variable, 
+and to add the Grails /bin folder to your system PATH!)
 
 FIRST STEPS
 -----------
 1. Clone the repository
+
 2. In the "grails-app/conf" folder, locate the file "DataSource.groovy.template". 
-   Create a copy of this file named "DataSource.groovy" and edit the contents to
-   match your local database settings.
+   Create a copy of this file named "DataSource.groovy". You can edit the contents to
+   match your local database settings, if you want (per default, you will be running
+   on an in-memory database)
+
+3. To verify everything is set up, change to the project folder, type
+   "grails run-app", and go to http://localhost:8080/maphub-portal after the server
+   has started.
