@@ -4,7 +4,10 @@ class Map {
 
 	String tilesetUrl
 
-    static constraints = {
-    	tilesetUrl(blank: false)
-    }
+  static constraints = {
+  	tilesetUrl(url: true)
+  }
+
+	static belongsTo = [ user : User ]
+
 }
