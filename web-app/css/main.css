@@ -1,12 +1,12 @@
 html * {
     margin: 0;
-    /*padding: 0; SELECT NOT DISPLAYED CORRECTLY IN FIREFOX */
+	padding: 0;
 }
 
 /* GENERAL */
 
 .spinner {
-    padding: 5px;
+    
     position: absolute;
     right: 0;
 }
@@ -14,55 +14,154 @@ html * {
 body {
     background: #fff;
     color: #333;
-    font: 11px verdana, arial, helvetica, sans-serif;
-}
-#grailsLogo {
-	padding:20px;
+	width: 940px;
+	font: 13px Helvetica, Arial, sans-serif;
+	line-height: 22px;
+ 	margin: 0 auto;  
+	padding-top:15px;
 }
 
 a:link, a:visited, a:hover {
-    color: #666;
+    color: #069;
     font-weight: bold;
     text-decoration: none;
 }
 
 h1 {
-    color: #48802c;
-    font-weight: normal;
-    font-size: 16px;
-    margin: .8em 0 .3em 0;
+	font-size: 24px;
+	line-height: 44px;
+	padding: 22px 0;
+}
+
+h2 {
+	font-size: 18px;
+	line-height: 33px;
+	padding: 15px 0;
+}
+
+h3 {
+	font-size: 14px;
+	line-height: 22px;
+	padding: 11px 0;
+}
+
+p {
+	padding-bottom: 22px;
+}
+
+
+
+p {
+	padding-bottom: 22px;
 }
 
 ul {
-    padding-left: 15px;
+	padding-left: 15px;
 }
 
-input, select, textarea {
-    background-color: #fcfcfc;
-    border: 1px solid #ccc;
-    font: 11px verdana, arial, helvetica, sans-serif;
-    margin: 2px 0;
-    padding: 2px 4px;
-}
-select {
-   padding: 2px 2px 2px 0;
-}
-textarea {
-	width: 250px;
-	height: 150px;
-	vertical-align: top;
-}
 
 input:focus, select:focus, textarea:focus {
     border: 1px solid #b2d1ff;
 }
 
-.body {
-    float: left;
-    margin: 0 15px 10px 15px;
+/* USER TOOL BAR */
+
+#usertools {
+	float: right;
+	display:block;
 }
 
-/* NAVIGATION MENU */
+/* HEADER MESSAGE */
+
+#header {
+	font-size:30px;
+	font-weight:bold;
+	text-shadow: 2px 2px 2px #ccc;
+	padding: 30px 0 30px;
+}
+
+/* NAVIGATION BAR */
+
+#navigation {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background: url("../images/nav_background.png");
+}
+
+#navigation ul {
+	margin: 0 auto;
+	padding: 0;
+	width: 940px;
+	list-style: none;
+}
+
+#navigation ul li {
+	float: left;
+}
+
+	#navigation ul li a {
+		display: block;
+		margin-right: 20px;
+		width: 140px;
+		font-size: 14px;
+		line-height: 44px;
+		text-align: center;
+		font-weight: normal;
+		text-decoration: none;
+		color: #aaa;
+	}
+	
+	#upload {
+		float:right !important;
+	}
+	
+	#upload a {
+		/*background: #fff url("..images/nav_background_inv.png");*/
+	}
+
+		#navigation ul li a:hover {
+			color: #fff;
+		}
+
+		#navigation ul li.selected a {
+			color: #fff;
+		}
+
+
+#main {
+	margin-top:50px;
+}
+
+/* INTRODUCTION */
+#introduction {
+	margin-top:50px;
+	height: 220px;
+	background: #069 url("../images/map_bg.jpg") repeat-x;
+	
+	/* Background-size not implemented yet */
+	/*-webkit-background-size: 100%;
+		-o-background-size: 100%;
+		-khtml-background-size: 100%;*/
+	
+	/* Border-radius not implemented yet */
+	border-radius: 22px;
+	-moz-border-radius: 22px;
+	-webkit-border-radius: 22px;
+}
+	
+	#introduction h2 {
+		padding: 0 0 0 0;
+		font-weight: normal;
+		color: #666;
+	}
+	
+	#introduction p {
+		padding: 0;
+		color: #d9f499;
+	}
+
+/* NAVIGATION MENU FOR SCAFFOLDS */
 
 .nav {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
@@ -95,6 +194,66 @@ input:focus, select:focus, textarea:focus {
     color: #333;
     padding-left: 25px;
 }
+
+/* MAIN CONTENT */
+
+#main {
+	padding-bottom: 30px;
+}
+
+/* FOOTER */
+
+#footer {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background: #222;
+	font-size:11px;
+}
+
+#footer div {
+	margin: 0 auto;
+	padding: 0;
+	width: 940px;
+}
+
+	#footer div div {
+		margin: 0 auto;
+		padding: 30px 0 30px;
+		width: 400px;
+		color: #999;
+	}
+	
+	#footer #about {
+		float: left;
+	}
+	
+	#footer #links {
+		float: right;
+	}
+		
+	#footer h3 {
+		color: #FFF;
+	}
+	
+	#footer a {
+		color: #aaa;
+	}
+	
+		#footer a:hover {
+			color: #FFF;
+			text-decoration: none;
+		}
+	
+	#footer ul {
+		margin: 0 0 0 40px;
+		list-style: square;
+		color: #565656;
+	}
+	
+		#footer ul li a {
+			display: block;
+		}
 
 /* MESSAGES AND ERRORS */
 
@@ -143,7 +302,7 @@ tr {
     border: 0;
 }
 td, th {
-    font: 11px verdana, arial, helvetica, sans-serif;
+    font: 10px verdana, arial, helvetica, sans-serif;
     line-height: 12px;
     padding: 5px 6px;
     text-align: left;
@@ -152,7 +311,7 @@ td, th {
 th {
     background: #fff url(../images/skin/shadow.jpg);
     color: #666;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
     line-height: 17px;
     padding: 2px 6px;
