@@ -1,15 +1,19 @@
 TODO
 ====
 
+- See how we can fit in the "registration" and "forgot password" views into the new layout because they are somewhere in Spring Security and not in our project root
+
 - Create two user groups (Admin/User), the latter with a flag to enable map uploads
 
 - Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments
 
-- Create a Home controller with a basic interface (Login/Logout), upload button for users with upload privileges and list of recently uploaded maps
-
-- Find a nice and basic HTML/CSS template to apply to all pages
+- Make upload work for users with upload privileges and list of recently uploaded maps
 
 
 
 DONE
 ====
+
+- Werner: Create a Home controller with a basic interface (Login/Logout) - we don't need a specific home controller
+
+- Werner: Find a nice and basic HTML/CSS template to apply to all pages
