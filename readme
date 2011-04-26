@@ -12,10 +12,11 @@ FIRST STEPS
 1. Clone the repository
 
 2. In the "grails-app/conf" folder, locate the file "DataSource.groovy.template". 
-   Create a copy of this file named "DataSource.groovy". (Important: please don't just rename the file. If you
-   do, you might accidentally delete the .template from the repository on your next commit!)
-   You can edit the contents of DataSource.groovy to match your local database settings, if you want (per default, you will be running
-   on an in-memory database)
+   Create a copy of this file named "DataSource.groovy". (Important: please don't
+   just rename the file. If you do, you might accidentally delete the .template from
+   the repository on your next commit!)
+   You can edit the contents of DataSource.groovy to match your local database settings,
+   if you want (per default, you will be running on an in-memory database)
 
 3. To verify everything is set up, change to the project folder, type
    "grails run-app", and go to http://localhost:8080/maphub-portal after the server
