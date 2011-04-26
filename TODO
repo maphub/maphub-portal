@@ -9,6 +9,7 @@ TODO
 
 - Make upload work for users with upload privileges and list of recently uploaded maps
 
+- Implement bootstrapping of some test data (map URIs)
 
 
 DONE
@@ -17,3 +18,5 @@ DONE
 - Werner: Create a Home controller with a basic interface (Login/Logout) - we don't need a specific home controller
 
 - Werner: Find a nice and basic HTML/CSS template to apply to all pages
+
+- Christian: Admin and user roles are now created during (development) bootstrapping. Decided to create one admin role and two user roles. Users are named "admin", "rwuser", and "rouser"; passwords are easy to guess
