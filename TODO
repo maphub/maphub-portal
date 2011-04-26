@@ -1,0 +1,15 @@
+TODO
+====
+
+- Create two user groups (Admin/User), the latter with a flag to enable map uploads
+
+- Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments
+
+- Create a Home controller with a basic interface (Login/Logout), upload button for users with upload privileges and list of recently uploaded maps
+
+- Find a nice and basic HTML/CSS template to apply to all pages
+
+
+
+DONE
+====
