@@ -1,9 +1,13 @@
 import grails.util.Environment
+import at.ait.dme.maphub.Map
 import at.ait.dme.maphub.Role
 import at.ait.dme.maphub.User
 import at.ait.dme.maphub.UserRole
 
 class BootStrap {
+
+	final TESTDATA_BASE_URI = "http://europeana.mminf.univie.ac.at/maps/"
+	final TESTDATA_IMPORT_COUNT = 10
 
 	final ADMIN_USER_NAME = "admin"
 	final WRITE_ACCESS_USER_NAME = "rwuser"
@@ -62,7 +66,14 @@ class BootStrap {
 	}
 
 	void insertTestData() {
+		def adminUser = User.findByUsername(ADMIN_USER_NAME)
 
+		new File("maps_index.txt").eachLine { line, nr ->
+			def mapUri = TESTDATA_BASE_URI + line
+			if (nr <= TESTDATA_IMPORT_COUNT && !Map.findByTilesetUrl(mapUri)) {
+				new Map(tilesetUrl: mapUri, user: adminUser).save(flush: true)
+			}
+		}
 	}
 
 }
