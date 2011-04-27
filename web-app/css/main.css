@@ -112,7 +112,7 @@ input:focus, select:focus, textarea:focus {
 		color: #aaa;
 	}
 	
-	#upload {
+	#upload, #adminarea {
 		float:right !important;
 	}
 	

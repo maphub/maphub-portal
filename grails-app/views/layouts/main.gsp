@@ -38,7 +38,14 @@
             <li><a href="/maphub-portal">Home</a></li>
             <li><a href="#">Browse Maps</a></li>.
             <li><a href="#">Users</a></li>
-            <li id="upload"><a href="#">Upload Map</a></li>
+						<sec:ifAnyGranted roles="ROLE_ADMIN">
+							<li id="adminarea">
+								<g:link controller='user'>Admin Area</g:link>
+							</li>
+						</sec:ifAnyGranted>
+						<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
+            	<li id="upload"><a href="#">Upload Map</a></li>
+						</sec:ifAnyGranted>
           </ul>
         </div>
         
