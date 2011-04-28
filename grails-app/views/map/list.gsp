@@ -22,7 +22,7 @@
            </g:form>
           </div>
             <h1>List Maps</h1>
-            <p>Here is a list of all maps. Click a column header to sort them and use the filter box in the upper right corner to select the number of maps per page.</p>
+            <p>Here is a list of all maps. Click a column header to sort them and use the filter box in the upper right corner to select the number of maps per page. You can also <g:link action="browse" controller="map" params="${params}" >view them as thumbnails</g:link>.</p>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
