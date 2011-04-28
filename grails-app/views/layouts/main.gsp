@@ -43,7 +43,7 @@
             <li><g:link action="browse" controller="map">Browse Maps</g:link></li>.
             <li><a href="#">Users</a></li>
 						<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
-            	<li id="upload"><g:link action="index" controller="mapupload">Upload Map</g:link></li>
+            	<li id="upload"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
 						</sec:ifAnyGranted>
           </ul>
         </div>
