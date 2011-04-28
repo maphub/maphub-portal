@@ -5,6 +5,7 @@ class Map {
   String tilesetUrl
   String name
   String description
+	Integer views
   Date uploadDate
   Date mapDate
 
