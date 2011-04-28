@@ -17,7 +17,7 @@ class MapController {
     
     def browse = {
     
-        params.max = Math.min(params?.max?.toInteger() ?: 10, 100)
+        params.max = Math.min(params?.max?.toInteger() ?: 9, 99)
         params.offset = params?.offset?.toInteger() ?: 0
         params.sort = params?.sort ?: "tilesetUrl"
         params.order = params?.order ?: "asc"

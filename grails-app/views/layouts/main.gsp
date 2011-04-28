@@ -6,6 +6,7 @@
         <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
         <g:layoutHead />
         <g:javascript library="application" />
+        <g:javascript library="swfobject" />
     </head>
     <body>
         <div id="spinner" class="spinner" style="display:none;">
@@ -23,8 +24,11 @@
         <sec:ifLoggedIn>
           Welcome, 
           <sec:loggedInUserInfo field="username"/>
-          (<g:link controller='logout'>Logout</g:link>)
+          | <g:link controller='logout'>Logout</g:link>
         </sec:ifLoggedIn>
+        <sec:ifAnyGranted roles="ROLE_ADMIN">
+            | <g:link controller='admin'>Admin Area</g:link>
+        </sec:ifAnyGranted>
       </div>
 
         <!-- Header text/logo -->
@@ -38,13 +42,8 @@
             <li><a href="/maphub-portal">Home</a></li>
             <li><g:link action="browse" controller="map">Browse Maps</g:link></li>.
             <li><a href="#">Users</a></li>
-						<sec:ifAnyGranted roles="ROLE_ADMIN">
-							<li id="adminarea">
-								<g:link controller='user'>Admin Area</g:link>
-							</li>
-						</sec:ifAnyGranted>
 						<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
-            	<li id="upload"><a href="#">Upload Map</a></li>
+            	<li id="upload"><g:link action="index" controller="mapupload">Upload Map</g:link></li>
 						</sec:ifAnyGranted>
           </ul>
         </div>
@@ -63,8 +62,9 @@
           </div>
           
           <div id="links">
-            <h3>Links</h3>
+            <h3>Useful Links</h3>
             <ul>
+              <li><a href="#">Help</a></li>
               <li><a href="#">Contact us</a></li>
               <li><a href="#">Terms of Service</a></li> 
             </ul>

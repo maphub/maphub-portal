@@ -56,7 +56,7 @@ p {
 }
 
 ul {
-	padding-left: 15px;
+	padding-left: 20px;
 }
 
 
@@ -102,18 +102,30 @@ input:focus, select:focus, textarea:focus {
 
 	#navigation ul li a {
 		display: block;
-		margin-right: 20px;
-		width: 140px;
+		margin-right: 5px;
+		width: 110px;
 		font-size: 14px;
 		line-height: 44px;
 		text-align: center;
 		font-weight: normal;
 		text-decoration: none;
-		color: #aaa;
+		color: #ccc;
 	}
-	
-	#upload, #adminarea {
-		float:right !important;
+
+	#navigation ul li a:hover {
+	  background: #069;
+	  background: -moz-linear-gradient(100% 100% 90deg, #09C, #069);
+	  background: -webkit-linear-gradient(#09C, #069);
+	}
+
+  #upload {
+    float:right !important;
+  }
+
+	#upload a {
+	  background: #333;
+	  background: -moz-linear-gradient(100% 100% 90deg, #555, #333);
+	  background: -webkit-linear-gradient(#555, #333);
 	}
 	
 	#upload a {
@@ -129,13 +141,17 @@ input:focus, select:focus, textarea:focus {
 		}
 
 
+
+/* MAIN CONTENT */
+
 #main {
-	margin-top:50px;
+  padding-top: 60px;
+	padding-bottom: 30px;
+	min-height: 500px;
 }
 
-/* INTRODUCTION */
+/* INTRODUCTION IMAGE BANNER */
 #introduction {
-	margin-top:50px;
 	height: 220px;
 	background: #069 url("../images/map_bg.jpg") repeat-x;
 	
@@ -195,11 +211,6 @@ input:focus, select:focus, textarea:focus {
     padding-left: 25px;
 }
 
-/* MAIN CONTENT */
-
-#main {
-	padding-bottom: 30px;
-}
 
 /* FOOTER */
 
@@ -246,7 +257,6 @@ input:focus, select:focus, textarea:focus {
 		}
 	
 	#footer ul {
-		margin: 0 0 0 40px;
 		list-style: square;
 		color: #565656;
 	}
@@ -273,6 +283,14 @@ input:focus, select:focus, textarea:focus {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+code {
+  border: 1px solid #333;
+  background: #fff;
+  padding:10px;
+  display:block;
+  width:80%;
 }
 
 /* MESSAGES AND ERRORS */
@@ -377,8 +395,9 @@ th.desc a {
 
 .paginateButtons {
     /*background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;*/
+    text-align:center;
     color: #666;
-    font-size: 10px;
+    font-size: 11px;
     overflow: hidden;
     padding: 10px 3px;
 }
