@@ -71,7 +71,9 @@ class BootStrap {
 		new File("maps_index.txt").eachLine { line, nr ->
 			def mapUri = TESTDATA_BASE_URI + line
 			if (nr <= TESTDATA_IMPORT_COUNT && !Map.findByTilesetUrl(mapUri)) {
-				new Map(tilesetUrl: mapUri, user: adminUser).save(flush: true)
+			  def name = "Test Map " + nr
+			  def date = new Date();
+				new Map(tilesetUrl: mapUri, user: adminUser, name: name, description: "Description", uploadDate: date, mapDate: date).save(flush: true)
 			}
 		}
 	}

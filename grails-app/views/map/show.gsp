@@ -38,9 +38,7 @@
 
     </head>
     <body>
-        <div id="pageBody">
-          <div id="viewer"></div>
-                    <p>Uploaded by ${mapInstance.user.username}</p>
-        </div>
+          <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
+          <p>This map was uploaded by ${mapInstance.user.username}.</p>
     </body>
 </html>
