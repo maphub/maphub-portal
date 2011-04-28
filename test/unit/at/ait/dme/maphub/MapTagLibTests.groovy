@@ -2,7 +2,7 @@ package at.ait.dme.maphub
 
 import grails.test.*
 
-class MapControllerTests extends ControllerUnitTestCase {
+class MapTagLibTests extends TagLibUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

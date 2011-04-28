@@ -2,12 +2,14 @@ package at.ait.dme.maphub
 
 class Map {
 
-	String tilesetUrl
+  String tilesetUrl
 
   static constraints = {
   	tilesetUrl(url: true)
   }
 
-	static belongsTo = [ user : User ]
+  static belongsTo = [ user : User ]
+  
+  static searchable = true
 
 }

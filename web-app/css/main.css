@@ -255,6 +255,26 @@ input:focus, select:focus, textarea:focus {
 			display: block;
 		}
 
+
+/* MAP LISTING */
+
+.mapList {
+  overflow: auto;
+	width: 100%;
+}
+
+.singleMapContainer {
+  min-width: 300px;
+  min-height:250px;
+  float:left;
+}
+
+.singleMapContainer img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* MESSAGES AND ERRORS */
 
 .message {
@@ -356,18 +376,17 @@ th.desc a {
 /* PAGINATION */
 
 .paginateButtons {
-    background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
-    border: 1px solid #ccc;
-    border-top: 0;
+    /*background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;*/
     color: #666;
     font-size: 10px;
     overflow: hidden;
     padding: 10px 3px;
 }
 .paginateButtons a {
-    background: #fff;
     border: 1px solid #ccc;
-    border-color: #ccc #aaa #aaa #ccc;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
     color: #666;
     margin: 0 3px;
     padding: 2px 6px;

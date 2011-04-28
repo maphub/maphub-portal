@@ -7,7 +7,7 @@ import at.ait.dme.maphub.UserRole
 class BootStrap {
 
 	final TESTDATA_BASE_URI = "http://europeana.mminf.univie.ac.at/maps/"
-	final TESTDATA_IMPORT_COUNT = 10
+	final TESTDATA_IMPORT_COUNT = 30
 
 	final ADMIN_USER_NAME = "admin"
 	final WRITE_ACCESS_USER_NAME = "rwuser"

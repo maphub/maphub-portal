@@ -7,13 +7,13 @@ TODO
 
 - Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments
 
-- Make upload work for users with upload privileges and list of recently uploaded maps
-
-- Implement bootstrapping of some test data (map URIs)
+- Make upload work for users with upload privileges
 
 
 DONE
 ====
+
+- Werner: Basic map listing and installation of search plugin
 
 - Werner: Create a Home controller with a basic interface (Login/Logout) - we don't need a specific home controller
 

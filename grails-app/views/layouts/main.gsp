@@ -36,7 +36,7 @@
         <div id="navigation">
           <ul>
             <li><a href="/maphub-portal">Home</a></li>
-            <li><a href="#">Browse Maps</a></li>.
+            <li><g:link action="browse" controller="map">Browse Maps</g:link></li>.
             <li><a href="#">Users</a></li>
 						<sec:ifAnyGranted roles="ROLE_ADMIN">
 							<li id="adminarea">
