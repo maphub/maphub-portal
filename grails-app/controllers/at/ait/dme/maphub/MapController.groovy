@@ -4,7 +4,7 @@ class MapController {
 
     def mapService
 
-    // def scaffold = Map
+    //def scaffold = Map
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
