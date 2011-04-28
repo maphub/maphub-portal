@@ -14,7 +14,7 @@ html * {
 body {
     background: #fff;
     color: #333;
-	width: 940px;
+	width: 1000px;
 	font: 13px Helvetica, Arial, sans-serif;
 	line-height: 22px;
  	margin: 0 auto;  
@@ -92,7 +92,7 @@ input:focus, select:focus, textarea:focus {
 #navigation ul {
 	margin: 0 auto;
 	padding: 0;
-	width: 940px;
+	width: 1000px;
 	list-style: none;
 }
 
@@ -105,7 +105,7 @@ input:focus, select:focus, textarea:focus {
 		margin-right: 5px;
 		width: 110px;
 		font-size: 14px;
-		line-height: 44px;
+		line-height: 40px;
 		text-align: center;
 		font-weight: normal;
 		text-decoration: none;
@@ -145,10 +145,50 @@ input:focus, select:focus, textarea:focus {
 /* MAIN CONTENT */
 
 #main {
-  padding-top: 60px;
+  padding-top: 40px;
 	padding-bottom: 30px;
 	min-height: 500px;
 }
+
+#viewer {
+  padding-top:30px;
+  padding-bottom:10px;
+}
+
+
+/* FILTER BOX */
+
+#filterBox {
+	/*background: url("../images/nav_background.png");
+	color: #ccc; */
+  display:block;
+  font-size:11px;
+  float:right;
+  text-align:right;
+  width: auto;
+  padding-right:15px;
+  padding-left:15px;
+  padding-top:20px;
+  padding-bottom:20px;
+  /* Border-radius not implemented yet */
+	border-bottom-left-radius: 22px;
+	border-bottom-right-radius: 22px;
+	-moz-border-bottom-right-radius: 22px;
+	-moz-border-bottom-left-radius: 22px;
+	-webkit-border-bottom-right-radius: 22px;
+	-webkit-border-bottom-left-radius: 22px;
+}
+
+	#filterBox a {
+		color: #666;
+	}
+	
+  #filterBox a:hover {
+      color: #FFF;
+      text-decoration: none;
+    }
+
+
 
 /* INTRODUCTION IMAGE BANNER */
 #introduction {
@@ -164,6 +204,7 @@ input:focus, select:focus, textarea:focus {
 	border-radius: 22px;
 	-moz-border-radius: 22px;
 	-webkit-border-radius: 22px;
+	margin-top:10px;
 }
 	
 	#introduction h2 {
@@ -225,13 +266,13 @@ input:focus, select:focus, textarea:focus {
 #footer div {
 	margin: 0 auto;
 	padding: 0;
-	width: 940px;
+	width: 1000px;
 }
 
 	#footer div div {
 		margin: 0 auto;
 		padding: 30px 0 30px;
-		width: 400px;
+		width: 480px;
 		color: #999;
 	}
 	
@@ -251,10 +292,10 @@ input:focus, select:focus, textarea:focus {
 		color: #aaa;
 	}
 	
-		#footer a:hover {
-			color: #FFF;
-			text-decoration: none;
-		}
+  #footer a:hover {
+      color: #FFF;
+      text-decoration: none;
+    }
 	
 	#footer ul {
 		list-style: square;
@@ -270,13 +311,19 @@ input:focus, select:focus, textarea:focus {
 
 .mapList {
   overflow: auto;
+  color: #333;
 	width: 100%;
+	font-size: 11px;
 }
 
 .singleMapContainer {
-  min-width: 300px;
+  min-width: 245px;
   min-height:250px;
   float:left;
+}
+
+.singleMapContainer .singleMapInfo {
+  text-align: center;
 }
 
 .singleMapContainer img {
@@ -402,10 +449,6 @@ th.desc a {
     padding: 10px 3px;
 }
 .paginateButtons a {
-    border: 1px solid #ccc;
-    border-radius:5px;
-    -webkit-border-radius:5px;
-    -moz-border-radius:5px;
     color: #666;
     margin: 0 3px;
     padding: 2px 6px;
