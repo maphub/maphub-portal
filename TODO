@@ -1,13 +1,17 @@
 TODO
 ====
 
+- separate homescreens for normal / logged in users
+
+- add a "cover flow" view
+
+- make the search work
+
+- add more details for map view
+
 - See how we can fit in the "registration" and "forgot password" views into the new layout because they are somewhere in Spring Security and not in our project root
 
-- Create two user groups (Admin/User), the latter with a flag to enable map uploads
-
 - Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments
-
-- Make upload work for users with upload privileges
 
 - Map upload form input verification
 
