@@ -20,9 +20,11 @@
               <a href="javascript: submitFilter();">Apply</a>
            </g:form>
           </div>
-          <h1>Browsing Maps</h1>
-          
-          <p>There are already ${mapInstanceTotal} maps uploaded to MapHub! Feel free to browse them here or <g:link action="list" controller="map" params="${params}">view them as a list instead</g:link>.</p>
+          <div id="viewTypeBox">
+            <strong>View as:</strong> 
+            Thumbnails&nbsp;|&nbsp;
+            <g:link action="list" controller="map" params="${params}">List</g:link>
+          </div>
           
           <div class="mapList">
             <g:each in="${mapInstanceList}" var="map">

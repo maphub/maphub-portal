@@ -33,9 +33,10 @@
 
         <!-- Header text/logo -->
         <div id="header">
-          MapHub
+          <a href="/maphub-portal">MapHub</a>
         </div>
         
+        <sec:ifLoggedIn>
         <!-- Navigation -->
         <div id="navigation">
           <ul>
@@ -46,6 +47,7 @@
 						</sec:ifAnyGranted>
           </ul>
         </div>
+        </sec:ifLoggedIn>
         
         <!-- Main contents -->
         <div id="main">

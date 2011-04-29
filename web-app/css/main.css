@@ -188,6 +188,35 @@ input:focus, select:focus, textarea:focus {
       text-decoration: none;
     }
 
+#viewTypeBox {
+	/*background: url("../images/nav_background.png");
+	color: #ccc; */
+  display:block;
+  font-size:11px;
+  float:left;
+  text-align:left;
+  width: auto;
+  padding-right:15px;
+  padding-left:15px;
+  padding-top:20px;
+  padding-bottom:20px;
+  /* Border-radius not implemented yet */
+	border-bottom-left-radius: 22px;
+	border-bottom-right-radius: 22px;
+	-moz-border-bottom-right-radius: 22px;
+	-moz-border-bottom-left-radius: 22px;
+	-webkit-border-bottom-right-radius: 22px;
+	-webkit-border-bottom-left-radius: 22px;
+}
+
+	#filterBox a {
+		color: #666;
+	}
+	
+  #filterBox a:hover {
+      color: #FFF;
+      text-decoration: none;
+    }
 
 
 /* INTRODUCTION IMAGE BANNER */
@@ -481,6 +510,19 @@ th.desc a {
     text-align: left;
     width: 85%;
 }
+
+/* GENERIC FORMS */
+
+.genericForm label {
+	float: left;
+	width: 120px;
+}
+
+.genericForm input {
+	float: left;
+	
+}
+
 
 /* ACTION BUTTONS */
 

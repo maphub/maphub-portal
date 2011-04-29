@@ -1,9 +1,11 @@
 TODO
 ====
 
-- separate homescreens for normal / logged in users
-
 - add a "cover flow" view
+
+- set all the default fields for maps when uploading (e.g. views to 0, uploadDate to current date, etc.)
+
+- maybe make the "year" field not a selection but a keyboard input field with 4 digits
 
 - make the search work
 
