@@ -340,6 +340,17 @@ code {
   width:80%;
 }
 
+/* BLOCKQUOTE */
+
+blockquote {
+	padding-left:50px;
+	padding-top:10px;
+	font-family: Georgia, Garamond, Times, serif;
+	font-size:15px;
+	background: url(../images/blockquote.png) no-repeat;
+	min-height:40px;
+}
+
 /* MESSAGES AND ERRORS */
 
 .message {
@@ -380,23 +391,18 @@ td.errors textarea {
 /* TABLES */
 
 table {
-    border: 1px solid #ccc;
-    width: 100%
+    width: 100%;
+		font-size:10px;
 }
-tr {
-    border: 0;
-}
+
 td, th {
-    font: 10px verdana, arial, helvetica, sans-serif;
     line-height: 12px;
     padding: 5px 6px;
     text-align: left;
     vertical-align: top;
 }
 th {
-    background: #fff url(../images/skin/shadow.jpg);
     color: #666;
-    font-size: 10px;
     font-weight: bold;
     line-height: 17px;
     padding: 2px 6px;
@@ -435,7 +441,7 @@ th.desc a {
     border-left: 1px solid #ddd;
 }
 .list th:hover, .list tr:hover {
-    background: #b2d1ff;
+    background: #eee;
 }
 
 /* PAGINATION */
