@@ -8,9 +8,10 @@ class Map {
 	Integer views
   Date uploadDate
   Date mapDate
+	Boolean isPublic
 
   static constraints = {
-  	tilesetUrl(url: true)
+  	tilesetUrl(url: true, blank: false, unique: true)
   }
 
   static belongsTo = [ user : User ]
