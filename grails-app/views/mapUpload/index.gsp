@@ -13,42 +13,43 @@
 			</div>
 		</g:hasErrors>
 
-  	<g:form>
-			<div>
-				You can either:
-				<div>
+  	<g:form class="genericForm">
+  	    <h3>Step 1 - Upload</h3>
+				You can either
+				<p>
 					<label for="tilesetUrl">provide a tileset URL:</label>
-					<g:textField name="tilesetUrl"/>
-				</div>
-				or 
-				<div>
+					<g:textField name="tilesetUrl"/>&nbsp;&nbsp;or <br/>
 					<label for="imgupload">upload an image of the map</label>		
 					<input type="file" name="imgupload" disabled/>
-			</div>
+			</p>
 
-			<div>
+
+      <h3>Step 2 - Provide some more information</h3>
+      Now for some details:
+      
+			<p>
 				<label for="name">Map Name:</label>
 				<g:textField name="name"/>
-			</div>
+			</p>
 
-			<div>
+			<p>
 				<label for="description">Map Description:</label>
 				<g:textArea name="description" rows="5" cols="60"/>
-			</div>
+			</p>
 
-			<div>
+			<p>
 				<label for="mapDate">Map Date:</label>
 				<g:datePicker name="mapDate" precision="year" noSelection="['':'']" default="none" years="${1700..2050}"/>
-			</div>
+			</p>
 
-			<div>
+			<p>
 				<label for="isPublic">This map is available to all users</label>
 				<g:checkBox name="isPublic" checked="true"/>
-			</div>
-
-			<div>
+			</p>
+<p></p>
+			<p>
 				<g:actionSubmit value="Upload"/>
-			</div>
+			</p>
 		</g:form>    
 	</body>
 </html>

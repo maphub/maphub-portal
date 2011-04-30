@@ -13,14 +13,14 @@ TODO
 
 - See how we can fit in the "registration" and "forgot password" views into the new layout because they are somewhere in Spring Security and not in our project root
 
-- Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments
-
-- Map upload form input verification
-
 - Map file upload and tiling
 
 DONE
 ====
+
+- Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments shouldn't be necessary though, as we can scope everything through views.. I guess.
+
+- Christian: Map upload form input verification
 
 - Werner: Basic map listing and installation of search plugin
 
