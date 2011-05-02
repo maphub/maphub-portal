@@ -99,3 +99,9 @@ grails.plugins.springsecurity.userLookup.userDomainClassName = 'at.ait.dme.maphu
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'at.ait.dme.maphub.UserRole'
 grails.plugins.springsecurity.authority.className = 'at.ait.dme.maphub.Role'
 
+grails.plugins.springsecurity.controllerAnnotations.staticRules = [
+   '/user/**': ['ROLE_ADMIN'],
+   '/role/**': ['ROLE_ADMIN'],
+   '/registrationCode/**': ['ROLE_ADMIN'],
+   '/securityInfo/**': ['ROLE_ADMIN']
+]
