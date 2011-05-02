@@ -25,7 +25,8 @@
           <div id="viewTypeBox">
             <strong>View as:</strong> 
             <g:link action="browse" controller="map" params="${params}">Thumbnails</g:link>&nbsp;|&nbsp;
-            List
+            List&nbsp;|&nbsp;
+            <g:link action="coverflow" controller="map" params="${params}">Cover Flow</g:link>
           </div>
           
 

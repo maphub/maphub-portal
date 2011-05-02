@@ -18,7 +18,6 @@ class MapController {
     }
     
     def browse = {
-    
         params.max = Math.min(params?.max?.toInteger() ?: 20, 200)
         params.offset = params?.offset?.toInteger() ?: 0
         params.sort = params?.sort ?: "uploadDate"
@@ -29,8 +28,19 @@ class MapController {
         params.totalMaps = maps.totalCount
         [ mapInstanceList : maps, mapInstanceTotal : maps.totalCount, params: params ]
       }
-
     
+    def coverflow = {
+        params.max = Math.min(params?.max?.toInteger() ?: 20, 200)
+        params.offset = params?.offset?.toInteger() ?: 0
+        params.sort = params?.sort ?: "uploadDate"
+        params.order = params?.order ?: "desc"
+
+        def maps = Map.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {}
+
+        params.totalMaps = maps.totalCount
+        [ mapInstanceList : maps, mapInstanceTotal : maps.totalCount, params: params ]
+    }
+
    
     def show = {
         def mapInstance = Map.get(params.id)

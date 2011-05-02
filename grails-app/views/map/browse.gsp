@@ -23,7 +23,8 @@
           <div id="viewTypeBox">
             <strong>View as:</strong> 
             Thumbnails&nbsp;|&nbsp;
-            <g:link action="list" controller="map" params="${params}">List</g:link>
+            <g:link action="list" controller="map" params="${params}">List</g:link>&nbsp;|&nbsp;
+            <g:link action="coverflow" controller="map" params="${params}">Cover Flow</g:link>
           </div>
           
           <div class="mapList">
