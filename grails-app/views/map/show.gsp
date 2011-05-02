@@ -58,7 +58,7 @@
                   <div class="detailInfoObject"><strong>Description: </strong> ${mapInstance.description}</div>
                 </td>
                 <td class="right">
-                  <div class="detailInfoObject "><strong>When: </strong> </div>
+                  <div class="detailInfoObject "> </div>
                 </td>
               </tr>  
             </table>
