@@ -2,7 +2,7 @@ package at.ait.dme.maphub
 
 import grails.plugins.springsecurity.Secured
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER_RO'])
+@Secured(['ROLE_ADMIN', 'ROLE_USER_RW'])
 class MapUploadController {
 
 		def springSecurityService

@@ -24,7 +24,7 @@
         </sec:ifNotLoggedIn>
         <sec:ifLoggedIn>
           Welcome, 
-          <sec:loggedInUserInfo field="username"/>
+          <g:link controller="profile"><sec:loggedInUserInfo field="username"/></g:link>
           | <g:link controller='logout'>Logout</g:link>
         </sec:ifLoggedIn>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
@@ -42,7 +42,8 @@
         <div id="navigation">
           <ul>
             <li><a href="/maphub-portal">Home</a></li>
-            <li><g:link action="browse" controller="map">Maps</g:link></li>.
+            <li><g:link action="browse" controller="map">Maps</g:link></li>
+            <li><g:link action="list" controller="user">Users</g:link></li>
 						<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
             	<li id="upload"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
 						</sec:ifAnyGranted>

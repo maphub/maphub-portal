@@ -30,7 +30,9 @@
           <div class="mapList">
             <g:each in="${mapInstanceList}" var="map">
               <div class="singleMapContainer">
-                <div class="singleMapInfo"><g:link action="show" controller="map" id="${map.id}">${map.name}</g:link>, uploaded by <g:link action="show" controller="user" id="${map.user.id}">${map.user.username}</g:link></div>
+                <div class="singleMapInfo">
+                  <g:link action="show" controller="map" id="${map.id}">${map.name}</g:link><br>
+                  <prettytime:display date="${map.uploadDate}" />, uploaded by <g:link action="show" controller="profile" id="${map.user.id}">${map.user.username}</g:link></div>
                 <g:link action="show" controller="map" id="${map.id}"><g:thumbnail map="${map}"/></g:link>
               </div>
             </g:each>

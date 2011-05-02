@@ -28,7 +28,7 @@
             swfobject.embedSWF("${resource(dir:'',file:'OpenZoomViewer.swf')}", 
         		"viewer",
         		"100%", 
-        		(clientHeight - 510) + "px",
+        		(clientHeight - 440) + "px",
         		"9.0.0",
         		false,
         		{ source : "${mapInstance.tilesetUrl}/ImageProperties.xml" },
@@ -46,7 +46,7 @@
                   <div class="detailInfoObject"><strong>Name:</strong> ${mapInstance.name}</div>
                 </td>
                 <td class="right">
-                  <div class="detailInfoObject"><strong>Uploaded by: </strong> <g:link action="show" controller="user" id="${mapInstance.user.id}">${mapInstance.user.username}</g:link>, <prettytime:display date="${mapInstance.uploadDate}" showTime="true" format="HH:mm:ss"/></div>
+                  <div class="detailInfoObject"><strong>Uploaded by: </strong> <g:link action="show" controller="profile" id="${mapInstance.user.id}">${mapInstance.user.username}</g:link>, <prettytime:display date="${mapInstance.uploadDate}" showTime="true" format="HH:mm:ss"/></div>
                 </td>
               </tr>
             </table>

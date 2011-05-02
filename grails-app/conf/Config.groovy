@@ -100,8 +100,16 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'at.ait.dme.ma
 grails.plugins.springsecurity.authority.className = 'at.ait.dme.maphub.Role'
 
 grails.plugins.springsecurity.controllerAnnotations.staticRules = [
+   '/user/search': ['ROLE_USER_RW', 'ROLE_USER_RO', 'ROLE_ADMIN'],
    '/user/**': ['ROLE_ADMIN'],
    '/role/**': ['ROLE_ADMIN'],
+   '/registrationCode/**': ['ROLE_ADMIN'],
+   '/persistentLogin/**': ['ROLE_ADMIN'],
+   '/layout/**': ['ROLE_ADMIN'],
+   '/aclObjectIdentity/**': ['ROLE_ADMIN'],
+   '/aclSid/**': ['ROLE_ADMIN'],
+   '/aclClass/**': ['ROLE_ADMIN'],
+   '/aclEntry/**': ['ROLE_ADMIN'],
    '/registrationCode/**': ['ROLE_ADMIN'],
    '/securityInfo/**': ['ROLE_ADMIN']
 ]

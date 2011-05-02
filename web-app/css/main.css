@@ -15,7 +15,7 @@ body {
   background: #fff;
   color: #333;
   width: 1000px;
-  font: 13px Helvetica, Arial, sans-serif;
+  font: 11px Helvetica, Arial, sans-serif;
   line-height: 22px;
   margin: 0 auto;  
   padding-top:15px;
@@ -189,7 +189,7 @@ input:focus, select:focus, textarea:focus {
 
 /* FILTER BOX AND VIEW BOX */
 
-#filterBox, #viewTypeBox {
+#filterBox, #viewTypeBox, #userBox {
   display:block;
   font-size:11px;
   width: auto;
@@ -206,7 +206,7 @@ input:focus, select:focus, textarea:focus {
 	-webkit-border-bottom-left-radius: 22px;
 }
 
-#filterBox {
+#filterBox, #userBox {
   float:right;
   text-align:right;
 }
@@ -428,7 +428,7 @@ td.errors textarea {
 
 table {
     width: 100%;
-		font-size:10px;
+		font-size:11px;
 }
 
 td, th {
@@ -446,7 +446,7 @@ th {
 th a:link, th a:visited, th a:hover {
     color: #333;
     display: block;
-    font-size: 10px;
+    font-size: 11px;
     text-decoration: none;
     width: 100%;
 }
@@ -552,7 +552,7 @@ form br {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
     border: 1px solid #ccc;
     color: #666;
-    font-size: 10px;
+    font-size: 11px;
     margin-top: 5px;
     overflow: hidden;
     padding: 0;
@@ -563,7 +563,7 @@ form br {
     border: 0;
     color: #333;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: bold;
     margin-left: 3px;
     overflow: visible;
