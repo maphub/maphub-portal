@@ -73,7 +73,7 @@ class BootStrap {
 			if (nr <= TESTDATA_IMPORT_COUNT && !Map.findByTilesetUrl(mapUri)) {
 			  def name = "Test Map " + nr
 			  def date = new Date();
-				new Map(tilesetUrl: mapUri, user: adminUser, name: name, views: 0, description: "Description", uploadDate: date, mapDate: date).save(flush: true)
+				new Map(tilesetUrl: mapUri, user: adminUser, name: name, views: 0, description: "Description", uploadDate: date, mapDate: date, isPublic: true).save(flush: true)
 			}
 		}
 	}
