@@ -520,6 +520,10 @@ th.desc a {
 
 /* GENERIC FORMS */
 
+form br {
+  clear: both;
+}
+
 .genericForm label {
 	float: left;
 	width: 250px;
@@ -528,6 +532,17 @@ th.desc a {
 .genericForm input {
 	float: left;
 	
+}
+
+/* LOGIN AND REGISTER FORM */
+
+#registerForm label, #loginForm label {
+	float: left;
+	width: 120px;
+}
+
+#registerForm input, #loginForm input {
+  float: left;
 }
 
 
