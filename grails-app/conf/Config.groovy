@@ -65,6 +65,11 @@ environments {
 
 }
 
+jquery {
+    sources = 'jquery' // Holds the value where to store jQuery-js files /web-app/js/
+    version = '1.5.2' // The jQuery version in use
+}
+
 // log4j configuration
 log4j = {
     // Example of changing the log pattern for the default console

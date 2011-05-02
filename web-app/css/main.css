@@ -56,6 +56,7 @@ p {
 }
 
 ul {
+	list-style: square;
 	padding-left: 20px;
 }
 
@@ -151,72 +152,69 @@ input:focus, select:focus, textarea:focus {
 }
 
 #viewer {
-  padding-top:30px;
-  padding-bottom:10px;
+  padding-top:10px;
+  padding-bottom:5px;
 }
 
+/* MAP DETAIL INFO BOX (AT THE TOP OF THE PAGE) */
 
-/* FILTER BOX */
+#detailInfo {
+  background-color:#ddd;
+  display:block;
+  width: auto;
+  padding-right:15px;
+  padding-left:15px;
+  padding-top:10px;
+  padding-bottom:10px;
+  /* Border-radius not implemented yet */
+	border-bottom-left-radius: 22px;
+	border-bottom-right-radius: 22px;
+	-moz-border-bottom-right-radius: 22px;
+	-moz-border-bottom-left-radius: 22px;
+	-webkit-border-bottom-right-radius: 22px;
+	-webkit-border-bottom-left-radius: 22px;
+}
+
+#detailInfoMessage {
+
+}
+
+#detailInfo td.left {
+  text-align: left;
+}
+
+#detailInfo td.right {
+  text-align: right;
+}
+
+/* FILTER BOX AND VIEW BOX */
+
+#filterBox, #viewTypeBox {
+  display:block;
+  font-size:11px;
+  width: auto;
+  padding-right:15px;
+  padding-left:15px;
+  padding-top:20px;
+  padding-bottom:20px;
+  /* Border-radius not implemented yet */
+	border-bottom-left-radius: 22px;
+	border-bottom-right-radius: 22px;
+	-moz-border-bottom-right-radius: 22px;
+	-moz-border-bottom-left-radius: 22px;
+	-webkit-border-bottom-right-radius: 22px;
+	-webkit-border-bottom-left-radius: 22px;
+}
 
 #filterBox {
-	/*background: url("../images/nav_background.png");
-	color: #ccc; */
-  display:block;
-  font-size:11px;
   float:right;
   text-align:right;
-  width: auto;
-  padding-right:15px;
-  padding-left:15px;
-  padding-top:20px;
-  padding-bottom:20px;
-  /* Border-radius not implemented yet */
-	border-bottom-left-radius: 22px;
-	border-bottom-right-radius: 22px;
-	-moz-border-bottom-right-radius: 22px;
-	-moz-border-bottom-left-radius: 22px;
-	-webkit-border-bottom-right-radius: 22px;
-	-webkit-border-bottom-left-radius: 22px;
 }
-
-	#filterBox a {
-		color: #666;
-	}
-	
-  #filterBox a:hover {
-      color: #FFF;
-      text-decoration: none;
-    }
 
 #viewTypeBox {
-	/*background: url("../images/nav_background.png");
-	color: #ccc; */
-  display:block;
-  font-size:11px;
   float:left;
   text-align:left;
-  width: auto;
-  padding-right:15px;
-  padding-left:15px;
-  padding-top:20px;
-  padding-bottom:20px;
-  /* Border-radius not implemented yet */
-	border-bottom-left-radius: 22px;
-	border-bottom-right-radius: 22px;
-	-moz-border-bottom-right-radius: 22px;
-	-moz-border-bottom-left-radius: 22px;
-	-webkit-border-bottom-right-radius: 22px;
-	-webkit-border-bottom-left-radius: 22px;
 }
-
-	#filterBox a {
-		color: #666;
-	}
-	
-  #filterBox a:hover {
-      color: #FFF;
-      text-decoration: none;
-    }
 
 
 /* INTRODUCTION IMAGE BANNER */
@@ -347,7 +345,7 @@ input:focus, select:focus, textarea:focus {
 
 .singleMapContainer {
   min-width: 245px;
-  min-height:250px;
+  min-height:270px;
   float:left;
 }
 

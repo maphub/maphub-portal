@@ -13,7 +13,14 @@ class Map {
   static constraints = {
   	tilesetUrl(url: true, blank: false, unique: true)
   }
-
+  
+  static namedQueries = {
+    recentUploadsByDays { days ->
+      def now = new Date()
+      gt 'uploadDate', now - days
+    }
+  }
+  
   static belongsTo = [ user : User ]
   
   static searchable = true
