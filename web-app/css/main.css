@@ -12,13 +12,13 @@ html * {
 }
 
 body {
-    background: #fff;
-    color: #333;
-	width: 1000px;
-	font: 13px Helvetica, Arial, sans-serif;
-	line-height: 22px;
- 	margin: 0 auto;  
-	padding-top:15px;
+  background: #fff;
+  color: #333;
+  width: 1000px;
+  font: 13px Helvetica, Arial, sans-serif;
+  line-height: 22px;
+  margin: 0 auto;  
+  padding-top:15px;
 }
 
 a:link, a:visited, a:hover {
@@ -367,6 +367,15 @@ code {
   padding:10px;
   display:block;
   width:80%;
+}
+
+/* CONTENT FLOW */
+
+.ContentFlow {
+  margin-top:50px;
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* BLOCKQUOTE */
