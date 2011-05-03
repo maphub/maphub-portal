@@ -1,6 +1,12 @@
 TODO
 ====
 
+- add sets to organize maps
+
+- add functionality to browse maps by user
+
+- add openID/oauth support
+
 - maybe make the "year" field not a selection but a keyboard input field with 4 digits
 
 - make the search work
