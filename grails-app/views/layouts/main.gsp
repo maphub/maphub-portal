@@ -23,8 +23,8 @@
           <g:link controller='login' action='auth'>Login</g:link>
         </sec:ifNotLoggedIn>
         <sec:ifLoggedIn>
-          Welcome, 
           <g:link controller="profile"><sec:loggedInUserInfo field="username"/></g:link>
+          <!-- TODO insert the reputation here? -->
           | <g:link controller='logout'>Logout</g:link>
         </sec:ifLoggedIn>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
@@ -44,9 +44,9 @@
             <li><a href="/maphub-portal">Home</a></li>
             <li><g:link action="browse" controller="map">Maps</g:link></li>
             <li><g:link action="browse" controller="user">Users</g:link></li>
-						<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
-            	<li id="upload"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
-						</sec:ifAnyGranted>
+            <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
+              <li id="upload"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
+            </sec:ifAnyGranted>
           </ul>
         </div>
         </sec:ifLoggedIn>
@@ -67,9 +67,9 @@
           <div id="links">
             <h3>Useful Links</h3>
             <ul>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact us</a></li>
-              <li><a href="#">Terms of Service</a></li> 
+              <li><g:link controller="home" action="help">Help</g:link></li>
+              <li><g:link controller="home" action="contact">Contact</g:link></li>
+              <li><g:link controller="home" action="tos">Terms Of Service</g:link></li> 
             </ul>
           </div> <!-- end links -->
         </div> <!-- end footer div -->

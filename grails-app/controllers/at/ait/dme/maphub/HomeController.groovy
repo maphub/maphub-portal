@@ -9,4 +9,16 @@ class HomeController {
       [recentMaps: recentMaps]
     }
     
+    def help = {
+      
+    }
+    
+    def tos = {
+      
+    }
+    
+    def contact = {
+      
+    }
+    
 }

@@ -21,7 +21,7 @@
             <g:each in="${recentMaps}" var="map">
                 <li>
                   <g:link action="show" controller="map" id="${map.id}">${map.name}</g:link>,
-                  <prettytime:display date="${map.uploadDate}" /> by <g:link action="show" controller="profile" id="${map.user.id}">${map.user.username}</g:link>
+                  <prettytime:display date="${map.uploadDate}" /> by <g:link action="show" controller="profile" id="${map.user.id}">${map.user.username}</g:link>&nbsp;<g:rep user="${map.user}"/>
                 </li>
             </g:each>
           </ul>

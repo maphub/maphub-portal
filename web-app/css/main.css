@@ -335,10 +335,11 @@ input:focus, select:focus, textarea:focus {
 /* MAP AND USER LISTING */
 
 .mapList, .userList {
-  overflow: auto;
+  overflow: hidden;
   color: #333;
 	width: 100%;
 	font-size: 11px;
+	padding-top: 15px;
 }
 
 .singleMapContainer {

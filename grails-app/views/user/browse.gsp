@@ -36,9 +36,7 @@
                   <div class="userName">
                     <g:link action="show" controller="profile" id="${user.id}">${user.username}</g:link>
                   </div>
-                  <div class="userRep">
-                    ${user.reputation}
-                  </div>
+                  <g:rep user="${user}"/>
                 </div>
               </div>
             </g:each>
