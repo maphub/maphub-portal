@@ -14,6 +14,12 @@ $(document).ready(function() {
 
     <g:form action='register' name='registerForm' id="registerForm">
 
+      <g:hasErrors>
+        <div class="errors">
+          <g:renderErrors as="list" />
+        </div>
+      </g:hasErrors>
+
     	<g:if test='${emailSent}'>
     	<br/>
     	<g:message code='spring.security.ui.register.sent'/>
@@ -36,7 +42,7 @@ $(document).ready(function() {
         <input type="password" size="40" name="password"/>
         <br/>
         <label for="password2">Password (repeat): </label>
-        <input type="password2" size="40" name="password2"/>        
+        <input type="password" size="40" name="password2"/>        
       </p>
       <br>
     	<p><input type="submit" id="#create" value="Register" /></p>

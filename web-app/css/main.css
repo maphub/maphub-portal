@@ -424,12 +424,16 @@ blockquote {
 
 /* MESSAGES AND ERRORS */
 
-.message {
+.message, .errors {
     background: #f3f8fc url(../images/skin/information.png) 8px 50% no-repeat;
     border: 1px solid #b2d1ff;
     color: #006dba;
     margin: 10px 0 10px 0;
     padding: 10px;
+    padding-left: 40px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 div.errors {
@@ -437,7 +441,6 @@ div.errors {
     border: 1px solid red;
     color: #cc0000;
     padding: 10px;
-    margin-bottom:10px;
 }
 div.errors ul {
     list-style: none;

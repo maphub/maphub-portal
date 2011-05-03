@@ -118,10 +118,10 @@ grails.plugins.springsecurity.controllerAnnotations.staticRules = [
 
 grails.plugins.springsecurity.useSecurityEventListener = true
 
-grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
+/*grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
   print "==============================================================="
-  User.withTransaction {
-      def user = User.findById(appCtx.springSecurityService.principal.id)
+  at.ait.dme.maphub.User.withTransaction {
+      def user = at.ait.dme.maphub.User.findById(appCtx.springSecurityService.principal.id)
       if(!user.isAttached())
           user.attach()
       print "user.lastLoginDate " + user.lastLoginDate
@@ -131,5 +131,5 @@ grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, app
   }
   print "==============================================================="
 }
-
+*/
 

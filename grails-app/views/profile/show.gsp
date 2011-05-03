@@ -50,8 +50,15 @@
       </div>
       
       <div style="width: 45%; float:right;">
-        <h2>About myself</h2>
+        <g:if test="${user.description == ''}">
+          <div class="message">
+            Here could be a text about you! Why not <g:link controller="profile" action="edit">edit your profile</g:link> and add something interesting?
+          </div>
+        </g:if>
+        <g:else>
+          <h2>About myself</h2>
         <markdown:renderHtml>${user.description}</markdown:renderHtml>
+        </g:else>
       </div>
       
       <br style="clear:both;">
