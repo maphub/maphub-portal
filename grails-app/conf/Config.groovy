@@ -93,7 +93,7 @@ log4j = {
 
     warn   'org.mortbay.log'
     
-    debug   'org.hibernate.SQL'
+    // debug   'org.hibernate.SQL'
 }
 
 // Added by the Spring Security Core plugin:
@@ -118,18 +118,14 @@ grails.plugins.springsecurity.controllerAnnotations.staticRules = [
 
 grails.plugins.springsecurity.useSecurityEventListener = true
 
-/*grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
-  print "==============================================================="
-  at.ait.dme.maphub.User.withTransaction {
-      def user = at.ait.dme.maphub.User.findById(appCtx.springSecurityService.principal.id)
-      if(!user.isAttached())
-          user.attach()
-      print "user.lastLoginDate " + user.lastLoginDate
-      user.lastLoginDate = new Date()
-      print "user.lastLoginDate " + user.lastLoginDate
-      user.save(flush: true, failOnError: true)
-  }
-  print "==============================================================="
+grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
+    at.ait.dme.maphub.User.withTransaction {
+          def user = at.ait.dme.maphub.User.findById(appCtx.springSecurityService.principal.id)
+          if(!user.isAttached())
+              user.attach()
+          user.lastLoginDate = new Date()
+          user.save(flush: true, failOnError: true)
+    }
 }
-*/
+
 
