@@ -120,11 +120,9 @@ grails.plugins.springsecurity.useSecurityEventListener = true
 
 grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
     at.ait.dme.maphub.User.withTransaction {
-          def user = at.ait.dme.maphub.User.findById(appCtx.springSecurityService.principal.id)
-          if(!user.isAttached())
-              user.attach()
+          def user = at.ait.dme.maphub.User.get(appCtx.springSecurityService.principal.id)
           user.lastLoginDate = new Date()
-          user.save(flush: true, failOnError: true)
+          user.save(failOnError: true)
     }
 }
 
