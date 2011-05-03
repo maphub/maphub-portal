@@ -50,7 +50,7 @@
       </div>
       
       <div style="width: 45%; float:right;">
-        <g:if test="${user.description == ''}">
+        <g:if test="${(user.description == '') && self}">
           <div class="message">
             Here could be a text about you! Why not <g:link controller="profile" action="edit">edit your profile</g:link> and add something interesting?
           </div>
