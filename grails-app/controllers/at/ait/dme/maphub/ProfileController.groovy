@@ -19,7 +19,15 @@ class ProfileController {
 
     def show = {
       def user = User.get(params.id)
-      [user: user]
+      def self = false
+      if (user.id == springSecurityService.getCurrentUser().id) {
+        self = true
+      }
+      
+      def mapsCount = Map.findAllByUser(user).size
+      def maps = Map.findAllByUser(user, [max: 10])
+      
+      [user: user, self: self, maps: maps, mapsCount: mapsCount]
     }
 
 		def update = {

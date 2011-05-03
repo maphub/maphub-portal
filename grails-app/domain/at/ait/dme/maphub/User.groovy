@@ -4,6 +4,10 @@ class User {
 
 	String username
 	String password
+	String description
+	Integer reputation
+	Date registerDate
+	Date lastLoginDate
 	boolean enabled
 	boolean accountExpired
 	boolean accountLocked
