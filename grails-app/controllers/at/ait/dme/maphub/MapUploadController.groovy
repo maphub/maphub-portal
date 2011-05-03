@@ -19,7 +19,7 @@ class MapUploadController {
 			createdMap.views = 0
 
 			if (createdMap.validate()) {
-println "mapname: "+createdMap.name
+        createdMap.description = createdMap.description.encodeAsHTML()
 				createdMap.save(flush:true)
 				redirect(controller: 'map', action: 'show', id: createdMap.id)
 			}

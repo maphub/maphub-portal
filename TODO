@@ -1,17 +1,9 @@
 TODO
 ====
 
-- add a "cover flow" view
-
-- set all the default fields for maps when uploading (e.g. views to 0, uploadDate to current date, etc.)
-
 - maybe make the "year" field not a selection but a keyboard input field with 4 digits
 
 - make the search work
-
-- add more details for map view
-
-- See how we can fit in the "registration" and "forgot password" views into the new layout because they are somewhere in Spring Security and not in our project root
 
 - Map file upload and tiling
 

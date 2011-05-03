@@ -30,8 +30,19 @@ class ProfileController {
       [user: user, self: self, maps: maps, mapsCount: mapsCount]
     }
 
-		def update = {
-		  def user = springSecurityService.getCurrentUser()
-		}
+    def update = {
+      def user = springSecurityService.getCurrentUser()
+      
+      user.username = params.username
+      user.description = params.description.encodeAsHTML()
+      
+      if (user.validate()) {
+        user.save(flush: true)
+        redirect(controller: 'profile', action: 'show', id: user.id)
+      }
+      else {
+        render(view: 'edit', model: [ user : user ])
+      }
+    }
 
 }

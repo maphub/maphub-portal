@@ -428,16 +428,16 @@ blockquote {
     background: #f3f8fc url(../images/skin/information.png) 8px 50% no-repeat;
     border: 1px solid #b2d1ff;
     color: #006dba;
-    margin: 10px 0 5px 0;
-    padding: 5px 5px 5px 30px
+    margin: 10px 0 10px 0;
+    padding: 10px;
 }
 
 div.errors {
     background: #fff3f3;
     border: 1px solid red;
     color: #cc0000;
-    margin: 10px 0 5px 0;
-    padding: 5px 0 5px 0;
+    padding: 10px;
+    margin-bottom:10px;
 }
 div.errors ul {
     list-style: none;

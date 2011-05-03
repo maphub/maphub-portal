@@ -34,7 +34,7 @@
 
 			<p>
 				<label for="description">Map Description:</label>
-				<g:textArea name="description" rows="5" cols="60"/>
+				<g:textArea name="description" rows="10" cols="60"/>
 			</p>
 
 			<p>

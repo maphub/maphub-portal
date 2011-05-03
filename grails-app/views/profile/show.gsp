@@ -51,7 +51,7 @@
       
       <div style="width: 45%; float:right;">
         <h2>About myself</h2>
-        <p>${user.description}</p>
+        <markdown:renderHtml>${user.description}</markdown:renderHtml>
       </div>
       
       <br style="clear:both;">

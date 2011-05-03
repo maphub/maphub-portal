@@ -92,6 +92,8 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+    
+    debug   'org.hibernate.SQL'
 }
 
 // Added by the Spring Security Core plugin:
@@ -113,3 +115,21 @@ grails.plugins.springsecurity.controllerAnnotations.staticRules = [
    '/registrationCode/**': ['ROLE_ADMIN'],
    '/securityInfo/**': ['ROLE_ADMIN']
 ]
+
+grails.plugins.springsecurity.useSecurityEventListener = true
+
+grails.plugins.springsecurity.onInteractiveAuthenticationSuccessEvent = { e, appCtx ->
+  print "==============================================================="
+  User.withTransaction {
+      def user = User.findById(appCtx.springSecurityService.principal.id)
+      if(!user.isAttached())
+          user.attach()
+      print "user.lastLoginDate " + user.lastLoginDate
+      user.lastLoginDate = new Date()
+      print "user.lastLoginDate " + user.lastLoginDate
+      user.save(flush: true, failOnError: true)
+  }
+  print "==============================================================="
+}
+
+
