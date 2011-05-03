@@ -36,7 +36,7 @@ $(document).ready(function() {
         <input name="email" size="40"/>
       </p>
       <br>
-      <p>Choose your password:</p>
+      <p>Choose your password. For safety reasons, passwords must have at least 8 characters, at least one letter, number, and special character: !@#$%^&</p>
       <p>
         <label for="password">Password: </label>
         <input type="password" size="40" name="password"/>
@@ -45,6 +45,9 @@ $(document).ready(function() {
         <input type="password" size="40" name="password2"/>        
       </p>
       <br>
+      <p>
+        By registering, you accept our <g:link controller="home" action="tos">Terms of Service</g:link>.
+      </p>
     	<p><input type="submit" id="#create" value="Register" /></p>
 
     	</g:else>

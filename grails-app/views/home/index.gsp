@@ -44,7 +44,13 @@
           MapHub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
           </blockquote>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-<p>Are you ready? <g:link action="browse" controller="map">Start browsing public maps now!</g:link></p>
+
+          <p>Are you ready?
+          <ul>
+            <li><g:link action="browse" controller="map">Start browsing public maps now!</g:link></li>
+            <li><g:link action="index" controller="register">Register now!</g:link></li>
+          </ul>
+          </p>  
 
       </sec:ifNotLoggedIn>
 
