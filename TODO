@@ -5,27 +5,21 @@ TODO
 
 - add functionality to browse maps by user
 
-- add openID/oauth support
+- make the search work (google like)
+
+- respect the "public" flag
 
 - maybe make the "year" field not a selection but a keyboard input field with 4 digits
 
-- make the search work
+- enable password editing for user profile
+
+- add openID/oauth support
+
+- AJAX stuff (username check, map upload: check if tileset is provided)
 
 - Map file upload and tiling
 
-- enable password editing for user profile
-
 DONE
 ====
-
-- Create a separate Admin "namespace", using the View Compartments plugin: https://github.com/kimble/grails-view-compartments shouldn't be necessary though, as we can scope everything through views.. I guess.
-
-- Christian: Map upload form input verification
-
-- Werner: Basic map listing and installation of search plugin
-
-- Werner: Create a Home controller with a basic interface (Login/Logout) - we don't need a specific home controller
-
-- Werner: Find a nice and basic HTML/CSS template to apply to all pages
 
 - Christian: Admin and user roles are now created during (development) bootstrapping. Decided to create one admin role and two user roles. Users are named "admin", "rwuser", and "rouser"; passwords are easy to guess
