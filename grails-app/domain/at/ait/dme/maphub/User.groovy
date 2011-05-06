@@ -28,4 +28,6 @@ class User {
 
 	static hasMany = [ maps : Map ]
 
+  static searchable = true
+
 }

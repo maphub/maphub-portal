@@ -16,6 +16,18 @@
 
 				<!-- replace with maphub logo 
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div> -->
+
+			<!-- Search field -->
+      <div id="search">
+				<script type="text/javascript">
+					function submitQuery() { document.forms["queryString"].submit(); }
+				</script>
+
+				<g:form action="index" controller="siteSearch" name="queryString">
+					<g:textField name="q" />
+					<a href="javascript: submitQuery();">Search</a>
+				</g:form>
+			</div>
 				
       <!-- User Action bar -->
       <div id="usertools">
@@ -36,6 +48,8 @@
         <div id="header">
           <a href="/maphub-portal">MapHub</a>
         </div>
+
+				
         
         <sec:ifLoggedIn>
         <!-- Navigation -->

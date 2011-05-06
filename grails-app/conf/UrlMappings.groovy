@@ -10,6 +10,9 @@ class UrlMappings {
 			}
 		}
 
+		"/search"(controller:'siteSearch')
+		"/searchable"(controller:'siteSearch')
+
 		/*"/"(view:"/index")*/
 		"500"(view:'/error')
 	}

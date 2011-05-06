@@ -63,12 +63,22 @@ input:focus, select:focus, textarea:focus {
     border: 1px solid #b2d1ff;
 }
 
+/* SEARCH FIELD */
+#search {
+	float: right;
+}
+
+#search a, #search input {
+	vertical-align: middle;
+	margin-left: .5em;
+}
+
 /* USER TOOL BAR */
 
 #usertools {
 	float: right;
-	display:block;
 }
+
 
 /* HEADER MESSAGE */
 
@@ -76,7 +86,7 @@ input:focus, select:focus, textarea:focus {
 	font-size:30px;
 	font-weight:bold;
 	text-shadow: 2px 2px 2px #ccc;
-	padding: 30px 0 30px;
+	padding: 30px 0 15px;
 }
 
 /* NAVIGATION BAR */
