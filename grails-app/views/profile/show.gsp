@@ -57,7 +57,9 @@
         </g:if>
         <g:else>
           <h2>About myself</h2>
-        <markdown:renderHtml>${user.description}</markdown:renderHtml>
+        <div class="aboutMyself">
+          <markdown:renderHtml>${user.description}</markdown:renderHtml>
+        </div>
         </g:else>
       </div>
       

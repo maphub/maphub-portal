@@ -9,9 +9,11 @@ class Map {
   Date uploadDate
   Date mapDate
 	Boolean isPublic
+	User user
 
   static constraints = {
   	tilesetUrl(url: true, blank: false, unique: true)
+  	name(blank: false)
   }
   
   static namedQueries = {
@@ -21,7 +23,9 @@ class Map {
     }
   }
   
-  static belongsTo = [ user : User ]
+  static belongsTo = [ User, Mapset ]
+  
+  static hasMany = [ mapsets : Mapset ]
   
   static searchable = true
 

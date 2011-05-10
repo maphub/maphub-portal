@@ -26,7 +26,7 @@ class User {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
 
-	static hasMany = [ maps : Map ]
+	static hasMany = [ maps : Map, sets: Mapset ]
 
   static searchable = true
 

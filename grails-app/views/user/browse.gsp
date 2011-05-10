@@ -20,12 +20,7 @@
               <a href="javascript: submitFilter();">Apply</a>
            </g:form>
           </div>
-          <div id="viewTypeBox">
-            <strong>View as:</strong> 
-            Thumbnails&nbsp;|&nbsp;
-            <g:link action="list" controller="user" params="${params}">List</g:link>
-          </div>
-          
+                    
           <div class="userList">
             <g:each in="${userInstanceList}" var="user">
               <div class="singleUserContainer">

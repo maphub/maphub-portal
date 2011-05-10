@@ -33,8 +33,8 @@
 			</p>
 
 			<p>
-				<label for="description">Map Description:</label>
-				<g:textArea name="description" rows="10" cols="60"/>
+				<label for="description">Map Description (maximum 750 characters):</label>
+        <textarea name="description" maxlength="750" rows="10" cols="60"/></textarea>
 			</p>
 
 			<p>
@@ -46,7 +46,10 @@
 				<label for="isPublic">This map is available to all users</label>
 				<g:checkBox name="isPublic" checked="true"/>
 			</p>
-<p></p>
+			
+			<div class="todo">Add a choice for adding it to one or more sets</div>
+			
+      <p></p>
 			<p>
 				<g:actionSubmit value="Upload"/>
 			</p>

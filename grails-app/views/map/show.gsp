@@ -4,6 +4,11 @@
         <meta name="layout" content="main" />
         <g:javascript library="showmap" />
         <script type="text/javascript">
+          
+          $(document).ready(function(){
+            $("#footer").hide();
+          });
+        
           var path = "${mapInstance.tilesetUrl}";
           
           var swfParams = {
@@ -28,7 +33,7 @@
             swfobject.embedSWF("${resource(dir:'',file:'OpenZoomViewer.swf')}", 
         		"viewer",
         		"100%", 
-        		(clientHeight - 440) + "px",
+        		(clientHeight - 210) + "px",
         		"9.0.0",
         		false,
         		{ source : "${mapInstance.tilesetUrl}/ImageProperties.xml" },

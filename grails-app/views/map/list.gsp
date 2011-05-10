@@ -72,7 +72,7 @@
                 </table>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${mapInstanceTotal}" />
+                <g:paginate controller="map" action="list" params="${params}" total="${mapInstanceTotal}"></g:paginate>
             </div>
         </div>
     </body>

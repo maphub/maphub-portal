@@ -6,29 +6,23 @@
   <head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta name='layout' content='main'/>
-    <title><g:if test="${params.q && params.q?.trim() != ''}">${params.q} - </g:if>Grails Searchable Plugin</title>
-
-    <style type="text/css">
-			#search {
-				display: none;
-			}
-		</style>
+    <title><g:if test="${params.q && params.q?.trim() != ''}">${params.q} - </g:if>Search Results</title>
 
     <script type="text/javascript">
-        var focusQueryInput = function() {
-            document.getElementById("q").focus();
-        }
+        $(document).ready(function() {
+          $("#q").attr("value", "${params.q}");
+          $("#q").select();
+        });
     </script>
   </head>
   <body onload="focusQueryInput();">
-  <div id="header">
-    <h1><a href="http://grails.org/Searchable+Plugin" target="_blank">Grails <span>Searchable</span> Plugin</a></h1>
-    <g:form url='[controller: "searchable", action: "index"]' id="searchableForm" name="searchableForm" method="get">
+
+    <h1>Search Results</h1>
+    <!-- <g:form url='[controller: "searchable", action: "index"]' id="searchableForm" name="searchableForm" method="get">
         <g:textField name="q" value="${params.q}" size="50"/> <input type="submit" value="Search" />
-    </g:form>
-    <div style="clear: both; display: none;" class="hint">See <a href="http://lucene.apache.org/java/docs/queryparsersyntax.html">Lucene query syntax</a> for advanced queries</div>
-  </div>
-  <div id="main">
+    </g:form> -->
+
+
     <g:set var="haveQuery" value="${params.q?.trim()}" />
     <g:set var="haveResults" value="${searchResult?.results}" />
     <div class="title">
@@ -88,15 +82,13 @@
             <g:set var="desc" value="${result.toString()}" />
             <g:if test="${desc.size() > 120}"><g:set var="desc" value="${desc[0..120] + '...'}" /></g:if>
             <div class="desc">${desc.encodeAsHTML()}</div>
-            <div class="displayLink">${link}</div>
           </div>
         </g:each>
       </div>
 
       <div>
-        <div class="paging">
+        <div class="paginateButtons">
           <g:if test="${haveResults}">
-              Page:
               <g:set var="totalPages" value="${Math.ceil(searchResult.total / searchResult.max)}" />
               <g:if test="${totalPages == 1}"><span class="currentStep">1</span></g:if>
               <g:else><g:paginate controller="searchable" action="index" params="[q: params.q]" total="${searchResult.total}" prev="&lt; previous" next="next &gt;"/></g:else>
@@ -104,6 +96,6 @@
         </div>
       </div>
     </g:if>
-  </div>
+
   </body>
 </html>

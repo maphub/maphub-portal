@@ -20,11 +20,12 @@
               <input name="username" value="${user.username}"/>
             </p>
             <p>
-              <label for="description">About me:</label>
-              <textarea rows="10" cols="60" name="description">${user.description}</textarea>
+              <label for="description">About me (700 chars maximum):</label>
+              <textarea rows="10" cols="60" maxlength="700" name="description">${user.description}</textarea>
             </p>
             
             <p>If you want to change your password, type it twice, otherwise leave it blank.</p>
+            <div class="todo">TODO make this work!</div>
             <p>
               <label for="password">Password:</label>
               <input type="password" name="password"/>

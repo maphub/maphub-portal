@@ -45,7 +45,7 @@
           </div>
           
           <div class="paginateButtons">
-              <g:paginate controller="map" action="coverflow" total="${mapInstanceTotal}"></g:paginate>
+              <g:paginate controller="map" action="coverflow" params="${params}" total="${mapInstanceTotal}"></g:paginate>
           </div>
     </body>
 </html>

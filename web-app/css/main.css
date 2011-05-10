@@ -19,6 +19,7 @@ body {
   line-height: 18px;
   margin: 0 auto;  
   padding-top:15px;
+  height:100%;
 }
 
 a:link, a:visited, a:hover {
@@ -66,11 +67,13 @@ input:focus, select:focus, textarea:focus {
 /* SEARCH FIELD */
 #search {
 	float: right;
+	padding-left:10px;
 }
 
 #search a, #search input {
 	vertical-align: middle;
 	margin-left: .5em;
+	margin-top: -3px;
 }
 
 /* USER TOOL BAR */
@@ -87,6 +90,7 @@ input:focus, select:focus, textarea:focus {
 	font-weight:bold;
 	text-shadow: 2px 2px 2px #ccc;
 	padding: 30px 0 15px;
+	height:30px;
 }
 
 /* NAVIGATION BAR */
@@ -111,7 +115,7 @@ input:focus, select:focus, textarea:focus {
 
 	#navigation ul li a {
 		display: block;
-		margin-right: 5px;
+		margin-right: 0px; /* this is the spacing of the items */
 		width: 110px;
 		font-size: 14px;
 		line-height: 40px;
@@ -127,19 +131,15 @@ input:focus, select:focus, textarea:focus {
 	  background: -webkit-linear-gradient(#09C, #069);
 	}
 
-  #upload {
+  #navigation .right {
     float:right !important;
   }
-
-	#upload a {
-	  background: #333;
+  
+  #navigation .right a {
+    background: #333;
 	  background: -moz-linear-gradient(100% 100% 90deg, #555, #333);
 	  background: -webkit-linear-gradient(#555, #333);
-	}
-	
-	#upload a {
-		/*background: #fff url("..images/nav_background_inv.png");*/
-	}
+  }
 
 		#navigation ul li a:hover {
 			color: #fff;
@@ -156,7 +156,7 @@ input:focus, select:focus, textarea:focus {
 #main {
   padding-top: 40px;
 	padding-bottom: 30px;
-	min-height: 500px;
+	min-height: 600px;
 }
 
 #viewer {
@@ -402,6 +402,15 @@ input:focus, select:focus, textarea:focus {
   width: 100px;
 }
 
+.aboutMyself {
+  border: 1px solid #333;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding: 5px;
+  background-color: #eee;
+}
+
 /* CODE VIEW */
 
 code {
@@ -434,7 +443,7 @@ blockquote {
 
 /* MESSAGES AND ERRORS */
 
-.message, .errors {
+.message, .errors, .todo {
     background: #f3f8fc url(../images/skin/information.png) 8px 50% no-repeat;
     border: 1px solid #b2d1ff;
     color: #006dba;
@@ -471,6 +480,14 @@ td.errors input {
 td.errors textarea {
     border: 1px solid red;
 }
+
+
+.todo {
+  background-color: #eed;
+  border: 1px solid yellow;
+  color: black;
+}
+
 
 /* TABLES */
 
@@ -528,6 +545,12 @@ th.desc a {
     background: #eee;
 }
 
+/* SEARCH RESULTS */
+
+.result {
+  padding: 10px 0 10px 0;
+}
+
 /* PAGINATION */
 
 .paginateButtons {
@@ -546,6 +569,10 @@ th.desc a {
 .paginateButtons span {
     padding: 2px 3px;
 }
+
+/* PAGINATION FOR SEARCH */
+
+
 
 /* DIALOG */
 

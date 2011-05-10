@@ -14,6 +14,15 @@ class MapController {
 
     def list = {
         params.max = Math.min(params.max ? params.int('max') : 20, 200)
+
+        /*  params.userId = params?.userId ?: null
+
+        if (params.userId) {
+          def maps = Map.findByUser(params.userId).list(params)
+        } else {
+          
+        }*/
+        
         [mapInstanceList: Map.list(params), mapInstanceTotal: Map.count()]
     }
     
@@ -23,7 +32,11 @@ class MapController {
         params.sort = params?.sort ?: "uploadDate"
         params.order = params?.order ?: "desc"
         
-        def maps = Map.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {}
+        def maps = Map.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {
+          and {
+            eq('isPublic', true)
+          }
+        }
         
         params.totalMaps = maps.totalCount
         [ mapInstanceList : maps, mapInstanceTotal : maps.totalCount, params: params ]
@@ -35,7 +48,11 @@ class MapController {
         params.sort = params?.sort ?: "uploadDate"
         params.order = params?.order ?: "desc"
 
-        def maps = Map.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {}
+        def maps = Map.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {
+          and {
+            eq('isPublic', true)
+          }
+        }
 
         params.totalMaps = maps.totalCount
         [ mapInstanceList : maps, mapInstanceTotal : maps.totalCount, params: params ]
@@ -44,7 +61,7 @@ class MapController {
    
     def show = {
         def mapInstance = Map.get(params.id)
-        if (!mapInstance) {
+        if ((!mapInstance) || (!mapInstance.isPublic)) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'map.label', default: 'Map'), params.id])}"
             redirect(action: "list")
         }

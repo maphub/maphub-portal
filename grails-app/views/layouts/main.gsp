@@ -17,18 +17,18 @@
 				<!-- replace with maphub logo 
         <div id="grailsLogo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div> -->
 
-			<!-- Search field -->
-      <div id="search">
-				<script type="text/javascript">
-					function submitQuery() { document.forms["queryString"].submit(); }
-				</script>
+        <!-- Search field -->
+        <div id="search">
+          <script type="text/javascript">
+          function submitQuery() { document.forms["queryString"].submit(); }
+          </script>
 
-				<g:form action="index" controller="siteSearch" name="queryString">
-					<g:textField name="q" />
-					<a href="javascript: submitQuery();">Search</a>
-				</g:form>
-			</div>
-				
+          <g:form action="index" controller="siteSearch" name="queryString">
+            <g:textField name="q" />
+            <a href="javascript: submitQuery();">Search</a>
+          </g:form>
+        </div>
+
       <!-- User Action bar -->
       <div id="usertools">
         <sec:ifNotLoggedIn>
@@ -49,7 +49,7 @@
           <a href="/maphub-portal">MapHub</a>
         </div>
 
-				
+        
         
         <sec:ifLoggedIn>
         <!-- Navigation -->
@@ -57,9 +57,11 @@
           <ul>
             <li><a href="/maphub-portal">Home</a></li>
             <li><g:link action="browse" controller="map">Maps</g:link></li>
+            <li><g:link action="browse" controller="mapset">Sets  </g:link></li>
             <li><g:link action="browse" controller="user">Users</g:link></li>
             <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
-              <li id="upload"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
+              <li class="right"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
+              <li class="right"><g:link action="index" controller="mapManage">Manage Maps</g:link></li>
             </sec:ifAnyGranted>
           </ul>
         </div>
@@ -75,8 +77,8 @@
           <div>
             <div id="about">
             <h3>About MapHub</h3>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </div> <!-- end about -->
           
           <div id="links">
             <h3>Useful Links</h3>
@@ -87,6 +89,6 @@
             </ul>
           </div> <!-- end links -->
         </div> <!-- end footer div -->
-        </div> <!-- end footer -->
+
     </body>
 </html>
