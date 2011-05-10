@@ -1,7 +1,9 @@
 package at.ait.dme.maphub
 
 class MapsetController {
-
+    
+    def springSecurityService
+    
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -43,7 +45,7 @@ class MapsetController {
 
     def edit = {
         def mapsetInstance = Mapset.get(params.id)
-        if (!mapsetInstance) {
+        if ((!mapsetInstance) || (mapsetInstance.user != springSecurityService.getCurrentUser())) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'mapset.label', default: 'Mapset'), params.id])}"
             redirect(action: "list")
         }
@@ -54,7 +56,7 @@ class MapsetController {
 
     def update = {
         def mapsetInstance = Mapset.get(params.id)
-        if (mapsetInstance) {
+        if ((mapsetInstance) && (mapsetInstance.user == springSecurityService.getCurrentUser())) {
             if (params.version) {
                 def version = params.version.toLong()
                 if (mapsetInstance.version > version) {
@@ -81,7 +83,7 @@ class MapsetController {
 
     def delete = {
         def mapsetInstance = Mapset.get(params.id)
-        if (mapsetInstance) {
+        if ((mapsetInstance) && (mapsetInstance.user == springSecurityService.getCurrentUser())) {
             try {
                 mapsetInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'mapset.label', default: 'Mapset'), params.id])}"
