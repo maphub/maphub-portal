@@ -117,8 +117,8 @@ input:focus, select:focus, textarea:focus {
 		display: block;
 		margin-right: 0px; /* this is the spacing of the items */
 		width: 110px;
-		font-size: 14px;
-		line-height: 40px;
+		font-size: 11px;
+		line-height: 30px;
 		text-align: center;
 		font-weight: normal;
 		text-decoration: none;
@@ -167,7 +167,7 @@ input:focus, select:focus, textarea:focus {
 /* MAP DETAIL INFO BOX (AT THE TOP OF THE PAGE) */
 
 #detailInfo {
-  background-color:#ddd;
+  /*background-color:#ddd;*/
   display:block;
   width: auto;
   padding-right:15px;
@@ -175,12 +175,12 @@ input:focus, select:focus, textarea:focus {
   padding-top:10px;
   padding-bottom:10px;
   /* Border-radius not implemented yet */
-	border-bottom-left-radius: 22px;
-	border-bottom-right-radius: 22px;
-	-moz-border-bottom-right-radius: 22px;
-	-moz-border-bottom-left-radius: 22px;
-	-webkit-border-bottom-right-radius: 22px;
-	-webkit-border-bottom-left-radius: 22px;
+	/*border-bottom-left-radius: 22px;
+	 border-bottom-right-radius: 22px;
+	 -moz-border-bottom-right-radius: 22px;
+	 -moz-border-bottom-left-radius: 22px;
+	 -webkit-border-bottom-right-radius: 22px;
+	 -webkit-border-bottom-left-radius: 22px;*/
 }
 
 #detailInfoMessage {

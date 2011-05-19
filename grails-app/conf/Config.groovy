@@ -96,6 +96,11 @@ log4j = {
     // debug   'org.hibernate.SQL'
 }
 
+
+avatarPlugin {
+	defaultGravatarUrl="http://localhost:8080/maphub-portal/images/avatar_large.png"
+}
+
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'at.ait.dme.maphub.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'at.ait.dme.maphub.UserRole'

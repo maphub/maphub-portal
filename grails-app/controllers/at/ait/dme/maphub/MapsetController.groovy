@@ -1,13 +1,18 @@
 package at.ait.dme.maphub
 
 class MapsetController {
-    
+
     def springSecurityService
-    
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
         redirect(action: "list", params: params)
+    }
+
+    def list = {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [mapsetInstanceList: Mapset.list(params), mapsetInstanceTotal: Mapset.count()]
     }
     
     def browse = {
@@ -28,18 +33,41 @@ class MapsetController {
 
     def create = {
         def mapsetInstance = new Mapset()
+        mapsetInstance.uploadDate = new Date()
+        mapsetInstance.editDate = new Date()
         mapsetInstance.properties = params
         return [mapsetInstance: mapsetInstance]
     }
 
     def save = {
         def mapsetInstance = new Mapset(params)
+        mapsetInstance.editDate = new Date()
+        if (params.uploadDate == null) {
+          mapsetInstance.uploadDate = new Date()
+        }
+        // FIXME http://jira.grails.org/browse/GPSEARCHABLE-60
+        // mapsetInstance = mapsetInstance.merge(flush: true)
+        // END FIXME
+        
+        mapsetInstance.user = springSecurityService.getCurrentUser()
+        
         if (mapsetInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'mapset.label', default: 'Mapset'), mapsetInstance.id])}"
             redirect(action: "show", id: mapsetInstance.id)
         }
         else {
             render(view: "create", model: [mapsetInstance: mapsetInstance])
+        }
+    }
+
+    def show = {
+        def mapsetInstance = Mapset.get(params.id)
+        if (!mapsetInstance) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'mapset.label', default: 'Mapset'), params.id])}"
+            redirect(action: "list")
+        }
+        else {
+            [mapsetInstance: mapsetInstance]
         }
     }
 

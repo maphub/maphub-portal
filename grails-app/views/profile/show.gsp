@@ -12,10 +12,16 @@
       <h1>${user.username}</h1>
       
       <div class="userAvatarLarge">
-        <img src="${resource(dir:'images',file:'avatar_large.png')}"/>
+        <avatar:gravatar email="${user.email}" size="150"/>
       </div>
       <div class="userInfoTableContainer">
         <table class="userInfoTable">
+          <g:if test="{self}">
+            <tr>
+              <td class="firstCol">E-Mail:</td>
+              <td>${user.email}</td>
+            </tr>  
+          </g:if>
           <tr>
             <td class="firstCol">Reputation:</td>
             <td>${user.reputation}</td>

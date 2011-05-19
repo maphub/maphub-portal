@@ -60,7 +60,7 @@ class BootStrap {
 
 	User createUser(name, pwd) {
 		String password = springSecurityService.encodePassword(name)
-		def user = new User(username: name, enabled: true, password: password, registerDate: new Date(), lastLoginDate: new Date(), reputation: 1, description: "")
+		def user = new User(username: name, enabled: true, password: password, registerDate: new Date(), lastLoginDate: new Date(), reputation: 1, description: "", email: name+"@test.com")
 		user.save(flush: true)
 		return user
 	}

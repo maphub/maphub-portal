@@ -18,12 +18,28 @@ class UrlMappings {
       controller = "map"
       action = "coverflow"
     }*/
+    
+    // remapping in order to include User ID in the URL
+    
+    "/map/$userId/$id/" {
+      controller = "map"
+      action = "show"
+    }
+/*
+    "/mapset/$userId/$id/" {
+      controller = "mapset"
+      action = "show"
+    }
+    */
+    // General route
 
     "/$controller/$action?/$id?"{
     	constraints {
     		// apply constraints here
     	}
     }
+    
+    // Search alias
 
 		"/search"(controller:'siteSearch')
 		"/searchable"(controller:'siteSearch')

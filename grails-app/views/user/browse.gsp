@@ -26,7 +26,9 @@
               <div class="singleUserContainer">
                 <div class="singleUserInfo">
                   <div class="userAvatarSmall">
-                    <g:link action="show" controller="profile" id="${user.id}"><img src="${resource(dir:'images',file:'avatar_small.png')}"/></g:link>
+                    <g:link action="show" controller="profile" id="${user.id}">
+                    <avatar:gravatar email="${user.email}" size="50"/>
+                    </g:link>
                   </div>
                   <div class="userName">
                     <g:link action="show" controller="profile" id="${user.id}">${user.username}</g:link>

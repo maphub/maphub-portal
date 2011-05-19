@@ -40,6 +40,9 @@
               
               <input type="submit" value="Create Set"/>
               
+              <g:if test="${edit}">
+                <input type="hidden" value="${edit}" name="edit">
+              </g:if>
             </g:form>
             
         </div>

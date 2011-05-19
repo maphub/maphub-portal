@@ -4,6 +4,7 @@ class User {
 
 	String username
 	String password
+	String email
 	String description
 	Integer reputation
 	Date registerDate
@@ -15,6 +16,7 @@ class User {
 
 	static constraints = {
 		username blank: false, unique: true
+		email blank: false, unique: true
 		password blank: false
 	}
 

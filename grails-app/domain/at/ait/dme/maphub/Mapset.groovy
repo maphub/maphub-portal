@@ -7,6 +7,7 @@ class Mapset {
   Boolean isPublic
   Date uploadDate
   Date editDate
+  User user
   
   static constraints = {
     name(blank: false)
@@ -16,6 +17,6 @@ class Mapset {
   
   static belongsTo = [ user : User ]
   
-  static searchable = true
+  // static searchable = true
   
 }

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Map</title>
+        <title>${mapInstance.name}</title>
         <meta name="layout" content="main" />
         <g:javascript library="showmap" />
         <script type="text/javascript">
@@ -43,6 +43,7 @@
         </script>
     </head>
     <body>
+          <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
           <div id="detailInfo">
             <div id="detailInfoFirst">
             <table>
@@ -56,21 +57,20 @@
               </tr>
             </table>
             </div>
-            <div id="detailInfoFollowing">
-            <table>
-              <tr>
-                <td class="left">
-                  <div class="detailInfoObject">
-                    <markdown:renderHtml>${mapInstance.description}</markdown:renderHtml>
-                  </div>
-                </td>
-                <td class="right">
-                  <div class="detailInfoObject "> </div>
-                </td>
-              </tr>  
-            </table>
-            </div>
+            <!-- <div id="detailInfoFollowing">
+                        <table>
+                          <tr>
+                            <td class="left">
+                              <div class="detailInfoObject">
+                                <markdown:renderHtml>${mapInstance.description}</markdown:renderHtml>
+                              </div>
+                            </td>
+                            <td class="right">
+                              <div class="detailInfoObject "> </div>
+                            </td>
+                          </tr>  
+                        </table>
+                        </div> -->
           </div>
-          <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
     </body>
 </html>
