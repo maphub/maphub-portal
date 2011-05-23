@@ -61,7 +61,7 @@
             <li><g:link action="browse" controller="user">Users</g:link></li>
             <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
               <li class="right"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
-              <li class="right"><g:link action="index" controller="mapManage">Manage Maps</g:link></li>
+              <li class="right"><g:link action="index" controller="mapManage">Manage Maps/Sets</g:link></li>
             </sec:ifAnyGranted>
           </ul>
         </div>

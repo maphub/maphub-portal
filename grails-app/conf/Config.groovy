@@ -93,6 +93,9 @@ log4j = {
 
     warn   'org.mortbay.log'
     
+    debug   'org.codehaus.groovy.grails.app.filter'
+    
+    
     // debug   'org.hibernate.SQL'
 }
 

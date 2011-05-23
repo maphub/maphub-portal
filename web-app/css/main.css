@@ -356,6 +356,17 @@ input:focus, select:focus, textarea:focus {
   min-width: 245px;
   min-height:270px;
   float:left;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.highlighted {
+  background-color: #5ca7cc;
+}
+
+.fixed {
+  background-color: #ddd;
 }
 
 .singleUserContainer {

@@ -1,7 +1,9 @@
 TODO
 ====
 
-- Edit sets (and let users add maps to sets)
+- Edit sets (same code as for creating)
+
+- Make set view sortable and include pagination
 
 - Edit maps
 

@@ -28,12 +28,12 @@
               <div class="singleMapContainer">
                 <div class="singleMapInfo">
                   <g:link action="show" controller="mapset" id="${mapset.id}">${mapset.name}</g:link><br>
-                  Uploaded by <g:rep user="${mapset.user}"/></div>
+                  Uploaded by ${mapset.user.username} <g:rep user="${mapset.user}"/><br/>
+                 </div>
               </div>
             </g:each>
           </div>
           
-          <div class="errors">Why is there no username showing?</div>
           <div class="todo">Upload some sets and then tweak this view.</div>
           
           <div class="paginateButtons">

@@ -7,17 +7,19 @@
 
       <h1>Maps in ${mapsetInstance.name}</h1>
 
+      <p>This is a set created by <g:link action="show" controller="profile" id="${mapsetInstance.user.id}">${mapsetInstance.user.username}</g:link>&nbsp;<g:rep user="${mapsetInstance.user}"/>, last edited <prettytime:display date="${mapsetInstance.editDate}"/> (originally created <prettytime:display date="${mapsetInstance.uploadDate}"/>).</p>
+
           <div class="mapList">
             <g:each in="${mapsetInstance.maps}" var="map">
               <div class="singleMapContainer">
                 <div class="singleMapInfo">
-                  <g:link action="browse" controller="map">${map.name}</g:link>
+                  <g:link action="show" controller="map" id="${map.id}" >${map.name}</g:link><br>
+                  <prettytime:display date="${map.uploadDate}" />
                 </div>
+                <g:link action="show" controller="map" id="${map.id}"><g:thumbnail map="${map}"/></g:link>
               </div>
             </g:each>
           </div>
-          
-          <div class="todo">Upload some maps for this set and then tweak this view</div>
           
     </body>
 </html>

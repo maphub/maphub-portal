@@ -36,7 +36,8 @@ class MapsetController {
         mapsetInstance.uploadDate = new Date()
         mapsetInstance.editDate = new Date()
         mapsetInstance.properties = params
-        return [mapsetInstance: mapsetInstance]
+        def mapList = Map.findByUser(springSecurityService.getCurrentUser()).list(params)
+        return [mapsetInstance: mapsetInstance, mapList: mapList]
     }
 
     def save = {
@@ -45,6 +46,13 @@ class MapsetController {
         if (params.uploadDate == null) {
           mapsetInstance.uploadDate = new Date()
         }
+        
+        // TODO set maps from IDs
+        def maps = new ArrayList()
+        params.mapIds.each() { val ->
+          mapsetInstance.addToMaps(Map.get(val))
+        }
+        
         // FIXME http://jira.grails.org/browse/GPSEARCHABLE-60
         // mapsetInstance = mapsetInstance.merge(flush: true)
         // END FIXME
