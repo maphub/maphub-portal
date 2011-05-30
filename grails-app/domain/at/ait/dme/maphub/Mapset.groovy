@@ -13,7 +13,7 @@ class Mapset {
     name(blank: false)
   }
   
-  static hasMany = [ maps : Map ]
+  static hasMany = [ maps : at.ait.dme.maphub.Map ]
   
   static belongsTo = [ user : User ]
   

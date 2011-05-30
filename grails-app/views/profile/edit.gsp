@@ -19,6 +19,7 @@
               <label for="username">Username:</label>
               <input name="username" value="${user.username}"/>
             </p>
+            <br/>
             <p>
               <label for="description">About me (700 chars maximum):</label>
               <textarea rows="10" cols="60" maxlength="700" name="description">${user.description}</textarea>
@@ -30,6 +31,7 @@
               <label for="password">Password:</label>
               <input type="password" name="password"/>
             </p>
+            <br>
             <p>
               <label for="password2">Password (repeat):</label>
               <input type="password" name="password2"/>

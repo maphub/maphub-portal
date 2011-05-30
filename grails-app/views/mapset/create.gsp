@@ -8,6 +8,8 @@
         <script type="text/javascript">
           $(document).ready(function(){
             
+            $("#nameInput").focus();
+            
             $(".singleMapInfo input").hide();
             
             $(".singleMapContainer").hover(function(){
@@ -54,7 +56,7 @@
               <h3>Step 1 - Provide some details</h3>
                 <p>
                   <label for="name">Set Name:</label>
-                  <g:textField name="name"/>
+                  <g:textField name="name" id="nameInput"/>
                 </p>
 
                 <p>

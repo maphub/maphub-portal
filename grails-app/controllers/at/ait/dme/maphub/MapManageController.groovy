@@ -9,7 +9,7 @@ class MapManageController {
 
     def index = {
       def user = springSecurityService.getCurrentUser()
-      [maps : user.maps, sets: user.sets ]
+      [maps : user.maps, sets: user.sets, user: user ]
     }
 
 }

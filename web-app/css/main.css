@@ -42,12 +42,13 @@ h2 {
 
 h3 {
 	font-size: 14px;
-	line-height: 22px;
-	padding: 11px 0;
+	line-height: 20px;
+	padding-top: 7px;
+	padding-bottom: 11px;
 }
 
 p {
-	padding-bottom: 22px;
+	padding-bottom: 15px;
 }
 
 hr {
