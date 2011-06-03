@@ -1,9 +1,11 @@
 TODO
 ====
 
-- Edit sets (same code as for creating)
+- New Model: Annotation. Associate Annotation to Map. Fields: Text, Replies
 
-- Make set view sortable and include pagination
+- Bugfix for parameters like &user=1, &set=1 in MapController
+
+- Edit sets (same code as for creating)
 
 - Edit maps
 
