@@ -10,7 +10,8 @@ class Map {
   Date mapDate
 	Boolean isPublic
 	User user
-
+	List annotations
+	
   static constraints = {
   	tilesetUrl(url: true, blank: false, unique: true)
   	name(blank: false)
@@ -25,7 +26,7 @@ class Map {
   
   static belongsTo = [ User, Mapset ]
   
-  static hasMany = [ mapsets : Mapset ]
+  static hasMany = [ mapsets : Mapset, annotations: Annotation ]
   
   static searchable = true
 

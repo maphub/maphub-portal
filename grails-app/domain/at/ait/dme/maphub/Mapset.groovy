@@ -8,12 +8,13 @@ class Mapset {
   Date uploadDate
   Date editDate
   User user
+  List maps
   
   static constraints = {
     name(blank: false)
   }
   
-  static hasMany = [ maps : at.ait.dme.maphub.Map ]
+  static hasMany = [ maps : Map ]
   
   static belongsTo = [ user : User ]
   

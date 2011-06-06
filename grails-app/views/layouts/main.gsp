@@ -57,7 +57,8 @@
           <ul>
             <li><a href="/maphub-portal">Home</a></li>
             <li><g:link action="browse" controller="map">Maps</g:link></li>
-            <li><g:link action="browse" controller="mapset">Sets  </g:link></li>
+            <li><g:link action="browse" controller="mapset">Sets</g:link></li>
+            <li><g:link action="browse" controller="annotation">Annotations</g:link></li>
             <li><g:link action="browse" controller="user">Users</g:link></li>
             <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_USER_RW">
               <li class="right"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>

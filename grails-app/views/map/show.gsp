@@ -33,7 +33,7 @@
             swfobject.embedSWF("${resource(dir:'',file:'OpenZoomViewer.swf')}", 
         		"viewer",
         		"100%", 
-        		(clientHeight - 210) + "px",
+        		(clientHeight - 410) + "px",
         		"9.0.0",
         		false,
         		{ source : "${mapInstance.tilesetUrl}/ImageProperties.xml" },
@@ -45,6 +45,8 @@
     <body>
           <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
           <div id="detailInfo">
+            <h3>Details</h3>
+            
             <div id="detailInfoFirst">
             <table>
               <tr>
@@ -55,6 +57,16 @@
                   <div class="detailInfoObject"><strong>Uploaded by: </strong> <g:link action="show" controller="profile" id="${mapInstance.user.id}">${mapInstance.user.username}</g:link>&nbsp;<g:rep user="${mapInstance.user}"/>, <prettytime:display date="${mapInstance.uploadDate}" showTime="true" format="HH:mm:ss"/></div>
                 </td>
               </tr>
+<tr>
+                            <td class="left">
+                              <div class="detailInfoObject">
+                                <strong>Description:</strong> <markdown:renderHtml>${mapInstance.description}</markdown:renderHtml>
+                              </div>
+                            </td>
+                            <td class="right">
+                              <div class="detailInfoObject "> </div>
+                            </td>
+                          </tr>  
             </table>
             </div>
             <!-- <div id="detailInfoFollowing">
@@ -71,6 +83,10 @@
                           </tr>  
                         </table>
                         </div> -->
+          </div>
+          <div id="annotations">
+            <h3>Annotations</h3>
+            <g:link controller="annotation" action="create" params="${[map: mapInstance.id]}">Create a new Annotation</g:link>
           </div>
     </body>
 </html>
