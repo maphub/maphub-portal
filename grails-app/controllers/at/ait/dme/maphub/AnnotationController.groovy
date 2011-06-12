@@ -69,6 +69,12 @@ class AnnotationController {
         }
     }
 
+		def serialize = {
+			def annotationInstance = Annotation.get(params.id)
+			String rdfAnnotation = annotationInstance.serialize()
+			render(contentType:"text/xml", text: rdfAnnotation)
+		}
+
     def update = {
         def annotationInstance = Annotation.get(params.id)
         if (annotationInstance) {

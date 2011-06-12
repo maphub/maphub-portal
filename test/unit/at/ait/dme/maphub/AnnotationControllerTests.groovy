@@ -11,7 +11,6 @@ class AnnotationControllerTests extends ControllerUnitTestCase {
         super.tearDown()
     }
 
-    void testSomething() {
-
+    void testSerialization() {
     }
 }
