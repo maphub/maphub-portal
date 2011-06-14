@@ -12,8 +12,15 @@
             </div>
           </g:hasErrors>
           
-          <p>Here you can create a new annotation.</p>
-          
+          <p>Here you can create a new annotation. It appears on the following Map:</p>
+                <div class="singleMapInfo">
+                  <g:link action="show" controller="map" id="${map.id}" >${map.name}</g:link><br>
+                  <prettytime:display date="${map.uploadDate}" />, uploaded by <g:link action="show" controller="profile" id="${map.user.id}">${map.user.username}</g:link>&nbsp;<g:rep user="${map.user}"/><br>
+                <g:link action="show" controller="map" id="${map.id}"><g:thumbnail map="${map}"/></g:link>
+              </div>
+
+          <hr>
+          <br>
           <g:form action="save" class="genericForm">
             <p>
               <label for="title">Title</label>
@@ -25,7 +32,7 @@
               <textarea rows="10" cols="60" maxlength="700" name="body"></textarea>
             </p>
             <p><input type="submit"/></p>
-            <input type="hidden" name="map" value="${params.map}">
+            <input type="hidden" name="mapId" value="${params.mapId}">
           </g:form>
           
     </body>

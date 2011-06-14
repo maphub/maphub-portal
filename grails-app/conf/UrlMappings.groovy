@@ -19,12 +19,6 @@ class UrlMappings {
       action = "coverflow"
     }*/
     
-    // remapping in order to include User ID in the URL
-    
-    "/map/$userId/$id/" {
-      controller = "map"
-      action = "show"
-    }
 /*
     "/mapset/$userId/$id/" {
       controller = "mapset"

@@ -7,7 +7,7 @@ class AnnotationController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
-        redirect(action: "list", params: params)
+        redirect(action: "browse", params: params)
     }
 
     def browse = {
@@ -26,7 +26,8 @@ class AnnotationController {
         annotationInstance.uploadDate = new Date()
         annotationInstance.editDate = new Date()
         annotationInstance.properties = params
-        return [annotationInstance: annotationInstance]
+        def map = Map.get(params.mapId)
+        return [annotationInstance: annotationInstance, map : map]
     }
 
     def save = {
@@ -35,8 +36,14 @@ class AnnotationController {
         if (params.uploadDate == null) {
           annotationInstance.uploadDate = new Date()
         }
-        annotationInstance.user = springSecurityService.getCurrentUser()
-        Map.get(params.map).addToAnnotations(annotationInstance)
+        
+        def user = springSecurityService.getCurrentUser()
+        annotationInstance.user = user
+        annotationInstance.map = Map.get(params.mapId)
+        user.annotations.add(annotationInstance)
+        
+        // this has to be done manually, obviously...
+        Map.get(params.mapId).annotations.add(annotationInstance)
         
         if (annotationInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'annotation.label', default: 'Annotation'), annotationInstance.id])}"

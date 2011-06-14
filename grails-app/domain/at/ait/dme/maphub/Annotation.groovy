@@ -8,9 +8,8 @@ class Annotation {
   String body
   Date uploadDate
   Date editDate
-  User user
   
-  static belongsTo = [ User, Map ]
+  static belongsTo = [ user : User, map : Map ]
 
 	String serialize() {
 		return mapService.serializeOAC(this)

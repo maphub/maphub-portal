@@ -50,7 +50,9 @@ class MapsetController {
         // TODO set maps from IDs
         def maps = new ArrayList()
         params.mapIds.each() { val ->
-          mapsetInstance.addToMaps(Map.get(val))
+          def map = Map.get(val)
+          mapsetInstance.addToMaps(map)
+          map.mapsets.add(mapsetInstance)
         }
         
         // FIXME http://jira.grails.org/browse/GPSEARCHABLE-60

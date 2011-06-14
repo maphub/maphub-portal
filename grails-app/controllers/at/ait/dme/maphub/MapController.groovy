@@ -65,6 +65,18 @@ class MapController {
         params.totalMaps = maps.totalCount
         [ mapInstanceList : maps, mapInstanceTotal : maps.totalCount, params: params ]
     }
+    
+    def fullscreen = {
+        def mapInstance = Map.get(params.id)
+        if ((!mapInstance) || (!mapInstance.isPublic)) {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'map.label', default: 'Map'), params.id])}"
+            redirect(action: "list")
+        }
+        else {
+            [mapInstance: mapInstance]
+        }
+    }
+
    
     def show = {
         def mapInstance = Map.get(params.id)
@@ -76,6 +88,5 @@ class MapController {
             [mapInstance: mapInstance]
         }
     }
-
 
 }

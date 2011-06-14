@@ -33,7 +33,7 @@
             swfobject.embedSWF("${resource(dir:'',file:'OpenZoomViewer.swf')}", 
         		"viewer",
         		"100%", 
-        		(clientHeight - 410) + "px",
+        		(clientHeight - 600) + "px",
         		"9.0.0",
         		false,
         		{ source : "${mapInstance.tilesetUrl}/ImageProperties.xml" },
@@ -43,9 +43,16 @@
         </script>
     </head>
     <body>
+        <div id="viewTypeBox">
+            <strong>View as:</strong> 
+            Default&nbsp;|&nbsp;
+            <g:link action="fullscreen" controller="map" id="${mapInstance.id}">Full Screen</g:link>
+          </div>
+
           <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
-          <div id="detailInfo">
+          <hr>
             <h3>Details</h3>
+          <div id="detailInfo">
             
             <div id="detailInfoFirst">
             <table>
@@ -57,7 +64,7 @@
                   <div class="detailInfoObject"><strong>Uploaded by: </strong> <g:link action="show" controller="profile" id="${mapInstance.user.id}">${mapInstance.user.username}</g:link>&nbsp;<g:rep user="${mapInstance.user}"/>, <prettytime:display date="${mapInstance.uploadDate}" showTime="true" format="HH:mm:ss"/></div>
                 </td>
               </tr>
-<tr>
+              <tr>
                             <td class="left">
                               <div class="detailInfoObject">
                                 <strong>Description:</strong> <markdown:renderHtml>${mapInstance.description}</markdown:renderHtml>
@@ -86,7 +93,14 @@
           </div>
           <div id="annotations">
             <h3>Annotations</h3>
-            <g:link controller="annotation" action="create" params="${[map: mapInstance.id]}">Create a new Annotation</g:link>
+            <p><g:link controller="annotation" action="create" params="${[mapId: mapInstance.id]}">Create a new Annotation ...</g:link></p>
+            <ul>
+            <g:each in="${mapInstance.annotations}" var="annotation">
+              <li><strong><g:link controller="annotation" action="show" id="${annotation.id}">${annotation.title}</g:link></strong>, by 
+              <g:link action="show" controller="profile" id="${annotation.user.id}">${annotation.user.username}</g:link>&nbsp;<g:rep user="${annotation.user}"/>, <prettytime:display date="${annotation.uploadDate}"/>  
+              </li>
+            </g:each>
+            </ul>
           </div>
     </body>
 </html>

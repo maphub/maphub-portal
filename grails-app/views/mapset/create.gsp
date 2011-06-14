@@ -58,7 +58,7 @@
                   <label for="name">Set Name:</label>
                   <g:textField name="name" id="nameInput"/>
                 </p>
-
+<br><br>
                 <p>
                   <label for="description">Set Description:</label>
                   <g:textArea name="description" rows="10" cols="60"/>
