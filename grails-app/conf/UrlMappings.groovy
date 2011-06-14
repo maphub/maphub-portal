@@ -25,6 +25,19 @@ class UrlMappings {
       action = "show"
     }
     */
+    
+/*  
+    This doesn't work. Enable it and go to /map/browse. Why?
+    "/map/$id" {
+      controller = "map"
+      action = "show"
+    }
+*/    
+    "/profile/$id" {
+      controller = "profile"
+      action = "show"
+    }
+    
     // General route
 
     "/$controller/$action?/$id?"{
