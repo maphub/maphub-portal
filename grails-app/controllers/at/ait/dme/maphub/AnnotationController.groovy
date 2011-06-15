@@ -15,7 +15,7 @@ class AnnotationController {
       params.offset = params?.offset?.toInteger() ?: 0
       params.sort = params?.sort ?: "uploadDate"
       params.order = params?.order ?: "desc"
-    
+      
       def annotations = Annotation.createCriteria().list(max: params.max, offset: params.offset, sort: params.sort, order: params.order) {}
       
       [ annotationInstanceList : annotations, params: params, annotationInstanceTotal : annotations.totalCount ]

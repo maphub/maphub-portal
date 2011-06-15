@@ -7,6 +7,7 @@ class Map {
   String description
 	Integer views
   Date uploadDate
+  Date editDate
   Date mapDate
 	Boolean isPublic
 	User user

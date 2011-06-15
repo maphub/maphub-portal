@@ -47,8 +47,8 @@
             <strong>View as:</strong> 
             Default&nbsp;|&nbsp;
             <g:link action="fullscreen" controller="map" id="${mapInstance.id}">Full Screen</g:link>
-          </div>
-
+          </div><br><br>
+          <h1>${mapInstance.name}</h1>
           <div id="viewer">Whoops, you don't seem to have Flash installed.</div>
           <hr>
             <h3>Details</h3>

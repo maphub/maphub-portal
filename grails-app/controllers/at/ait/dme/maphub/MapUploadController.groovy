@@ -14,6 +14,7 @@ class MapUploadController {
 			def createdMap = new Map(params)
 
 			createdMap.uploadDate = new Date()
+			createdMap.editDate = new Date()
 			// createdMap.mapDate = new Date()
 			def user = springSecurityService.getCurrentUser()
 			createdMap.user = user
