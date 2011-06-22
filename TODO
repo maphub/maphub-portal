@@ -1,27 +1,22 @@
-TODO
-====
+# TODO
 
-- New Model: Annotation. Associate Annotation to Map. Fields: Text, Replies
+### Annotations
 
-- Bugfix for parameters like &user=1, &set=1 in MapController
+### Editing
 
-- Edit sets (same code as for creating)
-
+- Edit sets (same code as for creating), see if it already works?
 - Edit maps
 
+### Browsing
+
+- Bugfix for parameters like &user=1, &set=1 in MapController
 - add functionality to browse maps by set (just add another parameter)
-
 - add functionality to browse maps by user
-
 - enable password editing for user profile
 
-NICE-TO-HAVE:
-=============
+# NICE-TO-HAVE:
 
 - maybe make the "year" field not a selection but a keyboard input field with 4 digits
-
 - add openID/oauth support
-
 - AJAX stuff (username check, map upload: check if tileset is provided)
-
 - Map file upload and tiling
