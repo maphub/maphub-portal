@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @map.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @map.description %>
+</p>
+
+<p>
+  <b>Tileset url:</b>
+  <%= @map.tileset_url %>
+</p>
+
+<p>
+  <b>Views:</b>
+  <%= @map.views %>
+</p>
+
+<p>
+  <b>Upload date:</b>
+  <%= @map.upload_date %>
+</p>
+
+<p>
+  <b>Edit date:</b>
+  <%= @map.edit_date %>
+</p>
+
+<p>
+  <b>Map date:</b>
+  <%= @map.map_date %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%= @map.public %>
+</p>
+
+
+<%= link_to 'Edit', edit_map_path(@map) %> |
+<%= link_to 'Back', maps_path %>

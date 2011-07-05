@@ -8,7 +8,81 @@
 </head>
 <body>
 
-<%= yield %>
+<div id="search">
+  <!-- TODO: search -->
+</div>
+
+<div id="usertools">
+  <% if not user_signed_in? %>
+      <%= link_to 'Log in', new_user_session_path %> |
+      <%= link_to 'Sign up', new_user_registration_path %>
+  <% end %>
+  <% if user_signed_in? -%>
+      <div id="user_login_box" style="float:right">
+        <%= current_user.username %> |
+        <%= link_to 'My info', edit_user_registration_path %> |
+        <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+      </div>
+  <% end -%>
+  <% if admin_signed_in? -%>
+      <div id="admin_login_box" style="float:right">
+        <%= current_admin.username %> |
+        <%= link_to 'Admin Area', admins_path %> |
+        <%= link_to 'Sign out', destroy_admin_session_path %>
+      </div>
+  <% end -%>  
+</div>
+
+<!-- Header text/logo -->
+<div id="header">
+  <%= link_to 'MapHub', home_index_path %>
+</div>
+
+<!-- Navigation -->
+<div id="navigation">
+  <ul>
+    <li><%= link_to 'Home', home_index_path %></li>
+    <li><%= link_to 'Maps', maps_path %></li>
+    <li><%= link_to 'Collections', collections_path %></li>
+    <li><%= link_to 'Annotations', annotations_path %></li>
+    <li><%= link_to 'Users', users_path %></li>
+    <% if user_signed_in? -%>
+      <li class="right"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
+      <li class="right"><g:link action="index" controller="mapManage">Manage Maps/Sets</g:link></li>
+    <% end -%>
+  </ul>
+</div>
+
+<!-- Main contents -->
+<div id="main">
+  
+  <% if not notice.nil? %>
+  <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if not alert.nil? %>
+  <p class="alert"><%= alert %></p>
+  <% end %>
+  <%= yield %>
+
+</div>
+
+<!-- Footer -->
+<div id="footer">
+  <div>
+    <div id="about">
+    <h3>About MapHub</h3>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </div> <!-- end about -->
+  
+  <div id="links">
+    <h3>Useful Links</h3>
+    <ul>
+      <li>Help</li>
+      <li>Contact</li>
+      <li>Terms Of Service</li> 
+    </ul>
+  </div> <!-- end links -->
+</div> <!-- end footer div -->
 
 </body>
 </html>

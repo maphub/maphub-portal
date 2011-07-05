@@ -1,4 +1,33 @@
 MaphubPortal::Application.routes.draw do
+
+  devise_for :users, :admins
+
+  resources :annotations
+  
+  resources :collections do
+    resources :maps
+  end
+  
+  resources :maps do
+    resources :annotations
+    resources :collections
+  end
+  
+  resources :users do
+    resources :maps
+    resources :annotations
+    resources :collections
+  end
+  
+  get "home/index"
+  
+  # deactivate a user (the controller will check that you can only deactivate yourself)
+  match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
+  
+  namespace 'admin' do 
+    resources :maps, :collections, :users, :annotations
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +77,7 @@ MaphubPortal::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "home#index"
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,29 @@
+<% if not user_signed_in? %>
+
+<div id="introduction"></div>
+
+  <blockquote>
+  MapHub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
+  </blockquote>
+
+  <div class="pseudoButton" style="float:left;"><%= link_to 'Log in', new_user_session_path %></div>
+  <div class="pseudoButton" style="float:left;"><%= link_to 'Sign up', new_user_registration_path %></div>
+
+<% else %>
+
+  <h1>Welcome back to MapHub!</h1>
+        
+  <h2>What's new</h2>
+  <blockquote>
+  MapHub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
+  </blockquote>
+  
+  <div style="width: 45%; float:left;">
+    <h2>Recently uploaded Maps</h2>
+  </div>
+  <div style="width: 45%; float:right;">
+    <h2>Recently created Annotations</h2>
+  </div>
+
+
+<% end %>

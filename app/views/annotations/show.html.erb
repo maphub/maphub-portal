@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @annotation.title %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @annotation.body %>
+</p>
+
+<p>
+  <b>Creation date:</b>
+  <%= @annotation.creation_date %>
+</p>
+
+<p>
+  <b>Edit date:</b>
+  <%= @annotation.edit_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_annotation_path(@annotation) %> |
+<%= link_to 'Back', annotations_path %>
