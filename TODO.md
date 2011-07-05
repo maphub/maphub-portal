@@ -1,3 +1,8 @@
+- Clean up controllers:
+  - adding new maps
+  - adding collections with maps
+  - adding annotations to map
+
 - Porting views (show):
   - show maps
   - show collections
@@ -7,13 +12,12 @@
   - browse maps
   - browse collections
   - browse annotations
-
-- Porting controllers:
-  - adding maps
-  - adding collections
-  - adding annotations
+  - add various viewing methods (list/coverflow)
   
 - Admin interface
   - administrate users
   - administrate annotations
   - administrate maps
+
+- Security
+  - secure controllers
