@@ -70,7 +70,7 @@ input:focus, select:focus, textarea:focus {
 .pseudoButton {
   background-color: #069;
   display: block;
-  width:100px;
+  width:150px;
 	border-radius: 22px;
 	-moz-border-radius: 22px;
   -webkit-border-radius: 22px;
@@ -177,7 +177,7 @@ input:focus, select:focus, textarea:focus {
 
 #main {
   padding-top: 40px;
-	padding-bottom: 30px;
+	padding-bottom: 200px; /*Compensate for footer*/
 	min-height: 600px;
 }
 
@@ -192,8 +192,7 @@ input:focus, select:focus, textarea:focus {
   /*background-color:#ddd;*/
   display:block;
   width: auto;
-  padding-right:15px;
-  padding-left:15px;
+  
   padding-top:10px;
   padding-bottom:10px;
   /* Border-radius not implemented yet */
@@ -320,6 +319,7 @@ input:focus, select:focus, textarea:focus {
 	width: 100%;
 	background: #222;
 	font-size:11px;
+	height:150px;
 }
 
 #footer div {
@@ -425,7 +425,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .userInfoTableContainer {
-  height: 150px;
+
 }
 
 .userInfoTable {
@@ -478,17 +478,17 @@ blockquote {
 
 /* MESSAGES AND ERRORS */
 
-/*.MESSAGE {
+.message {
     background: #f3f8fc url(../images/skin/information.png) 8px 50% no-repeat;
     border: 1px solid #b2d1ff;
     color: #006dba;
-    margin: 10px 0 10px 0;
+    /*margin: 10px 0 10px 0;*/
     padding: 10px;
     padding-left: 40px;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-}*/
+}
 
 /*.ERROR, {
     background: #fff3f3;

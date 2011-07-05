@@ -1,1 +1,69 @@
-<h1>User Profile</h1>
+
+<% if current_user.id == @user.id %>
+        <div id="userBox">
+          Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
+          <%= link_to 'Edit your profile', edit_user_registration_path %>
+        </div>        
+<% end %>
+
+      <h1><%= @user.username %></h1>
+      
+      <div class="userAvatarLarge">
+        <!-- TODO insert avatar -->
+      </div>
+      <div class="userInfoTableContainer">
+        <table class="userInfoTable">
+          <tr>
+            <td class="firstCol">Joined:</td>
+            <td><%= @user.created_at %></td>
+          </tr>
+          <tr>
+            <td class="firstCol">Last seen:</td>
+            <td><%= @user.last_sign_in_at %></td>
+          </tr>
+          <tr>
+            <td class="firstCol">Maps:</td>
+            <td><%= @user.maps.count %></td>
+          </tr>
+          <tr>
+            <td class="firstCol">Collections:</td>
+            <td><%= @user.collections.count %></td>
+          </tr>
+          <tr>
+            <td class="firstCol">Annotations:</td>
+            <td><%= @user.annotations.count %></td>
+          </tr>
+          <tr>
+            <td class="firstCol">About <%= @user.username %>:</td>
+            <td>
+              <% if current_user.id == @user.id %>
+                <div class="message">
+                  Here could be a text about you! Why not <%= link_to 'edit your profile', edit_user_registration_path %> and add something interesting?
+                </div>
+              <% else %>
+                <h2>About myself</h2>
+              <div class="aboutMyself">
+                <%= @user.description %>
+              </div>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <hr>
+      
+      <div style="width: 45%; float:left;">
+        <h2>Maps</h2>
+        <ul>
+          <!-- TODO list of maps -->
+        </ul>
+      </div>
+      <div style="width: 45%; float:left;">
+        <h2>Collections</h2>
+        <ul>
+          <!-- TODO list of collections -->
+        </ul>
+      </div>
+
+      <br style="clear:both;">
+      

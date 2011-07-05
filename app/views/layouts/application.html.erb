@@ -19,8 +19,8 @@
   <% end %>
   <% if user_signed_in? -%>
       <div id="user_login_box" style="float:right">
-        <%= current_user.username %> |
-        <%= link_to 'My info', edit_user_registration_path %> |
+        Welcome, <%= link_to current_user.username, current_user %> |
+        <%= link_to 'Edit Account', edit_user_registration_path %> |
         <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
       </div>
   <% end -%>
@@ -47,8 +47,7 @@
     <li><%= link_to 'Annotations', annotations_path %></li>
     <li><%= link_to 'Users', users_path %></li>
     <% if user_signed_in? -%>
-      <li class="right"><g:link action="index" controller="mapUpload">Upload Map</g:link></li>
-      <li class="right"><g:link action="index" controller="mapManage">Manage Maps/Sets</g:link></li>
+      <li class="right"><%= link_to 'Upload Map', new_map_path %></li>
     <% end -%>
   </ul>
 </div>

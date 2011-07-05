@@ -19,11 +19,14 @@ MaphubPortal::Application.routes.draw do
     resources :collections
   end
   
+  # default homepage
   get "home/index"
+  root :to => "home#index"
   
   # deactivate a user (the controller will check that you can only deactivate yourself)
   match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
   
+  # administrator namespace (create separate controllers for these!)
   namespace 'admin' do 
     resources :maps, :collections, :users, :annotations
   end
@@ -74,10 +77,6 @@ MaphubPortal::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => "home#index"
 
   # See how all your routes lay out with "rake routes"
 

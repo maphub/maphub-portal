@@ -53,6 +53,11 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
     t.datetime "updated_at"
   end
 
+  create_table "collections_maps", :id => false, :force => true do |t|
+    t.integer "collection_id"
+    t.integer "map_id"
+  end
+
   create_table "maps", :force => true do |t|
     t.string   "title",                      :null => false
     t.text     "description"

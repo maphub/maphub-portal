@@ -1,45 +1,44 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @map.title %>
-</p>
+<h1><%= @map.title %></h1>
 
-<p>
-  <b>Description:</b>
-  <%= @map.description %>
-</p>
+<div id="viewer">
+  <img src="<%= @map.tileset_url %>/TileGroup0/0-0-0.jpg"/>
+</div>
 
-<p>
-  <b>Tileset url:</b>
-  <%= @map.tileset_url %>
-</p>
+<hr>
 
-<p>
-  <b>Views:</b>
-  <%= @map.views %>
-</p>
+<div id="detailInfo">
+  <div id="detailInfoFirst">
+  <table>
+    <tr>
+      <td class="left">
+        <div class="detailInfoObject"><strong>Title:</strong> <%= @map.title %></div>
+      </td>
+      <td class="right">
+        <div class="detailInfoObject"><strong>Uploaded by: </strong> <%= link_to "#{@map.user.username}", @map.user %></div>
+      </td>
+    </tr>
+    <tr>
+                  <td class="left">
+                    <div class="detailInfoObject">
+                      <strong>Description:</strong>
+                      <%= @map.description %>
+                    </div>
+                  </td>
+                  <td class="right">
+                    <div class="detailInfoObject "> </div>
+                  </td>
+                </tr>  
+  </table>
+  </div>
+</div>
 
-<p>
-  <b>Upload date:</b>
-  <%= @map.upload_date %>
-</p>
-
-<p>
-  <b>Edit date:</b>
-  <%= @map.edit_date %>
-</p>
-
-<p>
-  <b>Map date:</b>
-  <%= @map.map_date %>
-</p>
-
-<p>
-  <b>Public:</b>
-  <%= @map.public %>
-</p>
-
-
-<%= link_to 'Edit', edit_map_path(@map) %> |
-<%= link_to 'Back', maps_path %>
+<div id="annotations">
+  <div class="pseudoButton"><%= link_to "Create a new annotation", new_annotation_path %></div>
+  <ul>
+    <% for annotation in @map.annotations %>
+      <li><%= link_to annotation.title, annotation %></li>
+    <% end %>
+  </ul>
+</div>
