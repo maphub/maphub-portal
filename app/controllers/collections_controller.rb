@@ -1,6 +1,9 @@
 class CollectionsController < ApplicationController
+
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   # GET /collections
-  # GET /collections.xml
+  # GET /collections.xml  
   def index
     @collections = Collection.all
 

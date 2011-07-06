@@ -1,4 +1,7 @@
-<p id="notice"><%= notice %></p>
+<h1>Annotation</h1>
+
+<%= render :partial => 'maps/thumbnail', :locals => { :map => @annotation.map } %>
+<br style="clear:both">
 
 <p>
   <b>Title:</b>
@@ -20,5 +23,8 @@
   <%= @annotation.edit_date %>
 </p>
 
-
-<div class="pseudoButton"><%= link_to 'Edit', edit_annotation_path(@annotation) %></div>
+<% if current_user == @annotation.user %>
+<div class="pseudoButton">
+<%= link_to 'Edit', edit_annotation_path(@annotation) %>
+</div>
+<% end %>

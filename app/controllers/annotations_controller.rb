@@ -1,4 +1,7 @@
 class AnnotationsController < ApplicationController
+
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   # GET /annotations
   # GET /annotations.xml
   def index
@@ -23,9 +26,10 @@ class AnnotationsController < ApplicationController
 
   # GET /annotations/new
   # GET /annotations/new.xml
+  # GET /maps/:map_id/annotations/new
   def new
-    @annotation = Annotation.new
-
+    @map = Map.find(params[:map_id])
+    @annotation = @map.annotations.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @annotation }
@@ -41,7 +45,11 @@ class AnnotationsController < ApplicationController
   # POST /annotations.xml
   def create
     @annotation = Annotation.new(params[:annotation])
-
+    @annotation.creation_date = DateTime.now
+    @annotation.edit_date = DateTime.now
+    @annotation.user = current_user
+    @annotation.map = Map.find(params[:map_id])
+    
     respond_to do |format|
       if @annotation.save
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
@@ -57,7 +65,7 @@ class AnnotationsController < ApplicationController
   # PUT /annotations/1.xml
   def update
     @annotation = Annotation.find(params[:id])
-
+    @annotation.edit_date = DateTime.now
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully updated.') }

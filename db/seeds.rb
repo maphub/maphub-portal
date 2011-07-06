@@ -17,23 +17,28 @@ end
 
 
 puts "Creating users ..."
-User.create do |a|
-  a.username = 'user'
-  a.password = 'test'
-  a.password_confirmation = 'test'
-  a.email = 'user@example.com'
+for i in 1..10 do
+  User.create do |a|
+    a.username = "user#{i}"
+    a.password = 'test'
+    a.password_confirmation = 'test'
+    a.email = "user#{i}@example.com"
+  end
+  puts "Created user #{i}"
 end
-
 
 # Create example maps
 puts "Creating maps ..."
 
 map_ids = File.open("#{::Rails.root.to_s}/db/map-ids.txt")
 map_ids.each_with_index do |id, index|
+  break if index == 30
   Map.create do |map|
     map.title = "Map #{index+1}"
     map.description = "This is a sample description"
     map.tileset_url = "http://europeana.mminf.univie.ac.at/maps/#{id}"
+    map.creation_date = DateTime.now
     map.user = User.first
   end
+  puts "Created map #{index+1}"
 end

@@ -59,11 +59,11 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
   end
 
   create_table "maps", :force => true do |t|
-    t.string   "title",                      :null => false
+    t.string   "title",                        :null => false
     t.text     "description"
     t.string   "tileset_url"
-    t.integer  "views",       :default => 0
-    t.datetime "upload_date"
+    t.integer  "views",         :default => 0
+    t.datetime "creation_date"
     t.datetime "edit_date"
     t.datetime "map_date"
     t.boolean  "public"

@@ -1,7 +1,7 @@
 <%= form_for(@map) do |f| %>
   <% if @map.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being saved:</h2>
+      <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being uploaded:</h2>
 
       <ul>
       <% @map.errors.full_messages.each do |msg| %>
@@ -13,19 +13,15 @@
 
   <div class="field">
     <%= f.label :title %><br />
-    <%= f.text_field :title %>
+    <%= f.text_field :title, :size => 50 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :tileset_url %><br />
-    <%= f.text_field :tileset_url %>
-  </div>
-  <div class="field">
-    <%= f.label :views %><br />
-    <%= f.text_field :views %>
+    <%= label_tag :tileset_url, "URL of the Zoomify Tileset" %><br />
+    <%= f.text_field :tileset_url, :size => 120 %>
   </div>
   <div class="field">
     <%= f.label :map_date %><br />

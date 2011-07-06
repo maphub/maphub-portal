@@ -5,7 +5,7 @@ one:
   description: MyText
   tileset_url: MyString
   views: 1
-  upload_date: 2011-07-05
+  creation_date: 2011-07-05
   edit_date: 2011-07-05
   map_date: 2011-07-05
   public: false
@@ -15,7 +15,7 @@ two:
   description: MyText
   tileset_url: MyString
   views: 1
-  upload_date: 2011-07-05
+  creation_date: 2011-07-05
   edit_date: 2011-07-05
   map_date: 2011-07-05
   public: false

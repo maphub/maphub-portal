@@ -1,0 +1,7 @@
+<div class="singleMapContainer">
+    <div class="singleMapInfo">
+      <%= link_to map.title, map %><br>
+      <%= map.creation_date %>, by <%= link_to map.user.username, map.user %>
+    </div>
+    <%= link_to image_tag(map.thumbnail_url), map %>
+</div>

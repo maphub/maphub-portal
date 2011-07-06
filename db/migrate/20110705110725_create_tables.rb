@@ -8,7 +8,7 @@ class CreateTables < ActiveRecord::Migration
       t.text :description
       t.string :tileset_url
       t.integer :views, :default => 0
-      t.datetime :upload_date
+      t.datetime :creation_date
       t.datetime :edit_date
       t.datetime :map_date
       t.boolean :public

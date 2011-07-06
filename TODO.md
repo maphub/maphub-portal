@@ -1,12 +1,8 @@
-- Clean up controllers:
-  - adding new maps
+*- Clean up controllers:
   - adding collections with maps
-  - adding annotations to map
 
 - Porting views (show):
-  - show maps
   - show collections
-  - show annotations
 
 - Porting views (browsing):
   - browse maps

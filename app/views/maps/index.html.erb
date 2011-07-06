@@ -1,37 +1,8 @@
 <h1>Maps</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Tileset url</th>
-    <th>Views</th>
-    <th>Upload date</th>
-    <th>Edit date</th>
-    <th>Map date</th>
-    <th>Public</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+<div class="mapList">
 <% @maps.each do |map| %>
-  <tr>
-    <td><%= map.title %></td>
-    <td><%= map.description %></td>
-    <td><%= map.tileset_url %></td>
-    <td><%= map.views %></td>
-    <td><%= map.upload_date %></td>
-    <td><%= map.edit_date %></td>
-    <td><%= map.map_date %></td>
-    <td><%= map.public %></td>
-    <td><%= link_to 'Show', map %></td>
-    <td><%= link_to 'Edit', edit_map_path(map) %></td>
-    <td><%= link_to 'Destroy', map, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <%= render :partial => "thumbnail", :locals => { :map => map } %>
 <% end %>
-</table>
-
-<br />
-
+</div>
 <div class="pseudoButton"><%= link_to 'Upload Map', new_map_path %></div>
