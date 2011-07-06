@@ -21,6 +21,12 @@ class UsersController < ApplicationController
       end
     end
     
+    # Updates the user's description
+    def update
+      @user = User.find(params[:id])
+      @user.update_attributes params[:user]
+    end
+    
     # Deactivates the user and logs them out
     def deactivate
       

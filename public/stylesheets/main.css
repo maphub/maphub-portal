@@ -177,7 +177,7 @@ input:focus, select:focus, textarea:focus {
 
 #main {
   padding-top: 40px;
-	padding-bottom: 200px; /*Compensate for footer*/
+	padding-bottom: 50px; /*Compensate for footer*/
 	min-height: 600px;
 }
 
@@ -313,57 +313,42 @@ input:focus, select:focus, textarea:focus {
 /* FOOTER */
 
 #footer {
-	position: fixed;
-	bottom:0px;
-	left: 0;
-	width: 100%;
-	background: #222;
-	font-size:11px;
-	height:150px;
+  position: fixed;
+  bottom:0px;
+  left: 0;
+  width: 100%;
+  background: url("../images/nav_background.png");
+  font-size:11px;
+  height:30px;
+  color: #ccc;
 }
 
 #footer div {
-	margin: 0 auto;
-	padding: 0;
-	width: 1000px;
+  margin: 0 auto;
+  padding: 5px 0 5px 0;
+  width: 1000px;
+}
+#footer h3 {
+  color: #fff;
 }
 
-	#footer div div {
-		margin: 0 auto;
-		padding: 30px 0 30px;
-		width: 480px;
-		color: #999;
-	}
-	
-	#footer #about {
-		float: left;
-	}
-	
-	#footer #links {
-		float: right;
-	}
-		
-	#footer h3 {
-		color: #FFF;
-	}
-	
-	#footer a {
-		color: #aaa;
-	}
-	
-  #footer a:hover {
-      color: #FFF;
-      text-decoration: none;
-    }
-	
-	#footer ul {
-		list-style: square;
-		color: #565656;
-	}
-	
-		#footer ul li a {
-			display: block;
-		}
+#footer a {
+  color: #aaa;
+}
+
+#footer a:hover {
+  color: #FFF;
+  text-decoration: none;
+}
+
+#footer ul {
+  list-style: square;
+  color: #565656;
+}
+
+#footer ul li a {
+  display: block;
+}
 
 
 /* MAP AND USER LISTING */
@@ -424,26 +409,36 @@ input:focus, select:focus, textarea:focus {
   float: right;
 }
 
-.userInfoTableContainer {
-
+#userInfoContainer {
+/*  padding-bottom:10px;*/
 }
 
-.userInfoTable {
+#userInfoTable {
   width: 400px;
+  float: left;
 }
 
-.userInfoTable .firstCol {
+#userInfoText {
+  width: 400px;
+  min-height:120px;
+  float: right;
+  background-color:#eee;
+  padding:5px;
+  
+}
+
+#userInfoTable .firstCol {
   font-weight: bold;
   width: 100px;
 }
 
-.aboutMyself {
-  border: 1px solid #333;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  padding: 5px;
-  background-color: #eee;
+#aboutMyself {
+  /*border: 1px solid #333;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 5px;
+    background-color: #eee;*/
 }
 
 /* CODE VIEW */
@@ -524,7 +519,7 @@ blockquote {
 }
 
 .todo, .notice {
-  background-color: #eed;
+  background-color: #ffe;
   border: 1px solid yellow;
   color: black;
   margin: 10px 0 10px 0;
@@ -654,18 +649,13 @@ th.desc a {
 
 /* GENERIC FORMS */
 
-form br {
-  clear: both;
+
+input {
+  line-height:200%;
 }
 
-.genericForm label {
-	float: left;
-	width: 250px;
-}
-
-.genericForm input {
-	float: left;
-	
+input:focus {
+  background-color: #ffe;
 }
 
 /* LOGIN AND REGISTER FORM */

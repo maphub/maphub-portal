@@ -1,9 +1,22 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".edit_user").hide();
+    
+    // If the "Edit your description button" is clicked
+    $("#toggleForm").click(function(){
+      $('#aboutMyself').hide();
+      $(".edit_user").slideDown();
+      $("#user_about_me").focus();
+    });
+
+  });
+</script>
 
 <% if current_user.id == @user.id %>
         <div id="userBox">
           Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
-          <%= link_to 'Edit your profile', edit_user_registration_path %>
-        </div>        
+          <a href="#" id="toggleForm">Edit your description</a>
+        </div>
 <% end %>
 
       <h1><%= @user.username %></h1>
@@ -11,8 +24,9 @@
       <div class="userAvatarLarge">
         <!-- TODO insert avatar -->
       </div>
-      <div class="userInfoTableContainer">
-        <table class="userInfoTable">
+      
+      <div id="userInfoContainer">
+        <table id="userInfoTable">
           <tr>
             <td class="firstCol">Joined:</td>
             <td><%= @user.created_at %></td>
@@ -33,23 +47,25 @@
             <td class="firstCol">Annotations:</td>
             <td><%= @user.annotations.count %></td>
           </tr>
-          <tr>
-            <td class="firstCol">About <%= @user.username %>:</td>
-            <td>
-              <% if current_user.id == @user.id %>
-                <div class="message">
-                  Here could be a text about you! Why not <%= link_to 'edit your profile', edit_user_registration_path %> and add something interesting?
-                </div>
-              <% else %>
-                <h2>About myself</h2>
-              <div class="aboutMyself">
-                <%= @user.description %>
-              </div>
-              <% end %>
-            </td>
-          </tr>
         </table>
+        
+        <div id="userInfoText">
+          <% if current_user.id == @user.id %>
+            <!-- Display form if this is our own page -->
+            <%= form_for @user, :remote => true do |f| %>
+            <%= f.text_area :about_me, :cols => 55, :rows => 10  %><br>
+            <%= f.submit "Update" %>
+            <% end %>
+          <% end %>
+              
+          <div id="aboutMyself">
+            <%= @user.about_me %>
+          </div>
+        </div>
+        <br style="clear:both;">
       </div>
+      
+      <br>
       <hr>
       
       <div style="width: 45%; float:left;">

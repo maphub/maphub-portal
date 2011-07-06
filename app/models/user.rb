@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :fullname, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :fullname, :username, :email, :password, :password_confirmation, :remember_me, :about_me
   
   # Default scope (inactive users are filtered out)
   default_scope :conditions => {:deleted_at => nil}

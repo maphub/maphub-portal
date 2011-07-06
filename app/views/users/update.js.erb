@@ -1,0 +1,5 @@
+// This JavaScript is executed when the #update controller method finishes
+
+$("#aboutMyself").text("<%= escape_javascript(@user.about_me) %>");
+$(".edit_user").slideUp();
+$("#aboutMyself").show();

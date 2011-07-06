@@ -6,10 +6,10 @@
   <p><%= f.label :username %><br />
   <%= f.text_field :username %></p>
 
-  <p><%= f.label :email %><br />
+  <p><%= f.label 'Email' %> <i>(this will only be visible to you!)</i><br />
   <%= f.email_field :email %></p>
   
-  <p><%= f.label 'Full Name (optional)' %><br />
+  <p><%= f.label 'Full Name' %> <i>(optional)</i><br />
   <%= f.text_field :fullname %></p>
 
   <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
@@ -24,6 +24,4 @@
   <p><%= f.submit "Update" %></p>
 <% end %>
 
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
+<p>Unhappy with your account? <%= link_to "Cancel user account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
