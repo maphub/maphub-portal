@@ -26,6 +26,11 @@
       </div>
       
       <div id="userInfoContainer">
+        
+        <div id="userImage">
+          <%= image_tag(@user.gravatar_url(:size => 120)) %>
+        </div>
+        
         <table id="userInfoTable">
           <tr>
             <td class="firstCol">Joined:</td>

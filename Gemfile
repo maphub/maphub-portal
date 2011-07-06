@@ -9,6 +9,7 @@ gem 'devise'
 gem 'jquery-rails', '>= 1.0.3'
 gem 'sqlite3'
 gem 'yaml_db'
+gem 'gravtastic'
 
 # Use unicorn as the web server
 # gem 'unicorn'

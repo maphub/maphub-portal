@@ -356,14 +356,14 @@ input:focus, select:focus, textarea:focus {
 .mapList, .userList {
   overflow: hidden;
   color: #333;
-	width: 100%;
-	font-size: 11px;
-	padding-top: 15px;
+  width: 100%;
+  font-size: 11px;
+  padding-top: 15px;
 }
 
 .singleMapContainer {
   min-width: 245px;
-  min-height:270px;
+  min-height:290px;
   float:left;
   border-radius: 10px;
   -moz-border-radius: 10px;
@@ -380,19 +380,36 @@ input:focus, select:focus, textarea:focus {
 
 .singleUserContainer {
   width: 190px;
-  height: 60px;
+  height: 50px;
   float: left;
+  overflow: hidden;
+  margin-bottom:10px;
 }
 
+.singleUserContainer img {
+  display: block;
+  float:left;
+}
+
+.singleUserContainer .userInfo {
+  width: 100px;
+  float:left;
+  padding-left:5px;
+}
+
+
+/* Info about a map (title, uploaded, etc)*/
 .singleMapContainer .singleMapInfo {
   text-align: center;
 }
 
+/* The map thumbnail */
 .singleMapContainer img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
+
 
 /* USER INFO DETAIL STYLING */
 
@@ -400,13 +417,9 @@ input:focus, select:focus, textarea:focus {
   font-weight: bold;
 }
 
-.userAvatarSmall {
+#userImage {
+  width: 150px;
   float: left;
-  padding-right: 5px;
-}
-
-.userAvatarLarge {
-  float: right;
 }
 
 #userInfoContainer {
@@ -430,15 +443,6 @@ input:focus, select:focus, textarea:focus {
 #userInfoTable .firstCol {
   font-weight: bold;
   width: 100px;
-}
-
-#aboutMyself {
-  /*border: 1px solid #333;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    padding: 5px;
-    background-color: #eee;*/
 }
 
 /* CODE VIEW */

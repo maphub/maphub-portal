@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   default_scope :conditions => {:deleted_at => nil}
   
    # Unique attributes
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :email
   
   # Hooks
   after_create :send_sign_up_notification
@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
   has_many :collections
   has_many :annotations
   
+  # Gravatars
+  include Gravtastic
+  gravtastic :size => 40, :default => "identicon"
   
   def self.find_with_destroyed *args
     self.with_exclusive_scope { find(*args) }

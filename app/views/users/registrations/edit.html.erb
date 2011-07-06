@@ -1,7 +1,9 @@
-<h2>Edit my Account Data</h2>
+<h2>Edit your Account Data</h2>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
+
+<h3>Your Data</h3>
 
   <p><%= f.label :username %><br />
   <%= f.text_field :username %></p>
@@ -12,11 +14,19 @@
   <p><%= f.label 'Full Name' %> <i>(optional)</i><br />
   <%= f.text_field :fullname %></p>
 
+<h3>Change Password</h3>
+
   <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
   <%= f.password_field :password %></p>
 
   <p><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></p>
+
+<h3>Your Avatar</h3>
+
+  <p>We don't host our own avatars. If you haven't done so yet, register with <a href="http://gravatar.com">Gravatar</a>. We will then show your Gravatar automatically. Simple as that!</p>
+
+<h3>Password Confirmation</h3>
 
   <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
   <%= f.password_field :current_password %></p>
