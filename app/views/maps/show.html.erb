@@ -52,6 +52,7 @@
       <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %> at <%= annotation.edit_date %></li>
     <% end %>
   </ul>
-  
-  <div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div>
+
+  <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p>
+
 </div>

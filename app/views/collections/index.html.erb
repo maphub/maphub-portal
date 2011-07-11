@@ -20,4 +20,6 @@
 
 <br />
 
-<div class="pseudoButton"><%= link_to 'New Collection', new_collection_path %></div>
+<% if user_signed_in? %>
+<div class="pseudoButton"><%= link_to 'Create a new collection', new_collection_path %></div>
+<% end %>
