@@ -1,14 +1,6 @@
-*- Clean up controllers:
-  - adding collections with maps
-
-- Porting views (show):
-  - show collections
-
 - Porting views (browsing):
-  - browse maps
-  - browse collections
-  - browse annotations
   - add various viewing methods (list/coverflow)
+  - add [pagination](https://github.com/mislav/will_paginate)
   
 - Admin interface
   - administrate users
