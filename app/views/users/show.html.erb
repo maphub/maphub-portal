@@ -12,7 +12,7 @@
   });
 </script>
 
-<% if current_user.id == @user.id %>
+<% if @myself %>
         <div id="userBox">
           Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
           <a href="#" id="toggleForm">Edit your description</a>
@@ -41,6 +41,10 @@
             <td><%= @user.last_sign_in_at %></td>
           </tr>
           <tr>
+            <td class="firstCol">Full Name:</td>
+            <td><%= @user.fullname %></td>
+          </tr>
+          <tr>
             <td class="firstCol">Maps:</td>
             <td><%= @user.maps.count %></td>
           </tr>
@@ -55,7 +59,7 @@
         </table>
         
         <div id="userInfoText">
-          <% if current_user.id == @user.id %>
+          <% if @myself %>
             <!-- Display form if this is our own page -->
             <%= form_for @user, :remote => true do |f| %>
             <%= f.text_area :about_me, :cols => 55, :rows => 10  %><br>
@@ -64,7 +68,11 @@
           <% end %>
               
           <div id="aboutMyself">
-            <%= @user.about_me %>
+            <% if @user.about_me.nil? %>
+              <em>This user hasn't entered a description yet.</em>
+            <% else %>
+              <%= @user.about_me %>
+            <% end %>
           </div>
         </div>
         <br style="clear:both;">
@@ -73,18 +81,21 @@
       <br>
       <hr>
       
-      <div style="width: 45%; float:left;">
-        <h2>Maps</h2>
-        <ul>
-          <!-- TODO list of maps -->
-        </ul>
-      </div>
-      <div style="width: 45%; float:left;">
-        <h2>Collections</h2>
-        <ul>
-          <!-- TODO list of collections -->
-        </ul>
-      </div>
-
+      <% if @user.maps.count > 0 %>
+        <div style="width: 45%; float:left;">
+          <h2>Maps</h2>
+          <ul>
+            <!-- TODO list of maps -->
+          </ul>
+        </div>
+      <% end %>
+      <% if @user.collections.count > 0 %>
+        <div style="width: 45%; float:left;">
+          <h2>Collections</h2>
+          <ul>
+            <!-- TODO list of collections -->
+          </ul>
+        </div>
+      <% end %>
       <br style="clear:both;">
       

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
     
+    before_filter :authenticate_user!, :except => [:show, :index]
+    
     # GET /users
     def index
       @users = User.all
@@ -14,7 +16,9 @@ class UsersController < ApplicationController
     # GET /users/1.xml
     def show
       @user = User.find(params[:id])
-
+      unless current_user.nil?
+        @myself = (current_user.id == @user.id) ? true : false
+      end
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @user }
@@ -31,8 +35,10 @@ class UsersController < ApplicationController
     def deactivate
       
       @user = User.find(params[:id])
-      
-      if @user.id != current_user.id
+      unless current_user.nil?
+        @myself = (current_user.id == @user.id) ? true : false
+      end
+      if not @myself
         redirect_to home_index_path, :notice => "You are not allowed to do that"
         return
       end
@@ -40,7 +46,7 @@ class UsersController < ApplicationController
       @user.deactivate
       
       respond_to do |format|
-         format.html { redirect_to destroy_user_session_path, :notice => "Your account was deleted!" }
+         format.html { redirect_to destroy_user_session_path, :notice => "Your account was successfully deleted! Sad to see you go." }
       end
       
     end

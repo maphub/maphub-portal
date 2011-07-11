@@ -1,7 +1,7 @@
 <%= form_for(@map) do |f| %>
   <% if @map.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@map.errors.count, "error") %> prohibited this map from being uploaded:</h2>
+      <h2>There were <%= pluralize(@map.errors.count, "error") %> while creating this Map.</h2>
 
       <ul>
       <% @map.errors.full_messages.each do |msg| %>
@@ -11,26 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
+<p>
     <%= f.label :title %><br />
     <%= f.text_field :title, :size => 50 %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
+</p>
+<p>
+    <%= f.label :description, :class => "slideDown" %> <em>(Click to add one...)</em><br />
+    <%= f.text_area :description, :cols => 80, :class => "hiddenElement" %>
+
+</p
+><p>
     <%= label_tag :tileset_url, "URL of the Zoomify Tileset" %><br />
     <%= f.text_field :tileset_url, :size => 120 %>
-  </div>
-  <div class="field">
+
+</p
+><p>
     <%= f.label :map_date %><br />
     <%= f.date_select :map_date %>
-  </div>
-  <div class="field">
-    <%= f.label :public %><br />
-    <%= f.check_box :public %>
-  </div>
+</p>
+<p>
+    <%= f.label "Should this map be public?" %> 
+    <%= f.check_box :public, :checked => true %>
+</p>
+
   <div class="actions">
     <%= f.submit %>
   </div>

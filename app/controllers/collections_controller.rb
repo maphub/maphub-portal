@@ -28,7 +28,7 @@ class CollectionsController < ApplicationController
   # GET /collections/new.xml
   def new
     @collection = Collection.new
-
+    @collection.user = current_user
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @collection }
@@ -44,7 +44,8 @@ class CollectionsController < ApplicationController
   # POST /collections.xml
   def create
     @collection = Collection.new(params[:collection])
-
+    @collection.creation_date = DateTime.now
+    @collection.edit_date = DateTime.now
     respond_to do |format|
       if @collection.save
         format.html { redirect_to(@collection, :notice => 'Collection was successfully created.') }
@@ -60,7 +61,7 @@ class CollectionsController < ApplicationController
   # PUT /collections/1.xml
   def update
     @collection = Collection.find(params[:id])
-
+    @collection.edit_date = DateTime.now
     respond_to do |format|
       if @collection.update_attributes(params[:collection])
         format.html { redirect_to(@collection, :notice => 'Collection was successfully updated.') }

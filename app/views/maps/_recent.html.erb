@@ -1,0 +1,5 @@
+<ul>
+  <% for map in Map.order("edit_date").limit(10).reverse() %>
+    <li><%= link_to map.title, map %>, by <%= link_to map.user.username, map.user %></li>
+  <% end %>
+</ul>

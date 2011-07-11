@@ -2,7 +2,9 @@
 
 <p>Here you can create a new annotation for this map:</p>
 
-<%= render :partial => 'maps/thumbnail', :locals => { :map => @map } %>
-<br style="clear:both">
-
+<div style="width:45%; float:left;">
 <%= render 'form' %>
+</div>
+<div style="width:45%; float:right;">
+<%= render :partial => 'maps/thumbnail', :locals => { :map => @map } %>
+</div>

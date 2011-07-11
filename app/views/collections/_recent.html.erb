@@ -1,0 +1,5 @@
+<ul>
+  <% for collection in Collection.order("edit_date").limit(10).reverse() %>
+    <li><%= link_to collection.title, collection %>, by <%= link_to collection.user.username, collection.user %></li>
+  <% end %>
+</ul>

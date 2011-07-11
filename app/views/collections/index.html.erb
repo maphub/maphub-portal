@@ -3,25 +3,17 @@
 <table>
   <tr>
     <th>Title</th>
-    <th>Description</th>
-    <th>Creation date</th>
-    <th>Edit date</th>
-    <th>Public</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Maps</th>
+    <th>Created</th>
+    <th>User</th>
   </tr>
 
 <% @collections.each do |collection| %>
   <tr>
-    <td><%= collection.title %></td>
-    <td><%= collection.description %></td>
+    <td><%= link_to collection.title, collection %></td>
+    <td><%= collection.maps.count %></td>
     <td><%= collection.creation_date %></td>
-    <td><%= collection.edit_date %></td>
-    <td><%= collection.public %></td>
-    <td><%= link_to 'Show', collection %></td>
-    <td><%= link_to 'Edit', edit_collection_path(collection) %></td>
-    <td><%= link_to 'Destroy', collection, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to collection.user.username, collection.user %></td>
   </tr>
 <% end %>
 </table>

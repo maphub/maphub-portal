@@ -1,7 +1,7 @@
 <%= form_for([@map, @annotation]) do |f| %>
   <% if @annotation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@annotation.errors.count, "error") %> prohibited this annotation from being saved:</h2>
+      <h2><%= pluralize(@annotation.errors.count, "error") %> while saving this Annotation.</h2>
 
       <ul>
       <% @annotation.errors.full_messages.each do |msg| %>
@@ -11,14 +11,14 @@
     </div>
   <% end %>
   
-  <div class="field">
+<p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
-  </div>
-  <div class="field">
+
+</p><p>
     <%= f.label :body %><br />
     <%= f.text_area :body %>
-  </div>
+</p>
   <div class="actions">
     <%= f.submit %>
   </div>

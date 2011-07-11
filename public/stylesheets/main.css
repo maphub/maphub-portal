@@ -448,11 +448,7 @@ input:focus, select:focus, textarea:focus {
 /* CODE VIEW */
 
 code {
-  border: 1px solid #333;
-  background: #fff;
-  padding:10px;
-  display:block;
-  width:80%;
+
 }
 
 /* CONTENT FLOW */

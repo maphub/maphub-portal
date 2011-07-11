@@ -1,3 +1,19 @@
+<script>
+$(function() {
+  $( "#selectable" ).selectable();
+});
+$(document).ready(function(){
+  
+});
+</script>
+
+<style>
+#selectable .ui-selecting { background: #FECA40; }
+#selectable .ui-selected {   background-color: #5ca7cc; color: white; }
+#selectable { list-style-type: none; margin: 0; padding: 0; }
+</style>
+
+
 <%= form_for(@collection) do |f| %>
   <% if @collection.errors.any? %>
     <div id="error_explanation">
@@ -11,18 +27,49 @@
     </div>
   <% end %>
 
-  <div class="field">
+<p>
     <%= f.label :title %><br />
     <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :public %><br />
-    <%= f.check_box :public %>
-  </div>
+</p>    
+<p>
+    <%= f.label :description, :class => "slideDown" %> <em>(Click to add one...)</em> <br />
+    <%= f.text_area :description, :class => "hiddenElement" %>
+</p>
+    
+    <h3>Select Maps for this Collection</h3>
+    
+    <p>Click or drag across maps to select. Hold <code>Ctrl</code> or <code>Cmd</code> to select multiple)</p>
+    <div class="hiddenElement">
+      
+      <!-- This is hidden until I can figure out how to sync with collection sync -->
+      <ol id="selectable">
+        <% for map in @collection.user.maps %>
+          <li class="ui-state-default, singleMapContainer">
+            <div class="singleMapInfo">
+              <strong><%= map.title %></strong><br>
+              <%= map.creation_date %><br>
+              <%= image_tag(map.thumbnail_url) %>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+      <br style="clear:both;">
+    </div>
+
+<p>
+    <%= collection_select :collection, 
+        :map_ids, 
+        @collection.user.maps, 
+        :id,
+        :title, 
+        { :selected => @collection.map_ids }, { :class => "map_select", :multiple => true, :size => '10', :name => 'collection[map_ids][]' }
+    %>
+</p>
+<p>
+    <%= f.label "Should this collection be public?" %> <i>(Non-public maps will still be hidden)</i>&nbsp;
+    <%= f.check_box :public, :checked => true %>
+</p>
+
   <div class="actions">
     <%= f.submit %>
   </div>
