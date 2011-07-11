@@ -23,6 +23,8 @@ for i in 1..10 do
     a.password = 'test'
     a.password_confirmation = 'test'
     a.email = "user#{i}@example.com"
+    a.location = "Vienna, Austria"
+    a.fullname = "Test User #{i}"
   end
   puts "Created user #{i}"
 end
@@ -38,6 +40,7 @@ map_ids.each_with_index do |id, index|
     map.description = "This is a sample description"
     map.tileset_url = "http://europeana.mminf.univie.ac.at/maps/#{id}"
     map.creation_date = DateTime.now
+    map.edit_date = DateTime.now
     map.user = User.first
   end
   puts "Created map #{index+1}"

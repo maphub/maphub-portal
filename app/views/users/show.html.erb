@@ -28,7 +28,11 @@
       <div id="userInfoContainer">
         
         <div id="userImage">
-          <%= image_tag(@user.gravatar_url(:size => 120)) %>
+          <% if @myself %>
+            <%= link_to image_tag(@user.gravatar_url(:size => 120)), "http://gravatar.com" %>
+          <% else %>
+            <%= image_tag(@user.gravatar_url(:size => 120)) %>
+          <% end %>
         </div>
         
         <table id="userInfoTable">
@@ -40,10 +44,18 @@
             <td class="firstCol">Last seen:</td>
             <td><%= @user.last_sign_in_at %></td>
           </tr>
+          <% unless @user.fullname.nil? or @user.fullname.empty? %>
           <tr>
             <td class="firstCol">Full Name:</td>
             <td><%= @user.fullname %></td>
           </tr>
+          <% end %>
+          <% unless @user.location.nil? or @user.location.empty? %>
+          <tr>
+            <td class="firstCol">Location:</td>
+            <td><%= @user.location %></td>
+          </tr>
+          <% end %>
           <tr>
             <td class="firstCol">Maps:</td>
             <td><%= @user.maps.count %></td>
@@ -62,7 +74,7 @@
           <% if @myself %>
             <!-- Display form if this is our own page -->
             <%= form_for @user, :remote => true do |f| %>
-            <%= f.text_area :about_me, :cols => 55, :rows => 10  %><br>
+            <%= f.text_area :about_me, :cols => 55, :rows => 10 %><br>
             <%= f.submit "Update" %>
             <% end %>
           <% end %>
@@ -84,17 +96,13 @@
       <% if @user.maps.count > 0 %>
         <div style="width: 45%; float:left;">
           <h2>Maps</h2>
-          <ul>
-            <!-- TODO list of maps -->
-          </ul>
+          <%= render :partial => "maps/grid", :locals => { :maps => @user.maps.limit(18) } %>
         </div>
       <% end %>
       <% if @user.collections.count > 0 %>
         <div style="width: 45%; float:left;">
           <h2>Collections</h2>
-          <ul>
-            <!-- TODO list of collections -->
-          </ul>
+          <%= render :partial => "collections/recent", :locals => { :user => @user, :limit => 10 } %>
         </div>
       <% end %>
       <br style="clear:both;">

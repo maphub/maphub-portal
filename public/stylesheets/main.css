@@ -410,6 +410,22 @@ input:focus, select:focus, textarea:focus {
   margin-right: auto;
 }
 
+,mapGrid {
+  ;
+}
+
+.mapGridImage {
+  float:left;
+  width:65px;
+  height:65px;
+  overflow:hidden;
+  border: 2px solid white;
+}
+
+.mapGridImage:hover {
+  border: 2px solid #006699;
+}
+
 
 /* USER INFO DETAIL STYLING */
 

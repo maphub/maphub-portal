@@ -11,8 +11,11 @@
   <p><%= f.label 'Email' %> <i>(this will only be visible to you!)</i><br />
   <%= f.email_field :email %></p>
   
-<%= f.label 'Full Name' %> <em>(optional, will be displayed in your profile)</em><br />
+  <p><%= f.label 'Full Name' %><br />
   <%= f.text_field :fullname %></p>
+  
+  <p><%= f.label :Location %><br />
+  <%= f.text_field :location %></p>
 
 <h3>Change Password</h3>
 

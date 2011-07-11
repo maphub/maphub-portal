@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :fullname, :username, :email, :password, :password_confirmation, :remember_me, :about_me
+  attr_accessible :fullname, :username, :email, :password, :password_confirmation, :remember_me, :about_me, :location
   
   # Default scope (inactive users are filtered out)
   default_scope :conditions => {:deleted_at => nil}
@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
   has_many :maps
   has_many :collections
   has_many :annotations
+  
+  # Markdown content
+  # TODO test and make it work
+  # acts_as_markdown :about_me
   
   # Gravatars
   include Gravtastic

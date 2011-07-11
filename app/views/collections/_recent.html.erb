@@ -1,5 +1,16 @@
+<% 
+
+limit = local_assigns.has_key?(:limit) ? limit : 10
+
+if local_assigns.has_key? :user 
+  collections = user.collections.limit(limit).reverse()
+else
+  collections = Collection.order("edit_date").limit(limit).reverse()
+end
+%>
+
 <ul>
-  <% for collection in Collection.order("edit_date").limit(10).reverse() %>
-    <li><%= link_to collection.title, collection %>, by <%= link_to collection.user.username, collection.user %></li>
+  <% for collection in collections %>
+    <li><%= link_to collection.title, collection %>, by <%= link_to collection.user.username, collection.user %>, <%= collection.edit_date %></li>
   <% end %>
 </ul>

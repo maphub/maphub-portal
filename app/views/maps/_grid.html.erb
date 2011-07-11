@@ -1,0 +1,34 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".mapGridImage").hover(function(){
+      var text = $(this).find(".previewTextHidden").html();
+      $("#previewText").html(text);
+    });
+  });
+</script>
+
+<% 
+unless local_assigns.has_key? :maps
+  maps = Maps.order("edit_date").limit(12)
+end
+%>
+
+<div class="mapGrid">
+  <% for map in maps %>
+    <div class="mapGridImage">
+      <%= link_to image_tag(map.thumbnail_url, :alt => "#{map.title}"), map %>
+      <div style="display:none;" class="previewTextHidden">
+        <%= link_to map.title, map %> by 
+        <%= link_to map.user.username, map.user %>, 
+        <%= map.creation_date %>
+      </div>
+    </div>
+  <% end %>
+  <br style="clear:both;">
+  <p>
+    <div id="previewText">
+    <!-- Here comes the preview text via JavaScript -->
+    </div>
+  </p>
+</div>
+

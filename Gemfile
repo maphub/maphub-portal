@@ -10,6 +10,7 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'sqlite3'
 gem 'yaml_db'
 gem 'gravtastic'
+gem 'acts_as_markup'
 
 # Use unicorn as the web server
 # gem 'unicorn'

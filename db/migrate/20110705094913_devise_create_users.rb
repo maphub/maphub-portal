@@ -7,6 +7,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.trackable
       t.string :username
       t.string :fullname
+      t.string :location
       t.text :about_me
       t.timestamp :deleted_at, :default => nil
       t.integer :maps_count

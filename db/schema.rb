@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
     t.string   "last_sign_in_ip"
     t.string   "username"
     t.string   "fullname"
+    t.string   "location"
     t.text     "about_me"
     t.datetime "deleted_at"
     t.integer  "maps_count"
