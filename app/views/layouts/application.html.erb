@@ -21,7 +21,7 @@
   <% if user_signed_in? -%>
       <div id="user_login_box" style="float:right">
         Welcome, <%= link_to current_user.username, current_user %> |
-        <%= link_to 'Edit your Profile', edit_user_registration_path %> |
+        <%= link_to 'Edit your Account', edit_user_registration_path  %> |
         <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
       </div>
   <% end -%>
@@ -68,7 +68,12 @@
 
 <!-- Footer -->
 <div id="footer">
-  <div>&copy; 2011 MapHub&nbsp;|&nbsp;Help&nbsp;|&nbsp;Contact&nbsp;|&nbsp;Terms Of Service&nbsp;</div>
+  <div>
+    &copy; 2011 MapHub |
+    <%= link_to "Help", help_path %> |
+    <%= link_to "Contact", contact_path %> |
+    <%= link_to "Terms of Service", terms_path %>
+  </div>
 </div> <!-- end footer div -->
 
 </body>

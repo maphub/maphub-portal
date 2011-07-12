@@ -1,6 +1,10 @@
 <script>
 $(function() {
-  $( "#selectable" ).selectable();
+  $( "#selectable" ).selectable({
+    selected: function(event, ui) {
+      // TODO: Sync this callback with the multiple select below
+    }
+  });
 });
 $(document).ready(function(){
   
@@ -39,7 +43,7 @@ $(document).ready(function(){
     <h3>Select Maps for this Collection</h3>
     
     <p>Click or drag across maps to select. Hold <code>Ctrl</code> or <code>Cmd</code> to select multiple)</p>
-    <div class="hiddenElement">
+    <div class="">
       
       <!-- This is hidden until I can figure out how to sync with collection sync -->
       <ol id="selectable">

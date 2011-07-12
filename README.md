@@ -17,9 +17,11 @@ If you want to add test data, run
 
     rake db:seed
     
-If you made some changes to the database, run
+If you made some changes to the database or first create the database, run
 
     rake db:drop; rake db:migrate; rake db:seed
+    
+Then, log in with `user1@example.com` and `test`.
 
 
 Installing Prerequisites

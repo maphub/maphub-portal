@@ -18,13 +18,15 @@ MaphubPortal::Application.routes.draw do
     resources :annotations
     resources :collections
   end
+  # deactivate a user (the controller will check that you can only deactivate yourself)
+  match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
+  match "terms" => 'home#terms'
+  match "contact" => 'home#contact'
+  match "help" => 'home#help'
   
   # default homepage
   get "home/index"
   root :to => "home#index"
-  
-  # deactivate a user (the controller will check that you can only deactivate yourself)
-  match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
   
   # administrator namespace (create separate controllers for these!)
   namespace 'admin' do 
