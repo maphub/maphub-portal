@@ -8,7 +8,10 @@ gem 'rails', '3.0.9'
 gem 'devise'
 gem 'jquery-rails', '>= 1.0.3'
 gem 'sqlite3'
+
+# TODO: Find out if this is really working like in COMPASS
 gem 'yaml_db'
+
 gem 'gravtastic'
 gem 'acts_as_markup'
 
