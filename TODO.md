@@ -7,7 +7,6 @@
 
     recent maps => all recent maps
     recent maps (user = ...) => all recent maps from this user
-    
   
 - Admin interface
   - administrate users
@@ -16,3 +15,6 @@
 
 - Security
   - secure controllers
+
+- Registration
+  - text for registration mails
