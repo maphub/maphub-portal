@@ -1,11 +1,13 @@
 <h1><%= @collection.title %></h1>
 
-<p>This is a collection created by <%= link_to @collection.user.username, @collection.user %>.</p>
+<p>This is a collection created by <%= link_to @collection.user.username, @collection.user %>, <%= time_ago_in_words(@collection.creation_date) %> ago.</p>
 
 <% for map in @collection.maps %>
   <%= render :partial => "maps/thumbnail", :locals => { :map => map } %>
 <% end %>
+
 <br style="clear:both;">
+
 <% if @collection.user == current_user %>
   <div class="pseudoButton">
     <%= link_to "Edit", edit_collection_path(@collection) %>

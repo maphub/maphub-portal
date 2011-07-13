@@ -20,7 +20,7 @@ end
       <div style="display:none;" class="previewTextHidden">
         <%= link_to map.title, map %> by 
         <%= link_to map.user.username, map.user %>, 
-        <%= map.creation_date %>
+        <%= time_ago_in_words(map.creation_date) %> ago
       </div>
     </div>
   <% end %>

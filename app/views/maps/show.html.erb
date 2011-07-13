@@ -17,7 +17,7 @@
         <div class="detailInfoObject"><strong>Title:</strong> <%= @map.title %></div>
       </td>
       <td class="right">
-        <div class="detailInfoObject"><strong>Uploaded by: </strong> <%= link_to "#{@map.user.username}", @map.user %></div>
+        <div class="detailInfoObject"><strong>Uploaded: </strong> <%= link_to "#{@map.user.username}", @map.user %>, <%= time_ago_in_words @map.creation_date %> ago</div>
       </td>
     </tr>
     
@@ -29,9 +29,9 @@
         </div>
       </td>
       <td class="right">
-        <div class="detailInfoObject "><strong>Uploaded at: </strong> <%= @map.creation_date %></div>
+        <div class="detailInfoObject "><strong>Edited: </strong> <%= time_ago_in_words @map.creation_date %> ago</div>
       </td>
-    </tr>  
+    </tr>
   </table>
   </div>
   
@@ -49,7 +49,7 @@
 <div id="annotations">
   <ul>
     <% for annotation in @map.annotations %>
-      <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %> at <%= annotation.edit_date %></li>
+      <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
     <% end %>
   </ul>
 

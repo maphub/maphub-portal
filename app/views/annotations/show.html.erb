@@ -15,12 +15,12 @@
 
 <p>
   <b>Created: </b>
-  <%= @annotation.creation_date %>
+  <%= time_ago_in_words(@annotation.creation_date) %> ago
 </p>
 
 <p>
   <b>Edited: </b>
-  <%= @annotation.edit_date %>
+  <%= time_ago_in_words(@annotation.edit_date) %> ago
 </p>
 
 <% if current_user == @annotation.user %>

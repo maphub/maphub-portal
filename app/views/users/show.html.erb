@@ -38,11 +38,11 @@
         <table id="userInfoTable">
           <tr>
             <td class="firstCol">Joined:</td>
-            <td><%= @user.created_at %></td>
+            <td><%= time_ago_in_words(@user.created_at) %> ago </td>
           </tr>
           <tr>
             <td class="firstCol">Last seen:</td>
-            <td><%= @user.last_sign_in_at %></td>
+            <td><%= time_ago_in_words(@user.last_sign_in_at) %> ago</td>
           </tr>
           <% unless @user.fullname.nil? or @user.fullname.empty? %>
           <tr>
