@@ -1,12 +1,28 @@
 <script>
 $(function() {
-  $( "#selectable" ).selectable({
-    selected: function(event, ui) {
-      // TODO: Sync this callback with the multiple select below
-    }
-  });
+  $( "#selectable" ).selectable();
 });
+
 $(document).ready(function(){
+  
+  function synchronizeSelection() {
+    // iterate over each selected <li> element
+    $(".ui-selected").each(function(){
+      // find the map ID
+      var mapId = $(this).find("span.mapId").html();
+      
+      // debug
+      alert(mapId);
+      
+      // synchronize the multiple select box
+      $("#collection_map_ids option[value='" + mapId + "']:first")[0].selected = true;
+    });
+  }
+  
+  $("#new_collection, .edit_collection").submit(function(){
+    synchronizeSelection();
+    return true;
+  });
   
 });
 </script>
@@ -47,9 +63,10 @@ $(document).ready(function(){
       
       <!-- This is hidden until I can figure out how to sync with collection sync -->
       <ol id="selectable">
-        <% for map in @collection.user.maps %>
+        <% for map in current_user.maps %>
           <li class="ui-state-default, singleMapContainer">
             <div class="singleMapInfo">
+              <span class="mapId" style="display:none;"><%= map.id %></span>
               <strong><%= map.title %></strong><br>
               <%= map.creation_date %><br>
               <%= image_tag(map.thumbnail_url) %>

@@ -46,6 +46,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.new(params[:collection])
     @collection.creation_date = DateTime.now
     @collection.edit_date = DateTime.now
+    @collection.user = current_user
     respond_to do |format|
       if @collection.save
         format.html { redirect_to(@collection, :notice => 'Collection was successfully created.') }
