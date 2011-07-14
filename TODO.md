@@ -1,3 +1,5 @@
+- Fix the jQuery synchronization in `collections/_form`
+
 - Porting views (browsing):
   - add various viewing methods (list/coverflow)
   - add [pagination](https://github.com/mislav/will_paginate)
