@@ -49,7 +49,7 @@ class AnnotationsController < ApplicationController
     @annotation.edit_date = DateTime.now
     @annotation.user = current_user
     @annotation.map = Map.find(params[:map_id])
-    
+    @map = @annotation.map # we have to do this so the form is correctly displayed on error
     respond_to do |format|
       if @annotation.save
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
