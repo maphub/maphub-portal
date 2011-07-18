@@ -5,24 +5,29 @@ $(function() {
 
 $(document).ready(function(){
   
-  function synchronizeSelection() {
+  $("#new_collection, .edit_collection").submit(function(){
     // iterate over each selected <li> element
     $(".ui-selected").each(function(){
-      // find the map ID
-      var mapId = $(this).find("span.mapId").html();
-      
-      // debug
-      alert(mapId);
-      
-      // synchronize the multiple select box
-      $("#collection_map_ids option[value='" + mapId + "']:first")[0].selected = true;
+      var mapId = $(this).find("span.mapId").html();  // find the map ID
+      $("#collection_map_ids option[value='" + mapId + "']:first")[0].selected = true;  // synchronize the multiple select box
     });
-  }
-  
-  $("#new_collection, .edit_collection").submit(function(){
-    synchronizeSelection();
     return true;
   });
+  
+  $("#buttonSelectAll").click(function(){
+    // add "selected" attribute to every map container
+    $(".singleMapContainer").each(function(){
+      $(this).addClass("ui-selected");
+    });
+  });
+  
+  $("#buttonSelectNone").click(function(){
+    // remove "selected" attribute from each "selectee" 
+    // (these can be nested elements too, if dragged)
+    $(".ui-selectee").each(function(){
+      $(this).removeClass("ui-selected");
+    });
+  })
   
 });
 </script>
@@ -58,13 +63,18 @@ $(document).ready(function(){
     
     <h3>Select Maps for this Collection</h3>
     
-    <p>Click or drag across maps to select. Hold <code>Ctrl</code> or <code>Cmd</code> to select multiple)</p>
-    <div class="">
+    <p>Click or drag across the maps below to select them. You can hold <code>Ctrl</code> or <code>Cmd</code> to select multiple maps).</p>
+    
+    <div>
       
       <!-- This is hidden until I can figure out how to sync with collection sync -->
       <ol id="selectable">
         <% for map in current_user.maps %>
-          <li class="ui-state-default, singleMapContainer">
+          <% if @collection.maps.include? map %>
+            <li class="singleMapContainer ui-selected">
+          <% else %>
+            <li class="singleMapContainer">
+          <% end %>
             <div class="singleMapInfo">
               <span class="mapId" style="display:none;"><%= map.id %></span>
               <strong><%= map.title %></strong><br>
@@ -75,6 +85,7 @@ $(document).ready(function(){
         <% end %>
       </ol>
       <br style="clear:both;">
+      
     </div>
 
 <p>
@@ -83,9 +94,28 @@ $(document).ready(function(){
         @collection.user.maps, 
         :id,
         :title, 
-        { :selected => @collection.map_ids }, { :class => "map_select", :multiple => true, :size => '10', :name => 'collection[map_ids][]' }
+        # { :selected => @collection.map_ids }, 
+        # FIXME - normally, the already contained maps would be preselected by the line above.
+        # This is useful because we don't want to select everything again.
+        # But if we want to remove maps using the jQuery select, these will NOT be removed by the
+        # Javascript above. We therefore don't select any maps at all but resynchronize from 
+        # the jQuery select.
+        { :selected => nil },
+        { :class => "map_select hiddenElement", :multiple => true, :size => '10', :name => 'collection[map_ids][]' }
     %>
 </p>
+
+<p>
+  <div class="pseudoButton" style="float:left;" id="buttonSelectAll">
+    Select all
+  </div>
+  
+  <div class="pseudoButton" style="float:left;" id="buttonSelectNone">
+    Select none
+  </div>
+  <br style="clear:both;">
+</p>
+
 <p>
     <%= f.label :public, "Should this collection be public?" %> <i>(Non-public maps will still be hidden)</i>&nbsp;
     <%= f.check_box :public, :checked => true %>

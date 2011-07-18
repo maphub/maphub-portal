@@ -1,17 +1,20 @@
 <h1>Annotation</h1>
 
 <%= render :partial => 'maps/thumbnail', :locals => { :map => @annotation.map } %>
-<br style="clear:both">
+<br style="clear:both"/>
+
+<hr>
+
+<h2><%= @annotation.title %></h2>
 
 <p>
-  <b>Title:</b>
-  <%= @annotation.title %>
-</p>
-
-<p>
-  <b>Body:</b>
   <%= @annotation.body %>
 </p>
+
+
+<hr>
+
+<h2>Details</h2>
 
 <p>
   <b>Created: </b>

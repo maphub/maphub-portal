@@ -42,7 +42,7 @@
           </tr>
           <tr>
             <td class="firstCol">Last seen:</td>
-            <td><%= time_ago_in_words(@user.last_sign_in_at) %> ago</td>
+            <td><%= time_ago_in_words(@user.last_sign_in_at) rescue time_ago_in_words(@user.created_at)  %> ago</td>
           </tr>
           <% unless @user.fullname.nil? or @user.fullname.empty? %>
           <tr>
@@ -95,14 +95,20 @@
       
       <% if @user.maps.count > 0 %>
         <div style="width: 45%; float:left;">
-          <h2>Maps</h2>
+          <h2>Maps <small><%= link_to "(show all...)", user_maps_path(@user) %></small></h2>
           <%= render :partial => "maps/grid", :locals => { :maps => @user.maps.limit(18) } %>
         </div>
       <% end %>
       <% if @user.collections.count > 0 %>
         <div style="width: 45%; float:left;">
-          <h2>Collections</h2>
+          <h2>Collections <small><%= link_to "(show all...)", user_collections_path(@user) %></small></h2>
           <%= render :partial => "collections/recent", :locals => { :user => @user, :limit => 10 } %>
+        </div>
+      <% end %>
+      <% if @user.annotations.count > 0 %>
+        <div style="width: 45%; float:left;">
+          <h2>Annotations <small><%= link_to "(show all...)", user_annotations_path(@user) %></small></h2>
+          <%= render :partial => "annotations/recent", :locals => { :user => @user, :limit => 10 } %>
         </div>
       <% end %>
       <br style="clear:both;">

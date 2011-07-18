@@ -26,12 +26,14 @@
 
 </p
 ><p>
-    <%= f.label :map_date %><br />
+    <%= f.label :map_date, "This map is dated to: " %><br />
     <%= f.date_select :map_date %>
 </p>
 <p>
-    <%= f.label :public, "Should this map be public?" %> 
+    <%= f.label :public, "Should this map be public?" %>
     <%= f.check_box :public, :checked => true %>
+    <br>
+    <i>(Non-public maps will still be visible to you like any other map)</i>
 </p>
 
   <div class="actions">

@@ -83,6 +83,7 @@ input:focus, select:focus, textarea:focus {
   margin:5px;
   text-align:center;
   cursor: pointer;
+  font-weight:bold;
 }
 
 .pseudoButton a {

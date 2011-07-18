@@ -9,7 +9,12 @@
 <br style="clear:both;">
 
 <% if @collection.user == current_user %>
-  <div class="pseudoButton">
+  <div class="pseudoButton" style="float:left;">
     <%= link_to "Edit", edit_collection_path(@collection) %>
   </div>
+  
+  <div class="pseudoButton" style="float:left;">
+<%= link_to 'Delete', collection_path(@collection), :method => :delete, :confirm => "Are you sure you want to delete this Collection? Your maps will not be deleted." %>
+  </div>
+  <br style="clear:both;">
 <% end %>

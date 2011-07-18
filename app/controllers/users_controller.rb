@@ -29,6 +29,8 @@ class UsersController < ApplicationController
     def update
       @user = User.find(params[:id])
       @user.update_attributes params[:user]
+      
+      # automatically responds with update.js.erb
     end
     
     # Deactivates the user and logs them out

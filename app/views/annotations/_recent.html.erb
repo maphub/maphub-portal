@@ -1,5 +1,16 @@
+<% 
+
+limit = local_assigns.has_key?(:limit) ? limit : 10
+
+if local_assigns.has_key? :user 
+  annotations = user.annotations.limit(limit).reverse()
+else
+  annotations = Annotation.order("edit_date").limit(limit).reverse()
+end
+%>
+
 <ul>
-  <% for annotation in Annotation.order("edit_date").limit(10).reverse() %>
+  <% for annotation in annotations %>
     <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
   <% end %>
 </ul>
