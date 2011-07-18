@@ -1,3 +1,18 @@
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $(".new_annotation").hide();
+    
+    $("#createNewAnnotation").click(function(){
+      $(".new_annotation").slideDown(function(){
+        $("#annotation_title").focus();
+      });
+    });
+  });
+
+</script>
+
+
 <h1><%= @map.title %></h1>
 
 <div id="viewer">
@@ -45,14 +60,31 @@
 
 
 <hr>
-<h2>Annotations</h2>
+<h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
 <div id="annotations">
   <ul>
-    <% for annotation in @map.annotations %>
+    <% for annotation in @map.annotations.order("edit_date").reverse %>
       <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
     <% end %>
   </ul>
 
-  <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p>
+  <!-- <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p> -->
+  <p>
+  <div class="pseudoButton">
+    <a href="#" id="createNewAnnotation">Create a new annotation</a>
+  </div>
+  </p>
+  
+  <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
+    <p>
+    <%= f.label :title %><br/>
+    <%= f.text_field :title %>
+    </p>
+    <p>
+    <%= f.label :body %><br/>
+    <%= f.text_area :body, :cols => 40, :rows => 5 %>
+    </p>
+    <%= f.submit "Add Annotation" %>
+  <% end %>
 
 </div>

@@ -54,6 +54,7 @@ class AnnotationsController < ApplicationController
       if @annotation.save
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
         format.xml  { render :xml => @annotation, :status => :created, :location => @annotation }
+        format.js
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @annotation.errors, :status => :unprocessable_entity }
