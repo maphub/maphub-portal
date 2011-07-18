@@ -76,6 +76,7 @@
   </p>
   
   <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
+  <h3>New Annotation</h3>
     <p>
     <%= f.label :title %><br/>
     <%= f.text_field :title %>
