@@ -9,10 +9,11 @@ $(document).ready(function(){
   // The target needs to have the .hiddenElement class and be a sibling of the trigger
   $(".hiddenElement").hide();
   $(".slideDown").each(function(){
-    $(this).html("<a href='#'>" + $(this).html() + "</a>");
+    // will be styled as anchor
+    $(this).html("<a>" + $(this).html() + "</a>");
   });
   $(".slideDown").click(function(){
-    $(this).siblings(".hiddenElement").slideDown();
+    $(this).siblings(".hiddenElement").slideDown(function(){ $(this).focus(); });
   });
   
 });

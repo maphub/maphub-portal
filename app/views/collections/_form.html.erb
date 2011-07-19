@@ -61,9 +61,23 @@ $(document).ready(function(){
     <%= f.text_area :description, :class => "hiddenElement" %>
 </p>
     
+    <hr>
+    
     <h3>Select Maps for this Collection</h3>
     
-    <p>Click or drag across the maps below to select them. You can hold <code>Ctrl</code> or <code>Cmd</code> to select multiple maps).</p>
+    <p>
+      Click or drag across the maps below to select them. You can hold <code>Ctrl</code> or <code>Cmd</code> to select multiple maps).
+    </p>
+    <p>
+        <a id="buttonSelectAll">
+          Select all
+        </a>
+        |
+        <a id="buttonSelectNone">
+          Clear selection
+        </a>
+    </p>
+    
     
     <div>
       
@@ -103,17 +117,6 @@ $(document).ready(function(){
         { :selected => nil },
         { :class => "map_select hiddenElement", :multiple => true, :size => '10', :name => 'collection[map_ids][]' }
     %>
-</p>
-
-<p>
-  <div class="pseudoButton" style="float:left;" id="buttonSelectAll">
-    Select all
-  </div>
-  
-  <div class="pseudoButton" style="float:left;" id="buttonSelectNone">
-    Select none
-  </div>
-  <br style="clear:both;">
 </p>
 
 <p>

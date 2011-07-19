@@ -95,19 +95,19 @@
       <hr>
       
       <% if @user.maps.count > 0 %>
-        <div style="width: 45%; float:left;">
+        <div class="halfSize floatLeft">
           <h2>Maps <small><%= link_to "(show all...)", user_maps_path(@user) %></small></h2>
           <%= render :partial => "maps/grid", :locals => { :maps => @user.maps.limit(18) } %>
         </div>
       <% end %>
       <% if @user.collections.count > 0 %>
-        <div style="width: 45%; float:left;">
+        <div class="halfSize floatLeft">
           <h2>Collections <small><%= link_to "(show all...)", user_collections_path(@user) %></small></h2>
           <%= render :partial => "collections/recent", :locals => { :user => @user, :limit => 10 } %>
         </div>
       <% end %>
       <% if @user.annotations.count > 0 %>
-        <div style="width: 45%; float:left;">
+        <div class="halfSize floatLeft">
           <h2>Annotations <small><%= link_to "(show all...)", user_annotations_path(@user) %></small></h2>
           <%= render :partial => "annotations/recent", :locals => { :user => @user, :limit => 10 } %>
         </div>

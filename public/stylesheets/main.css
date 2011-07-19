@@ -22,10 +22,11 @@ body {
   height:100%;
 }
 
-a:link, a:visited, a:hover {
+a, a:link, a:visited, a:hover {
     color: #069;
     font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -62,11 +63,26 @@ hr {
 ul {
 	list-style: square;
 	padding-left: 20px;
+	margin-left:15px;
 }
 
 
 input:focus, select:focus, textarea:focus {
     border: 1px solid #b2d1ff;
+}
+
+/* POSITIONING AND SIZE */
+
+.floatLeft {
+  float:left;
+}
+
+.floatRight {
+  float:right;
+}
+
+.halfSize {
+  width: 45%;
 }
 
 /* PSEUDO BUTTONS */
@@ -75,12 +91,11 @@ input:focus, select:focus, textarea:focus {
   background-color: #069;
   display: block;
   width:150px;
-	border-radius: 22px;
-	-moz-border-radius: 22px;
-  -webkit-border-radius: 22px;
   color: white;
-  padding:5px;
-  margin:5px;
+  padding:3px;
+  margin-top:3px;
+  margin-bottom:3px;
+  margin-right:5px; /* for floating next to each other */
   text-align:center;
   cursor: pointer;
   font-weight:bold;

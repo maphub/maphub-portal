@@ -8,8 +8,8 @@
   maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
   </blockquote>
 
-  <div class="pseudoButton" style="float:left;"><%= link_to 'Log in', new_user_session_path %></div>
-  <div class="pseudoButton" style="float:left;"><%= link_to 'Sign up', new_user_registration_path %></div>
+  <div class="pseudoButton floatLeft"><%= link_to 'Log in', new_user_session_path %></div>
+  <div class="pseudoButton floatLeft"><%= link_to 'Sign up', new_user_registration_path %></div>
 
 <% else %>
 
@@ -21,14 +21,15 @@
   maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
   </blockquote>
   
-  <div style="width: 45%; float:left;">
-    <h2>Recently uploaded Maps</h2>
+  <div class="halfSize floatLeft">
+    <h2>Recent Maps <small><%= link_to "(show all...)", maps_path %></small></h2>
     <%= render :partial => "maps/grid", :locals => { :maps => @recent_maps } %>
   </div>
-  <div style="width: 45%; float:left;">
-    <h2>Recently created Annotations</h2>
+  <div style="halfSize floatLeft">
+    <h2>Recent Annotations <small><%= link_to "(show all...)", annotations_path %></small></h2>
     <%= render :partial => "annotations/recent" %>
   </div>
-
+  
+  <br style="clear:both">
 
 <% end %>

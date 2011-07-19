@@ -19,14 +19,14 @@
       <%= link_to 'Sign up', new_user_registration_path %>
   <% end %>
   <% if user_signed_in? -%>
-      <div id="user_login_box" style="float:right">
+      <div id="user_login_box" class="floatRight">
         Welcome, <%= link_to current_user.username, current_user %> |
         <%= link_to 'Edit your Account', edit_user_registration_path  %> |
         <%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
       </div>
   <% end -%>
   <% if admin_signed_in? -%>
-      <div id="admin_login_box" style="float:right">
+      <div id="admin_login_box" class="floatRight">
         <%= current_admin.username %> |
         <%= link_to 'Admin Area', admins_path %> |
         <%= link_to 'Sign out', destroy_admin_session_path %>
