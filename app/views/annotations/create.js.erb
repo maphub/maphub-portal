@@ -1,1 +1,6 @@
 // This JavaScript is executed when the #create controller method finishes
+<% annotationText = render :partial => "annotations/single_annotation", :locals => { :annotation => @annotation } %>
+var response = "<li><%= escape_javascript(annotationText)%></li>";
+$(response).hide().prependTo("#annotations ul:first-child").fadeIn("slow");
+
+//$("#annotations ul:first-child li:last-child").fadeOut("slow");

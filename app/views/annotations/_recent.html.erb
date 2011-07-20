@@ -11,6 +11,6 @@ end
 
 <ul>
   <% for annotation in annotations %>
-    <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
+    <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
   <% end %>
 </ul>
