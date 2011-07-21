@@ -1,6 +1,11 @@
 // This JavaScript is executed when the #create controller method finishes
+
+// compose new list item
 <% annotationText = render :partial => "annotations/single_annotation", :locals => { :annotation => @annotation } %>
 var response = "<li><%= escape_javascript(annotationText)%></li>";
-$(response).hide().prependTo("#annotations ul:first-child").fadeIn("slow");
+$(response).hide().prependTo("#annotationList").fadeIn("slow");
+
+// hide the form
+$(".new_annotation").fadeOut();
 
 //$("#annotations ul:first-child li:last-child").fadeOut("slow");

@@ -60,32 +60,38 @@
 
 
 <hr>
-<h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
-<div id="annotations">
-  <ul>
+<div id="annotations" class="halfSize floatLeft">
+  <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
+  <ul id="annotationList">
     <% for annotation in @map.annotations.order("edit_date").reverse %>
       <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
     <% end %>
   </ul>
 
   <!-- <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p> -->
-  <p>
-  <div class="pseudoButton">
-    <a href="#" id="createNewAnnotation">Create a new annotation</a>
-  </div>
-  </p>
-  
-  <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
-  <h3>New Annotation</h3>
+  <% if user_signed_in? %>
     <p>
-    <%= f.label :title %><br/>
-    <%= f.text_field :title %>
+    <div class="pseudoButton">
+      <a id="createNewAnnotation">Create a new annotation</a>
+    </div>
     </p>
-    <p>
-    <%= f.label :body %><br/>
-    <%= f.text_area :body, :cols => 40, :rows => 5 %>
-    </p>
-    <%= f.submit "Add Annotation" %>
   <% end %>
-
 </div>
+
+<div class="halfSize floatLeft">
+<%= form_for([@map, Annotation.new], :remote => true  ) do |f| %>
+<h2>New Annotation</h2>
+  <p>
+  <%= f.label :title %><br/>
+  <%= f.text_field :title %>
+  </p>
+  <p>
+  <%= f.label :body %><br/>
+  <%= f.text_area :body, :cols => 40, :rows => 5 %>
+  </p>
+  <%= f.submit "Add Annotation" %>
+<% end %>
+</div>
+
+  
+<br style="clear:both;">
