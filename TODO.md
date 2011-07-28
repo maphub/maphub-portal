@@ -18,8 +18,9 @@
     - reconsider map attributes; check what LoC metadata fields we have
     - redirect rdf/xml requests on annotations to an OAC-ruby implementation in lib/ (can later be pulled out into a separate API)
 
-* GUI
+* GUI / Views
     - unregistered users should see a very simple page with some simple (rotating?) map display, a search boy and a join/login button; allow them to switch views; for registered users/admins the current home view is OK
+    - make use of HTML5 features in application.html.erb and other views. E.g. footer elements, etc...
     
         
 # Comments/TODO Werner
