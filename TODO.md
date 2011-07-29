@@ -5,7 +5,7 @@
 
 * New Features
     - Integrate OpenLayers into Annotation view
-    - The new/edit annotation view should provide two functionalities: set control point, add annotation
+    - The new/edit annotation view should provide two functionalities: [set control point, add annotation](http://dme.ait.ac.at/annotation/yuma_map_demo_full.htm)
         - control points:
             - let the user set a point on the map and display an input field asking for the name of the place
             - provide a service in /lib that talks with Geonames (basically a ruby port of the YUMA code)
