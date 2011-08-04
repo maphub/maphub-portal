@@ -15,6 +15,8 @@ function initZoomify(){
     $(".new_annotation").hide();
     
     $("#createNewAnnotation").click(function(){
+      $("#annotation_title").attr("value", "");
+      $("#annotation_body").attr("value", "");
       $(".new_annotation").slideDown(function(){
         $("#annotation_title").focus();
       });
@@ -98,7 +100,7 @@ function initZoomify(){
 
 
 
-<div id="annotationList" class="halfSize floatLeft">
+<div id="annotations" class="halfSize floatLeft">
   <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
   <ul id="annotationList">
     <% for annotation in @map.annotations.order("edit_date").reverse %>
