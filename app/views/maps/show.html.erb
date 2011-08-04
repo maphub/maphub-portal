@@ -1,3 +1,14 @@
+<%= javascript_include_tag "OpenLayers" %>
+
+<script type="text/javascript">
+
+function initZoomify(){
+
+};
+
+</script>
+
+
 <script type="text/javascript">
 
   $(document).ready(function(){
@@ -8,59 +19,86 @@
         $("#annotation_title").focus();
       });
     });
+    
+    
+    var zoomify_width = 3300;
+    var zoomify_height = 12295;
+    var zoomify_url = "<%= @map.tileset_url.chomp! %>/";
+
+    var map, zoomify;
+
+    /* First we initialize the zoomify pyramid (to get number of tiers) */
+    var zoomify = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
+    new OpenLayers.Size( zoomify_width, zoomify_height ) );
+
+    /* Map with raster coordinates (pixels) from Zoomify image */
+    var options = {
+        controls: [],
+        maxExtent: new OpenLayers.Bounds(0, 0, zoomify_width, zoomify_height),
+        maxResolution: Math.pow(2, zoomify.numberOfTiers-1 ),
+        numZoomLevels: zoomify.numberOfTiers,
+        units: 'pixels'
+    };
+
+    map = new OpenLayers.Map("viewer", options);
+    map.addLayer(zoomify);
+
+    // map.addControl(new OpenLayers.Control.MousePosition());
+    map.addControl(new OpenLayers.Control.PanZoomBar());
+    map.addControl(new OpenLayers.Control.MouseDefaults());
+    map.addControl(new OpenLayers.Control.KeyboardDefaults());
+
+    map.setBaseLayer(zoomify);
+    map.zoomToMaxExtent();
+    
   });
 
 </script>
 
 
-<h1><%= @map.title %></h1>
+
+
+<h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
 
 <div id="viewer">
-  <img src="<%= @map.tileset_url %>/TileGroup0/0-0-0.jpg"/>
+
 </div>
+<br style="clear:both;">
 
-<hr>
 
-
-<div id="detailInfo">
+<div id="mapDetails">
   <h2>Details</h2>
-  <div id="detailInfoFirst">
-  <table>
-    
-    <tr>
-      <td class="left">
-        <div class="detailInfoObject"><strong>Title:</strong> <%= @map.title %></div>
-      </td>
-      <td class="right">
-        <div class="detailInfoObject"><strong>Uploaded: </strong> <%= link_to "#{@map.user.username}", @map.user %>, <%= time_ago_in_words @map.creation_date %> ago</div>
-      </td>
-    </tr>
-    
-    <tr>
-      <td class="left">
-        <div class="detailInfoObject">
-          <strong>Description:</strong>
-          <%= @map.description %>
-        </div>
-      </td>
-      <td class="right">
-        <div class="detailInfoObject "><strong>Edited: </strong> <%= time_ago_in_words @map.creation_date %> ago</div>
-      </td>
-    </tr>
-  </table>
-  </div>
   
-  <% if current_user == @map.user %>
-    <div class="pseudoButton">
-    <%= link_to 'Edit this map', edit_map_path(@map) %>
-    </div>
+  <div class="floatLeft halfSize">  
+  
+    <p>This map was uploaded <%= time_ago_in_words @map.creation_date %> ago, last edited <%= time_ago_in_words @map.edit_date %> ago.</p>
+
+    
+  <% unless @map.description.empty? %>
+    <blockquote>
+      <%=  @map.description %>
+    </blockquote>
   <% end %>
   
-</div>
+  </div>
+  
+  <div class="floatRight">  
+      <%= render :partial => "users/badge", :locals => { :user => @map.user } %>
+      <br style="clear:both;">
+      <% if current_user == @map.user %>
+      <%= link_to 'Edit this map', edit_map_path(@map) %><br>
+      <%= link_to 'Delete', map_path(@map), :method => :delete, :confirm => "Are you sure you want to delete this map?" %>
+      <% end %>
+  </div>
+  
+</div>  
 
 
-<hr>
-<div id="annotations" class="halfSize floatLeft">
+<br style="clear:both;">
+
+
+
+<div id="annotationList" class="halfSize floatLeft">
   <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
   <ul id="annotationList">
     <% for annotation in @map.annotations.order("edit_date").reverse %>

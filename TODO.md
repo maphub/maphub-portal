@@ -4,7 +4,6 @@
     - Admin login/views doesn't work properly at the moment
 
 * New Features
-    - Integrate OpenLayers into Annotation view
     - The new/edit annotation view should provide two functionalities: [set control point, add annotation](http://dme.ait.ac.at/annotation/yuma_map_demo_full.htm)
         - control points:
             - let the user set a point on the map and display an input field asking for the name of the place
@@ -25,18 +24,16 @@
         
 # Comments/TODO Werner
 
-- Fix the jQuery synchronization in `collections/_form`
+- TODO get the width/height of a Zoomify Tileset and include it in the javascript that is executed before loading, otherwise the map will be stretched
+
+- BUGFIX the jQuery synchronization in `collections/_form` (especially when selecting all / deselcting)
+
+- BUGFIX editing a map (tileset seems to be gone?)
 
 - Porting views (browsing):
   - add various viewing methods (list/coverflow)
   - add [pagination](https://github.com/mislav/will_paginate)
 
-- Partials
-  - extend partials to include [optional parameter](http://stackoverflow.com/questions/2385525/how-to-have-an-optional-local-variable-in-a-partial-template-in-rails) "user", for example
-
-    recent maps => all recent maps
-    recent maps (user = ...) => all recent maps from this user
-  
 - Admin interface
   - administrate users
   - administrate annotations

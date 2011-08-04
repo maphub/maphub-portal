@@ -1,12 +1,22 @@
 class AnnotationsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :get_parent
 
   # GET /annotations
   # GET /annotations.xml
+  # GET /user/:user_id/annotations
+  # GET /user/:user_id/annotations.xml  
+  # GET /map/:map_id/annotations
+  # GET /map/:map_id/annotations.xml  
   def index
-    @annotations = Annotation.all
-
+    
+    unless @parent.nil?
+      @annotations = @parent.annotations
+    else
+      @annotations = Annotation.all
+    end
+      
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @annotations }
@@ -87,6 +97,15 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(annotations_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  private
+  
+  def get_parent
+    @parent ||= case
+      when params[:user_id] then User.find(params[:user_id])
+      when params[:map_id] then Map.find(params[:map_id])
     end
   end
 end

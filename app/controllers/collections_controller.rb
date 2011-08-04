@@ -1,11 +1,19 @@
 class CollectionsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
-
+  before_filter :get_parent
+  
   # GET /collections
   # GET /collections.xml  
+  # GET /user/:user_id/collections
+  # GET /user/:user_id/collections.xml  
   def index
-    @collections = Collection.all
+    
+    unless @parent.nil?
+      @collections = @parent.collections
+    else
+      @collections = Collection.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -83,6 +91,14 @@ class CollectionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(collections_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  private
+  
+  def get_parent
+    @parent ||= case
+      when params[:user_id] then User.find(params[:user_id])
     end
   end
 end

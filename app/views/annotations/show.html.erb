@@ -1,38 +1,29 @@
-<h1>Annotation</h1>
+<h1><%= @annotation.title %> <small>by <%= link_to @annotation.user.username, @annotation.user %></small></h1>
 
-<%= render :partial => 'maps/thumbnail', :locals => { :map => @annotation.map } %>
+<div id="annotationDetails">
+
+  <div class="floatLeft halfSize">
+    <p>This annotation was created <%= time_ago_in_words(@annotation.creation_date) %> ago, last edited  <%= time_ago_in_words(@annotation.edit_date) %> ago.</p>
+    
+    <% unless @annotation.body.empty? %>
+      <blockquote>
+        <%=  @annotation.body %>
+      </blockquote>
+    <% end %>
+  </div>
+  <div class="floatRight">
+    <%= render :partial => "users/badge", :locals => { :user => @annotation.user } %>
+      <br style="clear:both;">
+      <% if current_user == @annotation.user %>
+          <%= link_to 'Edit this annotation', edit_annotation_path(@annotation) %><br>
+          <%= link_to 'Delete', annotation_path(@annotation), :method => :delete, :confirm => "Are you sure you want to delete this annotation?" %>
+      <% end %>
+  </div>
+</div>
+
+
 <br style="clear:both"/>
 
-<hr>
-
-<h2><%= @annotation.title %></h2>
-
-<p>
-  <%= @annotation.body %>
-</p>
-
-
-<hr>
-
-<h2>Details</h2>
-
-<p>
-  <b>Created: </b>
-  <%= time_ago_in_words(@annotation.creation_date) %> ago
-</p>
-
-<p>
-  <b>Edited: </b>
-  <%= time_ago_in_words(@annotation.edit_date) %> ago
-</p>
-
-<% if current_user == @annotation.user %>
-<div class="pseudoButton floatLeft">
-<%= link_to 'Edit', edit_annotation_path(@annotation) %>
+<div style="padding-top:30px">
+<%= render :partial => 'maps/thumbnail', :locals => { :map => @annotation.map } %>
 </div>
-
-<div class="pseudoButton floatLeft">
-<%= link_to 'Delete', annotation_path(@annotation), :method => :delete, :confirm => "Are you sure you want to delete this Annotation?" %>
-</div>
-
-<% end %>

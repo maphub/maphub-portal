@@ -31,6 +31,7 @@ a, a:link, a:visited, a:hover {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Lucidabright" , "Lucida", "Palatino", Garamond, Times, "Times New Roman", Serif;
+	font-weight:normal;
 }
 
 h1 {
@@ -69,6 +70,10 @@ ul {
 
 input:focus, select:focus, textarea:focus {
     border: 1px solid #b2d1ff;
+}
+
+kbd {
+  padding:2px 4px;white-space:nowrap;color:#000;background:#eee;border-width:1px 3px 3px 1px;border-style:solid;border-color:#ccc #aaa #888 #bbb;
 }
 
 /* POSITIONING AND SIZE */
@@ -142,7 +147,7 @@ input:focus, select:focus, textarea:focus {
 	position: absolute;
 	left: 0;
 	width: 100%;
-	background: url("../images/nav_background.png");
+  background: url("../images/nav_background_inv.png");
 }
 
 #navigation ul {
@@ -165,7 +170,7 @@ input:focus, select:focus, textarea:focus {
 		text-align: center;
 		font-weight: normal;
 		text-decoration: none;
-		color: #ccc;
+		color: #333;
 	}
 
 	#navigation ul li a:hover {
@@ -182,6 +187,7 @@ input:focus, select:focus, textarea:focus {
     background: #333;
 	  background: -moz-linear-gradient(100% 100% 90deg, #555, #333);
 	  background: -webkit-linear-gradient(#555, #333);
+	      color:#fff;
   }
 
 		#navigation ul li a:hover {
@@ -205,6 +211,8 @@ input:focus, select:focus, textarea:focus {
 #viewer {
   padding-top:10px;
   padding-bottom:5px;
+  height:500px;
+  width:1000px;
 }
 
 /* MAP DETAIL INFO BOX (AT THE TOP OF THE PAGE) */
@@ -338,10 +346,10 @@ input:focus, select:focus, textarea:focus {
   bottom:0px;
   left: 0;
   width: 100%;
-  background: url("../images/nav_background.png");
+  background: url("../images/nav_background_inv.png");
   font-size:11px;
   height:30px;
-  color: #ccc;
+  color: #333;
 }
 
 #footer div {
@@ -350,15 +358,14 @@ input:focus, select:focus, textarea:focus {
   width: 1000px;
 }
 #footer h3 {
-  color: #fff;
+  color: #333;
 }
 
 #footer a {
-  color: #aaa;
+  color: #333;
 }
 
 #footer a:hover {
-  color: #FFF;
   text-decoration: none;
 }
 
@@ -379,7 +386,7 @@ input:focus, select:focus, textarea:focus {
   color: #333;
   width: 100%;
   font-size: 11px;
-  padding-top: 15px;
+  padding-top: 20px;
 }
 
 .singleMapContainer {
@@ -416,6 +423,7 @@ input:focus, select:focus, textarea:focus {
   width: 100px;
   float:left;
   padding-left:5px;
+  white-space:nowrap;
 }
 
 

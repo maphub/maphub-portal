@@ -1,11 +1,21 @@
 class MapsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :get_parent
   
   # GET /maps
   # GET /maps.xml
+  # GET /user/:user_id/maps
+  # GET /user/:user_id/maps.xml
+  # GET /collection/:collection_id/maps
+  # GET /collection/:collection_id/maps.xml
   def index
-    @maps = Map.all
+
+    unless @parent.nil?
+      @maps = @parent.maps
+    else
+      @maps = Map.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -85,4 +95,14 @@ class MapsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  
+   def get_parent
+    @parent ||= case
+      when params[:user_id] then User.find(params[:user_id])
+      when params[:collection_id] then Collection.find(params[:collection_id])
+    end
+  end
+  
 end
