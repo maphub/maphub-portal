@@ -13,6 +13,8 @@ class CreateTables < ActiveRecord::Migration
       t.datetime :map_date
       t.boolean :public
       t.integer :user_id
+      t.integer :width
+      t.integer :height
       t.timestamps
     end
 
