@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
    # Unique attributes
   validates_uniqueness_of :username, :email
   
+  # User name length restrictions
+  validates_length_of :username, :in => 2..30
+  
   # Hooks
   after_create :send_sign_up_notification
   

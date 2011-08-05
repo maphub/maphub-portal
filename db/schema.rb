@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
     t.datetime "map_date"
     t.boolean  "public"
     t.integer  "user_id"
+    t.integer  "width"
+    t.integer  "height"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

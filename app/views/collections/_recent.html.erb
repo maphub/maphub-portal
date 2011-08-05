@@ -11,6 +11,6 @@ end
 
 <ul>
   <% for collection in collections %>
-    <li><%= link_to collection.title, collection %>, by <%= link_to collection.user.username, collection.user %>, <%= time_ago_in_words(collection.edit_date) %></li>
+    <li><%= link_to collection.title, collection %>, by <%= link_to collection.user.username, collection.user %>, <%= time_ago_in_words(collection.edit_date) %> ago</li>
   <% end %>
 </ul>

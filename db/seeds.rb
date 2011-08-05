@@ -34,6 +34,7 @@ puts "Creating maps ..."
 
 map_ids = File.open("#{::Rails.root.to_s}/db/map-ids.txt")
 map_ids.each_with_index do |id, index|
+  id.chomp!
   break if index == 30
   Map.create do |map|
     map.title = "Map #{index+1}"
