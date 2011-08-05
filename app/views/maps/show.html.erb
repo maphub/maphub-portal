@@ -69,7 +69,7 @@ function initZoomify(){
 
 
 <div id="mapDetails">
-  <h2>Details</h2>
+
   
   <div class="floatLeft halfSize">  
   
@@ -84,7 +84,7 @@ function initZoomify(){
   
   </div>
   
-  <div class="floatRight">  
+  <div class="floatRight tools">  
       <%= render :partial => "users/badge", :locals => { :user => @map.user } %>
       <br style="clear:both;">
       <% if current_user == @map.user %>

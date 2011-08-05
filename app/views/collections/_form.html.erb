@@ -6,8 +6,8 @@ $(function() {
 $(document).ready(function(){
   
   $("#new_collection, .edit_collection").submit(function(){
-    // iterate over each selected <li> element
-    $(".ui-selected").each(function(){
+    // iterate over each selected map container element
+    $("li.ui-selected").each(function(){
       var mapId = $(this).find("span.mapId").html();  // find the map ID
       $("#collection_map_ids option[value='" + mapId + "']:first")[0].selected = true;  // synchronize the multiple select box
     });

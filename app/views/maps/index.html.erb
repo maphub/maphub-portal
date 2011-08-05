@@ -5,7 +5,3 @@
   <%= render :partial => "thumbnail", :locals => { :map => map } %>
 <% end %>
 </div>
-
-<% if user_signed_in? %>
-<div class="pseudoButton"><%= link_to 'Upload Map', new_map_path %></div>
-<% end %>
