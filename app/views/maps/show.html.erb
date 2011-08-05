@@ -2,18 +2,8 @@
 
 <script type="text/javascript">
 
-function initZoomify(){
-
-};
-
-</script>
-
-
-<script type="text/javascript">
-
-  $(document).ready(function(){
+function initAnnotation() {
     $(".new_annotation").hide();
-    
     $("#createNewAnnotation").click(function(){
       $("#annotation_title").attr("value", "");
       $("#annotation_body").attr("value", "");
@@ -21,50 +11,65 @@ function initZoomify(){
         $("#annotation_title").focus();
       });
     });
-    
+}
+
+function initZoomify(){
     
     var zoomify_width = 3300;
     var zoomify_height = 12295;
-    var zoomify_url = "<%= @map.tileset_url %>/";
+    var zoomify_url = "<%= @map.tileset_url.strip! + "/" %>";
 
-    var map, zoomify;
+    var map, layer, vlayer;
 
-    /* First we initialize the zoomify pyramid (to get number of tiers) */
-    var zoomify = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
-    new OpenLayers.Size( zoomify_width, zoomify_height ) );
-
-    /* Map with raster coordinates (pixels) from Zoomify image */
+    /* The zoomify layer */
+    layer = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
+        new OpenLayers.Size( zoomify_width, zoomify_height ) );
+    
+    /* The editing controls layer */
+    vlayer = new OpenLayers.Layer.Vector( "Editable" );
+    
+    /* Display options */
     var options = {
-        controls: [],
+        controls: [], 
         maxExtent: new OpenLayers.Bounds(0, 0, zoomify_width, zoomify_height),
-        maxResolution: Math.pow(2, zoomify.numberOfTiers-1 ),
-        numZoomLevels: zoomify.numberOfTiers,
+        maxResolution: Math.pow(2, layer.numberOfTiers-1 ),
+        numZoomLevels: layer.numberOfTiers,
         units: 'pixels'
     };
 
     map = new OpenLayers.Map("viewer", options);
-    map.addLayer(zoomify);
 
+    map.addLayer(layer);
+    map.addLayer(vlayer);
+    
     // map.addControl(new OpenLayers.Control.MousePosition());
     map.addControl(new OpenLayers.Control.PanZoomBar());
     map.addControl(new OpenLayers.Control.MouseDefaults());
     map.addControl(new OpenLayers.Control.KeyboardDefaults());
+    map.addControl(new OpenLayers.Control.EditingToolbar(vlayer));
 
-    map.setBaseLayer(zoomify);
+    map.setBaseLayer(layer);
     map.zoomToMaxExtent();
-    
-  });
+};
+
+function init() {
+    initAnnotation();
+    initZoomify();
+}
+
+$(document).ready(function(){
+  init();
+});
+
 
 </script>
 
 
 
-
 <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
 
-<div id="viewer">
+<div id="viewer" border="1pt solid"></div>
 
-</div>
 <br style="clear:both;">
 
 
