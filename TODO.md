@@ -24,11 +24,9 @@
         
 # Comments/TODO Werner
 
-- TODO get the width/height of a Zoomify Tileset and include it in the javascript that is executed before loading, otherwise the map will be stretched
+- TODO Get the width/height of a Zoomify Tileset by parsing the Zoomify XML and include it in the javascript that is executed before loading, otherwise the map will be stretched
 
-- BUGFIX the jQuery synchronization in `collections/_form` (especially when selecting all / deselcting)
-
-- BUGFIX editing a map (tileset seems to be gone?)
+- TODO Implement a callback for creating Annotations, including a bar that pops up (like [this](http://spyrestudios.com/how-to-create-a-cute-popup-bar-with-html5-css3-and-jquery/)).
 
 - Porting views (browsing):
   - add various viewing methods (list/coverflow)
