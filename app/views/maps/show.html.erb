@@ -15,8 +15,8 @@ function initAnnotation() {
 
 function initZoomify(){
     
-    var zoomify_width = 3300;
-    var zoomify_height = 12295;
+    var zoomify_width = <%= @map.width %>;
+    var zoomify_height = <%= @map.height %>;
     var zoomify_url = "<%= @map.tileset_url + '/' %>";
 
     var map, layer, vlayer;
