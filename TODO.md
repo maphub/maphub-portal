@@ -33,7 +33,9 @@ Something like this:
       alert(evt.feature.id + " selected on " + this.name);
     }
     
-Then access the polygon coordinates.
+Then access the polygon coordinates. Convert them to [WKT](http://dev.openlayers.org/docs/files/OpenLayers/Format/WKT-js.html) -- add as a hidden field.
+
+
 
 - Porting views (browsing):
   - add various viewing methods (list/coverflow)
