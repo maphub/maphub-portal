@@ -28,6 +28,8 @@ function initZoomify(){
     /* The editing controls layer */
     vlayer = new OpenLayers.Layer.Vector( "Editable" );
     
+    vlayer.events.register("featureadded", vlayer, added);
+    
     /* Display options */
     var options = {
         controls: [], 
@@ -58,6 +60,11 @@ function initZoomify(){
 function init() {
     initAnnotation();
     initZoomify();
+}
+
+function added(evt) {
+    console.log(evt.feature.geometry.bounds);
+    
 }
 
 $(document).ready(function(){
