@@ -8,9 +8,34 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+  
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+    var searchBoxDefault = "Search maphub...";  
+    
+    $("#searchbox").attr("value", searchBoxDefault);
+    
+    // show/hide default text if needed
+    $("#searchbox").focus(function(){
+	    if($(this).attr("value") == searchBoxDefault) $(this).attr("value", "");
+    });
+    $("#searchbox").blur(function(){
+	    if($(this).attr("value") == "") $(this).attr("value", searchBoxDefault);
+    });
+
+
+    
+  });
+</script>
 
 <div id="search">
-  <!-- TODO: search -->
+  <%= form_tag search_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :q, params[:q], :id => "searchbox" %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  <% end %>
 </div>
 
 <div id="usertools">

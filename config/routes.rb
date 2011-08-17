@@ -1,5 +1,6 @@
 MaphubPortal::Application.routes.draw do
 
+  
   devise_for :users, :admins
 
   resources :annotations
@@ -18,11 +19,16 @@ MaphubPortal::Application.routes.draw do
     resources :annotations
     resources :collections
   end
+  
   # deactivate a user (the controller will check that you can only deactivate yourself)
   match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
   match "terms" => 'home#terms'
   match "contact" => 'home#contact'
   match "help" => 'home#help'
+  
+  # search controller
+  match 'search' => 'home#search'
+  match 'search/:q' => 'home#search'
   
   # default homepage
   get "home/index"

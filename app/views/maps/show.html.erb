@@ -46,7 +46,10 @@ function initZoomify(){
     map.addControl(new OpenLayers.Control.PanZoomBar());
     map.addControl(new OpenLayers.Control.MouseDefaults());
     map.addControl(new OpenLayers.Control.KeyboardDefaults());
+    
+    <% if user_signed_in? %>
     map.addControl(new OpenLayers.Control.EditingToolbar(vlayer));
+    <% end %>
 
     map.setBaseLayer(layer);
     map.zoomToMaxExtent();

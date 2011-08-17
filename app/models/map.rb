@@ -16,6 +16,11 @@ class Map < ActiveRecord::Base
   # After validation: Check width and height
   after_validation :parse_dimensions
   
+  searchable do
+    text :title, :default_boost => 2
+    text :description
+  end
+  
   def thumbnail_url
     "#{tileset_url}/TileGroup0/0-0-0.jpg"
   end

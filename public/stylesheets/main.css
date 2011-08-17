@@ -164,7 +164,7 @@ kbd {
 #search a, #search input {
 	vertical-align: middle;
 	margin-left: .5em;
-	margin-top: -3px;
+	margin-top: -5px;
 }
 
 /* USER TOOL BAR */
@@ -172,6 +172,7 @@ kbd {
 #usertools {
 	float: right;
 }
+
 
 
 /* HEADER MESSAGE */
