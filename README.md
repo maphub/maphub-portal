@@ -21,7 +21,15 @@ If you made some changes to the database or first create the database, run
 
     rake db:drop; rake db:migrate; rake db:seed
     
-Then, log in with `user1@example.com` and `test`.
+Then, log in with `user1@example.com` and `test`. 
+
+You might want to run the Solr search engine as well:
+
+    rake sunspot:solr:start
+    
+... and if you change something in your models, don't forget to reindex Sunspot:
+
+    rake sunspot:reindex
 
 
 Installing Prerequisites
