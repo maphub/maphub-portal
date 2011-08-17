@@ -12,16 +12,24 @@
 <script type="text/javascript">
   $(document).ready(function(){
     
-    var searchBoxDefault = "Search maphub...";  
+    <% if @q.nil? %>
+      var activeSearch = false;
+      var searchBoxDefault = "Search maphub...";  
+    <% else %>
+      var activeSearch = true;
+      var searchBoxDefault = "<%= @q %>";  
+    <% end %>
     
     $("#searchbox").attr("value", searchBoxDefault);
     
     // show/hide default text if needed
     $("#searchbox").focus(function(){
-	    if($(this).attr("value") == searchBoxDefault) $(this).attr("value", "");
+      if (($(this).attr("value") == searchBoxDefault) && (!activeSearch))
+        $(this).attr("value", "");
     });
     $("#searchbox").blur(function(){
-	    if($(this).attr("value") == "") $(this).attr("value", searchBoxDefault);
+      if ($(this).attr("value") == "") 
+        $(this).attr("value", searchBoxDefault);
     });
 
 
@@ -32,8 +40,8 @@
 <div id="search">
   <%= form_tag search_path, :method => 'get' do %>
   <p>
-    <%= text_field_tag :q, params[:q], :id => "searchbox" %>
-    <%= submit_tag "Search", :name => nil %>
+    <%= text_field_tag :q, params[:q], :id => "searchbox", :size => "40" %>
+    <%= submit_tag "Search", :name => nil, :class => "hiddenElement" %>
   </p>
   <% end %>
 </div>
