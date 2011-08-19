@@ -2,6 +2,7 @@
 
 <script type="text/javascript">
 
+// this function implements the DOM manipulation for adding new annotations
 function initAnnotation() {
     $("#slideUpBar").hide();
     $("#createNewAnnotation").click(function(){
@@ -17,6 +18,7 @@ function initAnnotation() {
     });
 }
 
+// this function initilalizes the map display with OpenLayers
 function initZoomify(){
     
     var zoomify_width = <%= @map.width %>;
@@ -61,23 +63,31 @@ function initZoomify(){
     map.zoomToMaxExtent();
 };
 
-function init() {
-    initAnnotation();
-    initZoomify();
-}
-
+// This function is called when a new feature was added to the map
 function added(evt) {
-    console.log(evt.feature.geometry.bounds);
+    var wkt_data = evt.feature.geometry.toString();
+    
+    // reinitialize title and body, and copy WKT data
     $("#annotation_title").attr("value", "");
     $("#annotation_body").attr("value", "");
+    $("#annotation_wkt_data").attr("value", wkt_data);
+    
+    // show the popup
     $("#slideUpBar").slideDown(function(){
       $("#annotation_title").focus();
     });
 }
 
+// this function is called when the document is loaded
 $(document).ready(function(){
   init();
 });
+
+// this function initializes annotation and zoomify code
+function init() {
+    initAnnotation();
+    initZoomify();
+}
 
 
 </script>
@@ -92,13 +102,11 @@ $(document).ready(function(){
 
 
 <div id="mapDetails">
-
   
   <div class="floatLeft halfSize">  
   
-    <p>This map was uploaded <%= time_ago_in_words @map.creation_date %> ago, last edited <%= time_ago_in_words @map.edit_date %> ago.</p>
-
-    
+  <p>This map was uploaded <%= time_ago_in_words @map.creation_date %> ago, last edited <%= time_ago_in_words @map.edit_date %> ago.</p>
+  
   <% unless @map.description.empty? %>
     <blockquote>
       <%=  @map.description %>
@@ -149,7 +157,11 @@ $(document).ready(function(){
     <div class="floatRight">
       <h2>Add a new Annotation ... </h2>
       <p>
-        What do you have to say about the area you marked? Please enter a short, descriptive title and a body for your new Annotation.
+        What do you want to annotate about the area you marked?
+      </p>
+      <p>
+        Please enter a short, descriptive title and a body for your new Annotation. When you're done, click "Add Annotation".
+        
       </p>
     </div>
     <%= form_for([@map, Annotation.new], :remote => true, :class => 'floatLeft' ) do |f| %>
@@ -161,8 +173,9 @@ $(document).ready(function(){
           <%= f.label :body %><br/>
           <%= f.text_area :body, :cols => 40, :rows => 5 %>
         </p>
-        <input type="button" value="Cancel" id="buttonCancel">
+        <input type="button" value="Cancel" id="buttonCancel" onclick="confirm('Are you sure you want to cancel adding an annotation?');"/>
         <%= f.submit "Add Annotation" %>
+        <%= f.text_field :wkt_data, :hidden => true %>
     <% end %>
     </div>
   </div>

@@ -15,7 +15,6 @@ class CreateTables < ActiveRecord::Migration
       t.integer :user_id
       t.integer :width
       t.integer :height
-      t.string :wkt_data
       t.timestamps
     end
 
@@ -38,6 +37,7 @@ class CreateTables < ActiveRecord::Migration
       t.datetime :edit_date
       t.integer :user_id
       t.integer :map_id
+      t.string :wkt_data
       t.timestamps
     end
 
