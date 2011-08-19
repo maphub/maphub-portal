@@ -15,6 +15,7 @@ class CreateTables < ActiveRecord::Migration
       t.integer :user_id
       t.integer :width
       t.integer :height
+      t.string :wkt_data
       t.timestamps
     end
 

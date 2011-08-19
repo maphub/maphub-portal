@@ -3,13 +3,17 @@
 <script type="text/javascript">
 
 function initAnnotation() {
-    $(".new_annotation").hide();
+    $("#slideUpBar").hide();
     $("#createNewAnnotation").click(function(){
       $("#annotation_title").attr("value", "");
       $("#annotation_body").attr("value", "");
-      $(".new_annotation").slideDown(function(){
+      $("#slideUpBar").slideDown(function(){
         $("#annotation_title").focus();
       });
+    });
+    
+    $("#buttonCancel").click(function(){
+      $("#slideUpBar").slideUp();
     });
 }
 
@@ -64,7 +68,11 @@ function init() {
 
 function added(evt) {
     console.log(evt.feature.geometry.bounds);
-    
+    $("#annotation_title").attr("value", "");
+    $("#annotation_body").attr("value", "");
+    $("#slideUpBar").slideDown(function(){
+      $("#annotation_title").focus();
+    });
 }
 
 $(document).ready(function(){
@@ -113,7 +121,7 @@ $(document).ready(function(){
 
 <br style="clear:both;">
 
-
+<hr>
 
 <div id="annotations" class="halfSize floatLeft">
   <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
@@ -124,29 +132,39 @@ $(document).ready(function(){
   </ul>
 
   <!-- <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p> -->
-  <% if user_signed_in? %>
+  <!-- <% if user_signed_in? %>
     <p>
     <div class="pseudoButton">
       <a id="createNewAnnotation">Create a new annotation</a>
     </div>
     </p>
   <% end %>
+  -->
 </div>
 
-<div class="halfSize floatLeft">
-<%= form_for([@map, Annotation.new], :remote => true  ) do |f| %>
-<h2>New Annotation</h2>
-  <p>
-  <%= f.label :title %><br/>
-  <%= f.text_field :title %>
-  </p>
-  <p>
-  <%= f.label :body %><br/>
-  <%= f.text_area :body, :cols => 40, :rows => 5 %>
-  </p>
-  <%= f.submit "Add Annotation" %>
-<% end %>
-</div>
-
-  
 <br style="clear:both;">
+
+<div id="slideUpBar">
+  <div id="slideUpBarContent">
+    <div class="floatRight">
+      <h2>Add a new Annotation ... </h2>
+      <p>
+        What do you have to say about the area you marked? Please enter a short, descriptive title and a body for your new Annotation.
+      </p>
+    </div>
+    <%= form_for([@map, Annotation.new], :remote => true, :class => 'floatLeft' ) do |f| %>
+        <p>
+          <%= f.label :title %><br/>
+          <%= f.text_field :title, :size => 55 %>
+        </p>
+        <p>
+          <%= f.label :body %><br/>
+          <%= f.text_area :body, :cols => 40, :rows => 5 %>
+        </p>
+        <input type="button" value="Cancel" id="buttonCancel">
+        <%= f.submit "Add Annotation" %>
+    <% end %>
+    </div>
+  </div>
+</div>
+

@@ -66,6 +66,10 @@ body {
   height:100%;
 }
 
+small {
+  font-size:0.7em;
+}
+
 a, a:link, a:visited, a:hover {
     color: #069;
     font-weight: bold;
@@ -173,7 +177,25 @@ kbd {
 	float: right;
 }
 
+/* POPUP BAR */
 
+#slideUpBar {
+  width: 100%;
+  height: 210px;
+  position:fixed;
+  bottom:0;
+  left:0;
+  background-color:#333;
+  color:#eee;
+  display: block;
+  z-index:99999;
+}
+
+#slideUpBarContent {
+  width: 1000px;
+  margin: 0 auto;
+  padding-top:10px;
+}
 
 /* HEADER MESSAGE */
 
