@@ -24,22 +24,15 @@
         
 # Comments/TODO Werner
 
-- TODO Implement a callback for creating Annotations, including a bar that pops up (like [this](http://spyrestudios.com/how-to-create-a-cute-popup-bar-with-html5-css3-and-jquery/)).
-
-Something like this:
-
-    layer.events.register("featureselected", layer, selected);
-    function selected (evt) {
-      alert(evt.feature.id + " selected on " + this.name);
-    }
-    
-Then access the polygon coordinates. Convert them to [WKT](http://dev.openlayers.org/docs/files/OpenLayers/Format/WKT-js.html) -- add as a hidden field.
-
-
+- Restore annotations from stored WKT
 
 - Porting views (browsing):
   - add various viewing methods (list/coverflow)
   - add [pagination](https://github.com/mislav/will_paginate)
+
+- What should we do with deletion? Implement a soft-delete version using `acts_as_paranoid` or similar.
+
+- What should we do with versioning? Implement something using [`paper_trail`](https://github.com/airblade/paper_trail).
 
 - Admin interface
   - administrate users
