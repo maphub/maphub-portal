@@ -47,6 +47,8 @@ table {
 	border-spacing: 0;
 }
 
+/* ========================================================  */
+
 
 html * {
   margin: 0;
@@ -60,6 +62,8 @@ body {
   color: #333;
   width: 1000px;
   font: 11px Helvetica, Arial, sans-serif;
+  font-variant-ligatures: common-ligatures;
+  -moz-font-feature-settings: "liga=1, swsh=0, cswh=0";
   line-height: 18px;
   margin: 0 auto;  
   padding-top:15px;
@@ -140,23 +144,13 @@ kbd {
 
 /* PSEUDO BUTTONS */
 
-.pseudoButton {
-  background-color: #069;
+button  a {
+  font-weight: normal !important;
   display: block;
-  width:150px;
-  color: white;
-  padding:3px;
-  margin-top:3px;
-  margin-bottom:3px;
-  margin-right:5px; /* for floating next to each other */
-  text-align:center;
-  cursor: pointer;
-  font-weight:bold;
 }
 
-.pseudoButton a {
-  color:white;
-  display:block;
+button:hover a {
+    color: white !important;
 }
 
 /* SEARCH FIELD */
@@ -726,7 +720,7 @@ input {
   line-height:200%;
 }
 
-input:focus {
+input[type="text"]:focus {
   background-color: #ffe;
 }
 

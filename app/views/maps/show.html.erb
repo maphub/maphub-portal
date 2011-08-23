@@ -38,7 +38,6 @@ function initMapView(){
     
     /* The annotation layer */
     alayer = new OpenLayers.Layer.Vector( "Annotations" );
-    parseWKT();
     
     /* Display options */
     var options = {
@@ -54,6 +53,8 @@ function initMapView(){
     map.addLayer(layer);
     map.addLayer(vlayer);
     map.addLayer(alayer);
+    
+    parseWKT();
     
     // map.addControl(new OpenLayers.Control.MousePosition());
     map.addControl(new OpenLayers.Control.PanZoomBar());
@@ -76,8 +77,8 @@ function parseWKT() {
   
   $(".wktData").each(function(){
     var wkt_data = $(this).text();
-    var wkt_data_parsed = wkt_parser.read(wkt_data);
-    features.push(new OpenLayers.Feature.Vector(wkt_data_parsed));
+    var wkt_data_parsed = wkt_parser.read(wkt_data); // wkt_data_parsed is an instance of a OpenLayers.Feature.Vector
+    features.push(wkt_data_parsed);
   });
   
   alayer.addFeatures(features);
