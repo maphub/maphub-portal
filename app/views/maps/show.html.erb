@@ -4,10 +4,14 @@
 
 // global OpenLayers variables
 var map, layer, vlayer, alayer;
+// association of annotation ID and feature ID
+var feature_annotation = new Array();
 
 // this function implements the DOM manipulation for adding new annotations
 function initAnnotation() {
     $("#slideUpBar").hide();
+    $(".annotationOverlay").hide();
+    
     $("#createNewAnnotation").click(function(){
       $("#annotation_title").attr("value", "");
       $("#annotation_body").attr("value", "");
@@ -18,6 +22,10 @@ function initAnnotation() {
     
     $("#buttonCancel").click(function(){
       $("#slideUpBar").slideUp();
+    });
+    
+    $(".annotationClose").click(function(){
+      $(this).parents(".annotationOverlay").slideUp();
     });
 }
 
@@ -38,6 +46,7 @@ function initMapView(){
     
     /* The annotation layer */
     alayer = new OpenLayers.Layer.Vector( "Annotations" );
+    alayer.events.register("featureselected", vlayer, selected);
     
     /* Display options */
     var options = {
@@ -61,6 +70,10 @@ function initMapView(){
     map.addControl(new OpenLayers.Control.MouseDefaults());
     map.addControl(new OpenLayers.Control.KeyboardDefaults());
     
+    var select = new OpenLayers.Control.SelectFeature([alayer]);
+    map.addControl(select);
+    select.activate();
+    
     <% if user_signed_in? %>
     map.addControl(new OpenLayers.Control.EditingToolbar(vlayer));
     <% end %>
@@ -75,10 +88,16 @@ function parseWKT() {
   var features = [];
   var bounds;
   
-  $(".wktData").each(function(){
+  // iterate over each annotation's WKT data
+  // we associate the ID with the feature's ID
+  $(".annotationWktData").each(function(){
     var wkt_data = $(this).text();
     var wkt_data_parsed = wkt_parser.read(wkt_data); // wkt_data_parsed is an instance of a OpenLayers.Feature.Vector
     features.push(wkt_data_parsed);
+    
+    var annotation_id = $(this).parent().parent().attr("id");
+    var feature_id = wkt_data_parsed.id;
+    feature_annotation[feature_id]  = annotation_id;
   });
   
   alayer.addFeatures(features);
@@ -97,6 +116,13 @@ function added(evt) {
     $("#slideUpBar").slideDown(function(){
       $("#annotation_title").focus();
     });
+}
+
+// This function is called when an existing feature on the Annotation layer was clicked
+function selected(evt) {
+    var annotation_id = feature_annotation[evt.feature.id];
+    var overlay = $("#" + annotation_id);
+    overlay.show();
 }
 
 // this function is called when the document is loaded
@@ -157,19 +183,21 @@ function init() {
   <ul id="annotationList">
     <% for annotation in @map.annotations.order("edit_date").reverse %>
       <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
-      <div class="hiddenElement wktData"><%= annotation.wkt_data %></div>
     <% end %>
   </ul>
+</div>
 
-  <!-- <p><div class="pseudoButton"><%= link_to "Create a new annotation", new_map_annotation_path(@map) %></div></p> -->
-  <!-- <% if user_signed_in? %>
-    <p>
-    <div class="pseudoButton">
-      <a id="createNewAnnotation">Create a new annotation</a>
+<div id="hiddenAnnotations">
+  <% for annotation in @map.annotations.order("edit_date") %>
+    <div class="annotationOverlay" id="<%= annotation.id %>">
+      <div class="annotationOverlayContent">
+        <small style="float:right;"><a class="annotationClose">Close</a></small>
+        <div class="annotationTitle"><%= link_to annotation.title, annotation, :target => :blank %></div>
+        <div class="annotationBody"><%= annotation.body %></div>
+        <div class="annotationWktData hiddenElement"><%= annotation.wkt_data %></div>
+      </div>
     </div>
-    </p>
   <% end %>
-  -->
 </div>
 
 <br style="clear:both;">

@@ -7,9 +7,13 @@
   <blockquote>
   maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
   </blockquote>
-
-  <div class="pseudoButton floatLeft"><%= link_to 'Log in', new_user_session_path %></div>
-  <div class="pseudoButton floatLeft"><%= link_to 'Sign up', new_user_registration_path %></div>
+  <hr><br>
+  <p>
+  <button><%= link_to 'Log in', new_user_session_path %></button> if you already have an account with us.
+  </p>
+  <p>
+  <button><%= link_to 'Sign up', new_user_registration_path %></button> if you want to start contributing. It only takes a minute!
+  </p>
 
 <% else %>
 

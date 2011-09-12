@@ -40,6 +40,17 @@ class CreateTables < ActiveRecord::Migration
       t.string :wkt_data
       t.timestamps
     end
+    
+    # GEOREFERENCES belong to a USER and a MAP
+     create_table :georeferences do |t|
+      t.string :title
+      t.datetime :creation_date
+      t.datetime :edit_date
+      t.integer :user_id
+      t.integer :map_id
+      t.string :wkt_data
+      t.timestamps
+    end
 
     create_table :collections_maps, :id => false do |t|
       t.integer :collection_id

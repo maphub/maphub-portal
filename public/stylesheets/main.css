@@ -557,6 +557,24 @@ code {
 
 }
 
+/* MAP VIEW */
+
+.annotationOverlay {
+  position: absolute;
+  padding:5px;
+  left: 0px;
+  top: 0px;
+  width:300px;
+  background-color:#fff;
+  border:1px solid #333;
+  height:auto;
+  z-index: 1000;
+}
+
+.annotationTitle {
+  font-weight:bold;
+}
+
 /* CONTENT FLOW */
 
 .ContentFlow {
@@ -649,7 +667,6 @@ blockquote {
   -webkit-border-radius: 5px;
 }
 
-
 /* TABLES */
 
 table {
@@ -736,7 +753,7 @@ input[type="text"]:focus {
 }
 
 
-/* ACTION BUTTONS */
+/* ACTION BUTTONS (LEGACY) */
 
 .buttons {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
