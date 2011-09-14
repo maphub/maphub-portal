@@ -1,14 +1,14 @@
 <%= javascript_include_tag "OpenLayers" %>
 
 <script type="text/javascript">
-
-// global OpenLayers variables
-var map, layer, vlayer, alayer;
+  
+  // global OpenLayers variables
+var map, baseLayer, editLayer, annotationLayer;
 // association of annotation ID and feature ID
 var feature_annotation = new Array();
 
 // this function implements the DOM manipulation for adding new annotations
-function initAnnotation() {
+function initClickHandlers() {
     $("#slideUpBar").hide();
     $(".annotationOverlay").hide();
     
@@ -30,38 +30,38 @@ function initAnnotation() {
 }
 
 // this function initilalizes the map display with OpenLayers
-function initMapView(){
+function initOpenLayers(){
     
     var zoomify_width = <%= @map.width %>;
     var zoomify_height = <%= @map.height %>;
     var zoomify_url = "<%= @map.tileset_url + '/' %>";
-
+    
     /* The zoomify layer */
-    layer = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
+    baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
         new OpenLayers.Size( zoomify_width, zoomify_height ) );
     
     /* The editing controls layer */
-    vlayer = new OpenLayers.Layer.Vector( "Editable" );
-    vlayer.events.register("featureadded", vlayer, added);
+    editLayer = new OpenLayers.Layer.Vector( "Editable" );
+    editLayer.events.register("featureadded", editLayer, featureAdded);
     
     /* The annotation layer */
-    alayer = new OpenLayers.Layer.Vector( "Annotations" );
-    alayer.events.register("featureselected", vlayer, selected);
+    annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
+    annotationLayer.events.register("featureselected", editLayer, featureSelected);
     
     /* Display options */
     var options = {
         controls: [], 
         maxExtent: new OpenLayers.Bounds(0, 0, zoomify_width, zoomify_height),
-        maxResolution: Math.pow(2, layer.numberOfTiers-1 ),
-        numZoomLevels: layer.numberOfTiers,
+        maxResolution: Math.pow(2, baseLayer.numberOfTiers-1),
+        numZoomLevels: baseLayer.numberOfTiers,
         units: 'pixels'
     };
     
     map = new OpenLayers.Map("viewer", options);
     
-    map.addLayer(layer);
-    map.addLayer(vlayer);
-    map.addLayer(alayer);
+    map.addLayer(baseLayer);
+    map.addLayer(editLayer);
+    map.addLayer(annotationLayer);
     
     parseWKT();
     
@@ -70,15 +70,15 @@ function initMapView(){
     map.addControl(new OpenLayers.Control.MouseDefaults());
     map.addControl(new OpenLayers.Control.KeyboardDefaults());
     
-    var select = new OpenLayers.Control.SelectFeature([alayer]);
+    var select = new OpenLayers.Control.SelectFeature([annotationLayer]);
     map.addControl(select);
     select.activate();
     
     <% if user_signed_in? %>
-    map.addControl(new OpenLayers.Control.EditingToolbar(vlayer));
+    map.addControl(new OpenLayers.Control.EditingToolbar(editLayer));
     <% end %>
 
-    map.setBaseLayer(layer);
+    map.setBaseLayer(baseLayer);
     map.zoomToMaxExtent();
 };
 
@@ -100,11 +100,11 @@ function parseWKT() {
     feature_annotation[feature_id]  = annotation_id;
   });
   
-  alayer.addFeatures(features);
+  annotationLayer.addFeatures(features);
 }
 
 // This function is called when a new feature was added to the map
-function added(evt) {
+function featureAdded(evt) {
     var wkt_data = evt.feature.geometry.toString();
     
     // reinitialize title and body, and copy WKT data
@@ -119,7 +119,7 @@ function added(evt) {
 }
 
 // This function is called when an existing feature on the Annotation layer was clicked
-function selected(evt) {
+function featureSelected(evt) {
     var annotation_id = feature_annotation[evt.feature.id];
     var overlay = $("#" + annotation_id);
     overlay.show();
@@ -127,19 +127,11 @@ function selected(evt) {
 
 // this function is called when the document is loaded
 $(document).ready(function(){
-  init();
+  initClickHandlers();
+  initOpenLayers();
 });
 
-// this function initializes annotation and zoomify code
-function init() {
-    initAnnotation();
-    initMapView();
-}
-
-
 </script>
-
-
 
 <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
 
@@ -211,7 +203,6 @@ function init() {
       </p>
       <p>
         Please enter a short, descriptive title and a body for your new Annotation. When you're done, click "Add Annotation".
-        
       </p>
     </div>
     <%= form_for([@map, Annotation.new], :remote => true, :class => 'floatLeft' ) do |f| %>
