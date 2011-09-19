@@ -4,7 +4,11 @@
   <title>maphub Portal</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag "jquery-ui-1.8.14.custom.min.js" %>
+  <%= javascript_include_tag "jquery-ui-1.8.14.custom.min" %>
+  <!-- Maphub specific JS -->
+  <%= javascript_include_tag "maphub/maphub" %>
+  <%= javascript_include_tag "maphub/annotation_tooltip" %>
+  <%= javascript_include_tag "maphub/annotation_view" %>
   <%= csrf_meta_tag %>
 </head>
 <body>

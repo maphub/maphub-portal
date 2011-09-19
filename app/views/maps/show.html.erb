@@ -1,143 +1,27 @@
 <%= javascript_include_tag "OpenLayers" %>
+<%= javascript_include_tag "maphub/annotation_user_interaction" %>
 
 <script type="text/javascript">
-  
-  // global OpenLayers variables
-var map, baseLayer, editLayer, annotationLayer;
-// association of annotation ID and feature ID
-var annotations = [];
-
-// this function implements the DOM manipulation for adding new annotations
-function initClickHandlers() {
-    $("#slideUpBar").hide();
-    $(".annotationOverlay").hide();
-    
-    $("#createNewAnnotation").click(function(){
-      $("#annotation_title").attr("value", "");
-      $("#annotation_body").attr("value", "");
-      $("#slideUpBar").slideDown(function(){
-        $("#annotation_title").focus();
-      });
-    });
-    
-    $("#buttonCancel").click(function(){
-      $("#slideUpBar").slideUp();
-    });
-    
-    $(".annotationClose").click(function(){
-      $(this).parents(".annotationOverlay").slideUp();
-    });
-}
-
-// this function initilalizes the map display with OpenLayers
-function initOpenLayers(){
-    
-    var zoomify_width = <%= @map.width %>;
-    var zoomify_height = <%= @map.height %>;
-    var zoomify_url = "<%= @map.tileset_url + '/' %>";
-    
-    /* The zoomify layer */
-    baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", zoomify_url, 
-        new OpenLayers.Size( zoomify_width, zoomify_height ) );
-    
-    /* The editing controls layer */
-    editLayer = new OpenLayers.Layer.Vector( "Editable" );
-    editLayer.events.register("featureadded", editLayer, featureAdded);
-    
-    /* The annotation layer */
-    annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
-    annotationLayer.events.register("featureselected", editLayer, featureSelected);
-    
-    /* Display options */
-    var options = {
-        controls: [], 
-        maxExtent: new OpenLayers.Bounds(0, 0, zoomify_width, zoomify_height),
-        maxResolution: Math.pow(2, baseLayer.numberOfTiers-1),
-        numZoomLevels: baseLayer.numberOfTiers,
-        units: 'pixels'
-    };
-    
-    map = new OpenLayers.Map("viewer", options);
-    
-    map.addLayer(baseLayer);
-    map.addLayer(editLayer);
-    map.addLayer(annotationLayer);
-    
-    remoteLoadAnnotations();
-    
-    map.addControl(new OpenLayers.Control.MousePosition());
-    map.addControl(new OpenLayers.Control.PanZoomBar());
-    map.addControl(new OpenLayers.Control.MouseDefaults());
-    map.addControl(new OpenLayers.Control.KeyboardDefaults());
-    
-    
-    /* Allow selection of features */
-    var select = new OpenLayers.Control.SelectFeature([annotationLayer]);
-    map.addControl(select);
-    select.activate();
-    
-    /* Allow creation of features */
-    <% if user_signed_in? %>
-    map.addControl(new OpenLayers.Control.EditingToolbar(editLayer));
-    <% end %>
-    
-    map.setBaseLayer(baseLayer);
-    map.zoomToMaxExtent();
-};
-
-
-function remoteLoadAnnotations() {
-  var annotations_url = "<%= map_annotations_url(@map, :format => :json) %>";
-  var wkt_parser = new OpenLayers.Format.WKT();
-  var features = [];
-  
-  $.getJSON(annotations_url, function(data) { 
-    $.each(data, function(key, val) {
-      var feature = wkt_parser.read(val.annotation.wkt_data);
-      features.push(feature);
-      feature.annotation = val.annotation;
-      annotations.push(val.annotation);
-      
-    });
-    annotationLayer.addFeatures(features);
-  });
-  
-  
-}
-
-// This function is called when a new feature was added to the map
-function featureAdded(evt) {
-    var wkt_data = evt.feature.geometry.toString();
-    
-    // reinitialize title and body, and copy WKT data
-    $("#annotation_title").attr("value", "");
-    $("#annotation_body").attr("value", "");
-    $("#annotation_wkt_data").attr("value", wkt_data);
-    
-    // show the popup
-    $("#slideUpBar").slideDown(function(){
-      $("#annotation_title").focus();
-    });
-}
-
-// This function is called when an existing feature on the Annotation layer was clicked
-function featureSelected(evt) {
-    alert(evt.feature.annotation.title);
-}
 
 // this function is called when the document is loaded
 $(document).ready(function(){
-  initClickHandlers();
-  initOpenLayers();
+  new MapHub.AnnotationUserInteraction();
+  new MapHub.AnnotationView(
+    <%= @map.width %>,
+    <%= @map.height %>,
+    "<%= @map.tileset_url + '/' %>",
+    "<%= map_annotations_url(@map, :format => :json) %>",
+    <%= user_signed_in? ? "true" : "false" %>
+  );
+  
 });
 
 </script>
 
 <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
 
-<div id="viewer" border="1pt solid"></div>
-
-<br style="clear:both;">
+<div id="viewer"></div>
+<br style="clear:both;"/>
 
 
 <div id="mapDetails">
@@ -179,22 +63,6 @@ $(document).ready(function(){
   </ul>
 </div>
 
-<!-- 
-
-<div id="hiddenAnnotations">
-  <% for annotation in @map.annotations.order("edit_date") %>
-    <div class="annotationOverlay" id="<%= annotation.id %>">
-      <div class="annotationOverlayContent">
-        <small style="float:right;"><a class="annotationClose">Close</a></small>
-        <div class="annotationTitle"><%= link_to annotation.title, annotation, :target => :blank %></div>
-        <div class="annotationBody"><%= annotation.body %></div>
-        <div class="annotationWktData hiddenElement"><%= annotation.wkt_data %></div>
-      </div>
-    </div>
-  <% end %>
-</div> 
-
--->
 
 <br style="clear:both;">
 

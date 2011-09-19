@@ -3,12 +3,12 @@
 
 $(document).ready(function(){
   
-  // ========================================================================
+
   // hides all elements with the .hiddenElement class
   $(".hiddenElement").hide();
 
 
-  // ========================================================================  
+
   // Enables a generic slide down effect
   // Elements with .hiddenElement will be hidden by default and toggled by the .slideDown button.
   //
@@ -22,7 +22,7 @@ $(document).ready(function(){
     $(this).siblings(".hiddenElement").slideDown(function(){ $(this).focus(); });
   });
   
-  // ========================================================================
+
   // Enables a generic slide down effect
   // The next element to the .foldable trigger will be hidden
   $(".foldable").each(function(){
@@ -35,8 +35,7 @@ $(document).ready(function(){
   });
   
   
-  // ========================================================================
-  // turns all buttons into real buttons
-  
+
+  // turns all buttons into "real" jQuery buttons  
   $("button, :button, :submit, .pseudoButton").button();
 });
