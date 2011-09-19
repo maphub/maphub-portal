@@ -5,7 +5,7 @@
   // global OpenLayers variables
 var map, baseLayer, editLayer, annotationLayer;
 // association of annotation ID and feature ID
-var feature_annotation = new Array();
+var annotations = [];
 
 // this function implements the DOM manipulation for adding new annotations
 function initClickHandlers() {
@@ -63,44 +63,46 @@ function initOpenLayers(){
     map.addLayer(editLayer);
     map.addLayer(annotationLayer);
     
-    parseWKT();
+    remoteLoadAnnotations();
     
-    // map.addControl(new OpenLayers.Control.MousePosition());
+    map.addControl(new OpenLayers.Control.MousePosition());
     map.addControl(new OpenLayers.Control.PanZoomBar());
     map.addControl(new OpenLayers.Control.MouseDefaults());
     map.addControl(new OpenLayers.Control.KeyboardDefaults());
     
+    
+    /* Allow selection of features */
     var select = new OpenLayers.Control.SelectFeature([annotationLayer]);
     map.addControl(select);
     select.activate();
     
+    /* Allow creation of features */
     <% if user_signed_in? %>
     map.addControl(new OpenLayers.Control.EditingToolbar(editLayer));
     <% end %>
-
+    
     map.setBaseLayer(baseLayer);
     map.zoomToMaxExtent();
 };
 
-// parses the WKT strings
-function parseWKT() {
+
+function remoteLoadAnnotations() {
+  var annotations_url = "<%= map_annotations_url(@map, :format => :json) %>";
   var wkt_parser = new OpenLayers.Format.WKT();
   var features = [];
-  var bounds;
   
-  // iterate over each annotation's WKT data
-  // we associate the ID with the feature's ID
-  $(".annotationWktData").each(function(){
-    var wkt_data = $(this).text();
-    var wkt_data_parsed = wkt_parser.read(wkt_data); // wkt_data_parsed is an instance of a OpenLayers.Feature.Vector
-    features.push(wkt_data_parsed);
-    
-    var annotation_id = $(this).parent().parent().attr("id");
-    var feature_id = wkt_data_parsed.id;
-    feature_annotation[feature_id]  = annotation_id;
+  $.getJSON(annotations_url, function(data) { 
+    $.each(data, function(key, val) {
+      var feature = wkt_parser.read(val.annotation.wkt_data);
+      features.push(feature);
+      feature.annotation = val.annotation;
+      annotations.push(val.annotation);
+      
+    });
+    annotationLayer.addFeatures(features);
   });
   
-  annotationLayer.addFeatures(features);
+  
 }
 
 // This function is called when a new feature was added to the map
@@ -120,9 +122,7 @@ function featureAdded(evt) {
 
 // This function is called when an existing feature on the Annotation layer was clicked
 function featureSelected(evt) {
-    var annotation_id = feature_annotation[evt.feature.id];
-    var overlay = $("#" + annotation_id);
-    overlay.show();
+    alert(evt.feature.annotation.title);
 }
 
 // this function is called when the document is loaded
@@ -179,6 +179,8 @@ $(document).ready(function(){
   </ul>
 </div>
 
+<!-- 
+
 <div id="hiddenAnnotations">
   <% for annotation in @map.annotations.order("edit_date") %>
     <div class="annotationOverlay" id="<%= annotation.id %>">
@@ -190,7 +192,9 @@ $(document).ready(function(){
       </div>
     </div>
   <% end %>
-</div>
+</div> 
+
+-->
 
 <br style="clear:both;">
 
