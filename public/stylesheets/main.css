@@ -559,12 +559,19 @@ code {
 
 /* MAP VIEW */
 
-.annotationOverlay {
-  position: absolute;
+#annotationOverlays {
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  position:absolute;
+}
+
+.annotationTooltip {
   padding:5px;
-  left: 0px;
-  top: 0px;
   width:300px;
+/*  left:-9999px;*/
+  position:absolute;
   background-color:#fff;
   border:1px solid #333;
   height:auto;

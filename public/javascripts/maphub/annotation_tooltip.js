@@ -1,20 +1,29 @@
 /* Creates a tooltip for each annotation */
 
-MapHub.AnnotationTooltip = function(text) {
+MapHub.AnnotationTooltip = function(annotation) {
   this.div = document.createElement("div");
-  this.div.innerHTML = text;
-  this.div.setAttribute("class", "pelagios-tooltip");
-  this.div.style.position = "absolute";
+  this.div.setAttribute("class", "annotationTooltip");
+  
+  this.div_title = document.createElement("div");
+  this.div_title.setAttribute("class", "annotationTitle");
+  this.div_title.innerHTML = annotation.title;
+  this.div.appendChild(this.div_title);
+  
+  this.div_body = document.createElement("div");
+  this.div_body.setAttribute("class", "annotationBody");
+  this.div_body.innerHTML = annotation.body;
+  this.div.appendChild(this.div_body); 
+  
   this.hide();
-  document.body.appendChild(this.div);
+  document.getElementById("annotationOverlays").appendChild(this.div);
 }
 
-MapHub.AnnotationTooltip.OFFSET_X = 15;
-MapHub.AnnotationTooltip.OFFSET_Y = 5;
+MapHub.AnnotationTooltip.OFFSET_X = 0;
+MapHub.AnnotationTooltip.OFFSET_Y = 0;
 
 MapHub.AnnotationTooltip.prototype.show = function(x, y) {
-  this.div.style.left = x + MapHub.AnnotationTooltip.OFFSET_X;
-  this.div.style.top = y + MapHub.AnnotationTooltip.OFFSET_Y;
+  this.div.style.left = x + MapHub.AnnotationTooltip.OFFSET_X + "px";
+  this.div.style.top = y + MapHub.AnnotationTooltip.OFFSET_Y + "px";
   this.div.style.visibility = "visible";
 }
 

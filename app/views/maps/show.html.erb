@@ -13,7 +13,6 @@ $(document).ready(function(){
     "<%= map_annotations_url(@map, :format => :json) %>",
     <%= user_signed_in? ? "true" : "false" %>
   );
-  
 });
 
 </script>
@@ -22,7 +21,6 @@ $(document).ready(function(){
 
 <div id="viewer"></div>
 <br style="clear:both;"/>
-
 
 <div id="mapDetails">
   
@@ -63,6 +61,7 @@ $(document).ready(function(){
   </ul>
 </div>
 
+<div id="annotationOverlays"></div>
 
 <br style="clear:both;">
 

@@ -12,7 +12,12 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   /* Callbacks for added / removed features */
   // This function is called when an existing feature on the Annotation layer was clicked
   function featureSelected(evt) {
-    var annotation = evt.feature.annotation;
+    evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
+    evt.feature.tooltip.show(0,0);
+  }
+  
+  function featureUnselected(evt) {
+    evt.feature.tooltip.hide();
   }
   
   // This function is called when a feature was added to the Edit layer
@@ -42,6 +47,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   /* The annotation layer */
   this.annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
   this.annotationLayer.events.register("featureselected", this.editLayer, featureSelected);
+  this.annotationLayer.events.register("featureunselected", this.editLayer, featureUnselected);
 
   /* Display options */
   var options = {
