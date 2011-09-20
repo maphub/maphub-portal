@@ -73,6 +73,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
 
 
   /* Allow selection of features */
+  // TODO: http://dev.openlayers.org/docs/files/OpenLayers/Control/SelectFeature-js.html#OpenLayers.Control.SelectFeature.hover
   var select = new OpenLayers.Control.SelectFeature([this.annotationLayer]);
   this.map.addControl(select);
   select.activate();

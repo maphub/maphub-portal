@@ -41,8 +41,8 @@ class CreateTables < ActiveRecord::Migration
       t.timestamps
     end
     
-    # GEOREFERENCES belong to a USER and a MAP
-     create_table :georeferences do |t|
+    # CONTROLPOINTS belong to a USER and a MAP
+     create_table :controlpoints do |t|
       t.string :title
       t.datetime :creation_date
       t.datetime :edit_date
