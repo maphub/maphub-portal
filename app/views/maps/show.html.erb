@@ -86,7 +86,7 @@ $(document).ready(function(){
           <%= f.label :body %><br/>
           <%= f.text_area :body, :cols => 40, :rows => 5 %>
         </p>
-        <input type="button" value="Cancel" id="buttonCancel" onclick="confirm('Are you sure you want to cancel adding an annotation?');"/>
+        <input type="button" value="Cancel" id="buttonCancel"/>
         <%= f.submit "Add Annotation" %>
         <%= f.text_field :wkt_data, :hidden => true %>
     <% end %>

@@ -1,4 +1,5 @@
 /* This class loads the OpenLayers view for the Zoomify tileset */
+
 MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, editable) {
   
   this.zoomify_width = width;
@@ -22,8 +23,18 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
-    var wkt_data = evt.feature.geometry.toString();
+    // cancel editing an annotation
+    $("#buttonCancel").click(function(){
+      var response = confirm('Are you sure you want to cancel adding an annotation?');
+      if (response)
+        $("#slideUpBar").slideUp();
+      else
+        $("#annotation_title").focus();
+        return;
+    });
     
+    var wkt_data = evt.feature.geometry.toString();
+    var self = this;
     // reinitialize title and body, and copy WKT data
     $("#annotation_title").attr("value", "");
     $("#annotation_body").attr("value", "");
@@ -33,6 +44,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     $("#slideUpBar").slideDown(function(){
       $("#annotation_title").focus();
     });
+    
   }
 
 
@@ -72,9 +84,10 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 
 
-  /* Allow selection of features */
-  // TODO: http://dev.openlayers.org/docs/files/OpenLayers/Control/SelectFeature-js.html#OpenLayers.Control.SelectFeature.hover
-  var select = new OpenLayers.Control.SelectFeature([this.annotationLayer]);
+  /* Allow selection of features upon hovering */
+  var select = new OpenLayers.Control.SelectFeature(
+    [this.annotationLayer], { hover: true }
+  );
   this.map.addControl(select);
   select.activate();
 

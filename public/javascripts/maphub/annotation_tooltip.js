@@ -2,9 +2,9 @@
 
 MapHub.AnnotationTooltip = function(annotation) {
   this.div = document.createElement("div");
-  this.div.setAttribute("class", "annotationTooltip");
+  this.div.setAttribute("class", "annotationTooltip shadow");
   
-  this.div_title = document.createElement("div");
+  this.div_title = document.createElement("h3");
   this.div_title.setAttribute("class", "annotationTitle");
   this.div_title.innerHTML = annotation.title;
   this.div.appendChild(this.div_title);

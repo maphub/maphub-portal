@@ -501,9 +501,6 @@ button:hover a {
   margin-right: auto;
 }
 
-,mapGrid {
-}
-
 .mapGridImage {
   float:left;
   width:65px;
@@ -560,11 +557,7 @@ code {
 /* MAP VIEW */
 
 #annotationOverlays {
-  width:100%;
-  height:100%;
-  left:0;
-  top:0;
-  position:absolute;
+
 }
 
 .annotationTooltip {
@@ -572,10 +565,20 @@ code {
   width:300px;
 /*  left:-9999px;*/
   position:absolute;
-  background-color:#fff;
-  border:1px solid #333;
+  background-color:#333;
+  color:#eee;
   height:auto;
   z-index: 1000;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+}
+
+.shadow {
+  -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #ccc;
 }
 
 .annotationTitle {
