@@ -6,7 +6,6 @@
 
 // this function is called when the document is loaded
 $(document).ready(function(){
-  new MapHub.AnnotationUserInteraction();
   window.annotation_view = new MapHub.AnnotationView(
     <%= @map.width %>,
     <%= @map.height %>,
@@ -18,15 +17,13 @@ $(document).ready(function(){
 
 </script>
 
-<h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
-
 <div id="viewer"></div>
 <br style="clear:both;"/>
 
 <div id="mapDetails">
   
   <div class="floatLeft halfSize">  
-  
+  <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
   <p>This map was uploaded <%= time_ago_in_words @map.creation_date %> ago, last edited <%= time_ago_in_words @map.edit_date %> ago.</p>
   
   <% unless @map.description.empty? %>
@@ -66,7 +63,7 @@ $(document).ready(function(){
 
 <br style="clear:both;">
 
-<div id="slideUpBar">
+<div id="slideUpBar" style="display:none;">
   <div id="slideUpBarContent">
     <div class="floatRight">
       <h2>Add a new Annotation ... </h2>
