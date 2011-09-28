@@ -8,4 +8,6 @@ $(response).hide().prependTo("#annotationList").fadeIn("slow");
 // hide the form
 $("#slideUpBar").slideUp();
 
-// new MapHub.AnnotationView.remoteLoadSingleAnnotation("<%= annotation_url(@annotation, :format => :json) %>");
+// first clear the editing layer, then load the newly created annotation
+window.annotation_view.editLayer.removeAllFeatures();
+window.annotation_view.loadSingleAnnotation("<%= annotation_url(@annotation, :format => :json) %>");

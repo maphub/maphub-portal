@@ -7,7 +7,7 @@
 // this function is called when the document is loaded
 $(document).ready(function(){
   new MapHub.AnnotationUserInteraction();
-  new MapHub.AnnotationView(
+  window.annotation_view = new MapHub.AnnotationView(
     <%= @map.width %>,
     <%= @map.height %>,
     "<%= @map.tileset_url + '/' %>",

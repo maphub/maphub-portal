@@ -108,12 +108,25 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
   $.getJSON(this.annotations_url, function(data) { 
     $.each(data, function(key, val) {
       var feature = wkt_parser.read(val.annotation.wkt_data);
-      
       feature.annotation = val.annotation;
       self.features.push(feature);
       self.annotations.push(val.annotation);
-      
     });
     self.annotationLayer.addFeatures(self.features);
+  });
+}
+
+/* Loads a single annotation for this map via a JSON request */
+MapHub.AnnotationView.prototype.loadSingleAnnotation = function(url) {
+  var wkt_parser = new OpenLayers.Format.WKT();
+  var self = this;
+  
+  $.getJSON(url, function(data) {
+    console.log(data);
+    var feature = wkt_parser.read(data.annotation.wkt_data);
+    feature.annotation = data.annotation;
+    self.features.push(feature);
+    self.annotations.push(data.annotation);
+    self.annotationLayer.addFeatures([feature]);
   });
 }
