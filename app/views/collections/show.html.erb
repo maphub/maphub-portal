@@ -3,7 +3,7 @@
 <div id="collectionDetails">
   
   <div class="floatLeft halfSize">
-  <p>This collection was created <%= time_ago_in_words(@collection.creation_date) %> ago, last edited  <%= time_ago_in_words(@collection.edit_date) %> ago.</p>
+  <p>This collection was created <%= time_ago_in_words(@collection.created_at) %> ago, last edited  <%= time_ago_in_words(@collection.updated_at) %> ago.</p>
 
   <% unless @collection.description.empty? %>
     <blockquote>

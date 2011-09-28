@@ -24,7 +24,7 @@ $(document).ready(function(){
   
   <div class="floatLeft halfSize">  
   <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
-  <p>This map was uploaded <%= time_ago_in_words @map.creation_date %> ago, last edited <%= time_ago_in_words @map.edit_date %> ago.</p>
+  <p>This map was uploaded <%= time_ago_in_words @map.created_at %> ago, last edited <%= time_ago_in_words @map.updated_at %> ago.</p>
   
   <% unless @map.description.empty? %>
     <blockquote>
@@ -53,8 +53,8 @@ $(document).ready(function(){
 <div id="annotations" class="halfSize floatLeft">
   <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
   <ul id="annotationList">
-    <% for annotation in @map.annotations.order("edit_date").reverse %>
-      <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.edit_date) %> ago</li>
+    <% for annotation in @map.annotations.order("updated_at").reverse %>
+      <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.updated_at) %> ago</li>
     <% end %>
   </ul>
 </div>

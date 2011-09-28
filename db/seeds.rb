@@ -40,8 +40,6 @@ map_ids.each_with_index do |id, index|
     map.title = "Map #{index+1}"
     map.description = "This is a sample description"
     map.tileset_url = "http://europeana.mminf.univie.ac.at/maps/#{id}"
-    map.creation_date = DateTime.now
-    map.edit_date = DateTime.now
     map.user = User.first
   end
   puts "Created map #{index+1}"

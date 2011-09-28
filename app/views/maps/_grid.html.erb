@@ -9,7 +9,7 @@
 
 <% 
 unless local_assigns.has_key? :maps
-  maps = Maps.order("edit_date").limit(12)
+  maps = Maps.order("updated_at").limit(12)
 end
 %>
 
@@ -20,7 +20,7 @@ end
       <div style="display:none;" class="previewTextHidden">
         <%= link_to map.title, map %> by 
         <%= link_to map.user.username, map.user %>, 
-        <%= time_ago_in_words(map.creation_date) %> ago
+        <%= time_ago_in_words(map.created_at) %> ago
       </div>
     </div>
   <% end %>

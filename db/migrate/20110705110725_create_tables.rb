@@ -8,8 +8,6 @@ class CreateTables < ActiveRecord::Migration
       t.text :description
       t.string :tileset_url
       t.integer :views, :default => 0
-      t.datetime :creation_date
-      t.datetime :edit_date
       t.datetime :map_date
       t.boolean :public
       t.integer :user_id
@@ -22,8 +20,6 @@ class CreateTables < ActiveRecord::Migration
     create_table :collections do |t|
       t.string :title
       t.text :description
-      t.datetime :creation_date
-      t.datetime :edit_date
       t.boolean :public
       t.integer :user_id
       t.timestamps
@@ -33,8 +29,6 @@ class CreateTables < ActiveRecord::Migration
     create_table :annotations do |t|
       t.string :title
       t.text :body
-      t.datetime :creation_date
-      t.datetime :edit_date
       t.integer :user_id
       t.integer :map_id
       t.string :wkt_data
@@ -42,13 +36,14 @@ class CreateTables < ActiveRecord::Migration
     end
     
     # CONTROLPOINTS belong to a USER and a MAP
-     create_table :controlpoints do |t|
+     create_table :control_points do |t|
       t.string :title
-      t.datetime :creation_date
-      t.datetime :edit_date
       t.integer :user_id
       t.integer :map_id
       t.string :wkt_data
+      t.string :geonames_link
+      t.decimal :lat, :precision => 12, :scale => 10
+      t.decimal :long, :precision => 12, :scale => 10
       t.timestamps
     end
 
@@ -63,5 +58,7 @@ class CreateTables < ActiveRecord::Migration
     drop_table :maps
     drop_table :collections
     drop_table :annotations
+    drop_table :control_points
+    drop_table :collections_maps
   end
 end

@@ -57,8 +57,6 @@ class AnnotationsController < ApplicationController
   # POST /annotations.xml
   def create
     @annotation = Annotation.new(params[:annotation])
-    @annotation.creation_date = DateTime.now
-    @annotation.edit_date = DateTime.now
     @annotation.user = current_user
     @annotation.map = Map.find(params[:map_id])
     @map = @annotation.map # we have to do this so the form is correctly displayed on error
@@ -78,7 +76,6 @@ class AnnotationsController < ApplicationController
   # PUT /annotations/1.xml
   def update
     @annotation = Annotation.find(params[:id])
-    @annotation.edit_date = DateTime.now
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully updated.') }

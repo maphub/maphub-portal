@@ -3,7 +3,7 @@
 <div id="annotationDetails">
 
   <div class="floatLeft halfSize">
-    <p>This annotation was created <%= time_ago_in_words(@annotation.creation_date) %> ago, last edited  <%= time_ago_in_words(@annotation.edit_date) %> ago.</p>
+    <p>This annotation was created <%= time_ago_in_words(@annotation.created_at) %> ago, last edited  <%= time_ago_in_words(@annotation.updated_at) %> ago.</p>
     
     <% unless @annotation.body.empty? %>
       <blockquote>

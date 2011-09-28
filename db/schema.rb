@@ -34,8 +34,6 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
   create_table "annotations", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.datetime "creation_date"
-    t.datetime "edit_date"
     t.integer  "user_id"
     t.integer  "map_id"
     t.string   "wkt_data"
@@ -46,8 +44,6 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
   create_table "collections", :force => true do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "creation_date"
-    t.datetime "edit_date"
     t.boolean  "public"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -59,13 +55,23 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
     t.integer "map_id"
   end
 
+  create_table "control_points", :force => true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.integer  "map_id"
+    t.string   "wkt_data"
+    t.string   "geonames_link"
+    t.decimal  "lat",           :precision => 12, :scale => 10
+    t.decimal  "long",          :precision => 12, :scale => 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "maps", :force => true do |t|
-    t.string   "title",                        :null => false
+    t.string   "title",                      :null => false
     t.text     "description"
     t.string   "tileset_url"
-    t.integer  "views",         :default => 0
-    t.datetime "creation_date"
-    t.datetime "edit_date"
+    t.integer  "views",       :default => 0
     t.datetime "map_date"
     t.boolean  "public"
     t.integer  "user_id"

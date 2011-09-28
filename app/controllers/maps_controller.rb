@@ -54,8 +54,6 @@ class MapsController < ApplicationController
   # POST /maps.xml
   def create
     @map = Map.new(params[:map])
-    @map.creation_date = DateTime.now
-    @map.edit_date = DateTime.now
     @map.user = current_user
     respond_to do |format|
       if @map.save
@@ -72,7 +70,6 @@ class MapsController < ApplicationController
   # PUT /maps/1.xml
   def update
     @map = Map.find(params[:id])
-    @map.edit_date = DateTime.now
     respond_to do |format|
       if @map.update_attributes(params[:map])
         format.html { redirect_to(@map, :notice => 'Map was successfully updated.') }

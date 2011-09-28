@@ -12,7 +12,7 @@
   <tr>
     <td><%= link_to collection.title, collection %></td>
     <td><%= collection.maps.count %></td>
-    <td><%= collection.creation_date %></td>
+    <td><%= collection.created_at %></td>
     <td><%= link_to collection.user.username, collection.user %></td>
   </tr>
 <% end %>

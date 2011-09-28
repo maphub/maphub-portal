@@ -1,21 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  title: MyString
-  description: MyText
-  tileset_url: MyString
-  views: 1
-  creation_date: 2011-07-05
-  edit_date: 2011-07-05
-  map_date: 2011-07-05
-  public: false
-
-two:
-  title: MyString
-  description: MyText
-  tileset_url: MyString
-  views: 1
-  creation_date: 2011-07-05
-  edit_date: 2011-07-05
-  map_date: 2011-07-05
-  public: false
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+#  column: value

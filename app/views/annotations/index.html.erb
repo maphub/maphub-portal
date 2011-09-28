@@ -11,7 +11,7 @@
 <% @annotations.each do |annotation| %>
   <tr>
     <td><%= link_to annotation.title, annotation %></td>
-    <td><%= annotation.creation_date %></td>
+    <td><%= annotation.created_at %></td>
     <td><%= link_to annotation.user.username, annotation.user %></td>
     <td><%= link_to annotation.map.title, annotation.map %></td>
   </tr>
