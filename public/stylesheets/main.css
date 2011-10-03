@@ -173,7 +173,7 @@ button:hover a {
 
 /* POPUP BAR */
 
-#slideUpBar {
+#slideUpBar, #slideUpBarControlPoint {
   width: 100%;
   height: 210px;
   position:fixed;
@@ -185,7 +185,7 @@ button:hover a {
   z-index:99999;
 }
 
-#slideUpBarContent {
+.slideUpBarContent {
   width: 1000px;
   margin: 0 auto;
   padding-top:10px;

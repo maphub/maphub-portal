@@ -23,18 +23,19 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
-    // cancel editing an annotation
-    $("#buttonCancel").click(function(){
-      var response = confirm('Are you sure you want to cancel adding an annotation?');
-      if (response)
-        $("#slideUpBar").slideUp();
-      else
-        $("#annotation_title").focus();
-        return;
-    });
-    
+    // is this a Control Point or an Annotation?
+    var class_name = evt.feature.geometry.CLASS_NAME;
+    if (class_name == "OpenLayers.Geometry.Point") {
+      controlPointAdded(evt);
+    } else {
+      annotationAdded(evt);
+    }
+  }
+  
+  function annotationAdded(evt) {    
     var wkt_data = evt.feature.geometry.toString();
     var self = this;
+    
     // reinitialize title and body, and copy WKT data
     $("#annotation_title").attr("value", "");
     $("#annotation_body").attr("value", "");
@@ -44,7 +45,12 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     $("#slideUpBar").slideDown(function(){
       $("#annotation_title").focus();
     });
-    
+  }
+  
+  function controlPointAdded(evt) {
+    $("#slideUpBarControlPoint").slideDown(function(){
+      
+    });
   }
 
 
@@ -97,7 +103,22 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
 
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
+  
+  addClickHandlers();
 }
+
+  function addClickHandlers() {
+    // cancel editing an annotation
+    $("#buttonCancel").click(function(){
+      var response = confirm('Are you sure you want to cancel adding an annotation?');
+      if (response)
+        $("#slideUpBar").slideUp();
+      else
+        $("#annotation_title").focus();
+        $("#control_point_title").focus();
+        return;
+    });
+  }
 
 
 /* Loads the annotations for this map via a JSON request */
