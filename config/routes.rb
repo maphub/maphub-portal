@@ -9,8 +9,19 @@ MaphubPortal::Application.routes.draw do
     resources :maps
   end
   
+  resources :control_points do
+    collection do
+      get 'find'
+    end
+  end
+  
   resources :maps do
     resources :annotations
+    resources :control_points do
+      collection do
+        get 'find'
+      end
+    end
     resources :collections
   end
   

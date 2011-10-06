@@ -56,13 +56,15 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
   end
 
   create_table "control_points", :force => true do |t|
-    t.string   "title"
+    t.string   "name"
+    t.string   "countryCode"
     t.integer  "user_id"
     t.integer  "map_id"
-    t.string   "wkt_data"
-    t.string   "geonames_link"
-    t.decimal  "lat",           :precision => 12, :scale => 10
-    t.decimal  "long",          :precision => 12, :scale => 10
+    t.string   "geonames_uri"
+    t.decimal  "lat",          :precision => 12, :scale => 10
+    t.decimal  "lng",          :precision => 12, :scale => 10
+    t.decimal  "x"
+    t.decimal  "y"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

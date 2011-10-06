@@ -5,6 +5,7 @@ class Map < ActiveRecord::Base
   
   belongs_to :user, :counter_cache => true
   has_many :annotations
+  has_many :control_points
   has_and_belongs_to_many :collections
   
   # Validate for a title and a tileset given

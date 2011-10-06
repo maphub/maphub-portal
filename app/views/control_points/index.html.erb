@@ -1,0 +1,29 @@
+<h1>Control Points</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>User</th>
+    <th>Map</th>
+    <th>Geonames_link</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>X-Position</th>
+    <th>Y-Position</th>
+  </tr>
+  
+<% @control_points.each do |control_point| %>
+  <tr>
+    <td><%= link_to control_point.label, control_point %></td>
+    <td><%= link_to control_point.user.username, control_point.user %></td>
+    <td><%= link_to control_point.map.title, control_point.map %></td>
+    <td><%= link_to control_point.geonames_uri %></td>
+    <td><%= control_point.lat %></td>
+    <td><%= control_point.lng %></td>
+    <td><%= control_point.x %></td>
+    <td><%= control_point.y %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

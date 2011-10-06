@@ -37,13 +37,15 @@ class CreateTables < ActiveRecord::Migration
     
     # CONTROLPOINTS belong to a USER and a MAP
      create_table :control_points do |t|
-      t.string :title
+      t.string :name
+      t.string :countryCode
       t.integer :user_id
       t.integer :map_id
-      t.string :wkt_data
-      t.string :geonames_link
+      t.string :geonames_uri
       t.decimal :lat, :precision => 12, :scale => 10
-      t.decimal :long, :precision => 12, :scale => 10
+      t.decimal :lng, :precision => 12, :scale => 10
+      t.decimal :x
+      t.decimal :y
       t.timestamps
     end
 

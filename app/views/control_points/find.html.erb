@@ -1,0 +1,33 @@
+<% flash.each do |key, msg| %>
+    <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_ #{key}" %>
+    <%= content_tag :script, :type => "text/javascript" do -%>
+        setTimeout("new Effect.Fade('notice_<%= key %>');", 15000);
+    <% end %>
+<% end %>
+
+<% unless @place.nil? %>
+    <h1>Possible Control Points / Location Matches for <%= @place %></h1>
+<% end %>
+
+<% unless @control_points.nil? %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Geonames_link</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+  </tr>
+  
+    <% @control_points.each do |control_point| %>
+    <tr>
+        <td><%= control_point.label %></td>
+        <td><a href="<%= control_point.geonames_uri %>"><%= control_point.geonames_uri %></td>
+        <td><%= control_point.lat %></td>
+        <td><%= control_point.lng %></td>
+     </tr>
+    <% end %>
+
+</table>
+
+<% end %>
+
