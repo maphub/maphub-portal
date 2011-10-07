@@ -8,12 +8,6 @@ class ControlPoint < ActiveRecord::Base
   belongs_to :user, :counter_cache => true
   belongs_to :map
   
-  # A human-readable label consisting of place name and country code
-  def label
-    "#{name} (#{countryCode})"
-  end
-  
-  
   # Searches Geonames for a given place and returns an array
   # of controlpoint objects filled with name, uri, lat, and long
   def self.find_in_geonames(place)
@@ -36,14 +30,15 @@ class ControlPoint < ActiveRecord::Base
         places = result["geonames"]
         places.each do |place|
           name = place["name"]
+          toponymName = place["toponymName"]
           countryCode = place["countryCode"]
           lat = place["lat"]
           lng = place["lng"]
           geonamesID = place["geonameId"]
           
           control_point = ControlPoint.new
-          control_point.name = name
-          control_point.countryCode = countryCode
+          control_point.name = toponymName
+          control_point.label = "#{name} (#{countryCode})"
           control_point.lat = lat
           control_point.lng = lng
           control_point.geonames_uri = "#{GEONAMES_BASEURL}#{geonamesID}/"

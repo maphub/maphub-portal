@@ -13,6 +13,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Label</th>
     <th>Geonames_link</th>
     <th>Latitude</th>
     <th>Longitude</th>
@@ -20,6 +21,7 @@
   
     <% @control_points.each do |control_point| %>
     <tr>
+        <td><%= control_point.name %></td>
         <td><%= control_point.label %></td>
         <td><a href="<%= control_point.geonames_uri %>"><%= control_point.geonames_uri %></td>
         <td><%= control_point.lat %></td>

@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Label</th>
     <th>User</th>
     <th>Map</th>
     <th>Geonames_link</th>
@@ -14,6 +15,7 @@
   
 <% @control_points.each do |control_point| %>
   <tr>
+    <td><%= link_to control_point.name, control_point %></td>
     <td><%= link_to control_point.label, control_point %></td>
     <td><%= link_to control_point.user.username, control_point.user %></td>
     <td><%= link_to control_point.map.title, control_point.map %></td>
