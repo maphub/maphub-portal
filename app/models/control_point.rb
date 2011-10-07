@@ -1,3 +1,5 @@
+require 'net/http'
+
 class ControlPoint < ActiveRecord::Base
   
   GEONAMES_API_BASEURL = "http://api.geonames.org/searchJSON"
