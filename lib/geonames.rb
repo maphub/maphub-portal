@@ -14,16 +14,12 @@ class GeoNamesClient
   # Finds control points in Geonames for a given placename
   def find_control_points(place)
     
-    puts "Method called"
-    
     control_points = []
     
     url = "#{GEONAMES_API_BASEURL}?name=#{URI.encode(place)}&maxRows=#{MAX_ROWS}&username=#{GEONAMES_USER}"
     
     resp = Net::HTTP.get_response(URI.parse(url))
     
-    puts resp
-        
     case resp
     when Net::HTTPSuccess
         puts "success"
