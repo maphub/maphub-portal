@@ -112,6 +112,7 @@ class ControlPointsController < ApplicationController
     unless @parent.nil?
       # TODO: consider the context of the current map; calculate bounding window before
       @control_points = ControlPoint.find_in_geonames(@place)
+      @control_points.each {|control_point| control_point.map = @parent}
     else
       @control_points = ControlPoint.find_in_geonames(@place)
     end

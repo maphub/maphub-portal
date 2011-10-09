@@ -20,13 +20,23 @@
   </tr>
   
     <% @control_points.each do |control_point| %>
-    <tr>
-        <td><%= control_point.name %></td>
-        <td><%= control_point.label %></td>
-        <td><a href="<%= control_point.geonames_uri %>"><%= control_point.geonames_uri %></td>
-        <td><%= control_point.lat %></td>
-        <td><%= control_point.lng %></td>
-     </tr>
+        <tr>
+            <td><%= control_point.name %></td>
+            <td><%= control_point.label %></td>
+            <td><a href="<%= control_point.geonames_uri %>"><%= control_point.geonames_uri %></td>
+            <td><%= control_point.lat %></td>
+            <td><%= control_point.lng %></td>
+            <% unless control_point.map.nil? %>
+                <%= form_for control_point do |f| %>
+                    <%= f.hidden_field :name %>
+                    <%= f.hidden_field :label %>
+                    <%= f.hidden_field :geonames_uri %>
+                    <%= f.hidden_field :lat %>
+                    <%= f.hidden_field :lng %>
+                    <td><%= f.submit "Add" %></td>
+                <% end %>
+            <% end %>
+         </tr>
     <% end %>
 
 </table>
