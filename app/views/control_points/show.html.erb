@@ -36,5 +36,5 @@
 </p>
  
  
-<%= link_to 'Edit', edit_map_control_point_path(@control_point) %> |
-<%= link_to 'Back', map_control_points_path(@control_point.map_id, @control_point.id) %>
+<%= link_to 'Edit', edit_map_control_point_path(@control_point.map, @control_point) %> |
+<%= link_to 'Back', map_control_points_path(@control_point.map) %>
