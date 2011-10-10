@@ -25,7 +25,7 @@ class AffineTransformation
   # CP2: x2/y2               u2/v2
   # CP3: x3/y3               u3/v3 
   def self.compute_XY_from_known_latlng(lat, lng, control_points)
-    raise ArgumentError unless control_points.length != 3
+    raise ArgumentError if control_points.length != 3
     
     # Compute matrix coefficients
     x1 = control_points[0].x;
