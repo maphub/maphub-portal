@@ -27,7 +27,7 @@
             <td><%= control_point.lat %></td>
             <td><%= control_point.lng %></td>
             <% unless control_point.map.nil? %>
-                <%= form_for control_point do |f| %>
+                <%= form_for [@parent, control_point] do |f| %>
                     <%= f.hidden_field :name %>
                     <%= f.hidden_field :label %>
                     <%= f.hidden_field :geonames_uri %>

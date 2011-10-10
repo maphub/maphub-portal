@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
     <th>Label</th>
     <th>User</th>
@@ -15,11 +16,12 @@
   
 <% @control_points.each do |control_point| %>
   <tr>
-    <td><%= link_to control_point.name, control_point %></td>
-    <td><%= link_to control_point.label, control_point %></td>
+    <td><%= link_to control_point.id, control_point %></td>
+    <td><%= control_point.name %></td>
+    <td><%= control_point.label %></td>
     <td><%= link_to control_point.user.username, control_point.user %></td>
-    <td><%= link_to control_point.map.title, control_point.map %></td>
-    <td><%= link_to control_point.geonames_uri %></td>
+    <td><%= link_to control_point.map.id, control_point.map %></td>
+    <td><%= control_point.geonames_uri %></td>
     <td><%= control_point.lat %></td>
     <td><%= control_point.lng %></td>
     <td><%= control_point.x %></td>

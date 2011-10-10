@@ -13,6 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :maps_count
       t.integer :collections_count
       t.integer :annotations_count
+      t.integer :control_points_count
       # t.encryptable
       # t.confirmable
       # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both

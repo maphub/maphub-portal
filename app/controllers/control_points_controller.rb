@@ -27,7 +27,7 @@ class ControlPointsController < ApplicationController
   # GET /control_points/1
   # GET /control_points/1.xml
   def show
-    @control_point = ControlPoints.find(params[:id])
+    @control_point = ControlPoint.find(params[:id])
     
     respond_to do |format|
       format.html # show.html.erb

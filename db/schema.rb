@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20110705110725) do
     t.integer  "maps_count"
     t.integer  "collections_count"
     t.integer  "annotations_count"
+    t.integer  "control_points_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
