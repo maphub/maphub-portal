@@ -102,10 +102,9 @@ class ControlPointsController < ApplicationController
   
   # GET /control_points/find?place="PLACENAME"
   def find
-    
-    @place = params[:place]
+    @place = params[:place] || params[:term]
     if @place.nil?
-      flash.now[:error] = 'No _place_ parameter specified'
+      flash.now[:error] = 'No "place" or "term" parameter specified'
       return
     end
 
