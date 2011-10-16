@@ -54,8 +54,13 @@ $(document).ready(function(){
       $.getJSON(
         "<%= find_map_control_points_url(@map, :format => :json) %>",
         request,
-        function(data){
-          console.log(data);
+        function(data) {
+          response( $.map(data, function(item) {
+            return {
+              "label" : item.control_point.label,
+              "value" : item.control_point.label
+            }
+          }));
       });
     },
     minLength: 2,
