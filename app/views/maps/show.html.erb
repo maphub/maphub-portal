@@ -58,14 +58,19 @@ $(document).ready(function(){
           response( $.map(data, function(item) {
             return {
               "label" : item.control_point.label,
-              "value" : item.control_point.label
+              "value" : item.control_point.label,
+              "data" : item.control_point
             }
           }));
       });
     },
     minLength: 2,
     select: function( event, ui ) {
-        // what to do when it's selected
+        $("#control_point_name").attr("value", ui.item.data.geonames_uri);
+        $("#control_point_label").attr("value", ui.item.data.label);
+        $("#control_point_geonames_uri").attr("value", ui.item.data.geonames_uri);
+        $("#control_point_lat").attr("value", ui.item.data.lat);
+        $("#control_point_lng").attr("value", ui.item.data.lng);
     }
   });
   
@@ -140,8 +145,8 @@ $(document).ready(function(){
         <%= f.label :body %><br/>
         <%= f.text_area :body, :cols => 40, :rows => 5 %>
       </p>
-      <input type="button" value="Cancel" id="buttonCancel"/>
       <%= f.submit "Add Annotation" %>
+      <input type="button" value="Cancel" id="buttonCancel"/>
       <%= f.text_field :wkt_data, :hidden => true %>
     <% end %>
   </div>
@@ -152,11 +157,20 @@ $(document).ready(function(){
 <div id="slideUpBarControlPoint" style="display:none;">
   <div class="slideUpBarContent">
     <%= form_for([@map, ControlPoint.new], :remote => true, :class => 'floatLeft') do |f| %>
-      <p>Enter a location: (Geonames lookup)<br/>
-      <input name="placeSearch" id="placeSearch" size="40"/></p>
+      <!-- <p>Enter a location: (Geonames lookup)<br/>
+      <input name="placeSearch" id="placeSearch" size="40"/></p> -->
       
       <p>Enter a location: (Rails lookup)<br/>
       <input name="placeSearchController" id="placeSearchController" size="40"/></p>
+      <%= f.submit "Add Control Point" %>
+      <input type="button" value="Cancel" id="buttonCancel"/>
+      <%= f.text_field :name, :hidden => true %>
+      <%= f.text_field :label, :hidden => true %>
+      <%= f.text_field :geonames_uri, :hidden => true %>
+      <%= f.text_field :lat, :hidden => true %>
+      <%= f.text_field :lng, :hidden => true %>
+      <%= f.text_field :x, :hidden => true %>
+      <%= f.text_field :y, :hidden => true %>
     <% end %>
   </div>
 </div>

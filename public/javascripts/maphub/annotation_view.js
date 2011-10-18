@@ -49,7 +49,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   
   function controlPointAdded(evt) {
     $("#slideUpBarControlPoint").slideDown(function(){
-      
+      $("#placeSearchController").focus();
     });
   }
 
