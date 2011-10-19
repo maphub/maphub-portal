@@ -1,5 +1,4 @@
 <%= javascript_include_tag "OpenLayers" %>
-<%= javascript_include_tag "maphub/annotation_user_interaction" %>
 <%= javascript_include_tag "maphub/annotation_tooltip" %>
 <%= javascript_include_tag "maphub/annotation_view" %>
 <script type="text/javascript">
@@ -13,43 +12,8 @@ $(document).ready(function(){
     "<%= map_annotations_url(@map, :format => :json) %>",
     <%= user_signed_in? ? "true" : "false" %>
   );
-  
-  // functions for geonames lookup
-  // TODO: Move this somewhere else
+    
   $('input#placeSearch').autocomplete({
-    source: function( request, response ) {
-        $.ajax({
-          url: "http://ws.geonames.org/searchJSON",
-          dataType: "jsonp",
-          data: {
-            featureClass: "P",
-            style: "full",
-            maxRows: 12,
-            name_startsWith: request.term
-          },
-          success: function( data ) {
-            response( $.map( data.geonames, function( item ) {
-              return {
-                label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-                value: item.name
-              }
-            }));
-          }
-        });
-      },
-      minLength: 2,
-      select: function( event, ui ) {
-        // what to do when it's selected
-      },
-      open: function() {
-        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-      },
-      close: function() {
-        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-      }
-  });
-  
-  $('input#placeSearchController').autocomplete({
     source: function( request, response ) {
       $.getJSON(
         "<%= find_map_control_points_url(@map, :format => :json) %>",
@@ -124,7 +88,7 @@ $(document).ready(function(){
 
 <br style="clear:both;">
 
-<div id="slideUpBar" style="display:none;">
+<div id="slideUpBarAnnotation" style="display:none;">
   <div class="slideUpBarContent">
     <div class="floatRight">
       <h2>Add a new Annotation ... </h2>
@@ -146,24 +110,19 @@ $(document).ready(function(){
         <%= f.text_area :body, :cols => 40, :rows => 5 %>
       </p>
       <%= f.submit "Add Annotation" %>
-      <input type="button" value="Cancel" id="buttonCancel"/>
+      <input type="button" value="Cancel" id="buttonCancelAnnotation"/>
       <%= f.text_field :wkt_data, :hidden => true %>
     <% end %>
   </div>
 </div>
 
-
-
 <div id="slideUpBarControlPoint" style="display:none;">
   <div class="slideUpBarContent">
     <%= form_for([@map, ControlPoint.new], :remote => true, :class => 'floatLeft') do |f| %>
-      <!-- <p>Enter a location: (Geonames lookup)<br/>
-      <input name="placeSearch" id="placeSearch" size="40"/></p> -->
-      
-      <p>Enter a location: (Rails lookup)<br/>
-      <input name="placeSearchController" id="placeSearchController" size="40"/></p>
+      <p>Enter a location: <br/>
+      <input name="placeSearch" id="placeSearch" size="40"/></p>
       <%= f.submit "Add Control Point" %>
-      <input type="button" value="Cancel" id="buttonCancel"/>
+      <input type="button" value="Cancel" id="buttonCancelControlPoint"/>
       <%= f.text_field :name, :hidden => true %>
       <%= f.text_field :label, :hidden => true %>
       <%= f.text_field :geonames_uri, :hidden => true %>

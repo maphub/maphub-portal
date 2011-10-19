@@ -42,14 +42,21 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     $("#annotation_wkt_data").attr("value", wkt_data);
     
     // show the popup
-    $("#slideUpBar").slideDown(function(){
+    $("#slideUpBarAnnotation").slideDown(function(){
       $("#annotation_title").focus();
     });
   }
   
   function controlPointAdded(evt) {
+    
+    // set x/y in form
+    $("#control_point_x").attr("value", evt.feature.geometry.x);
+    $("#control_point_y").attr("value", evt.feature.geometry.y);
+    
+    // reset the place search box and slide up panel
+    $("#placeSearch").attr("value", "");
     $("#slideUpBarControlPoint").slideDown(function(){
-      $("#placeSearchController").focus();
+      $("#placeSearch").focus();
     });
   }
 
@@ -107,18 +114,29 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   addClickHandlers();
 }
 
-  function addClickHandlers() {
-    // cancel editing an annotation
-    $("#buttonCancel").click(function(){
-      var response = confirm('Are you sure you want to cancel adding an annotation?');
-      if (response)
-        $("#slideUpBar").slideUp();
-      else
-        $("#annotation_title").focus();
-        $("#control_point_title").focus();
-        return;
-    });
-  }
+function addClickHandlers() {
+  // cancel editing an annotation
+  $("#buttonCancelAnnotation").click(function(){
+    var response = confirm('Are you sure you want to cancel adding an annotation?');
+    if (response)
+      $("#slideUpBarAnnotations").slideUp();
+    else
+      $("#annotation_title").focus();
+      $("#control_point_title").focus();
+      return;
+  });
+  
+  // cancel control point editing
+  $("#buttonCancelControlPoint").click(function(){
+    var response = confirm('Are you sure you want to cancel adding an control point?');
+    if (response)
+      $("#slideUpBarControlPoint").slideUp();
+    else
+      $("#placeSearch").focus();
+      return;
+  });
+  
+}
 
 
 /* Loads the annotations for this map via a JSON request */
