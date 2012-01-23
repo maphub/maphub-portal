@@ -39,7 +39,7 @@ map_ids.each_with_index do |id, index|
   Map.create do |map|
     map.title = "Map #{index+1}"
     map.description = "This is a sample description"
-    map.tileset_url = "http://europeana.mminf.univie.ac.at/maps/#{id}"
+    map.tileset_url = "http://samos.mminf.univie.ac.at/maps/#{id}"
     map.user = User.first
   end
   puts "Created map #{index+1}"
