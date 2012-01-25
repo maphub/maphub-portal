@@ -1,46 +1,28 @@
-# Comments/TODOs Bernhard 
+# A list of maphub TODOs
 
-* Enhancements
-    - Admin login/views doesn't work properly at the moment
+* Seed data script
+	- check downloaded map images + metadata files (empty / non-empty)
+	- decide which metadata fields to map to map's "title", "description", and "subject" attributes (maybe further fields are needed)
+	- check how http://memory.loc.gov/ammem/gmdhtml/ are reflected in metadata -> assignment to maphub collections
+	- implement script "create_seed_data.rb" that produces a YAML file with configurable size N from map + metadata fields
 
-* New Features
-    - The new/edit annotation view should provide two functionalities: [set control point, add annotation](http://dme.ait.ac.at/annotation/yuma_map_demo_full.htm)
-        - control points:
-            - let the user set a point on the map and display an input field asking for the name of the place
-            - provide a service in /lib that talks with Geonames (basically a ruby port of the YUMA code)
-            - enhance annotation model to store control points (long/lat/geonames ref)
-        - annotations:
-            - let the user draw areas on on the map
-            - integrate rainer's tag cloud
-            - provide a service in /lib that talks with DBpedia
-    - implement search over maps using http://outoftime.github.com/sunspot/
-    - reconsider map attributes; check what LoC metadata fields we have
-    - redirect rdf/xml requests on annotations to an OAC-ruby implementation in lib/ (can later be pulled out into a separate API)
+* DBPedia lookup + Tagcloud
+	- get rid of annotation title
+	- whenever user enters an annotation; scan text and check for possible DBPedia entities
+	- display tag cloud right beside the panel
+	- implement DBPedia lookup as standalone class in /lib directory
+	
+* Implement Open Annotation Collaboration model
+	- requests against annotation URIs should deliver serializations that follow the OAC model
+	- implement either by request extension ".rdf" or by conneg
+	- implement OAC serialization logic in lib directory -> extract into separate library later on
 
-* GUI / Views
-    - unregistered users should see a very simple page with some simple (rotating?) map display, a search box and a join/login button; allow them to switch views; for registered users/admins the current home view is OK
-    - make use of [HTML5 features](http://html5boilerplate.com/) in application.html.erb and other views. E.g. footer elements, etc...
-    
-        
-# Comments/TODO Werner
-
-- Restore annotations from stored WKT
-
-- Porting views (browsing):
-  - add various viewing methods (list/coverflow)
-  - add [pagination](https://github.com/mislav/will_paginate)
-
-- What should we do with deletion? Implement a soft-delete version using `acts_as_paranoid` or similar.
-
-- What should we do with versioning? Implement something using [`paper_trail`](https://github.com/airblade/paper_trail).
-
-- Admin interface
-  - administrate users
-  - administrate annotations
-  - administrate maps
-
-- Security
-  - secure controllers
-
-- Registration
-  - text for registration mails
+* Implement different work flows for registered / unregistered users
+	- unregistered:
+		- present sample maps and user annotation on welcome screen
+		- allow them to click on a single map and see details
+	- registered:
+		- full functionality
+	
+* Implement Admin Interface
+   	- admin users, annotations, maps, collections (if possible in separate /admin namespace)
