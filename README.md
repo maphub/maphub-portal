@@ -33,7 +33,7 @@ In case you change something in your models, don't forget to reindex Sunspot:
     rake sunspot:reindex
 
 
-Installing Prerequisites
+Deployment
 ========================
 
 Setup MYSQL DB-Backend
