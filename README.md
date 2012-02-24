@@ -1,15 +1,33 @@
-This is a HOWTO for testing and deploying the Maphub tool on a Linux machine running Apache2 and some MySQL database.
+About
+==========================================================
 
-Testing and running this application
-====================================
+MapHub is a Web portal for annotating online historic maps.
 
-You should be good to go by running the following the first time:
+
+Running Maphub in Development Mode
+==========================================================
+
+Make sure that you have ruby 1.9.2 and gem 1.3.7 installed. We recommend [RVM](http://beginrescueend.com/) for controlling your local
+Ruby environments.
+
+    ruby -v
+    gem -v
+
+Clone the maphub code on your local machine:
+
+    git clone git@github.com:yuma-annotation/maphub-portal.git
+
+Update your gem tool and install the bundler gem:
 
     gem update --system
     gem update
+    gem install bundler
+
+Then `cd` to the project folder and run to install all necessary gems for the maphub tool.
+    
     bundle install
     
-Then, run the Rails application with
+Then, run the Rails application, probably in a separate console window, with...
 
     rails server
     
@@ -25,16 +43,15 @@ If you made some changes to the database or first create the database, run
 
     rake db:drop; rake db:migrate; rake db:seed
     
-Then, log in with `user1@example.com` and `test`. 
-
+Open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
 
 In case you change something in your models, don't forget to reindex Sunspot:
 
     rake sunspot:reindex
 
 
-Deployment
-========================
+Deploying Maphub in Production Mode
+=======================================
 
 Setup MYSQL DB-Backend
 ----------------------
