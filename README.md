@@ -14,10 +14,7 @@ Clone the maphub code on your local machine:
     git clone git@github.com:yuma-annotation/maphub-portal.git
 
 Update your gem tool and install the bundler gem:
-
-    gem install bundler
-
-Then `cd` to the project folder and run to install all necessary gems for the maphub tool.
+ `cd` to the project folder and run to install all necessary gems for the maphub tool.
     
     bundle install
     
