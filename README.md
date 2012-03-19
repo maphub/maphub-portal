@@ -13,37 +13,36 @@ Clone the maphub code on your local machine:
 
     git clone git@github.com:yuma-annotation/maphub-portal.git
 
-Update your gem tool and install the bundler gem:
- `cd` to the project folder and run to install all necessary gems for the maphub tool.
+Update your gem tool with `gem update --system` and install the bundler gem with `gem install bundler`. `cd` to the project folder and run to install all necessary gems for the maphub tool.
     
     bundle install
     
 Then, run the Rails application, probably in a separate console window, with...
 
-    rails server
+    bundle exec rails server
     
 ...and start the Sunspot/Solr search engine
 
-    rake sunspot:solr:start
+    bundle exec rake sunspot:solr:start
 
 Create the database and add some test data
 
-    rake db:migrate
-    rake db:seed
+    bundle exec rake db:migrate
+    bundle exec rake db:seed
     
 
-Open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
+Finally, open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
 
 
 ## Updating the database / Reindexing data
 
 If you made some changes to the database or first create the database, run
 
-    rake db:drop; rake db:migrate; rake db:seed
+    bundle exec rake db:drop; rake db:migrate; rake db:seed
     
 In case you change something in your models, don't forget to reindex Sunspot:
 
-    rake sunspot:reindex
+    bundle exec rake sunspot:reindex
     
 
 ## Advanced Stuff
