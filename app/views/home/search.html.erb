@@ -1,0 +1,26 @@
+<h1>Search Results</h1>
+
+Your search for "<%= @q %>" returned <%= @results.flatten(2).length - 2 %> results.
+
+<% if @results[:maps].length > 0 %>
+
+  <h2 id="maps">Maps</h2>
+  <div class="mapList">
+  <% for map in @results[:maps] %>
+    <%= render :partial => "maps/thumbnail", :locals => { :map => map } %>
+  <% end %>
+  </div>
+<% end %>
+
+<br style="clear:both;">
+
+
+<% if @results[:annotations].length > 0 %>
+
+  <h2 id="maps">Annotations</h2>
+  <ul>
+  <% for annotation in @results[:annotations] %>
+    <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
+  <% end %>
+  </ul>
+<% end %>

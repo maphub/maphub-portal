@@ -1,0 +1,39 @@
+<% if not user_signed_in? %>
+
+
+<h1>Welcome to maphub!</h1>
+<div id="introduction"></div>
+
+  <blockquote>
+  maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
+  </blockquote>
+  <hr><br>
+  <p>
+  <button><%= link_to 'Log in', new_user_session_path %></button> if you already have an account with us.
+  </p>
+  <p>
+  <button><%= link_to 'Sign up', new_user_registration_path %></button> if you want to start contributing. It only takes a minute!
+  </p>
+
+<% else %>
+
+  <h1>Welcome back to maphub!</h1>
+  <div id="introduction"></div>        
+  
+  <h2>What's new</h2>
+  <blockquote>
+  maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
+  </blockquote>
+  
+  <div class="halfSize floatLeft">
+    <h2>Recent Maps <small>show all</small></h2>
+    Render partial here
+  </div>
+  <div style="halfSize floatLeft">
+    <h2>Recent Annotations <small>show all</small></h2>
+    Render partial here
+  </div>
+  
+  <br style="clear:both">
+
+<% end %>
