@@ -1,15 +1,18 @@
 MaphubPortal::Application.routes.draw do
   devise_for :admins, :users
   
-  # default homepage
-  get "home/index"
-  root :to => "home#index"
+  resources :users
   
   # administrator namespace (create separate controllers for these!)
   namespace 'admin' do 
     # resources :maps, :collections, :users, :annotations
     resources :users
   end
+  
+  # default homepage
+  get "home/index"
+  root :to => "home#index"
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

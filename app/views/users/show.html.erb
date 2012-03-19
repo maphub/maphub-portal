@@ -1,0 +1,92 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".edit_user").hide();
+    
+    // If the "Edit your description button" is clicked
+    $("#toggleForm").click(function(){
+      $('#aboutMyself').hide();
+      $(".edit_user").slideDown(function(){
+        $("#user_about_me").focus();
+      });
+      return false;
+    });
+
+  });
+</script>
+
+<% if @myself %>
+<div class="row">
+        <div id="userBox" class="pull-right">
+          Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
+          <a href="#" id="toggleForm">Edit your description</a>
+        </div>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="span12"><h1><%= @user.username %></h1></div>
+</div>
+
+<div class="row">
+  <div id="userImage" class="span2">
+    <% if @myself %>
+      <%= link_to image_tag(@user.gravatar_url(:size => 120)), "http://gravatar.com" %>
+    <% else %>
+      <%= image_tag(@user.gravatar_url(:size => 120)) %>
+    <% end %>
+  </div>
+
+  <div id="userInfoTableContainer" class="span2"> 
+    <table id="userInfoTable">
+      <tr>
+        <td class="firstCol">Joined:</td>
+        <td><%= time_ago_in_words(@user.created_at) %> ago </td>
+      </tr>
+      <tr>
+        <td class="firstCol">Last seen:</td>
+        <td><%= time_ago_in_words(@user.last_sign_in_at) rescue time_ago_in_words(@user.created_at)  %> ago</td>
+      </tr>
+      <% unless @user.fullname.nil? or @user.fullname.empty? %>
+      <tr>
+        <td class="firstCol">Full Name:</td>
+        <td><%= @user.fullname %></td>
+      </tr>
+      <% end %>
+      <% unless @user.location.nil? or @user.location.empty? %>
+      <tr>
+        <td class="firstCol">Location:</td>
+        <td><%= @user.location %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td class="firstCol">Maps:</td>
+    
+      </tr>
+      <tr>
+        <td class="firstCol">Collections:</td>
+    
+      </tr>
+      <tr>
+        <td class="firstCol">Annotations:</td>
+    
+      </tr>
+    </table>
+  </div> <!-- userInfoTableContainer -->
+  <div id="userInfoText" class="span4 offset4">
+    <% if @myself %>
+      <!-- Display form if this is our own page -->
+      <%= form_for @user, :remote => true do |f| %>
+      <%= f.text_area :about_me, :cols => 55, :rows => 10 %><br>
+      <%= f.submit "Update" %>
+      <% end %>
+    <% end %>
+      
+    <div id="aboutMyself">
+      <% if @user.about_me.nil? %>
+        <em>This user hasn't entered a description yet.</em>
+      <% else %>
+        <%= @user.about_me %>
+      <% end %>
+    </div>
+  </div> <!-- userInfoText -->
+</div>

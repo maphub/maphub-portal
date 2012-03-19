@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120319190620) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end
@@ -42,6 +43,11 @@ ActiveRecord::Schema.define(:version => 20120319190620) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "username"
+    t.string   "fullname"
+    t.string   "location"
+    t.text     "about_me"
+    t.datetime "deleted_at"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end

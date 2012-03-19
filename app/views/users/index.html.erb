@@ -1,0 +1,7 @@
+<h1>Users</h1>
+
+<div class="userList">
+  <% @users.each do |user| %>
+    <%= render :partial => "badge", :locals => { :user => user } %>
+  <% end %>
+</div>
