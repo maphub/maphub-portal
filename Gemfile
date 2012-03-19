@@ -10,6 +10,8 @@ gem 'yaml_db'
 gem 'gravtastic'
 gem 'acts_as_markup'
 
+gem 'twitter-bootstrap-rails'
+#, :git => "git://github.com/seyhunak/twitter-bootstrap-rails.git", :branch => "static"
 
 # Gems used only for assets and not required
 # in production environments by default.
