@@ -1,14 +1,14 @@
 /**
  * The Client class represents a viewer of the application.
  * 
- * @author Josh Endries <josh@endries.org>
+ * @author Josh Endries (josh@endries.org)
  */
 maphub.Client = function() {};
 
 
 
 maphub.Client.locationFailureCallback = function() {
-	console.log("WTF");
+	console.log("Failed to retrieve client's location.");
 }
 
 

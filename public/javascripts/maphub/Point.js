@@ -1,7 +1,7 @@
 /**
  * The Point class implements a simple set of X,Y coordinates.
  * 
- * @author Josh Endries <josh@endries.org>
+ * @author Josh Endries (josh@endries.org)
  * @param x The X coordinate.
  * @param y The Y coordinate.
  */

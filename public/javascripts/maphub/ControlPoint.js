@@ -1,22 +1,16 @@
-$.ajax({
-	cache: true,
-	url: maphub.ROOT_URL+"/Point.js",
-	dataType: "script"
-});
-
 /**
  * A ControlPoint is essentially two points in one: an "original" X,Y pair of
  * coordinates, and a resulting latitude,longitude pair of coordinates that
  * were calculated previously.
  * 
- * @author Josh Endries <josh@endries.org>
+ * @author Josh Endries (josh@endries.org)
  * @param x The "original" X coordinate.
  * @param y The "original" Y coordinate.
  * @param latitude The calculated latitude coordinate.
  * @param longitude The calculated longitude coordinate.
  */
 maphub.ControlPoint = function(x, y, latitude, longitude) {
-	Point.call(this, x, y);
+	maphub.Point.call(this, x, y);
 	this.latitude = latitude;
 	this.longitude = longitude;
 };
