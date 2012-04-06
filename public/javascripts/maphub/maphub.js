@@ -154,11 +154,13 @@ maphub.initialize = function() {
  * to the map represented by the given control points.
  * 
  * @param {maphub.Point} latitude The coordinates to transform.
- * @param {Array} controlPoints An Array of three objects with x, y, lat and lng properties.
+ * @param {Array} controlPoints An Array of three {maphub.ControlPoint} objects.
  * @param {Array} queryPoints An Array containing a lat,lng pair in the 0 and 1 indices.
  */
-maphub.transform = function(query_points, control_points) {
-	if (control_points.length < 3) throw "Insufficient number of control points.";
+maphub.transform = function(query_points, controlPoints) {
+	if (controlPoints.length < 3) throw "Insufficient number of control points.";
+	
+	console.log(controlPoints[0]);
 	
 	/*
 	 * Extract the query parameters.
@@ -169,18 +171,18 @@ maphub.transform = function(query_points, control_points) {
 	/*
 	 * Extract the control point parameters.
 	 */
-    var x1 = control_points[0].x;
-    var y1 = control_points[0].y;
-    var x2 = control_points[1].x;
-    var y2 = control_points[1].y;
-    var x3 = control_points[2].x;
-    var y3 = control_points[2].y;
-    var u1 = control_points[0].lat;
-    var v1 = control_points[0].lng;
-    var u2 = control_points[1].lat;
-    var v2 = control_points[1].lng;
-    var u3 = control_points[2].lat;
-    var v3 = control_points[2].lng;
+    var x1 = controlPoints[0].getX();
+    var y1 = controlPoints[0].getY();
+    var x2 = controlPoints[1].getX();
+    var y2 = controlPoints[1].getY();
+    var x3 = controlPoints[2].getX();
+    var y3 = controlPoints[2].getY();
+    var u1 = controlPoints[0].getLatitude();
+    var v1 = controlPoints[0].getLongitude();
+    var u2 = controlPoints[1].getLatitude();
+    var v2 = controlPoints[1].getLongitude();
+    var u3 = controlPoints[2].getLatitude();
+    var v3 = controlPoints[2].getLongitude();
 
     /*
      * Compute the matrix coefficients.

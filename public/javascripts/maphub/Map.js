@@ -67,7 +67,7 @@ maphub.Map = function(id) {
 				var x = $(this).find("x").text();
 				var y = $(this).find("y").text();
 				var cp = new maphub.ControlPoint(x, y, lat, lng);
-				controlPoints[controlPoints.length] = cp;
+				controlPoints.push(cp);
 			});
 		},
 		url: "/maps/"+id+"/control_points.xml"
@@ -99,30 +99,7 @@ maphub.Map = function(id) {
  * @public
  */
 maphub.Map.prototype.getControlPoints = function() {
-	/*
-	 * Retrieve the control points from the Rails server.
-	 */
-	var controlPoints = [];
-	$.ajax({
-		async: false,
-		cache: false,
-		dataType: "xml",
-		success: function(data, status, xhr) {
-			$(data).find("control-point").each(function() {
-				var controlPoint = {
-					lat: $(this).find("lat").text(),
-					lng: $(this).find("lng").text(),
-					x: $(this).find("x").text(),
-					y: $(this).find("y").text(),
-				};
-				controlPoints[controlPoints.length] = controlPoint;
-			});
-		},
-		url: "/maps/"+id+"/control_points.xml"
-	});
-	console.log(controlPoints);
-	
-	return controlPoints;
+	return this.controlPoints;
 };
 
 

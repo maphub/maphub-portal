@@ -58,5 +58,5 @@ maphub.ControlPoint.prototype.getLongitude = function() {
  * @returns A string representation of the ControlPoint.
  */
 maphub.ControlPoint.prototype.toString = function() {
-	return "ControlPoint[x="+this.x+", y="+this.y+", lat="+this.latitude+", long="+this.longitude+"]";
+	return "ControlPoint<x="+this.x+", y="+this.y+", lat="+this.latitude+", long="+this.longitude+">";
 };
