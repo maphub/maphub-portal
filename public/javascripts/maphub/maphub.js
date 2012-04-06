@@ -171,18 +171,30 @@ maphub.transform = function(query_points, controlPoints) {
 	/*
 	 * Extract the control point parameters.
 	 */
-    var x1 = controlPoints[0].getX();
-    var y1 = controlPoints[0].getY();
-    var x2 = controlPoints[1].getX();
-    var y2 = controlPoints[1].getY();
-    var x3 = controlPoints[2].getX();
-    var y3 = controlPoints[2].getY();
-    var u1 = controlPoints[0].getLatitude();
-    var v1 = controlPoints[0].getLongitude();
-    var u2 = controlPoints[1].getLatitude();
-    var v2 = controlPoints[1].getLongitude();
-    var u3 = controlPoints[2].getLatitude();
-    var v3 = controlPoints[2].getLongitude();
+    var x1 = controlPoints[0].x;
+    var y1 = controlPoints[0].y;
+    var x2 = controlPoints[1].x;
+    var y2 = controlPoints[1].y;
+    var x3 = controlPoints[2].x;
+    var y3 = controlPoints[2].y;
+    var u1 = controlPoints[0].latitude;
+    var v1 = controlPoints[0].longitude;
+    var u2 = controlPoints[1].latitude;
+    var v2 = controlPoints[1].longitude;
+    var u3 = controlPoints[2].latitude;
+    var v3 = controlPoints[2].longitude;
+//    var x1 = controlPoints[0].getX();
+//    var y1 = controlPoints[0].getY();
+//    var x2 = controlPoints[1].getX();
+//    var y2 = controlPoints[1].getY();
+//    var x3 = controlPoints[2].getX();
+//    var y3 = controlPoints[2].getY();
+//    var u1 = controlPoints[0].getLatitude();
+//    var v1 = controlPoints[0].getLongitude();
+//    var u2 = controlPoints[1].getLatitude();
+//    var v2 = controlPoints[1].getLongitude();
+//    var u3 = controlPoints[2].getLatitude();
+//    var v3 = controlPoints[2].getLongitude();
 
     /*
      * Compute the matrix coefficients.
