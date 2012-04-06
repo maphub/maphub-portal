@@ -57,7 +57,6 @@ maphub.Client.getLocation = function(successCallback, failureCallback) {
 	 */
 	if (typeof failureCallback == "function") {
 		maphub.Client.locationFailureCallback = failureCallback;
-		console.log(maphub.Client.locationFailureCallback);
 		timeoutTimer = setTimeout("maphub.Client.locationFailureCallback()", timeoutDelay);
 	}
 	

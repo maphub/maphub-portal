@@ -19,9 +19,9 @@ if (jQuery == "undefined") {
 
 maphub.load = function() {
 	/*
-	 * Load the classes. If these change, update the initialization count below.
+	 * Load the classes.
 	 */
-	var classes = ["Client", "Map", "Point", "ControlPoint"];
+	var classes = ["Client", "Map", "Point", "ControlPoint", "zoomify/Level", "zoomify/Pyramid"];
 	for (var i in classes) {
 		console.log("Loading "+maphub.RootURL+"/"+classes[i]+".js");
 		$.ajax({
@@ -50,7 +50,6 @@ maphub.load = function() {
  * Augment JavaScript's built-in functions to provide an easy way to inherit
  * from other objects.
  *
- * @author Josh Endries (josh@endries.org)
  * @param parent The parent object from which this object inherits.
  */
 Function.prototype.inheritFrom = function(parent) {
@@ -64,7 +63,6 @@ Function.prototype.inheritFrom = function(parent) {
 /**
  * Initialize the MapHub interface.
  * 
- * @author Josh Endries (josh@endries.org)
  * @function
  * @static
  */
@@ -81,22 +79,14 @@ maphub.initialize = function() {
 	 * Create the Google Maps map.
 	 */
 	var myOptions = {
-		zoom: 8,
-		center: new google.maps.LatLng(-34.397, 150.644),
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		zoom: 1,
+		mapTypeControlOptions: {
+		     mapTypeIds: [ map.getType() ]
+		},
+		mapTypeId: map.getType()
 	};
 	document.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-	
-	var myCopyright = new GCopyrightCollection("© ");
-	myCopyright.addCopyright(new GCopyright('Demo', new GLatLngBounds(new GLatLng(-90,-180), new GLatLng(90,180)), 0,'©2007 Google'));
-	var tilelayer = new GTileLayer(myCopyright);
-	tilelayer.getTileUrl = function() { return map.getTileURL(); };
-	tilelayer.isPng = function() { return false; };
-	tilelayer.getOpacity = function() { return 1.0; }
-
-	var myTileLayer = new GTileLayerOverlay(tilelayer);
-	var map = new GMap2(document.getElementById("map_canvas"));
-
+	document.map.mapTypes.set(map.getType(), map);
 	
 	/*
 	 * Get the client's location. The first argument is a success callback and
@@ -108,13 +98,13 @@ maphub.initialize = function() {
 			console.log(coords);
 		    var latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
 		    document.map.setCenter(latLng);
-		    document.map.setZoom(12);
+//		    document.map.setZoom(12);
 		    
 		    /*
 		     * We have a location, transform it into coordinates.
 		     */
 			var queryPoints = [ coords.latitude, coords.longitude ];
-			var controlPoints = maphub.getControlPoints(11);
+			var controlPoints = map.getControlPoints();
 			console.log("Control Points:");
 			console.log(controlPoints);
 			var result = maphub.transform(queryPoints, controlPoints);
