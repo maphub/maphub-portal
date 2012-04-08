@@ -5,14 +5,15 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript">
-			google.load('gdata', '2.x', {packages: ['maps']});
-			google.load('jquery', '1.7.1');
-			google.load('maps', '3.x', { other_params: "sensor=true&key=AIzaSyAZWsx0xPMR9SigtiD2QNmMxS7hbvwjJHI" });
+			//google.load('gdata', '2.x', {packages: ['maps']});
+			google.load('jquery', '1');
+			google.load('maps', '3', { other_params: "sensor=true&key=AIzaSyAZWsx0xPMR9SigtiD2QNmMxS7hbvwjJHI" });
 		</script>
 		<script type="text/javascript" src="/javascripts/maphub/maphub.js"></script>
 		<script type="text/javascript">maphub.load();</script>
 		<style type="text/css">
-		body,html {
+		body, html {
+			background-color: #fff;
 			height: 100%;
 			margin: 0px;
 			padding: 0px;
@@ -20,12 +21,16 @@
 		}
 		
 		#map_canvas {
-			height: 100%;
+			width: 100%;
+			height: 500px;
 		}
 		</style>
 		<title>MapHub</title>
 	</head>
 	<body>
-		<div id="map_canvas"></div>
+		<div style="text-align: center; padding: 0.5em; font-family: Georgia, serif; font-size: 1.5em;">MapHub</div>
+		<div>
+			<div id="map_canvas"></div>
+		</div>
 	</body>
 </html>

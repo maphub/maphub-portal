@@ -21,7 +21,7 @@ maphub.load = function() {
 	/*
 	 * Load the classes.
 	 */
-	var classes = ["Client", "Map", "Point", "ControlPoint", "zoomify/Level", "zoomify/Pyramid"];
+	var classes = ["Client", "Map", "ControlPoint", "zoomify/Level", "zoomify/Pyramid"];
 	for (var i in classes) {
 		console.log("Loading "+maphub.RootURL+"/"+classes[i]+".js");
 		$.ajax({
@@ -47,20 +47,6 @@ maphub.load = function() {
 
 
 /**
- * Augment JavaScript's built-in functions to provide an easy way to inherit
- * from other objects.
- *
- * @param parent The parent object from which this object inherits.
- */
-Function.prototype.inheritFrom = function(parent) {
-    var tmp = function() {};
-    tmp.prototype = parent.prototype;
-    this.prototype = new tmp();
-};
-
-
-
-/**
  * Initialize the MapHub interface.
  * 
  * @function
@@ -79,14 +65,44 @@ maphub.initialize = function() {
 	 * Create the Google Maps map.
 	 */
 	var myOptions = {
+		center: new google.maps.LatLng(0, 0),
 		zoom: 1,
 		mapTypeControlOptions: {
 		     mapTypeIds: [ map.getType() ]
 		},
-		mapTypeId: map.getType()
+		mapTypeId: map.getType(),
+		minZoom: 1,
 	};
 	document.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	document.map.mapTypes.set(map.getType(), map);
+	
+	
+	
+	/*
+	 * Intercept map panning. The constructors here are LatLngBounds(sw,ne) and LatLng(lat,lng).
+	 * We first create a rectangle (specified in lat/lng) in which the user is allowed to pan the
+	 * map around. Any movement that would pan outside of this rectangle is not allowed. Then we
+	 * create an event listener for when the user pans the map. If the center of the map is not
+	 * within the allowed rectangle, the map is forced to the last known valid position, making it
+	 * appear as it the map cannot be moved any more.
+	 * 
+	 * A rectangle of (-84.7,-180; 84.7,180) prevents panning more than one tile from the map edge.
+	 */
+	document.map.allowedBounds = new google.maps.LatLngBounds(
+			new google.maps.LatLng(-84.7, -180, true),
+			new google.maps.LatLng(84.7, 180, true)
+	);
+//	document.map.lastValidCenter = document.map.getCenter();
+	google.maps.event.addListener(document.map, 'center_changed', function() {
+		var c = document.map.getCenter();
+		if (document.map.allowedBounds.contains(c)) {
+			document.map.lastValidCenter = c;
+		} else {
+			document.map.panTo(document.map.lastValidCenter);
+		}
+	});
+	
+	
 	
 	/*
 	 * Get the client's location. The first argument is a success callback and
@@ -97,7 +113,7 @@ maphub.initialize = function() {
 			console.log("Client location found:");
 			console.log(coords);
 		    var latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
-		    document.map.setCenter(latLng);
+//		    document.map.setCenter(latLng);
 //		    document.map.setZoom(12);
 		    
 		    /*
@@ -115,11 +131,11 @@ maphub.initialize = function() {
 		     * Add a pin to the client's location. Specifying the map property
 		     * causes the marker to appear on that map.
 		     */
-		    new google.maps.Marker({
-			    map: document.map,
-			    position: latLng,
-			    title: 'Why, there you are!'
-		    });
+//		    new google.maps.Marker({
+//			    map: document.map,
+//			    position: latLng,
+//			    title: 'Why, there you are!'
+//		    });
 		},
 		function(err) {
 			console.log("Error while retrieving client location: "+err);
@@ -153,9 +169,8 @@ maphub.initialize = function() {
  * Transform the given latitude and longitude into x,y coordinates appropriate
  * to the map represented by the given control points.
  * 
- * @param {maphub.Point} latitude The coordinates to transform.
- * @param {Array} controlPoints An Array of three {maphub.ControlPoint} objects.
- * @param {Array} queryPoints An Array containing a lat,lng pair in the 0 and 1 indices.
+ * @param query_points An {Array} containing a lat,lng pair in the 0 and 1 indices.
+ * @param controlPoints An {Array} of three or more {maphub.ControlPoint} objects.
  */
 maphub.transform = function(query_points, controlPoints) {
 	if (controlPoints.length < 3) throw "Insufficient number of control points.";
@@ -171,30 +186,18 @@ maphub.transform = function(query_points, controlPoints) {
 	/*
 	 * Extract the control point parameters.
 	 */
-    var x1 = controlPoints[0].x;
-    var y1 = controlPoints[0].y;
-    var x2 = controlPoints[1].x;
-    var y2 = controlPoints[1].y;
-    var x3 = controlPoints[2].x;
-    var y3 = controlPoints[2].y;
-    var u1 = controlPoints[0].latitude;
-    var v1 = controlPoints[0].longitude;
-    var u2 = controlPoints[1].latitude;
-    var v2 = controlPoints[1].longitude;
-    var u3 = controlPoints[2].latitude;
-    var v3 = controlPoints[2].longitude;
-//    var x1 = controlPoints[0].getX();
-//    var y1 = controlPoints[0].getY();
-//    var x2 = controlPoints[1].getX();
-//    var y2 = controlPoints[1].getY();
-//    var x3 = controlPoints[2].getX();
-//    var y3 = controlPoints[2].getY();
-//    var u1 = controlPoints[0].getLatitude();
-//    var v1 = controlPoints[0].getLongitude();
-//    var u2 = controlPoints[1].getLatitude();
-//    var v2 = controlPoints[1].getLongitude();
-//    var u3 = controlPoints[2].getLatitude();
-//    var v3 = controlPoints[2].getLongitude();
+    var x1 = controlPoints[0].getX();
+    var y1 = controlPoints[0].getY();
+    var x2 = controlPoints[1].getX();
+    var y2 = controlPoints[1].getY();
+    var x3 = controlPoints[2].getX();
+    var y3 = controlPoints[2].getY();
+    var u1 = controlPoints[0].getLatitude();
+    var v1 = controlPoints[0].getLongitude();
+    var u2 = controlPoints[1].getLatitude();
+    var v2 = controlPoints[1].getLongitude();
+    var u3 = controlPoints[2].getLatitude();
+    var v3 = controlPoints[2].getLongitude();
 
     /*
      * Compute the matrix coefficients.

@@ -10,17 +10,11 @@
  * @param longitude The calculated longitude coordinate.
  */
 maphub.ControlPoint = function(x, y, latitude, longitude) {
-	maphub.Point.call(this, x, y);
+	this.x = x;
+	this.y = y;
 	this.latitude = latitude;
 	this.longitude = longitude;
 };
-
-
-
-/*
- * Pull in the properties of Points. 
- */
-maphub.ControlPoint.inheritFrom(maphub.Point);
 
 
 
@@ -59,4 +53,43 @@ maphub.ControlPoint.prototype.getLongitude = function() {
  */
 maphub.ControlPoint.prototype.toString = function() {
 	return "ControlPoint<x="+this.x+", y="+this.y+", lat="+this.latitude+", long="+this.longitude+">";
+};
+
+
+
+/**
+ * Retrieve the X coordinate of this point.
+ * 
+ * @function
+ * @public
+ * @returns The X coordinate value.
+ */
+maphub.ControlPoint.prototype.getX = function() {
+	return this.x;
+};
+
+
+
+/**
+ * Retrieve the Y coordinate of this point.
+ * 
+ * @function
+ * @public
+ * @returns The Y coordinate value.
+ */
+maphub.ControlPoint.prototype.getY = function() {
+	return this.y;
+};
+
+
+
+/**
+ * Retrieve a pretty representation of this Point.
+ * 
+ * @function
+ * @public
+ * @returns A string representation of this Point.
+ */
+maphub.ControlPoint.prototype.toString = function() {
+	return "ControlPoint[x="+this.x+", y="+this.y+"]";
 };

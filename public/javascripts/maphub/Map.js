@@ -131,7 +131,7 @@ maphub.Map.prototype.getTile = function(tileCoord, zoom, ownerDocument) {
 	 * appropriate tile for these coordinates, this empty div will appear instead.
 	 */
 	var div = ownerDocument.createElement('div');
-	div.style.background = "#222";
+	div.style.background = "#eee";
 	div.style.width = this.tileSize.width + 'px';
 	div.style.height = this.tileSize.height + 'px';
 	div.innerHTML = tileCoord;
@@ -153,7 +153,7 @@ maphub.Map.prototype.getTile = function(tileCoord, zoom, ownerDocument) {
 	/*
 	 * Since we have a tile, reset the div's background.
 	 */
-	div.style.background = "#222 url("+url+") no-repeat";
+	div.style.background = "#eee url("+url+") no-repeat";
 	
 	return div;
 };
