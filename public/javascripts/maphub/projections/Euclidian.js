@@ -27,33 +27,37 @@ maphub.projections.Euclidian = function(map) {
 	}
 };
 
-maphub.projection.Euclidian.prototype.fromLatLngToPoint = function(latLng) {
+maphub.projections.Euclidian.prototype.fromLatLngToPoint = function(latLng) {
+	var b = this.map.getZoom();
 	var c = Math.round(this.pixelOrigo[b].x + latLng.lng() * this.pixelsPerLonDegree[b]);
 	var d = Math.round(this.pixelOrigo[b].y + (-2 * latLng.lat()) * this.pixelsPerLonDegree[b]);
+	console.log("Converted from ("+b+") "+latLng.lat()+"|"+latLng.lng()+" to "+c+","+d);
 	return new google.maps.Point(c, d);
 };
 
-maphub.projection.Euclidian.prototype.fromPointToLatLng = function(point) {
+maphub.projections.Euclidian.prototype.fromPointToLatLng = function(a) {
+	var b = this.map.getZoom();
 	var d = (a.x - this.pixelOrigo[b].x) / this.pixelsPerLonDegree[b];
 	var e = -0.5 * (a.y - this.pixelOrigo[b].y) / this.pixelsPerLonDegree[b];
-	return new google.maps.LatLng(e, d, true);
+	console.log("Converted from ("+b+") "+a.x+","+a.y+" to "+e+"|"+d);
+	return new google.maps.LatLng(e, d);
 };
 
-maphub.projection.Euclidian.prototype.tileCheckRange = function(a, b, c) {
-	var d = this.tileBounds[b];
-	if (a.y < 0 || a.y >= d) {
-		return false;
-	}
-	if (a.x < 0 || a.x >= d) {
-		a.x = a.x % d;
-		if (a.x < 0) {
-			a.x += d;
-		}
-	}
-	return true
-};
-
-// == a method that returns the width of the tilespace ==
-maphub.projection.Euclidian.prototype.getWrapWidth = function(zoom) {
-	return this.tileBounds[zoom] * 256;
-};
+//maphub.projections.Euclidian.prototype.tileCheckRange = function(a, b, c) {
+//	var d = this.tileBounds[b];
+//	if (a.y < 0 || a.y >= d) {
+//		return false;
+//	}
+//	if (a.x < 0 || a.x >= d) {
+//		a.x = a.x % d;
+//		if (a.x < 0) {
+//			a.x += d;
+//		}
+//	}
+//	return true
+//};
+//
+//// == a method that returns the width of the tilespace ==
+//maphub.projections.Euclidian.prototype.getWrapWidth = function(zoom) {
+//	return this.tileBounds[zoom] * 256;
+//};
