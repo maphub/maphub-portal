@@ -17,19 +17,14 @@ Update your gem tool with `gem update --system` and install the bundler gem with
     
     bundle install
     
-Then, run the Rails application, probably in a separate console window, with...
+Then, run the Rails application, probably in a separate console window.
 
     bundle exec rails server
     
-...and start the Sunspot/Solr search engine
-
-    bundle exec rake sunspot:solr:start
-
 Create the database and add some test data
 
     bundle exec rake db:migrate
     bundle exec rake db:seed
-    
 
 Finally, open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
 
