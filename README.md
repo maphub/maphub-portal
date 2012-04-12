@@ -4,7 +4,7 @@ MapHub is a Web portal for annotating online historic maps.
 
 ## Running Maphub in Development Mode
 
-Make sure that you have ruby 1.9.2 and gem > 1.8 installed. We recommend [RVM](http://beginrescueend.com/) for controlling your local Ruby environments.
+The following instructions were tested with ruby 1.9.3 and gem 1.8. We recommend [RVM](http://beginrescueend.com/) for controlling your local Ruby environments.
 
     ruby -v
     gem -v

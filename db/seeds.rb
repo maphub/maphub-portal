@@ -15,7 +15,6 @@ Admin.create do |a|
   a.email = 'admin@example.com'
 end
 
-
 puts "Creating users ..."
 for i in 1..10 do
   User.create do |a|
@@ -28,3 +27,20 @@ for i in 1..10 do
   end
   puts "Created user #{i}"
 end
+
+maps = ["g3200.ct001129", 
+        "g3201b.ct002662",
+        "g3300.ar000600",
+        "g3300.ar003300",
+        "g3300.ct000912"]
+
+puts "Creating sample maps"
+
+maps.each_with_index do |id, index|
+  Map.create do |map|
+    map.title = "Map #{index+1}"
+    map.tileset_uri = "http://samos.mminf.univie.ac.at/maps/#{id}"
+  end
+  puts "Created map #{id}"
+end
+
