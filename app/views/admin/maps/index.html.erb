@@ -16,7 +16,7 @@
 
       <% @maps.each do |map| %>
         <tr>
-          <td><%= link_to map.id, map_path(@map) %></td>
+          <td><%= link_to map.id, map_path(map) %></td>
           <td><%= map.title %></td>
           <td><%= map.subject %></td>
           <td><%= link_to map.tileset_uri, map.tileset_uri, :target => '_blank' %></td>

@@ -1,16 +1,5 @@
 class MapsController < ApplicationController
   
-  # Return / render a list of all maps
-  def index
-    @maps = Map.all
-    
-    respond_to do |format|
-      format.html # index.html
-      format.json {render :json => @maps}
-    end
-    
-  end
-  
   # Render a single map
   def show
     @map = Map.find(params[:id])
