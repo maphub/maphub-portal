@@ -1,5 +1,11 @@
 class MapsController < ApplicationController
   
+  # forward to root; think about browsing view
+  def index
+    redirect_to :root
+  end
+  
+  
   # Render a single map
   def show
     @map = Map.find(params[:id])
@@ -7,6 +13,7 @@ class MapsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json {render :json => @map}
+      format.xml {render :xml => @map}
     end
   end
 

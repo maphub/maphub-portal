@@ -10,12 +10,11 @@ MaphubPortal::Application.routes.draw do
 
   resources :users, :only => [:show] # users can view their profile
 
-  resources :maps, :only => [:show] # users can view a map
+  resources :maps, :only => [:index, :show] # users can view a map
   
   # default homepage
   root :to => "home#index"
   
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
