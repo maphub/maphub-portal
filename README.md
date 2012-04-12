@@ -8,6 +8,15 @@ The following instructions were tested with ruby 1.9.3 and gem 1.8. We recommend
 
     ruby -v
     gem -v
+    
+We also recommend to create a separate [RVM Gemset](http://beginrescueend.com/gemsets/) for the MapHub portal:
+
+    rvm gemset create maphub
+    rvm gemset use maphub
+
+Optionally you can set maphub to be the default gemset
+
+    rvm use 1.9.3-head@maphub --default
 
 Clone the maphub code on your local machine:
 
@@ -19,12 +28,12 @@ Update your gem tool with `gem update --system` and install the bundler gem with
     
 Then, run the Rails application, probably in a separate console window.
 
-    bundle exec rails server
+    rails server
     
 Create the database and add some test data
 
-    bundle exec rake db:migrate
-    bundle exec rake db:seed
+    rake db:migrate
+    rake db:seed
 
 Finally, open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
 
@@ -34,12 +43,3 @@ Finally, open <http://localhost:3000/> in your browser and log into MapHub with 
 If you made some changes to the database or first create the database, run
 
     bundle exec rake db:drop; rake db:migrate; rake db:seed
-    
-In case you change something in your models, don't forget to reindex Sunspot:
-
-    bundle exec rake sunspot:reindex
-    
-
-## Advanced Stuff
-
-For deploying Maphub in production mode, follow [this guide](https://github.com/maphub/maphub-portal/wiki/Deploy-Maphub-in-production-mode)

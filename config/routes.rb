@@ -2,15 +2,15 @@ MaphubPortal::Application.routes.draw do
 
   devise_for :admins, :users
   
-  # administrator namespace (create separate controllers for these!)
+  # administrator namespace
   namespace :admin do 
     resources :users
     resources :maps
   end
 
-  match 'users/:id' => 'users#show' # users can view their profile
+  resources :users, :only => [:show] # users can view their profile
 
-  match 'maps/:id' => 'maps#show' # users can view a map
+  resources :maps, :only => [:show] # users can view a map
   
   # default homepage
   root :to => "home#index"

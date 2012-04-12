@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>List of all maps</h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <table class="table table-striped">
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Subject</th>
+        <th>Tileset URI</th>
+        <th>Width</th>
+        <th>Height</th>
+      </tr>
+
+      <% @maps.each do |map| %>
+        <tr>
+          <td><%= link_to map.id, map_path(@map) %></td>
+          <td><%= map.title %></td>
+          <td><%= map.subject %></td>
+          <td><%= link_to map.tileset_uri, map.tileset_uri, :target => '_blank' %></td>
+          <td><%= map.width %></td>
+          <td><%= map.height %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

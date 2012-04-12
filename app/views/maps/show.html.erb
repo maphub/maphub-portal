@@ -1,0 +1,37 @@
+<!-- map and metadata box-->
+<div class="row">
+  <div class="span12">
+    
+    <div class="row">
+
+      <p id="notice"><%= notice %></p>
+
+      <div class="span8">
+        <p>Here comes the map</p>
+        <div id="viewer"></div>
+      </div>
+
+      <div class="span4">
+        <p>And here the metadata</p>
+        <p>
+          <b>Title:</b>
+          <%= @map.title %>
+        </p>
+
+        <p>
+          <b>Tileset URI:</b>
+          <%= @map.tileset_uri %>
+        </p>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+
+<!-- annotations-->
+<div class="row">
+    <div class="span8">
+        <p>here the annotation list</p>
+    </div>
+</div>
