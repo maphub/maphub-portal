@@ -1,5 +1,15 @@
 class MapsController < ApplicationController
   
+  # Show all maps
+  def index
+    @maps = Map.all
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json {render :json => @map}
+    end
+  end
+  
   # Render a single map
   def show
     @map = Map.find(params[:id])
@@ -9,7 +19,7 @@ class MapsController < ApplicationController
       format.json {render :json => @map}
     end
   end
-
+  
   # def annotate
   #   # read the the posted annotation and save with the map
   # end

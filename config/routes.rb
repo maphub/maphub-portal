@@ -6,11 +6,19 @@ MaphubPortal::Application.routes.draw do
   namespace :admin do 
     resources :users
     resources :maps
+    resources :annotations
+  end
+  
+  resources :users, :only => [:show, :update] do 
+    resources :annotations, :only => [:show, :index]
+  end
+  
+  resources :maps, :only => [:show, :index] do 
+    resources :annotations, :only => [:create, :show, :index, :update]
   end
 
-  resources :users, :only => [:show] # users can view their profile
 
-  resources :maps, :only => [:show] # users can view a map
+  
   
   # default homepage
   root :to => "home#index"

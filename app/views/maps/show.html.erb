@@ -1,3 +1,14 @@
+<%= javascript_include_tag params[:controller] %>
+<%= javascript_tag do %>
+window.annotation_view = new MapHub.AnnotationView(
+    <%= @map.width %>,
+    <%= @map.height %>,
+    "<%= @map.tileset_uri + '/' %>",
+    "<%= map_annotations_url(@map, :format => :json) %>",
+    <%= user_signed_in? ? "true" : "false" %>
+);
+<% end %>
+
 <!-- map and metadata box-->
 <div class="row">
   <div class="span12">
@@ -7,12 +18,12 @@
       <p id="notice"><%= notice %></p>
 
       <div class="span8">
-        <p>Here comes the map</p>
+        <h2><%= @map.title %></h2>
         <div id="viewer"></div>
       </div>
 
       <div class="span4">
-        <p>And here the metadata</p>
+        <h3>About this map</h3>
         <p>
           <b>Title:</b>
           <%= @map.title %>
@@ -31,7 +42,7 @@
 
 <!-- annotations-->
 <div class="row">
-    <div class="span8">
-        <p>here the annotation list</p>
+    <div class="span4">
+    <h3>Annotations</h3>
     </div>
 </div>

@@ -6,7 +6,6 @@ class CreateMaps < ActiveRecord::Migration
       t.string :tileset_uri
       t.integer :width
       t.integer :height
-
       t.timestamps
     end
   end
