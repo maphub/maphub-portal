@@ -20,13 +20,7 @@ class User < ActiveRecord::Base
   after_create :send_sign_up_notification
   
   # Model associations
-  has_many :maps
-  has_many :collections
   has_many :annotations
-  
-  # Markdown content
-  # TODO test and make it work
-  # acts_as_markdown :about_me
   
   # Gravatars
   include Gravtastic

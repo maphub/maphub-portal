@@ -37,9 +37,7 @@
           <a class="brand" href="/">maphub</a>
           <div class="container nav-collapse">
             <ul class="nav">
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+                <li><%= link_to "maps", maps_path  %></li>
             </ul>
             <ul class="nav pull-right">
                 <% if not user_signed_in? %>
@@ -67,12 +65,12 @@
       <div class="content">
         <%= yield %>
       </div>
-
-      <footer>
-        <p>&copy; maphub 2012</p>
-      </footer>
-
+      
     </div> <!-- /container -->
+    <footer>
+      <p>&copy; maphub 2012</p>
+    </footer>
+    
 
   </body>
 </html>

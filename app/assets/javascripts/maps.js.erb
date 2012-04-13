@@ -2,11 +2,16 @@
 
 MapHub = {}
 
-MapHub.AnnotationView = function(width, height, zoomify_url) {
+MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, editable) {
   
   this.zoomify_width = width;
   this.zoomify_height = height;
   this.zoomify_url = zoomify_url;
+  
+  this.annotations_url = annotations_url;
+  this.editable = editable;
+  this.features = [];
+  this.annotations = [];
   
   /* The zoomify layer */
   this.baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", this.zoomify_url, 
@@ -34,12 +39,3 @@ MapHub.AnnotationView = function(width, height, zoomify_url) {
   this.map.zoomToMaxExtent();
   
 }
-
-// this function is called when the document is loaded
-// $(document).ready(function(){
-//   window.annotation_view = new MapHub.AnnotationView(
-//     <%= @map.width %>,
-//     <%= @map.height %>,
-//     "<%= @map.tileset_uri + '/' %>",
-//   );  
-// });

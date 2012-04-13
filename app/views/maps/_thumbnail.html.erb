@@ -1,0 +1,7 @@
+<div class="single-map">
+    <div class="single-map-info">
+      <%= link_to map.title, map %><br>
+      <%= time_ago_in_words(map.created_at) %> ago<br>
+    </div>
+    <%= link_to image_tag(map.thumbnail_uri), map %>
+</div>

@@ -1,18 +1,6 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".edit_user").hide();
-    
-    // If the "Edit your description button" is clicked
-    $("#toggleForm").click(function(){
-      $('#aboutMyself').hide();
-      $(".edit_user").slideDown(function(){
-        $("#user_about_me").focus();
-      });
-      return false;
-    });
+<%= javascript_include_tag params[:controller] %>
 
-  });
-</script>
+
 
 <% if @myself %>
 <div class="row">
@@ -36,7 +24,7 @@
     <% end %>
   </div>
 
-  <div id="userInfoTableContainer" class="span2"> 
+  <div id="userInfoTableContainer" class="span3"> 
     <table id="userInfoTable">
       <tr>
         <td class="firstCol">Joined:</td>
@@ -72,7 +60,8 @@
       </tr>
     </table>
   </div> <!-- userInfoTableContainer -->
-  <div id="userInfoText" class="span4 offset4">
+  <div id="userInfoText" class="span4 offset3">
+    <h3>About me</h3>
     <% if @myself %>
       <!-- Display form if this is our own page -->
       <%= form_for @user, :remote => true do |f| %>
