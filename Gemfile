@@ -10,6 +10,8 @@ gem 'yaml_db'
 gem 'gravtastic'
 gem 'acts_as_markup'
 
+gem 'linkeddata'
+
 gem 'twitter-bootstrap-rails'
 #, :git => "git://github.com/seyhunak/twitter-bootstrap-rails.git", :branch => "static"
 

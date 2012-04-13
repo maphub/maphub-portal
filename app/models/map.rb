@@ -25,5 +25,11 @@ class Map < ActiveRecord::Base
     end
     
   end
+  
+  def to_rdfxml
+    graph = RDF::Graph.new << [:hello, RDF::DC.title, "Hello, world!"]
+    graph.dump(:rdfxml)
+  end
+  
 
 end

@@ -14,7 +14,9 @@ class MapsController < ApplicationController
       format.html # show.html.erb
       format.json {render :json => @map}
       format.xml {render :xml => @map}
+      format.rdfxml {render :inline => @map.to_rdfxml}
     end
+    
   end
 
   # def annotate
