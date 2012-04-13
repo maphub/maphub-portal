@@ -1,13 +1,5 @@
 class MapsController < ApplicationController
   
-<<<<<<< HEAD
-  # forward to root; think about browsing view
-  def index
-    redirect_to :root
-  end
-  
-  
-=======
   # Show all maps
   def index
     @maps = Map.all
@@ -18,7 +10,6 @@ class MapsController < ApplicationController
     end
   end
   
->>>>>>> 2a4d4db9f13d8d31f7ec7bca690575e65810c09c
   # Render a single map
   def show
     @map = Map.find(params[:id])
