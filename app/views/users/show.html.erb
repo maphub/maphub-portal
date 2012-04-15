@@ -6,7 +6,7 @@
 <div class="row">
         <div id="userBox" class="pull-right">
           Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
-          <a href="#" id="toggleForm">Edit your description</a>
+          <a href="#" id="toggle-form">Edit your description</a>
         </div>
 </div>
 <% end %>
@@ -16,62 +16,64 @@
 </div>
 
 <div class="row">
-  <div id="userImage" class="span2">
+  <div id="user-image" class="span2">
     <% if @myself %>
-      <%= link_to image_tag(@user.gravatar_url(:size => 120)), "http://gravatar.com" %>
+      <%= link_to image_tag(@user.gravatar_url(:size => 150)), "http://gravatar.com" %>
     <% else %>
-      <%= image_tag(@user.gravatar_url(:size => 120)) %>
+      <%= image_tag(@user.gravatar_url(:size => 150)) %>
     <% end %>
   </div>
 
-  <div id="userInfoTableContainer" class="span3"> 
-    <table id="userInfoTable">
+  <div id="user-info-table-container" class="span3"> 
+    <table id="user-info-table">
       <tr>
-        <td class="firstCol">Joined:</td>
+        <td class="user-info-first-col"><strong>Joined:</strong></td>
         <td><%= time_ago_in_words(@user.created_at) %> ago </td>
       </tr>
       <tr>
-        <td class="firstCol">Last seen:</td>
+        <td class="user-info-first-col"><strong>Last seen:</strong></td>
         <td><%= time_ago_in_words(@user.last_sign_in_at) rescue time_ago_in_words(@user.created_at)  %> ago</td>
       </tr>
       <% unless @user.fullname.nil? or @user.fullname.empty? %>
       <tr>
-        <td class="firstCol">Full Name:</td>
+        <td class="user-info-first-col"><strong>Full Name:</strong></td>
         <td><%= @user.fullname %></td>
       </tr>
       <% end %>
       <% unless @user.location.nil? or @user.location.empty? %>
       <tr>
-        <td class="firstCol">Location:</td>
+        <td class="user-info-first-col"><strong>Location:</strong></td>
         <td><%= @user.location %></td>
       </tr>
       <% end %>
       <tr>
-        <td class="firstCol">Maps:</td>
+        <td class="user-info-first-col"><strong>Maps:</strong></td>
     
       </tr>
       <tr>
-        <td class="firstCol">Collections:</td>
+        <td class="user-info-first-col"><strong>Collections:</strong></td>
     
       </tr>
       <tr>
-        <td class="firstCol">Annotations:</td>
-    
+        <td class="user-info-first-col"><strong>Annotations:</strong></td>
+        <td><%= @user.annotations.count %></td>
       </tr>
     </table>
   </div> <!-- userInfoTableContainer -->
-  <div id="userInfoText" class="span4 offset3">
+  <div id="user-info-text" class="span4 offset3">
     <h3>About me</h3>
     <% if @myself %>
       <!-- Display form if this is our own page -->
       <%= form_for @user, :remote => true do |f| %>
-      <%= f.text_area :about_me, :cols => 55, :rows => 10 %><br>
-      <%= f.submit "Update", :class => "btn btn-primary" %>
+      <%= f.text_area :about_me, :rows => 10, :style => "width:100%" %><br>
+      <div class="pull-right">
       <%= f.button "Cancel", :class => "btn", :id => "button-cancel" %>
+      <%= f.submit "Update", :class => "btn btn-primary" %>
+      </div>
       <% end %>
     <% end %>
       
-    <div id="aboutMyself">
+    <div id="about-myself">
       <% if @user.about_me.nil? %>
         <em>This user hasn't entered a description yet.</em>
       <% else %>

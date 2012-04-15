@@ -35,7 +35,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       ## Token authenticatable
       # t.string :authentication_token
-
+      
       # custom attributes
       t.string :username
       t.string :fullname
@@ -43,6 +43,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :about_me
       t.timestamp :deleted_at, :default => nil
       
+      # relational attributes
+      t.integer :annotations_count
 
       t.timestamps
     end

@@ -14,8 +14,10 @@ MaphubPortal::Application.routes.draw do
   end
   
   resources :maps, :only => [:show, :index] do 
-    resources :annotations, :only => [:create, :show, :index, :update]
+    resources :annotations, :only => [:create, :index, :update]
   end
+  
+  resources :annotations, :only => [:create, :update]
   
   # default homepage
   root :to => "home#index"

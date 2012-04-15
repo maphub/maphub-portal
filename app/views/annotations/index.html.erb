@@ -1,0 +1,25 @@
+
+<div class="row">
+<h1>Annotations on <%= @annotations.first.map.title %></h1>
+</div>
+
+<div class="row">
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Body</th>
+    <th>Created</th>
+    <th>User</th>
+  </tr>
+</thead>
+<tbody>
+<% @annotations.each do |annotation| %>
+  <tr>
+    <td><%= annotation.body %></td>
+    <td><%= annotation.created_at %></td>
+    <td><%= link_to annotation.user.username, annotation.user %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+</div>

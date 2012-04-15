@@ -7,7 +7,8 @@ $(document).ready(function(){
       "<%= @map.tileset_uri + '/' %>",
       "<%= map_annotations_url(@map, :format => :json) %>",
       <%= user_signed_in? ? "true" : "false" %>
-  );  
+  );
+  
 });
 <% end %>
 
@@ -25,22 +26,53 @@ $(document).ready(function(){
       </div>
       <div class="span4">
         <h3>About this map</h3>
-        <p>
-          <b>Title:</b>
-          <%= @map.title %>
-        </p>
-        <p>
-          <b>Tileset URI:</b>
-          <%= @map.tileset_uri %>
-        </p>
+        <ul>
+          <li><strong>Title:</strong> <%= @map.title %></li>
+          <li><strong>Dimensions:</strong> <%= @map.width %>&times;<%= @map.height %>px</li>
+        </ul>
+        <h4>Tileset</h4>
+        <input type="text" value="<%= @map.tileset_uri %>" class="span4"></input>
+      </div>
+      <div class="span4" style="padding-top:20px">
+      <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) %></small></h3>
+        <ul id="annotation-list">
+          <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
+            <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 
-<!-- annotations-->
-<div class="row">
-    <div class="span4">
-    <h3>Annotations</h3>
+<div class="modal hide" id="modal-annotation">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Annotation</h3>
+  </div>
+  <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
+    <div class="modal-body">
+      <p>
+        <%= f.text_area :body, :cols => 80, :rows => 10, :style => "width: 500px" %>
+      </p>
+      <%= f.label "Data saved:" %>
+      <%= f.text_field :wkt_data %>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Save annotation", :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="modal hide" id="modal-control-point">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Control Point</h3>
+    </div>
+    <div class="modal-body">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary">Save control point</a>
     </div>
 </div>

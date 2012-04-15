@@ -1,8 +1,8 @@
 $(document).ready(function(){
   $(".edit_user").hide();
   // If the "Edit your description button" is clicked
-  $("#toggleForm").click(function(){
-    $('#aboutMyself').hide();
+  $("#toggle-form").click(function(){
+    $('#about-myself').hide();
     $(".edit_user").slideDown(function(){
       $("#user_about_me").focus();
     });
@@ -11,7 +11,7 @@ $(document).ready(function(){
   $("#button-cancel").click(function(e){
     e.preventDefault();
     $(".edit_user").slideUp(function(){
-      $('#aboutMyself').show();
+      $('#about-myself').show();
     });
   });
 

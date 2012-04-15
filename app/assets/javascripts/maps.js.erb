@@ -1,7 +1,6 @@
 //= require OpenLayers
 
 MapHub = {}
-
 MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, editable) {
   
   /* Callbacks for added / removed features */
@@ -30,18 +29,15 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     var self = this;
     
     // reinitialize title and body, and copy WKT data
-    $("#annotation_title").attr("value", "");
-    $("#annotation_body").attr("value", "");
+    $("#annotation_body").attr("value", "Add your annotation here!");
     $("#annotation_wkt_data").attr("value", wkt_data);
     
     // show the popup
-    $("#slideUpBarAnnotation").slideDown(function(){
-      $("#annotation_title").focus();
-    });
+    $("#modal-annotation").modal();
+    $("#annotation_body").focus();
   }
   
   function controlPointAdded(evt) {
-    
     // set x/y in form
     $("#control_point_x").attr("value", evt.feature.geometry.x);
     $("#control_point_y").attr("value", evt.feature.geometry.y);
