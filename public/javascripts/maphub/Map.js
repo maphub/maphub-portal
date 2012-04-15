@@ -19,6 +19,8 @@ maphub.Map = function(id) {
 	 */
 	this.controlPoints = [];
 	
+	
+	
 	/**
 	 * This map's type identifier. The Google Maps API uses these to differentiate maps in the UI.
 	 * 
@@ -88,7 +90,14 @@ maphub.Map = function(id) {
 	 * @public
 	 */
 	this.maxZoom = this.tileSet.numLevels();
+	
+	
+	this.currentZoomLevel = 1;
 };
+
+
+
+
 
 
 
@@ -159,6 +168,16 @@ maphub.Map.prototype.getTile = function(tileCoord, zoom, ownerDocument) {
 };
 
 
+
+/**
+ * Retrieve this map's tile set.
+ */
+maphub.Map.prototype.getTileSet = function() {
+	return this.tileSet;
+};
+
+
+
 /**
  * Retrieve this map's tile URL.
  * 
@@ -181,4 +200,14 @@ maphub.Map.prototype.getTileURL = function() {
  */
 maphub.Map.prototype.getType = function() {
 	return this.type;
+};
+
+
+
+maphub.Map.prototype.getZoom = function() { return this.currentZoomLevel; }
+
+
+
+maphub.Map.prototype.setZoom = function(level) {
+	this.currentZoomLevel = level;
 };
