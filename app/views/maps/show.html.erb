@@ -34,13 +34,13 @@ $(document).ready(function(){
         <input type="text" value="<%= @map.tileset_uri %>" class="span4"></input>
       </div>
       <div class="span4" style="padding-top:20px">
-      <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) %></small></h3>
-        <ul id="annotation-list">
-          <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
-            <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
-          <% end %>
-        </ul>
-      </div>
+        <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) %></small></h3>
+          <ul id="annotation-list">
+            <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
+              <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
+            <% end %>
+          </ul>
+        </div>
     </div>
   </div>
 </div>
