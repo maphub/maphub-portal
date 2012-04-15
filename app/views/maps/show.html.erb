@@ -1,12 +1,14 @@
 <%= javascript_include_tag params[:controller] %>
 <%= javascript_tag do %>
-window.annotation_view = new MapHub.AnnotationView(
-    <%= @map.width %>,
-    <%= @map.height %>,
-    "<%= @map.tileset_uri + '/' %>",
-    "<%= map_annotations_url(@map, :format => :json) %>",
-    <%= user_signed_in? ? "true" : "false" %>
-);
+$(document).ready(function(){
+  window.annotation_view = new MapHub.AnnotationView(
+      <%= @map.width %>,
+      <%= @map.height %>,
+      "<%= @map.tileset_uri + '/' %>",
+      "<%= map_annotations_url(@map, :format => :json) %>",
+      <%= user_signed_in? ? "true" : "false" %>
+  );  
+});
 <% end %>
 
 <!-- map and metadata box-->
@@ -19,24 +21,20 @@ window.annotation_view = new MapHub.AnnotationView(
 
       <div class="span8">
         <h2><%= @map.title %></h2>
-        <div id="viewer"></div>
+        <div id="viewer" class="span8" style="height:600px;"></div>
       </div>
-
       <div class="span4">
         <h3>About this map</h3>
         <p>
           <b>Title:</b>
           <%= @map.title %>
         </p>
-
         <p>
           <b>Tileset URI:</b>
           <%= @map.tileset_uri %>
         </p>
       </div>
-
     </div>
-    
   </div>
 </div>
 
