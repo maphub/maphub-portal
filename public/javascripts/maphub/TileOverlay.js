@@ -1,3 +1,5 @@
+define({});
+
 /**
  * Loosely based on Gavin Harriss' maphub.TileOverlay (http://www.gavinharriss.com/)
  */
@@ -62,3 +64,5 @@ maphub.TileOverlay.prototype.getTileUrlCoord = function(coord, zoom) {
 	}
 	return new google.maps.Point(x, y);
 }
+
+console.log("TO loaded.");
