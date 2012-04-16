@@ -1,0 +1,50 @@
+body, html {
+	background-color: #fff;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+}
+
+#map_canvas {
+	/*
+	width: 768px;
+	*/
+	height: 512px;
+}
+#container {
+	min-height: 100%;
+	position: relative;
+}
+#footer {
+	bottom: 0px;
+	font-family: Arial, sans;
+	font-size: 0.75em;
+	color: #aaa;
+	height: 23m;
+	position: absolute;
+	width: 100%;
+}
+
+.left { float: left; }
+.right { float: right; }
+
+#header {
+	height: 1.5em;
+	min-height: 1.5em;
+	width: 100%;
+}
+
+ul.menu {
+	font-size: 1.25em;
+	list-style-type: none;
+	margin: 0px;
+	padding: 5px;
+}
+ul.menu li {
+	border-top: 1px solid #eee;
+}
+ul.menu:first-child li {
+	border-bottom: 1px solid #eee;
+	border-top: 0px !important;
+}

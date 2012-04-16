@@ -5,9 +5,11 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript">
+			//google.load('gdata', '2.x', {packages: ['maps']});
 			google.load('jquery', '1');
+			google.load('maps', '2', { other_params: "sensor=true&key=AIzaSyAZWsx0xPMR9SigtiD2QNmMxS7hbvwjJHI" });
 		</script>
-		<script type="text/javascript" src="/javascripts/maphub/maphub.js"></script>
+		<script type="text/javascript" src="/javascripts/maphub2/maphub.js"></script>
 		<script type="text/javascript">maphub.load();</script>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/m.css"/>
 		<title>MapHub</title>
@@ -19,11 +21,13 @@
 				<div class="right">login</div>
 			</div>
 			<div id="main">
-				<ul class="menu">
-					<li>Browse Maps</li>
-				</ul>
+				<div id="map_canvas"></div>
 			</div>
 			<div id="footer">Footer <span id="ll" style=" display: inline-block; min-width: 20em;"></span> <span id="xy"></span></div>
 		</div>
+		<script type="text/javascript">
+			document.map = new maphub.Map("world");
+			document.map.render("map_canvas");
+		</script>
 	</body>
 </html>
