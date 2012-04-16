@@ -1,0 +1,25 @@
+<% 
+maps = Map.order("updated_at").limit(10)
+%>
+
+<div id="maps-carousel" class="carousel">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <% maps.each_with_index do |map, index| %>
+      <% if index == 0 %>
+        <div class="active item">
+      <% else %>
+        <div class="item">
+      <% end %>
+          <%= link_to image_tag(map.thumbnail_uri, :alt => "#{map.title}"), map %>
+          <div class="carousel-caption">
+            <h4><%= map.title %></h4>
+            <p><%= map.subject %></p>
+          </div>
+        </div>
+    <% end %>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>

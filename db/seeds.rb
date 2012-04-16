@@ -40,6 +40,7 @@ maps.each_with_index do |id, index|
   Map.create do |map|
     map.title = "Map #{index+1}"
     map.tileset_uri = "http://samos.mminf.univie.ac.at/maps/#{id}"
+    map.subject = "Lorem ipsum dolor sit amet. Sunt in culpa qui officia deserunt mollit anim id est laborum."
   end
   puts "Created map #{id}"
 end

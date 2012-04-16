@@ -1,0 +1,11 @@
+<% 
+unless local_assigns.has_key? :maps
+  maps = Map.order("updated_at").limit(10).reverse()
+end
+%>
+
+<ul>
+  <% for map in maps %>
+    <li><%= link_to map.title, map %>, <%= time_ago_in_words(map.updated_at) %> ago</li>
+  <% end %>
+</ul>

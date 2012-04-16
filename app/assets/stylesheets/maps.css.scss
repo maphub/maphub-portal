@@ -22,3 +22,15 @@ float:left;
 .single-map-info {
 
 }
+
+.map-grid-image {
+  float:left;
+  width:65px;
+  height:65px;
+  overflow:hidden;
+  border: 2px solid white;
+}
+
+.map-grid-image:hover {
+  border: 2px solid #006699;
+}

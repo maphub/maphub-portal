@@ -1,0 +1,33 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".map-grid-image").hover(function(){
+      var text = $(this).find(".preview-text-hidden").html();
+      $("#preview-text").html(text);
+    });
+  });
+</script>
+
+<% 
+unless local_assigns.has_key? :maps
+  maps = Map.order("updated_at").limit(18)
+end
+%>
+
+<div class="map-grid">
+  <% for map in maps %>
+    <div class="map-grid-image">
+      <%= link_to image_tag(map.thumbnail_uri, :alt => "#{map.title}"), map %>
+      <div style="display:none;" class="preview-text-hidden">
+        <%= link_to map.title, map %>,
+        <%= time_ago_in_words(map.created_at) %> ago
+      </div>
+    </div>
+  <% end %>
+  <br style="clear:both;">
+  <p>
+    <div id="preview-text">
+    <!-- Here comes the preview text via JavaScript -->
+    </div>
+  </p>
+</div>
+
