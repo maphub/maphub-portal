@@ -25,10 +25,13 @@ maphub.load = function(callback) {
 	for (var i in classes) {
 		console.log("Loading "+maphub.RootURL+"/"+classes[i]+".js");
 		$.ajax({
-			cache: true,
+			async: true,
 			url: maphub.RootURL+"/"+classes[i]+".js",
 			dataType: "script",
-			complete: function(data, status, xhr) {
+			error: function(jqxhr, status, error) {
+				console.log("Unable to load "+classes[i]+": "+status+", "+error);
+			},
+			success: function(data, status, xhr) {
 				if (window.tmpLoadCount) {
 					window.tmpLoadCount++;
 				} else {
