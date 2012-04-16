@@ -9,12 +9,18 @@ maphub = {
 
 
 /*
- * MapHub requires jQuery to function.
+ * Verify that our required libraries are loaded.
  */
-if (jQuery == "undefined") {
-	throw "MapHub requires jQuery to function."; 
-}
+if (jQuery == 'undefined') { throw 'MapHub requires jQuery to function.'; }
+if (requirejs == "undefined") { throw 'MapHub requires RequireJS to function.'; }
 
+
+
+
+/**
+ * Load everything.
+ */
+require(['Map']);
 
 
 maphub.load = function(callback) {

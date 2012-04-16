@@ -9,12 +9,7 @@
 			google.load('jquery', '1');
 			google.load('maps', '3', { other_params: "sensor=true&key=AIzaSyAZWsx0xPMR9SigtiD2QNmMxS7hbvwjJHI" });
 		</script>
-		<script type="text/javascript" src="/javascripts/maphub/maphub.js"></script>
-		<script type="text/javascript" src="/javascripts/maphub/Client.js"></</script>
-		<script type="text/javascript" src="/javascripts/maphub/Map.js"></</script>
-		<script type="text/javascript" src="/javascripts/maphub/ControlPoint.js"></</script>
-		<script type="text/javascript" src="/javascripts/maphub/TileOverlay.js"></</script>
-		<script type="text/javascript" src="/javascripts/maphub/AlphaOverlay.js"></</script>
+		<script data-main="/javascripts/maphub/maphub" type="text/javascript" src="/javascripts/require.js"></script>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/m.css"/>
 		<title>MapHub</title>
 	</head>
@@ -31,10 +26,13 @@
 		</div>
 		<script type="text/javascript">
 //			maphub.load(function () {
-				var x = new maphub.AlphaOverlay({
-					container: document.getElementById('map_canvas'),
-					tileSize: new google.maps.Size(256, 256)
-				});
+//				var x = new maphub.AlphaOverlay({
+//					container: document.getElementById('map_canvas'),
+//					tileSize: new google.maps.Size(256, 256)
+//				});
+//				console.log(x.getTile(new google.maps.Point(0,0), 4, document));
+//				console.log(x.getTile(new google.maps.Point(0,0), 4, document));
+				
 //				var map = new maphub.Map(11);
 //				map.render('map_canvas');
 //			});
