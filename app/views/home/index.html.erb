@@ -1,55 +1,24 @@
-<% if not user_signed_in? %>
-
+<div class="row">
   <div class="hero-unit">
     <h1>Welcome to maphub!</h1>
     <blockquote>
     maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
     </blockquote>
   </div>
-  
-  <div class="row">
-    <div class="span1">  
-    <%= link_to 'Log in', new_user_session_path, :class => "btn btn-primary" %>
-    </div>
-    <div class="span4">
-      if you already have an account with us
-    </div>
-  </div>
-  
-  <div class="row" style="padding-top:15px">
-    <div class="span1">
-    <%= link_to 'Sign up', new_user_registration_path, :class => "btn btn-primary" %>
-    </div>
-    <div class="span4">
-    if you want to start contributing. It only takes a minute!
-    </div>
-  </div>
-  
+  <%= render :partial => "maps/carousel", :locals => { :maps => @recent_maps } %>        
+</div>
 
-<% else %>
-
-  <div class="row">
-    <div class="hero-unit">
-      <h1>Welcome to maphub!</h1>
-      <p>
-      maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
-      <p>
-    </div>  
-    <%= render :partial => "maps/carousel", :locals => { :maps => @recent_maps } %>
-  </div>  
-  <div class="row">
-    <div class="span4">
-      <h2>Recent Maps <small>show all</small></h2>
-      <%= render :partial => "maps/recent", :locals => { :maps => @recent_maps } %>
-    </div>
-    <div class="span4">
-      <h2>Recent Annotations <small>show all</small></h2>
-      Render partial here
-    </div>
-    <div class="span4">
-      <h2>New Users <small>show all</small></h2>
-      Render partial here
-    </div>
+<div class="row">
+  <div class="span4">
+    <h2>Recent Maps <small>show all</small></h2>
+    <%= render :partial => "maps/recent", :locals => { :maps => @recent_maps } %>
   </div>
-
-<% end %>
+  <div class="span4">
+    <h2>Recent Annotations <small>show all</small></h2>
+    Render partial here
+  </div>
+  <div class="span4">
+    <h2>New Users <small>show all</small></h2>
+    Render partial here
+  </div>
+</div>

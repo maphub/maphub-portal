@@ -35,6 +35,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     // show the popup
     $("#modal-annotation").modal();
     $("#annotation_body").focus();
+    $("#annotation_body").select();
   }
   
   function controlPointAdded(evt) {
@@ -68,8 +69,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
 
   /* The annotation layer */
   this.annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
-  this.annotationLayer.events.register("featureselected", this.editLayer, featureSelected);
-  this.annotationLayer.events.register("featureunselected", this.editLayer, featureUnselected);
+  this.annotationLayer.events.register("featureselected", this.annotationLayer, featureSelected);
+  this.annotationLayer.events.register("featureunselected", this.annotationLayer, featureUnselected);
 
   /* Display options */
   var options = {
@@ -82,7 +83,14 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
 
   this.map = new OpenLayers.Map("viewer", options);
 
+  // add all layers to the map
   this.map.addLayer(this.baseLayer);
+  this.map.addLayer(this.editLayer);
+  this.map.addLayer(this.annotationLayer);
+
+
+  // remotely load already existing annotations via JSON
+  this.remoteLoadAnnotations();
 
   // MouseDefaults is deprecated, see: http://trac.osgeo.org/openlayers/wiki/Control/MouseDefaults
   this.map.addControl(new OpenLayers.Control.Navigation());
@@ -91,10 +99,20 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 
   /* Allow selection of features upon hovering */
-  var select = new OpenLayers.Control.SelectFeature(
-    [this.annotationLayer], { hover: true }
+  var highlight = new OpenLayers.Control.SelectFeature(
+    [this.annotationLayer], { 
+      hover: true,
+      highlightOnly: true
+      }
   );
+  var select = new OpenLayers.Control.SelectFeature(
+    [this.annotationLayer], { 
+      clickout: true,
+      }
+  );
+  this.map.addControl(highlight);
   this.map.addControl(select);
+  highlight.activate();
   select.activate();
 
   /* Allow creation of features */
@@ -104,4 +122,69 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
   
+}
+
+
+/* Loads the annotations for this map via a JSON request */
+MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
+  var wkt_parser = new OpenLayers.Format.WKT();
+  var self = this;
+  
+  $.getJSON(this.annotations_url, function(data) { 
+    $.each(data, function(key, val) {
+      var feature = wkt_parser.read(val.wkt_data);
+      feature.annotation = val;
+      self.features.push(feature);
+      self.annotations.push(val);
+    });
+    self.annotationLayer.addFeatures(self.features);
+  });
+}
+
+/* Loads a single annotation for this map via a JSON request */
+MapHub.AnnotationView.prototype.loadSingleAnnotation = function(url) {
+  var wkt_parser = new OpenLayers.Format.WKT();
+  var self = this;
+  
+  $.getJSON(url, function(data) {
+    console.log(data);
+    var feature = wkt_parser.read(data.wkt_data);
+    feature.annotation = data
+    self.features.push(feature);
+    self.annotations.push(data);
+    self.annotationLayer.addFeatures([feature]);
+  });
+}
+
+MapHub.AnnotationView.prototype.clearEditingLayer = function() {
+
+}
+
+MapHub.AnnotationTooltip = function(annotation) {
+  this.div = document.createElement("div");
+  this.div.setAttribute("class", "annotation-tooltip");
+    
+  this.div_body = document.createElement("div");
+  this.div_body.setAttribute("class", "annotation-tooltip-body");
+  this.div_body.innerHTML = annotation.body;
+  this.div.appendChild(this.div_body); 
+  
+  document.getElementById("annotation-selected").appendChild(this.div);
+}
+
+MapHub.AnnotationTooltip.OFFSET_X = 0;
+MapHub.AnnotationTooltip.OFFSET_Y = 0;
+
+MapHub.AnnotationTooltip.prototype.show = function(x, y) {
+  this.div.style.left = x + MapHub.AnnotationTooltip.OFFSET_X + "px";
+  this.div.style.top = y + MapHub.AnnotationTooltip.OFFSET_Y + "px";
+  this.div.style.display = "block";
+}
+
+MapHub.AnnotationTooltip.prototype.hide = function() {
+  this.div.style.display = "none";
+}
+
+MapHub.AnnotationTooltip.prototype.remove = function() {
+  // TODO
 }

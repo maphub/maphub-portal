@@ -1,15 +1,11 @@
-// Place all the styles related to the Maps controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 .single-map .single-map-info {
   text-align: center;
 }
 
 .single-map {
-min-width: 245px;
-min-height:300px;
-float:left;
+  min-width: 245px;
+  min-height:300px;
+  float:left;
 }
 
 .single-map img {

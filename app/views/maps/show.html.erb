@@ -1,6 +1,6 @@
 <%= javascript_include_tag params[:controller] %>
 <%= javascript_tag do %>
-$(document).ready(function(){
+function initOpenLayers() {
   window.annotation_view = new MapHub.AnnotationView(
       <%= @map.width %>,
       <%= @map.height %>,
@@ -8,42 +8,57 @@ $(document).ready(function(){
       "<%= map_annotations_url(@map, :format => :json) %>",
       <%= user_signed_in? ? "true" : "false" %>
   );
-  
+}
+$(document).ready(function(){
+  initOpenLayers();
 });
 <% end %>
 
 <!-- map and metadata box-->
 <div class="row">
+  <p id="notice"><%= notice %></p>
+  
   <div class="span12">
-    
     <div class="row">
-
-      <p id="notice"><%= notice %></p>
-
       <div class="span8">
-        <h2><%= @map.title %></h2>
         <div id="viewer" class="span8" style="height:600px;"></div>
       </div>
       <div class="span4">
-        <h3>About this map</h3>
+        <h4>Info</h4>
         <ul>
           <li><strong>Title:</strong> <%= @map.title %></li>
           <li><strong>Dimensions:</strong> <%= @map.width %>&times;<%= @map.height %>px</li>
         </ul>
         <h4>Tileset</h4>
-        <input type="text" value="<%= @map.tileset_uri %>" class="span4"></input>
+        <input type="text" value="<%= @map.tileset_uri %>" onClick="select();" class="span4"></input>
       </div>
       <div class="span4" style="padding-top:20px">
-        <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) %></small></h3>
-          <ul id="annotation-list">
-            <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
-              <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
-            <% end %>
-          </ul>
+        <div class="well">
+          <h4>Current Annotation</h4>
+          <div id="annotation-selected">
+            <!-- annotations will be appended here through JS -->
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="span8">
+  <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) if @map.annotations.count > 0 %></small></h3>
+  <% if not user_signed_in? %>
+    <%= link_to 'Log in', new_user_session_path, :class => "btn" %> to create annotations.
+  <% end %>
+    <ul id="annotation-list">
+      <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
+        <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+
 
 <div class="modal hide" id="modal-annotation">
   <div class="modal-header">
