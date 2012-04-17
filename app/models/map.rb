@@ -29,13 +29,24 @@ class Map < ActiveRecord::Base
     
   end
     
-  def to_ttl
-    rdf(:ttl)
-  end
-  
-  def rdf(format)
-    graph = RDF::Graph.new << [:hello, RDF::DC.title, "Hello, world!"]
-    graph.dump(format)
+  # Writes map metadata in a given RDF serialization format
+  def to_rdf(format, options = {})
+    
+    httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
+    
+    # building the graph
+    baseURI = RDF::URI.new(httpURI)
+    graph = RDF::Graph.new
+    graph << [baseURI, RDF::DC.title, self.title] unless self.title.nil?
+    graph << [baseURI, RDF::DC.subject, self.subject] unless self.subject.nil?
+    
+    # Serializing RDF graph to string
+    rdf_writer = RDF::Writer.for(format)
+    rdf_writer.buffer do |writer| 
+      writer.prefix :dcterms, RDF::URI('http://purl.org/dc/terms/')
+      writer << graph
+    end
+    
   end
   
 

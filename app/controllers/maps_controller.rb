@@ -17,17 +17,12 @@ class MapsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json {render :json => @map}
-      format.xml {render :xml => @map}
-      format.ttl { render :ttl => @map}
+      format.xml  {render :xml => @map}
+      format.rdf  {render :rdf => @map, :httpURI => base_uri(request.url)}
+      format.ttl  {render :ttl => @map, :httpURI => base_uri(request.url)}
+      format.nt  {render :nt => @map, :httpURI => base_uri(request.url)}
     end
     
   end
   
-  # def annotate
-  #   # read the the posted annotation and save with the map
-  # end
-  # 
-  # def georeference
-  #   # read the posted controlpoint and save with the map
-  # end
 end
