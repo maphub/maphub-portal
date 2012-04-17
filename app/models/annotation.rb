@@ -53,14 +53,13 @@ class Annotation < ActiveRecord::Base
       graph << [body_node, RDF::DC.format, "text/plain"]
     end
     
-    # Creating the target
+    # Creating the target; TODO: fragment information is still missing
     unless self.map.nil?
       target_uuid = UUIDTools::UUID.timestamp_create().to_s
       target_node = RDF::URI.new(target_uuid)
-      graph << [baseURI, oa.hasTarget, target_node]
+      graph << [baseURI, oa.hasTarget, self.map.tileset_uri]
     end
     
-    puts "Format: #{format}"    
     # Serializing RDF graph to string
     RDF::Writer.for(format.to_sym).buffer do |writer|
       writer.prefix :dcterms, RDF::URI('http://purl.org/dc/terms/')
