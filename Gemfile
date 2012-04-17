@@ -11,6 +11,7 @@ gem 'gravtastic'
 gem 'acts_as_markup'
 
 gem 'linkeddata'
+gem 'uuidtools'
 
 gem 'twitter-bootstrap-rails'
 #, :git => "git://github.com/seyhunak/twitter-bootstrap-rails.git", :branch => "static"

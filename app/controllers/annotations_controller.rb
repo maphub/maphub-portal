@@ -32,7 +32,10 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @annotation }
-      format.json { render :json => @annotation }
+      format.json { render :json => @annotation } 
+      format.rdf  {render :rdf => @annotation, :httpURI => base_uri(request.url)}
+      format.ttl  {render :ttl => @annotation, :httpURI => base_uri(request.url)}
+      format.nt  {render :nt => @annotation, :httpURI => base_uri(request.url)}
     end
   end
 

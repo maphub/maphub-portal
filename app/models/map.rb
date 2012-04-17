@@ -41,8 +41,7 @@ class Map < ActiveRecord::Base
     graph << [baseURI, RDF::DC.subject, self.subject] unless self.subject.nil?
     
     # Serializing RDF graph to string
-    rdf_writer = RDF::Writer.for(format)
-    rdf_writer.buffer do |writer| 
+    RDF::Writer.for(format.to_sym).buffer do |writer| 
       writer.prefix :dcterms, RDF::URI('http://purl.org/dc/terms/')
       writer << graph
     end
