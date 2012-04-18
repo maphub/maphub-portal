@@ -1,24 +1,27 @@
-<div class="row">
-  <div class="hero-unit">
-    <h1>Welcome to maphub!</h1>
-    <blockquote>
-    maphub is a portal environment for social annotation of digitized (historic) maps, powered by YUMA.
-    </blockquote>
-  </div>
-  <%= render :partial => "maps/carousel", :locals => { :maps => @recent_maps } %>        
-</div>
+<header>
+    <div class="hero-unit">
+        <p class="lead">View and annotate maps in the Library of Congress Historic Map Collection!</p>
+    </div>
+</header>
 
 <div class="row">
-  <div class="span4">
-    <h2>Recent Maps <small>show all</small></h2>
-    <%= render :partial => "maps/recent", :locals => { :maps => @recent_maps } %>
-  </div>
-  <div class="span4">
-    <h2>Recent Annotations <small>show all</small></h2>
-    Render partial here
-  </div>
-  <div class="span4">
-    <h2>New Users <small>show all</small></h2>
-    Render partial here
-  </div>
+    <div class="span8 offset2">
+        <%= render :partial => "maps/carousel", :locals => { :maps => @recent_maps } %>        
+    </div>
 </div>
+    
+<div class="row">
+    <div class="span4">
+      <h2>Top Contributors <small>show all</small></h2>
+      <%= render :partial => "maps/recent", :locals => { :maps => @recent_maps } %>
+    </div>
+    <div class="span4">
+      <h2>Recent Annotations <small>show all</small></h2>
+      Render partial here
+    </div>
+    <div class="span4">
+      <h2>Recent Georeferences <small>show all</small></h2>
+      Render partial here
+    </div>
+</div>
+    

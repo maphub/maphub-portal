@@ -11,10 +11,19 @@ class Map < ActiveRecord::Base
   #has_many :controlpoints
   
   before_validation :extract_dimensions
-  validates_presence_of :title, :tileset_uri, :width, :height
+  validates_presence_of :identifier, :title, :width, :height
+  
+  # TODO: this should be in a central APP configuration file
+  def map_base_uri
+    "http://samos.mminf.univie.ac.at/maps"
+  end
+  
+  def tileset_uri
+    "#{map_base_uri}/ts_zoomify/#{self.identifier}"
+  end
   
   def thumbnail_uri
-    "#{tileset_uri}/TileGroup0/0-0-0.jpg"
+    "#{map_base_uri}/thumbnails/#{self.identifier}.jpg"
   end
   
   # Extracts image dimensions from ImageProperties.xml;

@@ -42,13 +42,13 @@ ActiveRecord::Schema.define(:version => 20120412194401) do
   end
 
   create_table "maps", :force => true do |t|
+    t.string   "identifier"
     t.string   "title"
     t.string   "subject"
-    t.string   "tileset_uri"
     t.integer  "width"
     t.integer  "height"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
