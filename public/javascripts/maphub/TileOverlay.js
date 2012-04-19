@@ -82,5 +82,3 @@ maphub.TileOverlay.prototype.getTileUrlCoord = function(coord, zoom) {
 maphub.TileOverlay.prototype.toString = function() {
 	return 'TileOverlay<mapID='+this.mapID+', tileSize='+this.tileSize+'>';
 }
-
-console.log("TO loaded.");

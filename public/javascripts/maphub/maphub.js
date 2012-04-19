@@ -11,8 +11,8 @@ maphub = {
 /*
  * Verify that our required libraries are loaded.
  */
-if (jQuery == 'undefined') { throw 'MapHub requires jQuery to function.'; }
-if (requirejs == "undefined") { throw 'MapHub requires RequireJS to function.'; }
+if (typeof jQuery === 'undefined') { throw 'MapHub requires jQuery to function.'; }
+if (typeof requirejs === "undefined") { throw 'MapHub requires RequireJS to function.'; }
 
 
 

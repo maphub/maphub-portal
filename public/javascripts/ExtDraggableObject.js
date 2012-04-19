@@ -1,3 +1,5 @@
+define({});
+
 /**
  * @name ExtDraggableObject
  * @version 1.0
