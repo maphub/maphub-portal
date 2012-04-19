@@ -11,7 +11,6 @@ define(['AlphaOverlay'], function() {
 	maphub.Map = function(parameters) {
 		if (parameters) {
 			this.id = parameters.id;
-			this.tileSize = parameters.tileSize;
 		}
 	   this.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.8128911451, 8.73896538004), new google.maps.LatLng(51.4235907642, 27.8177687755));
 		document.map = this;
@@ -28,8 +27,7 @@ define(['AlphaOverlay'], function() {
 		
 		var overlay = new maphub.AlphaOverlay({
 			map: this,
-			mapID: this.id,
-			tileSize: this.tileSize
+			tileSize: new google.maps.Size(256,256);
 		})
 		
 		//new google.maps.Marker({ map: document.map, position: new google.maps.LatLng(-45,180), title: '-45,180' });
@@ -42,5 +40,7 @@ define(['AlphaOverlay'], function() {
 		this.googleMap.overlayMapTypes.push(overlay);
 	};
 
-	console.log('Loaded Map');
+	maphub.Map.toString = function() {
+		return 'Map<id='+this.id+'>';
+	}
 });

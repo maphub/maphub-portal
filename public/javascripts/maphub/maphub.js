@@ -22,8 +22,7 @@ if (typeof requirejs === "undefined") { throw 'MapHub requires RequireJS to func
  */
 require(['Map'], function() {
 	var map = new maphub.Map({
-		id: 'ct002033',
-		tileSize: new google.maps.Size(256,256)
+		id: 'ct002033'
 	});
 	
 	map.render(document.getElementById('map_canvas'));

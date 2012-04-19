@@ -1,13 +1,18 @@
 define({});
 
 /**
- * Loosely based on Gavin Harriss' maphub.TileOverlay (http://www.gavinharriss.com/)
+ * An overlay layer that consists of image tiles.
+ * 
+ * Loosely based on Gavin Harriss' TileOverlay (http://www.gavinharriss.com/)
+ * 
+ * @param {Object} parameters Configuration parameters. Required parameters are:
+ * 	map ({maphub.Map}): The maphub.Map instance on which this overlay will exist.
+ * 	tileSize ({google.maps.Size}): The size of the tiles on which this overlay is based.
  */
 maphub.TileOverlay = function(parameters) {
 	this.tiles = {};
 	if (parameters) {
 		this.map = parameters.map;
-		this.mapID = parameters.mapID;
 		this.tileSize = parameters.tileSize;
 	}
 	
@@ -40,7 +45,7 @@ maphub.TileOverlay.prototype.getTile = function(point, zoomLevel, container) {
 //		var y = ymax - point.y - 1;
 //		div.style.background = 'url(/images/tiles/ct002033/google/'+zoomLevel+'/'+point.x+'/'+y+'.png) no-repeat';
 		var tileCoordinates = this.getTileUrlCoord(point, zoomLevel);
-		div.style.background = 'url(/images/tiles/'+this.mapID+'/google/'+zoomLevel+'/'+tileCoordinates.x+'/'+tileCoordinates.y+'.png) no-repeat';
+		div.style.background = 'url(/images/tiles/'+this.map.id+'/google/'+zoomLevel+'/'+tileCoordinates.x+'/'+tileCoordinates.y+'.png) no-repeat';
 		
 		this.tiles[tileID] = div;
 	} else {
@@ -80,5 +85,5 @@ maphub.TileOverlay.prototype.getTileUrlCoord = function(coord, zoom) {
 }
 
 maphub.TileOverlay.prototype.toString = function() {
-	return 'TileOverlay<mapID='+this.mapID+', tileSize='+this.tileSize+'>';
+	return 'TileOverlay<map='+this.map+', tileSize='+this.tileSize+'>';
 }
