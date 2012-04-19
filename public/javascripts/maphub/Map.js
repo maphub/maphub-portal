@@ -27,7 +27,7 @@ define(['AlphaOverlay'], function() {
 		
 		var overlay = new maphub.AlphaOverlay({
 			map: this,
-			tileSize: new google.maps.Size(256,256);
+			tileSize: new google.maps.Size(256,256)
 		})
 		
 		//new google.maps.Marker({ map: document.map, position: new google.maps.LatLng(-45,180), title: '-45,180' });
