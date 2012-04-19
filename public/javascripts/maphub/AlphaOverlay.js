@@ -15,7 +15,14 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 			maphub.TileOverlay.prototype.constructor.apply(this, [parameters]);
 		}
 		
+		/*
+		 * The overlay's opacity, as a percentage.
+		 */
 		this.opacity = maphub.AlphaOverlay.InitialOpacity;
+
+		/*
+		 * Create the control slider on this overlay's map.
+		 */
 		this.createOpacityControl(this.map.googleMap, this.opacity);
 	};
 
@@ -29,7 +36,7 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 	 * Set up some static "constants".
 	 */
 	maphub.AlphaOverlay.SliderWidth = 57;
-	maphub.AlphaOverlay.InitialOpacity = 50;
+	maphub.AlphaOverlay.InitialOpacity = 75;
 	maphub.AlphaOverlay.SliderImageURL = '/images/opacity-slider.png';
 	
 	maphub.AlphaOverlay.prototype.getTile = function(point, zoomLevel, container) {
@@ -38,6 +45,7 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 		 * Call super().
 		 */
 		var tile = maphub.TileOverlay.prototype.getTile.apply(this, [point, zoomLevel, container]);
+		this.setObjectOpacity(tile, this.opacity);
 		return tile;
 	}
 	
@@ -56,15 +64,21 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 			container: opacityDiv
 		});
 
+		/*
+		 * Create a variable pointing to this overlay so we can reference it from the event
+		 * handlers (in which "this" is set to the object triggering the event).
+		 */
+		var self = this;
+		
 		google.maps.event.addListener(opacityCtrlKnob, "dragend", function () {
-			this.setOpacity(opacityCtrlKnob.valueX());
+			self.setOpacity(opacityCtrlKnob.valueX());
 		});
 
 		google.maps.event.addDomListener(opacityDiv, "click", function (e) {
-			var left = this.findPosLeft(this);
+			var left = self.findPosLeft(this);
 			var x = e.pageX - left - 5; // - 5 as we're using a margin of 5px on the div
 			opacityCtrlKnob.setValueX(x);
-			this.setOpacity(x);
+			self.setOpacity(x);
 		});
 
 		this.map.googleMap.controls[google.maps.ControlPosition.TOP_RIGHT].push(opacityDiv);
@@ -77,18 +91,34 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 
 	maphub.AlphaOverlay.prototype.setOpacity = function(pixelX) {
 		// Range = 0 to maphub.AlphaOverlay.SliderWidth
+		/*
+		 * Calculate and record the new opacity (as a percentage).
+		 */
 		var value = (100 / maphub.AlphaOverlay.SliderWidth) * pixelX;
 		if (value < 0) value = 0;
-		if (value == 0) {
-			if (overlay.visible == true) {
-				overlay.hide();
-			}
-		} else {
-			this.setOpacity(value);
-			if (overlay.visible == false) {
-				overlay.show();
-			}
+		this.opacity = value;
+		
+		/*
+		 * Set the opacity of the actual tiles.
+		 */
+		for (var tileID in this.tiles) {
+			this.setObjectOpacity(this.tiles[tileID], value);
 		}
+	}
+
+	/**
+	 * Set the CSS opacity of the specified object to the specified value. This is implemented as
+	 * a separate function because it is used both in the overlay's setOpacity function and when
+	 * the overlay creates new tiles.
+	 * 
+	 * @param obj The object for which the CSS opacity value will be set.
+	 * @param value The opacity value (as a percentage) to set. E.g.: 50 for 50% opacity.
+	 */
+	maphub.AlphaOverlay.prototype.setObjectOpacity = function(obj, opacity) {
+		if (typeof (obj.style.filter) == 'string') { obj.style.filter = 'alpha(opacity:' + opacity + ')'; }
+		if (typeof (obj.style.KHTMLOpacity) == 'string') { obj.style.KHTMLOpacity = opacity / 100; }
+		if (typeof (obj.style.MozOpacity) == 'string') { obj.style.MozOpacity = opacity / 100; }
+		if (typeof (obj.style.opacity) == 'string') { obj.style.opacity = opacity / 100; }
 	}
 
 	maphub.AlphaOverlay.prototype.findPosLeft = function(obj) {
@@ -103,6 +133,6 @@ define(['TileOverlay', 'ExtDraggableObject'], function() {
 	}
 	
 	maphub.AlphaOverlay.prototype.toString = function() {
-		return 'AlphaOverlay<map='+this.map+', opacity='+this.opacity+', tileSize='+this.tileSize+'>';
+		return 'AlphaOverlay<map='+this.map.id+', opacity='+this.opacity+', tileSize='+this.tileSize+'>';
 	}
 });

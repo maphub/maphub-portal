@@ -12,7 +12,7 @@ define(['AlphaOverlay'], function() {
 		if (parameters) {
 			this.id = parameters.id;
 		}
-	   this.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.8128911451, 8.73896538004), new google.maps.LatLng(51.4235907642, 27.8177687755));
+		this.bounds = new google.maps.LatLngBounds(new google.maps.LatLng(41.8128911451, 8.73896538004), new google.maps.LatLng(51.4235907642, 27.8177687755));
 		document.map = this;
 	};
 
@@ -29,6 +29,7 @@ define(['AlphaOverlay'], function() {
 			map: this,
 			tileSize: new google.maps.Size(256,256)
 		})
+		console.log("Overlay: "+overlay);
 		
 		//new google.maps.Marker({ map: document.map, position: new google.maps.LatLng(-45,180), title: '-45,180' });
 		
