@@ -14,6 +14,11 @@ class Annotation < ActiveRecord::Base
     truncated_body
   end
   
+  def segment
+    # TODO: parse only once after creation
+    Segment.create_from_wkt_data(self.wkt_data)
+  end
+  
   
   # Writes annotation metadata in a given RDF serialization format
   def to_rdf(format, options = {})
@@ -53,11 +58,28 @@ class Annotation < ActiveRecord::Base
       graph << [body_node, RDF::DC.format, "text/plain"]
     end
     
-    # Creating the target; TODO: fragment information is still missing
+    # Creating the target
     unless self.map.nil?
-      target_uuid = UUIDTools::UUID.timestamp_create().to_s
-      target_node = RDF::URI.new(target_uuid)
-      graph << [baseURI, oa.hasTarget, self.map.tileset_uri]
+      # the specific target
+      specific_target_uuid = UUIDTools::UUID.timestamp_create().to_s
+      specific_target = RDF::URI.new(specific_target_uuid)
+      graph << [baseURI, oa.hasTarget, specific_target]
+      graph << [specific_target, RDF.type, oa.SpecificResource]
+      
+      # the SVG selector
+      selector_uuid = UUIDTools::UUID.timestamp_create().to_s
+      selector_node = RDF::URI.new(selector_uuid)
+      graph << [specific_target, oa.hasSelector, selector_node]
+      graph << [selector_node, RDF.type, ct.ContentAsText]
+      graph << [selector_node, RDF::DC.format, "image/svg"]
+      graph << [selector_node, ct.chars, self.segment.to_svg(self.map.width, 
+        self.map.height)]
+
+      # the target source
+      graph << [specific_target, oa.hasSource, self.map.raw_image_uri]
+      
+      
+
     end
     
     # Serializing RDF graph to string
@@ -72,3 +94,115 @@ class Annotation < ActiveRecord::Base
   end
 
 end
+
+
+# TODO: this should defenitely go to a separate class
+class Segment
+  
+  def self.create_from_wkt_data(wkt_data)
+    if wkt_data.start_with?("POLYGON")
+      return Polygon.create_from_wkt_data(wkt_data)
+    elsif wkt_data.start_with?("LINESTRING")
+      return Linestring.create_from_wkt_data(wkt_data)
+    elsif wkt_data.start_with?("POINT")
+      return Point.create_from_wkt_data
+    else
+      raise "Unnown Segment shape: #{wkt_data}"
+    end
+    
+  end
+  
+  def to_svg(width, height)
+    %{
+    <?xml version="1.0" standalone="no"?>
+    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+      "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+      
+      <svg width="#{width}px" height="#{height}px"
+         xmlns="http://www.w3.org/2000/svg" version="1.1">
+      
+         #{svg_shape}
+         
+    </svg>
+    }
+  end
+
+end
+
+
+class Point < Segment
+  
+  attr_reader :x, :y
+  
+  def initialize(x,y)
+    @x = x
+    @y = y
+  end
+  
+  def self.create_from_wkt_data(wkt_data)
+    data = wkt_data["POINT".length+1..-2]
+    xy = data.split(" ")
+    Point.new(xy[1], xy[2])
+  end
+  
+  def to_s
+    "#{@x},#{@y}"
+  end
+    
+end
+
+class Linestring < Segment
+
+  attr_reader :points
+  
+  def initialize(points)
+    @points = points
+  end
+  
+  def self.create_from_wkt_data(wkt_data)
+    points = []
+    data = wkt_data["LINESTRING".length+1..-2]
+    data.split(",").each do |point_pair|
+      point = Point.create_from_wkt_data("POINT(#{point_pair})")
+      points << point
+    end
+    Linestring.new(points)
+  end
+  
+  def to_s
+    @points.join(" ")
+  end
+    
+  def svg_shape
+    %{<polyline 
+              points="#{to_s}" />
+    }
+  end
+
+
+end
+
+
+class Polygon < Linestring
+  
+  def self.create_from_wkt_data(wkt_data)
+    points = []
+    data = wkt_data["POLYGON".length+1..-2]
+    data.split(",").each do |point_pair|
+      point = Point.create_from_wkt_data("POINT(#{point_pair})")
+      points << point
+    end
+    Polygon.new(points)
+  end
+
+  def svg_shape
+    %{<polygon 
+              points="#{to_s}" />
+    }
+  end
+  
+end
+
+
+
+

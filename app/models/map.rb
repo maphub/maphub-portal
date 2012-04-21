@@ -18,6 +18,10 @@ class Map < ActiveRecord::Base
     "http://samos.mminf.univie.ac.at/maps"
   end
   
+  def raw_image_uri
+    "#{map_base_uri}/raw/#{self.identifier}.jp2"    
+  end
+  
   def tileset_uri
     "#{map_base_uri}/ts_zoomify/#{self.identifier}"
   end
