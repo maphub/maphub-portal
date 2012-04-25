@@ -24,13 +24,8 @@ $(document).ready(function(){
         <div id="viewer" class="span8" style="height:600px;"></div>
       </div>
       <div class="span4">
-        <h4>Info</h4>
-        <ul>
-          <li><strong>Title:</strong> <%= @map.title %></li>
-          <li><strong>Dimensions:</strong> <%= @map.width %>&times;<%= @map.height %>px</li>
-        </ul>
-        <h4>Tileset</h4>
-        <input type="text" value="<%= @map.tileset_uri %>" onClick="select();" class="span4"></input>
+        <h4><%= @map.title %></h4>
+        <p><%= @map.subject %></p>
       </div>
       <div class="span4" style="padding-top:20px">
         <div class="well">
