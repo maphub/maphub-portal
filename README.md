@@ -1,6 +1,6 @@
 # About
 
-MapHub is a Web portal for annotating online historic maps.
+MapHub is a Web portal for annotating online historic maps. 
 
 ## Running Maphub in Development Mode
 
