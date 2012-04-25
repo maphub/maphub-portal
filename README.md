@@ -40,6 +40,6 @@ Finally, open <http://localhost:3000/> in your browser and log into MapHub with 
 
 ## Updating the database / Reindexing data
 
-If you made some changes to the database or first create the database, run
+If you made some changes to the database or first create the database, run the following command, which recreates the database and adds sample data.
 
-    bundle exec rake db:drop; rake db:migrate; rake db:seed
+    bundle exec rake db:drop && rake db:migrate && rake db:seed
