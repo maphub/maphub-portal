@@ -44,10 +44,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
     $("#control_point_y").attr("value", evt.feature.geometry.y);
     
     // reset the place search box and slide up panel
-    $("#placeSearch").attr("value", "");
-    $("#slideUpBarControlPoint").slideDown(function(){
-      $("#placeSearch").focus();
-    });
+    $("#place-search").attr("value", "");
+    $("#modal-control-point").modal();
+    $("#place-search").focus();
   }
   
   this.zoomify_width = width;
@@ -92,6 +91,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   // remotely load already existing annotations via JSON
   this.remoteLoadAnnotations();
 
+  // add autocomplete
+  this.initAutoComplete();
+
   // MouseDefaults is deprecated, see: http://trac.osgeo.org/openlayers/wiki/Control/MouseDefaults
   this.map.addControl(new OpenLayers.Control.Navigation());
   this.map.addControl(new OpenLayers.Control.MousePosition());
@@ -124,6 +126,40 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   
 }
 
+MapHub.AnnotationView.prototype.initAutoComplete = function() {
+  $('input#place-search').autocomplete({
+      source: function( request, response ) {
+          $.ajax({
+            url: "http://ws.geonames.org/searchJSON",
+            dataType: "jsonp",
+            data: {
+              featureClass: "P",
+              style: "full",
+              maxRows: 12,
+              name_startsWith: request.term
+            },
+            success: function( data ) {
+              response( $.map( data.geonames, function( item ) {
+                return {
+                  label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                  value: item.name
+                }
+              }));
+            }
+          });
+        },
+        minLength: 2,
+        select: function( event, ui ) {
+          // what to do when it's selected
+        },
+        open: function() {
+          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+    });
+}
 
 /* Loads the annotations for this map via a JSON request */
 MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
@@ -163,7 +199,7 @@ MapHub.AnnotationView.prototype.clearEditingLayer = function() {
 MapHub.AnnotationTooltip = function(annotation) {
   this.div = document.createElement("div");
   this.div.setAttribute("class", "annotation-tooltip");
-    
+  
   this.div_body = document.createElement("div");
   this.div_body.setAttribute("class", "annotation-tooltip-body");
   this.div_body.innerHTML = annotation.body;

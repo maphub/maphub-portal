@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20120425084518) do
     t.text     "about_me"
     t.datetime "deleted_at"
     t.integer  "annotations_count"
+    t.integer  "control_points_count"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end

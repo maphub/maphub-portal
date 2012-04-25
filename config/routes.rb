@@ -11,10 +11,12 @@ MaphubPortal::Application.routes.draw do
   
   resources :users, :only => [:show, :update] do 
     resources :annotations, :only => [:show, :index]
+    resources :control_points, :only => [:show, :index]
   end
   
   resources :maps, :only => [:show, :index] do 
     resources :annotations, :only => [:create, :index, :update]
+    resources :control_points, :only => [:create, :index, :update]
   end
   
   resources :annotations, :only => [:create, :update, :show]

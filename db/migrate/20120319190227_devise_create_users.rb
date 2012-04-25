@@ -45,6 +45,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       
       # relational attributes
       t.integer :annotations_count
+      t.integer :control_points_count
 
       t.timestamps
     end
