@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   
   # Model associations
   has_many :annotations
+  has_many :control_points
   
   # Gravatars
   include Gravtastic

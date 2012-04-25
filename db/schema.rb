@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412194401) do
+ActiveRecord::Schema.define(:version => 20120425084518) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -39,6 +39,20 @@ ActiveRecord::Schema.define(:version => 20120412194401) do
     t.string   "wkt_data"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "control_points", :force => true do |t|
+    t.string   "name"
+    t.string   "label"
+    t.integer  "user_id"
+    t.integer  "map_id"
+    t.string   "geonames_uri"
+    t.decimal  "lat",          :precision => 12, :scale => 10
+    t.decimal  "lng",          :precision => 12, :scale => 10
+    t.decimal  "x"
+    t.decimal  "y"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "maps", :force => true do |t|

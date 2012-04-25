@@ -8,7 +8,7 @@ require 'net/http'
 class Map < ActiveRecord::Base
   
   has_many :annotations
-  #has_many :controlpoints
+  has_many :control_points
   
   before_validation :extract_dimensions
   validates_presence_of :identifier, :title, :width, :height
@@ -28,6 +28,10 @@ class Map < ActiveRecord::Base
   
   def thumbnail_uri
     "#{map_base_uri}/thumbnails/#{self.identifier}.jpg"
+  end
+  
+  def thumbnail_small_uri
+    "#{self.tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
   # Extracts image dimensions from ImageProperties.xml;
