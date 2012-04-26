@@ -10,13 +10,12 @@ class AnnotationsController < ApplicationController
   # GET /map/:map_id/annotations
   # GET /map/:map_id/annotations.xml  
   def index
-    
     unless @parent.nil?
       @annotations = @parent.annotations
     else
       @annotations = Annotation.all
     end
-      
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @annotations }
@@ -28,7 +27,6 @@ class AnnotationsController < ApplicationController
   # GET /annotations/1.xml
   def show
     @annotation = Annotation.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @annotation }

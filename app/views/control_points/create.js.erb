@@ -1,4 +1,8 @@
 // This JavaScript is executed when the #create controller method finishes
 
 // slide down the panel
-$("#modal-control-points").modal('hide');
+$("#modal-control-point").modal('hide');
+$("#modal-control-point-confirm").modal();
+$("#modal-control-point-confirm-close").click(function(){
+  $("#modal-control-point-confirm").modal('hide');
+});

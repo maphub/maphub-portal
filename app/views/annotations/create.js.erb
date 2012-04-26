@@ -5,11 +5,17 @@
 var response = "<li><%= escape_javascript(annotationText)%></li>";
 $(response).hide().prependTo("#annotation-list").fadeIn("slow");
 
-// slide down the panel
-$("#modal-annotation").modal('hide');
+// re-enable new tooltips
+$(".tooltip").tooltip();
+$("a[rel=tooltip]").tooltip();
 
 // first clear the editing layer, then load the newly created annotation
-// window.annotation_view.editLayer.removeAllFeatures();
-// window.annotation_view.loadSingleAnnotation("<%= annotation_url(@annotation, :format => :json) %>");
 $("#viewer").empty();
 initOpenLayers();
+
+// slide down the panel
+$("#modal-annotation").modal('hide');
+$("#modal-annotation-confirm").modal();
+$("#modal-annotation-confirm-close").click(function(){
+  $("#modal-annotation-confirm").modal('hide');
+});

@@ -1,22 +1,34 @@
 <div class="row">
-<h1>Annotations on <%= link_to @annotations.first.map.title, @annotations.first.map %></h1>
+  <% if @parent.class.name == "Map" %>
+    <h1>Annotations on <%= link_to @parent.title, @parent %></h1>
+  <% elsif @parent.class.name == "User" %>
+    <h1>Annotations by <%= link_to @parent.username, @parent %></h1>
+  <% end %>
 </div>
 
 <div class="row">
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Body</th>
+    <th width="800px">Body</th>
     <th>Created</th>
-    <th>User</th>
+    <% if @parent.class.name == "Map" %>
+      <th>User</th>
+    <% elsif @parent.class.name == "User" %>
+      <th>Map</th>
+    <% end %>
   </tr>
 </thead>
 <tbody>
 <% @annotations.each do |annotation| %>
   <tr>
-    <td><%= annotation.body %></td>
+    <td><%= simple_format h annotation.body %></td>
     <td><%= annotation.created_at %></td>
-    <td><%= link_to annotation.user.username, annotation.user %></td>
+    <% if @parent.class.name == "Map" %>
+      <td><%= link_to annotation.user.username, annotation.user %></td>
+    <% elsif @parent.class.name == "User" %>
+      <td><%= link_to annotation.map.title, annotation.map %></td>
+    <% end %>
   </tr>
 <% end %>
 </tbody>
