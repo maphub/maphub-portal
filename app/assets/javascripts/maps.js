@@ -154,6 +154,7 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
         minLength: 2,
         select: function( event, ui ) {
           // what to do when it's selected
+          $("#control_point_geonames_label").attr("value", ui.item.label);
           $("#control_point_lat").attr("value", ui.item.lat);
           $("#control_point_lng").attr("value", ui.item.lng);
           $("#control_point_geonames_id").attr("value", ui.item.geonameId);
