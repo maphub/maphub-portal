@@ -45,13 +45,13 @@ ActiveRecord::Schema.define(:version => 20120425084518) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "map_id"
-    t.string   "geonames_uri"
-    t.decimal  "lat",          :precision => 12, :scale => 10
-    t.decimal  "lng",          :precision => 12, :scale => 10
+    t.string   "geonames_id"
+    t.decimal  "lat",         :precision => 12, :scale => 10
+    t.decimal  "lng",         :precision => 12, :scale => 10
     t.decimal  "x"
     t.decimal  "y"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "maps", :force => true do |t|

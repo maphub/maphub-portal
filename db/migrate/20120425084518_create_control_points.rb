@@ -4,7 +4,7 @@ class CreateControlPoints < ActiveRecord::Migration
       t.string :name
       t.integer :user_id
       t.integer :map_id
-      t.string :geonames_uri
+      t.string :geonames_id
       t.decimal :lat, :precision => 12, :scale => 10
       t.decimal :lng, :precision => 12, :scale => 10
       t.decimal :x

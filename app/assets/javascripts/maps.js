@@ -142,7 +142,10 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
               response( $.map( data.geonames, function( item ) {
                 return {
                   label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
-                  value: item.name
+                  value: item.name,
+                  lat: item.lat,
+                  lng: item.lng,
+                  geonameId: item.geonameId
                 }
               }));
             }
@@ -151,6 +154,9 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
         minLength: 2,
         select: function( event, ui ) {
           // what to do when it's selected
+          $("#control_point_lat").attr("value", ui.item.lat);
+          $("#control_point_lng").attr("value", ui.item.lng);
+          $("#control_point_geonames_id").attr("value", ui.item.geonameId);
         },
         open: function() {
           $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
