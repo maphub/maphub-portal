@@ -11,7 +11,7 @@ maps = Map.order("updated_at").limit(10)
       <% else %>
         <div class="item">
       <% end %>
-          <%= link_to image_tag(map.thumbnail_uri, :alt => "#{map.title}"), map %>
+          <center><%= link_to image_tag(map.thumbnail_uri, :alt => "#{map.title}"), map %></center>
           <div class="carousel-caption">
             <h4><%= map.title %></h4>
             <p><%= map.subject %></p>
