@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20120425084518) do
 
   create_table "control_points", :force => true do |t|
     t.string   "name"
-    t.string   "label"
     t.integer  "user_id"
     t.integer  "map_id"
     t.string   "geonames_uri"

@@ -81,7 +81,6 @@ $(document).ready(function(){
     <%= form_for([@map, ControlPoint.new], :remote => true, :class => 'floatLeft') do |f| %>
          
       <%= f.text_field :name, :style => "display:none" %>
-      <%= f.text_field :label, :style => "display:none" %>
       <%= f.text_field :geonames_uri, :style => "display:none" %>
       <%= f.text_field :lat, :style => "display:none" %>
       <%= f.text_field :lng, :style => "display:none" %>

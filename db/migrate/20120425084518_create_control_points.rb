@@ -2,7 +2,6 @@ class CreateControlPoints < ActiveRecord::Migration
   def change
     create_table :control_points do |t|
       t.string :name
-      t.string :label
       t.integer :user_id
       t.integer :map_id
       t.string :geonames_uri
