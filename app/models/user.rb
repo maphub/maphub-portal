@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   
   def deactivate
     begin
+      # this could be done if we want to "anonymize" users first
       # update_attribute(:email, nil)
       # update_attribute(:username, "deleted user")
       update_attribute(:deleted_at, Time.current)

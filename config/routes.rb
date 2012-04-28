@@ -9,7 +9,7 @@ MaphubPortal::Application.routes.draw do
     resources :annotations
   end
   
-  resources :users, :only => [:show, :update] do 
+  resources :users, :only => [:show, :update, :index] do 
     resources :annotations, :only => [:show, :index]
     resources :control_points, :only => [:show, :index]
   end
@@ -23,6 +23,10 @@ MaphubPortal::Application.routes.draw do
   
   # default homepage
   root :to => "home#index"
+  
+  match "terms" => 'home#terms'
+  match "contact" => 'home#contact'
+  match "help" => 'home#help'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
