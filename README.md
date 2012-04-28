@@ -20,7 +20,7 @@ Optionally you can set maphub to be the default gemset
 
 Clone the maphub code on your local machine:
 
-    git clone git@github.com:yuma-annotation/maphub-portal.git
+    git clone git@github.com:maphub/maphub-portal.git
 
 Update your gem tool with `gem update --system` and install the bundler gem with `gem install bundler`. `cd` to the project folder and run to install all necessary gems for the maphub tool.
     
