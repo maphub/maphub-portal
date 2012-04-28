@@ -26,6 +26,7 @@ $(document).ready(function(){
       <div class="span4">
         <h4><%= @map.title %></h4>
         <p><%= @map.subject %></p>
+        <%= link_to "Control Points for this map ...", map_control_points_url(@map) %>
       </div>
       <div class="span4" style="padding-top:20px">
         <div class="well">

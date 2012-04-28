@@ -1,16 +1,6 @@
 <%= javascript_include_tag params[:controller] %>
 
 
-
-<% if @myself %>
-<div class="row">
-        <div id="userBox" class="pull-right">
-          Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
-          <a href="#" id="toggle-form">Edit your description</a>
-        </div>
-</div>
-<% end %>
-
 <div class="row">
   <div class="span12"><h1><%= @user.username %></h1></div>
 </div>
@@ -47,38 +37,43 @@
       </tr>
       <% end %>
       <tr>
-        <td class="user-info-first-col"><strong>Maps:</strong></td>
-    
-      </tr>
-      <tr>
-        <td class="user-info-first-col"><strong>Collections:</strong></td>
-    
-      </tr>
-      <tr>
         <td class="user-info-first-col"><strong>Annotations:</strong></td>
         <td><%= @user.annotations.count %></td>
       </tr>
+      <tr>
+        <td class="user-info-first-col"><strong>Control Points:</strong></td>
+        <td><%= @user.control_points.count %></td>
+      </tr>
     </table>
   </div> <!-- userInfoTableContainer -->
-  <div id="user-info-text" class="span4 offset3">
-    <h3>About me</h3>
+  <div id="user-info-container" class="span4 offset1">
     <% if @myself %>
-      <!-- Display form if this is our own page -->
-      <%= form_for @user, :remote => true do |f| %>
-      <%= f.text_area :about_me, :rows => 10, :style => "width:100%" %><br>
-      <div class="pull-right">
-      <%= f.button "Cancel", :class => "btn", :id => "button-cancel" %>
-      <%= f.submit "Update", :class => "btn btn-primary" %>
+      <div id="userBox" class="well">
+        Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
+        <a href="#" id="toggle-form">Edit your description</a>
       </div>
-      <% end %>
     <% end %>
-      
-    <div id="about-myself">
-      <% if @user.about_me.nil? %>
-        <em>This user hasn't entered a description yet.</em>
-      <% else %>
-        <%= @user.about_me %>
+    <div id="user-info-text">
+      <h3>About me</h3>
+      <% if @myself %>
+        <!-- Display form if this is our own page -->
+        <%= form_for @user, :remote => true do |f| %>
+        <%= f.text_area :about_me, :rows => 10, :style => "width:100%" %><br>
+        <div class="pull-right">
+        <%= f.button "Cancel", :class => "btn", :id => "button-cancel" %>
+        <%= f.submit "Update", :class => "btn btn-primary" %>
+        </div>
+        <% end %>
       <% end %>
-    </div>
-  </div> <!-- userInfoText -->
+
+      <div id="about-myself">
+        <% if @user.about_me.nil? %>
+          <em>This user hasn't entered a description yet.</em>
+        <% else %>
+          <%= @user.about_me %>
+        <% end %>
+      </div>
+    </div> <!-- userInfoText -->
+
+  </div>
 </div>

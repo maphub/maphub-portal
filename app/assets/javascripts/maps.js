@@ -143,6 +143,7 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
                 return {
                   label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
                   value: item.name,
+                  short_name: item.name,
                   lat: item.lat,
                   lng: item.lng,
                   geonameId: item.geonameId
@@ -154,6 +155,7 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
         minLength: 2,
         select: function( event, ui ) {
           // what to do when it's selected
+          $("#control_point_name").attr("value", ui.item.short_name);
           $("#control_point_geonames_label").attr("value", ui.item.label);
           $("#control_point_lat").attr("value", ui.item.lat);
           $("#control_point_lng").attr("value", ui.item.lng);

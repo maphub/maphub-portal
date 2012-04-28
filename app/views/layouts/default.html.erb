@@ -29,15 +29,11 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
           <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="/"><strong>maphub</strong></a>
           <div class="container nav-collapse">
             <ul class="nav">
-                <li><%= link_to "maps", maps_path  %></li>
+              <li class="<%= 'active' if params[:controller] == "maps" %>"><%= link_to "maps", maps_path  %></li>
+              <li class="<%= 'active' if params[:controller] == "users" %>"><%= link_to "users", users_path  %></li>
             </ul>
             <ul class="nav pull-right">
                 <% if not user_signed_in? %>
@@ -70,7 +66,7 @@
       
     </div> <!-- /container -->
     <footer>
-      <p>&copy; maphub 2012</p>
+      <p>&copy; maphub 2012 | <a href="/contact.html">contact</a> | <a href="/terms.html">terms</a> | <a href="/help.html">help</a></p>
     </footer>
     
 
