@@ -34,6 +34,10 @@ class Map < ActiveRecord::Base
     "#{self.tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
+  def short_title
+    "#{self.title[0..30]}..."
+  end
+  
   # Extracts image dimensions from ImageProperties.xml;
   def extract_dimensions
     tileset_uri.chomp!('/') # remove trailing slash just in case

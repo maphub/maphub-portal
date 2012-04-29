@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+def seed_dir
+    ENV['SEED_DIR'] || File.dirname(__FILE__) + '/seeds'
+end
+
 # Create example users
 puts "Creating admins ..."
 Admin.create do |a|
@@ -28,20 +32,37 @@ for i in 1..10 do
   puts "Created user #{i}"
 end
 
-maps = ["g3200.ct001129", 
-        "g3201b.ct002662",
-        "g3300.ar000600",
-        "g3300.ar003300",
-        "g3300.ct000912"]
-
-puts "Creating sample maps"
-
-maps.each_with_index do |id, index|
-  Map.create do |map|
-    map.identifier = id
-    map.title = "Map #{index+1}"
-    map.subject = "Lorem ipsum dolor sit amet. Sunt in culpa qui officia deserunt mollit anim id est laborum."
+# Create sample maps, either seed from YAML file in maphub-portal/db/seeds/seeddata.yaml
+seed_file = "#{seed_dir}/maps.yaml"
+if File.exists?(seed_file)
+  YAML.load_documents(File.open(seed_file, "r")) do |entry|
+    Map.create do |map|
+      map.identifier  = entry["id"]
+      map.title       = entry["title"]
+      map.subject     = entry["subject"]
+      map.author      = entry["author"]
+      map.date        = entry["date"]
+    end
+    puts "Created map #{entry['map']}"
   end
-  puts "Created map #{id}"
-end
+# or from dummy variables
+else
+  maps = ["g3200.ct001129", 
+          "g3201b.ct002662",
+          "g3300.ar000600",
+          "g3300.ar003300",
+          "g3300.ct000912"]
 
+  puts "Creating sample maps"
+
+  maps.each_with_index do |id, index|
+    Map.create do |map|
+      map.identifier  = id
+      map.title       = "Map #{index+1}"
+      map.subject     = "Lorem ipsum dolor sit amet. Sunt in culpa qui officia deserunt mollit anim id est laborum."
+      map.author      = "Anonymous"
+      map.date        = "1877"
+    end
+    puts "Created map #{id}"
+  end
+end

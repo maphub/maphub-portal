@@ -6,6 +6,8 @@ class CreateMaps < ActiveRecord::Migration
       t.string :subject
       t.integer :width
       t.integer :height
+      t.string :author
+      t.string :date
       t.timestamps
     end
   end
