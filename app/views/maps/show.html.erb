@@ -14,28 +14,47 @@ $(document).ready(function(){
 });
 <% end %>
 
-<!-- map and metadata box-->
+<!-- TODO: check if Fluid Layout (http://twitter.github.com/bootstrap/scaffolding.html) suits better for this view-->
 <div class="row">
   <p id="notice"><%= notice %></p>
   
   <div class="span12">
     <div class="row">
+      
+      <!-- Map View -->
       <div class="span8">
         <div id="viewer" class="span8" style="height:600px;"></div>
       </div>
+      
+      <!-- Right column-->
       <div class="span4">
-        <h4><%= @map.title %></h4>
-        <p><%= @map.subject %></p>
-        <%= link_to "Control Points for this map ...", map_control_points_url(@map) %>
-      </div>
-      <div class="span4" style="padding-top:20px">
-        <div class="well">
-          <h4>Current Annotation</h4>
-          <div id="annotation-selected">
-            <!-- annotations will be appended here through JS -->
-          </div>
+        
+        <h4>Map Metadata</h4>
+        <p><strong>Title: </strong><%= @map.title %></p>
+        <p><strong>Subject: </strong><%= @map.subject %></p>
+        <p><strong>Author: </strong> TODO </p>
+        <p><strong>Date: </strong> TODO </p>
+        
+        <hr>
+        
+        <h4>Geography</h4>
+        <p><strong>Control Points: </strong> <%= link_to @map.control_points.count, map_control_points_url(@map) %></p>
+
+        <hr>
+
+        <h4>User Annotations</h4>
+        <p>Some general infos; top contributor for this map, tagcloud, etc.</p>
+        <div class="well"> 
+            <h4>Current Annotation</h4>
+             <div id="annotation-selected">
+               <!-- annotations will be appended here through JS -->
+             </div>
         </div>
+        
+        <hr>
+        
       </div>
+      
     </div>
   </div>
 </div>
