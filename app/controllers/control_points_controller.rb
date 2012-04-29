@@ -33,6 +33,9 @@ class ControlPointsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @control_point }
       format.json { render :json => @control_point }
+      format.rdf  {render :rdf => @control_point, :httpURI => base_uri(request.url)}
+      format.ttl  {render :ttl => @control_point, :httpURI => base_uri(request.url)}
+      format.nt  {render :nt => @control_point, :httpURI => base_uri(request.url)}
     end
   end
 

@@ -10,6 +10,7 @@
 <table class="table table-striped">
   <thead>
   <tr>
+    <th>Id</th>
     <th>Short Name</th>
     <th>Full GeoNames Label</th>
     <th>Real-world Coordinates</th>
@@ -25,6 +26,7 @@
 <tbody>
 <% @control_points.each do |control_point| %>
   <tr>
+    <td><%= control_point.id %></td>
     <td><%= control_point.name %></td>
     <td><%= control_point.geonames_label %></td>
     <td><%= "#{control_point.lat}; #{control_point.lng}" %></td>
