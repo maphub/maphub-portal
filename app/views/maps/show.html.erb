@@ -59,12 +59,10 @@ $(document).ready(function(){
   </div>
 </div>
 
+<% if @map.annotations.count > 0 %>
 <div class="row">
   <div class="span8">
-  <h3>Annotations <small><%= link_to "see all ...", map_annotations_url(@map.id) if @map.annotations.count > 0 %></small></h3>
-  <% if not user_signed_in? %>
-    <%= link_to 'Log in', new_user_session_path, :class => "btn" %> to create annotations.
-  <% end %>
+  <h3>Annotations</h3>
     <ul id="annotation-list">
       <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
         <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
@@ -72,6 +70,7 @@ $(document).ready(function(){
     </ul>
   </div>
 </div>
+<% end %>
 
 <!-- Modal dialogs -->
 
