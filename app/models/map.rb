@@ -34,6 +34,12 @@ class Map < ActiveRecord::Base
     "#{self.tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
+  def overlay_tileset_uri
+    uri = "#{map_base_uri}/ts_google/#{self.identifier}/tilemapresource.xml"
+    response_code = Net::HTTP.get_response(URI.parse(uri)).code
+    return (response_code == "200") ? uri : nil
+  end
+  
   def short_title
     "#{self.title[0..30]}..."
   end

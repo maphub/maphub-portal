@@ -51,7 +51,8 @@ else
           "g3201b.ct002662",
           "g3300.ar000600",
           "g3300.ar003300",
-          "g3300.ct000912"]
+          "g3300.ct000912",
+          "ct002033"]
 
   puts "Creating sample maps"
 

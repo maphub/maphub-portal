@@ -16,7 +16,7 @@ class MapsController < ApplicationController
     
     respond_to do |format|
       format.html # show.html.erb
-      format.json {render :json => @map}
+      format.json # show.json.erb
       format.xml  {render :xml => @map}
       format.rdf  {render :rdf => @map, :httpURI => base_uri(request.url)}
       format.ttl  {render :ttl => @map, :httpURI => base_uri(request.url)}
