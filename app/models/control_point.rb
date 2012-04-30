@@ -23,6 +23,10 @@ class ControlPoint < ActiveRecord::Base
     oa = RDF::Vocabulary.new(oa_uri)
     oax_uri = RDF::URI('http://www.w3.org/ns/openannotation/extensions/')
     oax = RDF::Vocabulary.new(oax_uri)
+    maphub_uri = RDF::URI('http://maphub.info/ns/vocab#')
+    maphub = RDF::Vocabulary.new(maphub_uri)
+    foaf_uri = RDF::URI('http://xmlns.com/foaf/spec/')
+    foaf = RDF::Vocabulary.new(foaf_uri)
     
     # Building the annotation graph
     baseURI = RDF::URI.new(httpURI)
@@ -40,6 +44,17 @@ class ControlPoint < ActiveRecord::Base
         oa.generated, 
         RDF::Literal.new(self.updated_at, :datatype => RDF::XSD::dateTime)]
     end
+    graph << [baseURI, oa.hasMotivation, oax.Tagging]
+    graph << [baseURI, RDF.type, maphub.GeoReference]
+    graph << [baseURI, oa.generator, RDF::URI("http://www.maphub.info")]
+    
+    # Adding user and provenance data
+    user_uuid = UUIDTools::UUID.timestamp_create().to_s
+    user_node = RDF::URI.new(user_uuid)
+    graph << [baseURI, oa.annotator, user_node]
+    graph << [user_node, foaf.mbox, RDF::Literal.new(self.user.email)]
+    graph << [user_node, foaf.name, RDF::Literal.new(self.user.username)]
+
     
     # Adding the body
     graph << [baseURI, oax.hasSemanticTag, RDF::URI(self.geonames_uri)]
@@ -54,6 +69,8 @@ class ControlPoint < ActiveRecord::Base
       writer.prefix :oa, oa_uri
       writer.prefix :oax, oax_uri
       writer.prefix :rdf, RDF::URI(RDF.to_uri)
+      writer.prefix :maphub, maphub_uri
+      writer.prefix :foaf, foaf_uri
       writer << graph
     end
     

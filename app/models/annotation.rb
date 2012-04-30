@@ -30,6 +30,8 @@ class Annotation < ActiveRecord::Base
     oa = RDF::Vocabulary.new(oa_uri)
     ct_uri = RDF::URI('http://www.w3.org/2011/content#')
     ct = RDF::Vocabulary.new(ct_uri)
+    foaf_uri = RDF::URI('http://xmlns.com/foaf/spec/')
+    foaf = RDF::Vocabulary.new(foaf_uri)    
     
     # Building the annotation graph
     baseURI = RDF::URI.new(httpURI)
@@ -47,6 +49,14 @@ class Annotation < ActiveRecord::Base
         oa.generated, 
         RDF::Literal.new(self.updated_at, :datatype => RDF::XSD::dateTime)]
     end
+    graph << [baseURI, oa.generator, RDF::URI("http://www.maphub.info")]
+    
+    # Adding user and provenance data
+    user_uuid = UUIDTools::UUID.timestamp_create().to_s
+    user_node = RDF::URI.new(user_uuid)
+    graph << [baseURI, oa.annotator, user_node]
+    graph << [user_node, foaf.mbox, RDF::Literal.new(self.user.email)]
+    graph << [user_node, foaf.name, RDF::Literal.new(self.user.username)]
     
     # Creating the body
     unless self.body.nil?
@@ -77,9 +87,6 @@ class Annotation < ActiveRecord::Base
 
       # the target source
       graph << [specific_target, oa.hasSource, self.map.raw_image_uri]
-      
-      
-
     end
     
     # Serializing RDF graph to string
@@ -88,6 +95,7 @@ class Annotation < ActiveRecord::Base
       writer.prefix :oa, oa_uri
       writer.prefix :ct, ct_uri
       writer.prefix :rdf, RDF::URI(RDF.to_uri)
+      writer.prefix :foaf, foaf_uri
       writer << graph
     end
     
@@ -117,13 +125,10 @@ class Segment
     <?xml version="1.0" standalone="no"?>
     <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-      
       <svg width="#{width}px" height="#{height}px"
          xmlns="http://www.w3.org/2000/svg" version="1.1">
-      
          #{svg_shape}
-         
-    </svg>
+      </svg>
     }
   end
 
@@ -142,7 +147,7 @@ class Point < Segment
   def self.create_from_wkt_data(wkt_data)
     data = wkt_data["POINT".length+1..-2]
     xy = data.split(" ")
-    Point.new(xy[1], xy[2])
+    Point.new(xy[0], xy[1])
   end
   
   def to_s
@@ -187,7 +192,7 @@ class Polygon < Linestring
   
   def self.create_from_wkt_data(wkt_data)
     points = []
-    data = wkt_data["POLYGON".length+1..-2]
+    data = wkt_data["POLYGON".length+2..-3]
     data.split(",").each do |point_pair|
       point = Point.create_from_wkt_data("POINT(#{point_pair})")
       points << point
