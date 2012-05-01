@@ -1,7 +1,7 @@
 //= require OpenLayers
 
 MapHub = {}
-MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, editable) {
+MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, control_points_url, editable) {
   
   /* Callbacks for added / removed features */
   function featureSelected(evt) {
@@ -54,6 +54,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, ed
   this.zoomify_url = zoomify_url;
   
   this.annotations_url = annotations_url;
+  this.control_points_url = control_points_url;
   this.editable = editable;
   this.features = [];
   this.annotations = [];
@@ -186,24 +187,6 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
   });
 }
 
-/* Loads a single annotation for this map via a JSON request */
-MapHub.AnnotationView.prototype.loadSingleAnnotation = function(url) {
-  var wkt_parser = new OpenLayers.Format.WKT();
-  var self = this;
-  
-  $.getJSON(url, function(data) {
-    console.log(data);
-    var feature = wkt_parser.read(data.wkt_data);
-    feature.annotation = data
-    self.features.push(feature);
-    self.annotations.push(data);
-    self.annotationLayer.addFeatures([feature]);
-  });
-}
-
-MapHub.AnnotationView.prototype.clearEditingLayer = function() {
-
-}
 
 MapHub.AnnotationTooltip = function(annotation) {
   this.div = document.createElement("div");

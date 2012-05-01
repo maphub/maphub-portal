@@ -1,9 +1,10 @@
 // This JavaScript is executed when the #create controller method finishes
 
 // compose new list item
-<% annotationText = render :partial => "annotations/single_annotation", :locals => { :annotation => @annotation } %>
-var response = "<li><%= escape_javascript(annotationText)%></li>";
-$(response).hide().prependTo("#annotation-list").fadeIn("slow");
+<% annotationText = render :partial => "annotations/single_annotation_table_row", :locals => { :annotation => @annotation } %>
+var response = "<%= escape_javascript(annotationText)%>";
+$("#annotations-header").fadeIn("slow");
+$(response).hide().prependTo("#annotation-table").fadeIn("slow");
 
 // re-enable new tooltips
 $(".tooltip").tooltip();

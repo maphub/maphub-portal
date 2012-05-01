@@ -6,6 +6,7 @@ function initOpenLayers() {
       <%= @map.height %>,
       "<%= @map.tileset_uri + '/' %>",
       "<%= map_annotations_url(@map, :format => :json) %>",
+      "<%= map_control_points_url(@map, :format => :json) %>",
       <%= user_signed_in? ? "true" : "false" %>
   );
 }
@@ -38,12 +39,22 @@ $(document).ready(function(){
         <hr>
         
         <h4>Geography</h4>
-        <p><strong>Control Points: </strong> <%= link_to @map.control_points.count, map_control_points_url(@map) %></p>
-
+        <p>
+          <strong>Control Points:</strong>
+          <span id="control-points-count">
+            <%= @map.control_points.count %></span>&nbsp;
+            <a id="control-points-count-link" href="<%= map_control_points_url(@map) %>" style="<%= 'display:none;' if @map.control_points.count == 0 %>">
+              (show all)
+            </a>
+        </p>
+        
         <hr>
-
+        
         <h4>User Annotations</h4>
         <p>Some general infos; top contributor for this map, tagcloud, etc.</p>
+        
+        <hr>
+        
         <div class="well"> 
             <h4>Current Annotation</h4>
              <div id="annotation-selected">
@@ -61,12 +72,12 @@ $(document).ready(function(){
 
 <div class="row">
   <div class="span8">
-  <h3>Annotations</h3>
-    <ul id="annotation-list">
+    <h3 id="annotations-header" style="<%= 'display:none;' if @map.annotations.count == 0 %>">Annotations <small><%= link_to "show all", map_annotations_path(@map) %></small></h3>
+    <table class="table table-striped" id="annotation-table">
       <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
-        <li><%= render :partial => "annotations/single_annotation", :locals => { :annotation => annotation } %></li>
+        <%= render :partial => "annotations/single_annotation_table_row", :locals => { :annotation => annotation } %>
       <% end %>
-    </ul>
+    </table>
   </div>
 </div>
 
