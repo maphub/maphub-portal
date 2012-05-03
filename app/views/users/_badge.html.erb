@@ -1,7 +1,7 @@
-<div class="singleUserContainer">
+<div class="single-user-container">
 <%= link_to image_tag(user.gravatar_url), user %>
-<div class="userInfo">
+<div class="user-info">
   <%= link_to user.username, user %><br/>
-  <%= user.location %>
+  <small><%= user.location %></small>
 </div>
 </div>

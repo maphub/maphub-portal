@@ -1,117 +1,79 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".edit_user").hide();
-    
-    // If the "Edit your description button" is clicked
-    $("#toggleForm").click(function(){
-      $('#aboutMyself').hide();
-      $(".edit_user").slideDown(function(){
-        $("#user_about_me").focus();
-      });
-      return false;
-    });
+<%= javascript_include_tag params[:controller] %>
 
-  });
-</script>
 
-<% if @myself %>
-        <div id="userBox">
-          Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
-          <a href="#" id="toggleForm">Edit your description</a>
-        </div>
-<% end %>
+<div class="row">
+  <div class="span12"><h1><%= @user.username %></h1></div>
+</div>
 
-      <h1><%= @user.username %></h1>
-      
-      <div class="userAvatarLarge">
-        <!-- TODO insert avatar -->
+<div class="row">
+  <div id="user-image" class="span2">
+    <% if @myself %>
+      <%= link_to image_tag(@user.gravatar_url(:size => 150)), "http://gravatar.com" %>
+    <% else %>
+      <%= image_tag(@user.gravatar_url(:size => 150)) %>
+    <% end %>
+  </div>
+
+  <div id="user-info-table-container" class="span3"> 
+    <table id="user-info-table">
+      <tr>
+        <td class="user-info-first-col"><strong>Joined:</strong></td>
+        <td><%= time_ago_in_words(@user.created_at) %> ago </td>
+      </tr>
+      <tr>
+        <td class="user-info-first-col"><strong>Last seen:</strong></td>
+        <td><%= time_ago_in_words(@user.last_sign_in_at) rescue time_ago_in_words(@user.created_at)  %> ago</td>
+      </tr>
+      <% unless @user.fullname.nil? or @user.fullname.empty? %>
+      <tr>
+        <td class="user-info-first-col"><strong>Full Name:</strong></td>
+        <td><%= @user.fullname %></td>
+      </tr>
+      <% end %>
+      <% unless @user.location.nil? or @user.location.empty? %>
+      <tr>
+        <td class="user-info-first-col"><strong>Location:</strong></td>
+        <td><%= @user.location %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td class="user-info-first-col"><strong>Annotations:</strong></td>
+        <td><%= @user.annotations.count %></td>
+      </tr>
+      <tr>
+        <td class="user-info-first-col"><strong>Control Points:</strong></td>
+        <td><%= @user.control_points.count %></td>
+      </tr>
+    </table>
+  </div> <!-- userInfoTableContainer -->
+  <div id="user-info-container" class="span4 offset1">
+    <% if @myself %>
+      <div id="userBox" class="well">
+        Hey, <%= @user.username %>, this is you!&nbsp;|&nbsp;
+        <a href="#" id="toggle-form">Edit your description</a>
       </div>
-      
-      <div id="userInfoContainer">
-        
-        <div id="userImage">
-          <% if @myself %>
-            <%= link_to image_tag(@user.gravatar_url(:size => 120)), "http://gravatar.com" %>
-          <% else %>
-            <%= image_tag(@user.gravatar_url(:size => 120)) %>
-          <% end %>
+    <% end %>
+    <div id="user-info-text">
+      <h3>About me</h3>
+      <% if @myself %>
+        <!-- Display form if this is our own page -->
+        <%= form_for @user, :remote => true do |f| %>
+        <%= f.text_area :about_me, :rows => 10, :style => "width:100%" %><br>
+        <div class="pull-right">
+        <%= f.button "Cancel", :class => "btn", :id => "button-cancel" %>
+        <%= f.submit "Update", :class => "btn btn-primary" %>
         </div>
-        
-        <table id="userInfoTable">
-          <tr>
-            <td class="firstCol">Joined:</td>
-            <td><%= time_ago_in_words(@user.created_at) %> ago </td>
-          </tr>
-          <tr>
-            <td class="firstCol">Last seen:</td>
-            <td><%= time_ago_in_words(@user.last_sign_in_at) rescue time_ago_in_words(@user.created_at)  %> ago</td>
-          </tr>
-          <% unless @user.fullname.nil? or @user.fullname.empty? %>
-          <tr>
-            <td class="firstCol">Full Name:</td>
-            <td><%= @user.fullname %></td>
-          </tr>
-          <% end %>
-          <% unless @user.location.nil? or @user.location.empty? %>
-          <tr>
-            <td class="firstCol">Location:</td>
-            <td><%= @user.location %></td>
-          </tr>
-          <% end %>
-          <tr>
-            <td class="firstCol">Maps:</td>
-            <td><%= @user.maps.count %></td>
-          </tr>
-          <tr>
-            <td class="firstCol">Collections:</td>
-            <td><%= @user.collections.count %></td>
-          </tr>
-          <tr>
-            <td class="firstCol">Annotations:</td>
-            <td><%= @user.annotations.count %></td>
-          </tr>
-        </table>
-        
-        <div id="userInfoText">
-          <% if @myself %>
-            <!-- Display form if this is our own page -->
-            <%= form_for @user, :remote => true do |f| %>
-            <%= f.text_area :about_me, :cols => 55, :rows => 10 %><br>
-            <%= f.submit "Update" %>
-            <% end %>
-          <% end %>
-              
-          <div id="aboutMyself">
-            <% if @user.about_me.nil? %>
-              <em>This user hasn't entered a description yet.</em>
-            <% else %>
-              <%= @user.about_me %>
-            <% end %>
-          </div>
-        </div>
-        <br style="clear:both;">
+        <% end %>
+      <% end %>
+
+      <div id="about-myself">
+        <% if @user.about_me.nil? %>
+          <em>This user hasn't entered a description yet.</em>
+        <% else %>
+          <%= @user.about_me %>
+        <% end %>
       </div>
-      
-      <br>
-      <hr>
-      
-      <% if @user.maps.count > 0 %>
-        <div class="halfSize floatLeft">
-          <h2>Maps <small><%= link_to "(show all...)", user_maps_path(@user) %></small></h2>
-          <%= render :partial => "maps/grid", :locals => { :maps => @user.maps.limit(18) } %>
-        </div>
-      <% end %>
-      <% if @user.collections.count > 0 %>
-        <div class="halfSize floatLeft">
-          <h2>Collections <small><%= link_to "(show all...)", user_collections_path(@user) %></small></h2>
-          <%= render :partial => "collections/recent", :locals => { :user => @user, :limit => 10 } %>
-        </div>
-      <% end %>
-      <% if @user.annotations.count > 0 %>
-        <div class="halfSize floatLeft">
-          <h2>Annotations <small><%= link_to "(show all...)", user_annotations_path(@user) %></small></h2>
-          <%= render :partial => "annotations/recent", :locals => { :user => @user, :limit => 10 } %>
-        </div>
-      <% end %>
-      <br style="clear:both;">
-      
+    </div> <!-- userInfoText -->
+
+  </div>
+</div>

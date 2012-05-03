@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-MaphubPortal::Application.config.secret_token = 'a359e665dd8cb13df0ffbac4d3d85fdf341f586f0268dc130938d5638f486a48c950e2f27a972001a067a65fd249aa8739a0623752df620b447aad31e52f3468'
+MaphubPortal::Application.config.secret_token = 'aa252cb12ab899553e4e71b35369a633aaf51d6375cfdc9319c8d54f86a1431a7fedd494eaf8cf6e8448c3e46fa87e0bc306f2127706d9830f599be96035e006'

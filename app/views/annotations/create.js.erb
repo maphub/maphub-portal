@@ -1,13 +1,23 @@
 // This JavaScript is executed when the #create controller method finishes
 
 // compose new list item
-<% annotationText = render :partial => "annotations/single_annotation", :locals => { :annotation => @annotation } %>
-var response = "<li><%= escape_javascript(annotationText)%></li>";
-$(response).hide().prependTo("#annotationList").fadeIn("slow");
+<% annotationText = render :partial => "annotations/single_annotation_table_row", :locals => { :annotation => @annotation } %>
+var response = "<%= escape_javascript(annotationText)%>";
+$("#annotations-header").fadeIn("slow");
+$(response).hide().prependTo("#annotation-table").fadeIn("slow");
 
-// slide down the panel
-$("#slideUpBarAnnotation").slideUp();
+// re-enable new tooltips
+$(".tooltip").tooltip();
+$("a[rel=tooltip]").tooltip();
 
 // first clear the editing layer, then load the newly created annotation
-window.annotation_view.editLayer.removeAllFeatures();
-window.annotation_view.loadSingleAnnotation("<%= annotation_url(@annotation, :format => :json) %>");
+$("#viewer").empty();
+initOpenLayers();
+
+// slide down the panel
+$("#modal-annotation").modal('hide');
+// confirmation / error dialog, disabled
+// $("#modal-annotation-confirm").modal();
+// $("#modal-annotation-confirm-close").click(function(){
+//   $("#modal-annotation-confirm").modal('hide');
+// });

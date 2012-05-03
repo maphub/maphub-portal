@@ -1,33 +1,44 @@
-<h1>Control Points</h1>
+<div class="row">
+  <% if @parent.class.name == "Map" %>
+    <h1>Control Points on <%= link_to @parent.title, @parent %></h1>
+  <% elsif @parent.class.name == "User" %>
+    <h1>Control Points created by <%= link_to @parent.username, @parent %></h1>
+  <% end %>
+</div>
 
-<table>
+<div class="row">
+<table class="table table-striped">
+  <thead>
   <tr>
     <th>Id</th>
-    <th>Name</th>
-    <th>Label</th>
-    <th>User</th>
-    <th>Map</th>
-    <th>Geonames_link</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th>X-Position</th>
-    <th>Y-Position</th>
+    <th>Short Name</th>
+    <th>Full GeoNames Label</th>
+    <th>Real-world Coordinates</th>
+    <th>Map Coordinates</th>
+    <th>Created</th>
+    <% if @parent.class.name == "Map" %>
+      <th>User</th>
+    <% elsif @parent.class.name == "User" %>
+      <th>Map</th>
+    <% end %>
   </tr>
-  
+</thead>
+<tbody>
 <% @control_points.each do |control_point| %>
   <tr>
-    <td><%= link_to control_point.id, control_point %></td>
+    <td><%= control_point.id %></td>
     <td><%= control_point.name %></td>
-    <td><%= control_point.label %></td>
-    <td><%= link_to control_point.user.username, control_point.user %></td>
-    <td><%= link_to control_point.map.id, control_point.map %></td>
-    <td><%= control_point.geonames_uri %></td>
-    <td><%= control_point.lat %></td>
-    <td><%= control_point.lng %></td>
-    <td><%= control_point.x %></td>
-    <td><%= control_point.y %></td>
+    <td><%= control_point.geonames_label %></td>
+    <td><%= "#{control_point.lat}; #{control_point.lng}" %></td>
+    <td><%= "#{control_point.x}; #{control_point.y}" %></td>
+    <td><%= control_point.created_at %></td>
+    <% if @parent.class.name == "Map" %>
+      <td><%= link_to control_point.user.username, control_point.user %></td>
+    <% elsif @parent.class.name == "User" %>
+      <td><%= link_to control_point.map.title, control_point.map %></td>
+    <% end %>
   </tr>
 <% end %>
+</tbody>
 </table>
-
-<br />
+</div>

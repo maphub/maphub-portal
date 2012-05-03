@@ -1,6 +1,6 @@
 class ControlPointsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:show, :index, :find]
+  before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :get_parent
 
   # GET /control_points
@@ -33,6 +33,9 @@ class ControlPointsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @control_point }
       format.json { render :json => @control_point }
+      format.rdf  {render :rdf => @control_point, :httpURI => base_uri(request.url)}
+      format.ttl  {render :ttl => @control_point, :httpURI => base_uri(request.url)}
+      format.nt  {render :nt => @control_point, :httpURI => base_uri(request.url)}
     end
   end
 
@@ -98,30 +101,6 @@ class ControlPointsController < ApplicationController
       format.html { redirect_to(map_url @map) }
       format.xml  { head :ok }
     end
-  end
-  
-  # GET /control_points/find?place="PLACENAME"
-  def find
-    @place = params[:place] || params[:term]
-    if @place.nil?
-      flash.now[:error] = 'No "place" or "term" parameter specified'
-      return
-    end
-
-    unless @parent.nil?
-      # TODO: consider the context of the current map; calculate bounding window before
-      @control_points = ControlPoint.find_in_geonames(@place)
-      @control_points.each {|control_point| control_point.map = @parent}
-    else
-      @control_points = ControlPoint.find_in_geonames(@place)
-    end
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @control_points }
-      format.json { render :json => @control_points }
-    end
-  
   end
       
   private

@@ -1,7 +1,6 @@
-<h1>Maps</h1>
-
-<div class="mapList">
-<% @maps.each do |map| %>
-  <%= render :partial => "thumbnail", :locals => { :map => map } %>
-<% end %>
+<div class="row">
+  <h1>Maps</h1>
+    <% @maps.each do |map| %>
+      <%= render :partial => "thumbnail", :locals => { :map => map } %>
+    <% end %>
 </div>

@@ -1,143 +1,152 @@
-<%= javascript_include_tag "OpenLayers" %>
-<%= javascript_include_tag "maphub/annotation_tooltip" %>
-<%= javascript_include_tag "maphub/annotation_view" %>
-<script type="text/javascript">
-
-// this function is called when the document is loaded
-$(document).ready(function(){
+<%= javascript_include_tag params[:controller] %>
+<%= javascript_tag do %>
+function initOpenLayers() {
   window.annotation_view = new MapHub.AnnotationView(
-    <%= @map.width %>,
-    <%= @map.height %>,
-    "<%= @map.tileset_url + '/' %>",
-    "<%= map_annotations_url(@map, :format => :json) %>",
-    <%= user_signed_in? ? "true" : "false" %>
+      <%= @map.width %>,
+      <%= @map.height %>,
+      "<%= @map.tileset_uri + '/' %>",
+      "<%= map_annotations_url(@map, :format => :json) %>",
+      "<%= map_control_points_url(@map, :format => :json) %>",
+      <%= user_signed_in? ? "true" : "false" %>
   );
-    
-  $('input#placeSearch').autocomplete({
-    source: function( request, response ) {
-      $.getJSON(
-        "<%= find_map_control_points_url(@map, :format => :json) %>",
-        request,
-        function(data) {
-          response( $.map(data, function(item) {
-            return {
-              "label" : item.control_point.label,
-              "value" : item.control_point.label,
-              "data" : item.control_point
-            }
-          }));
-      });
-    },
-    minLength: 2,
-    select: function( event, ui ) {
-        $("#control_point_name").attr("value", ui.item.data.geonames_uri);
-        $("#control_point_label").attr("value", ui.item.data.label);
-        $("#control_point_geonames_uri").attr("value", ui.item.data.geonames_uri);
-        $("#control_point_lat").attr("value", ui.item.data.lat);
-        $("#control_point_lng").attr("value", ui.item.data.lng);
-    }
-  });
-  
+}
+$(document).ready(function(){
+  initOpenLayers();
 });
+<% end %>
 
-</script>
-
-<div id="viewer"></div>
-<br style="clear:both;"/>
-
-<div id="mapDetails">
+<!-- TODO: check if Fluid Layout (http://twitter.github.com/bootstrap/scaffolding.html) suits better for this view-->
+<div class="row">
+  <p id="notice"><%= notice %></p>
   
-  <div class="floatLeft halfSize">  
-  <h1><%= @map.title %> <small>by <%= link_to @map.user.username, @map.user %></small></h1>
-  <p>This map was uploaded <%= time_ago_in_words @map.created_at %> ago, last edited <%= time_ago_in_words @map.updated_at %> ago.</p>
-  
-  <% unless @map.description.empty? %>
-    <blockquote>
-      <%=  @map.description %>
-    </blockquote>
-  <% end %>
-  
-  </div>
-  
-  <div class="floatRight tools">  
-      <%= render :partial => "users/badge", :locals => { :user => @map.user } %>
-      <br style="clear:both;">
-      <% if current_user == @map.user %>
-      <%= link_to 'Edit this map', edit_map_path(@map) %><br>
-      <%= link_to 'Delete', map_path(@map), :method => :delete, :confirm => "Are you sure you want to delete this map?" %>
-      <% end %>
-  </div>
-  
-</div>  
-
-
-<br style="clear:both;">
-
-<hr>
-
-<div id="annotations" class="halfSize floatLeft">
-  <h2>Annotations <small><%= link_to "(Show all...)", map_annotations_path(@map) %></small></h2>
-  <ul id="annotationList">
-    <% for annotation in @map.annotations.order("updated_at").reverse %>
-      <li><%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.updated_at) %> ago</li>
-    <% end %>
-  </ul>
-</div>
-
-<div id="annotationOverlays"></div>
-
-<br style="clear:both;">
-
-<div id="slideUpBarAnnotation" style="display:none;">
-  <div class="slideUpBarContent">
-    <div class="floatRight">
-      <h2>Add a new Annotation ... </h2>
-      <p>
-        What do you want to annotate about the area you marked?
-      </p>
-      <p>
-        Please enter a short, descriptive title and a body for your new Annotation. When you're done, click "Add Annotation".
-      </p>
+  <div class="span12">
+    <div class="row">
+      
+      <!-- Map View -->
+      <div class="span8">
+        <div id="viewer" class="span8" style="height:600px;"></div>
+      </div>
+      
+      <!-- Right column-->
+      <div class="span4">
+        
+        <h4>Map Metadata</h4>
+        <p><strong>Title: </strong><%= @map.title %></p>
+        <p><strong>Subject: </strong><%= @map.subject %></p>
+        <p><strong>Author: </strong><%= @map.author %></p>
+        <p><strong>Date: </strong><%= @map.date %></p>
+        
+        <hr>
+        
+        <h4>Geography</h4>
+        <p>
+          <strong>Control Points:</strong>
+          <span id="control-points-count">
+            <%= @map.control_points.count %></span>&nbsp;
+            <a id="control-points-count-link" href="<%= map_control_points_url(@map) %>" style="<%= 'display:none;' if @map.control_points.count == 0 %>">
+              (show all)
+            </a>
+        </p>
+        
+        <hr>
+        
+        <h4>User Annotations</h4>
+        <p>Some general infos; top contributor for this map, tagcloud, etc.</p>
+        
+        <hr>
+        
+        <div class="well"> 
+            <h4>Current Annotation</h4>
+             <div id="annotation-selected">
+               <!-- annotations will be appended here through JS -->
+             </div>
+        </div>
+        
+        <hr>
+        
+      </div>
+      
     </div>
-
-    <%= form_for([@map, Annotation.new], :remote => true, :class => 'floatLeft' ) do |f| %>
-      <p>
-        <%= f.label :title %><br/>
-        <%= f.text_field :title, :size => 55 %>
-      </p>
-      <p>
-        <%= f.label :body %><br/>
-        <%= f.text_area :body, :cols => 40, :rows => 5 %>
-      </p>
-      <%= f.submit "Add Annotation" %>
-      <input type="button" value="Cancel" id="buttonCancelAnnotation"/>
-      <%= f.text_field :wkt_data, :hidden => true %>
-    <% end %>
   </div>
 </div>
 
-<div id="slideUpBarControlPoint" style="display:none;">
-  <div class="slideUpBarContent">
+<div class="row">
+  <div class="span8">
+    <h3 id="annotations-header" style="<%= 'display:none;' if @map.annotations.count == 0 %>">Annotations <small><%= link_to "show all", map_annotations_path(@map) %></small></h3>
+    <table class="table table-striped" id="annotation-table">
+      <% for annotation in @map.annotations.order("updated_at").limit(10).reverse %>
+        <%= render :partial => "annotations/single_annotation_table_row", :locals => { :annotation => annotation } %>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<!-- Modal dialogs -->
+
+<div class="modal hide" id="modal-annotation">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Annotation</h3>
+  </div>
+  <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
+    <div class="modal-body">
+      <p>
+        <%= f.text_area :body, :cols => 80, :rows => 10, :style => "width: 500px" %>
+      </p>
+      <%= f.text_field :wkt_data, :style => "display:none" %>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Save annotation", :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="modal hide" id="modal-control-point">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Control Point</h3>
+    </div>
     <%= form_for([@map, ControlPoint.new], :remote => true, :class => 'floatLeft') do |f| %>
-      <p>Enter a location: <br/>
-      <input name="placeSearch" id="placeSearch" size="40"/></p>
-      <%= f.submit "Add Control Point" %>
-      <input type="button" value="Cancel" id="buttonCancelControlPoint"/>
-      <%= f.text_field :name, :hidden => true %>
-      <%= f.text_field :label, :hidden => true %>
-      <%= f.text_field :geonames_uri, :hidden => true %>
-      <%= f.text_field :lat, :hidden => true %>
-      <%= f.text_field :lng, :hidden => true %>
-      <%= f.text_field :x, :hidden => true %>
-      <%= f.text_field :y, :hidden => true %>
+         
+      <%= f.text_field :name, :style => "display:none" %>
+      <%= f.text_field :geonames_id, :style => "display:none" %>
+      <%= f.text_field :geonames_label, :style => "display:none" %>
+      <%= f.text_field :lat, :style => "display:none" %>
+      <%= f.text_field :lng, :style => "display:none" %>
+      <%= f.text_field :x, :style => "display:none" %>
+      <%= f.text_field :y, :style => "display:none" %>
+      <div class="modal-body">
+        <p>Enter a location that belongs to this point: <br/>
+        <input name="place-search" id="place-search" size="40"/></p>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit "Save control point", :class => "btn btn-primary" %>
+      </div>
     <% end %>
+</div>
+
+<div class="modal hide" id="modal-annotation-confirm">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Annotation</h3>
+  </div>
+  <div class="modal-body">
+    <p>Your annotation has been successfully added to this map.</p>
+  </div>
+  <div class="modal-footer">
+    <a id="modal-annotation-confirm-close" href="#" class="btn btn-primary">OK</a>
   </div>
 </div>
 
-
-
-
-
-
-
-
+<div class="modal hide" id="modal-control-point-confirm">
+  <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Add Control Point</h3>
+  </div>
+  <div class="modal-body">
+    <p>Your control point has been successfully added to this map.</p>
+  </div>
+  <div class="modal-footer">
+    <a id="modal-control-point-confirm-close" href="#" class="btn btn-primary">OK</a>
+  </div>
+</div>

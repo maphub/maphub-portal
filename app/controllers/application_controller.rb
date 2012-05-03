@@ -1,18 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  layout "default" # <= Use twitter-bootstrap layout called "default" per default
   
-  # reloads libs in lib folder before each request (in development mode only)
-  # http://hemju.com/2011/02/11/rails-3-quicktip-auto-reload-lib-folders-in-development-mode/
-  before_filter :_reload_libs, :if => :_reload_libs?
-
-  def _reload_libs
-    RELOAD_LIBS.each do |lib|
-      require_dependency lib
+  
+  # Cuts a possible filename from the given URI
+  # => http://localhost:3000/maps/1.rdf => http://localhost:3000/maps/1
+  def base_uri(uri)
+    ext = File.extname(uri)
+    unless ext.length == 0
+      uri = uri[0..(ext.length + 1)*-1]
     end
-  end
-
-  def _reload_libs?
-    defined? RELOAD_LIBS
+    uri
   end
   
 end

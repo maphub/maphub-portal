@@ -1,4 +1,18 @@
 // This JavaScript is executed when the #create controller method finishes
 
-// hide the form
-$("#slideUpBarControlPoint").slideUp();
+// slide down the panel
+$("#modal-control-point").modal('hide');
+
+// confirmation / error dialog disabled
+// $("#modal-control-point-confirm").modal();
+// $("#modal-control-point-confirm-close").click(function(){
+//   $("#modal-control-point-confirm").modal('hide');
+// });
+
+// update the CP count in the view
+$.getJSON(window.annotation_view.control_points_url, function(data) { 
+  var count = 0;
+  $.each(data, function(k, v) { count++; });
+  $("#control-points-count").html(count);
+});
+$("#control-points-count-link").fadeIn("slow");

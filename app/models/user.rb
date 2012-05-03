@@ -20,13 +20,8 @@ class User < ActiveRecord::Base
   after_create :send_sign_up_notification
   
   # Model associations
-  has_many :maps
-  has_many :collections
   has_many :annotations
-  
-  # Markdown content
-  # TODO test and make it work
-  # acts_as_markdown :about_me
+  has_many :control_points
   
   # Gravatars
   include Gravtastic
@@ -38,6 +33,7 @@ class User < ActiveRecord::Base
   
   def deactivate
     begin
+      # this could be done if we want to "anonymize" users first
       # update_attribute(:email, nil)
       # update_attribute(:username, "deleted user")
       update_attribute(:deleted_at, Time.current)

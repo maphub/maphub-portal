@@ -1,0 +1,6 @@
+2012/05/01:
+    RELEASE 0.1:
+    
+    * implemented Open Annotation RDF serialization
+    * implemented annotation and control point creation
+    * implemented user management and core infrastructure components

@@ -1,0 +1,54 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
+@iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
+
+// Your custom LESS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/less.html for their names and documentation
+//
+// Example:
+// @linkColor: #ff0000;
+
+body {
+padding-top: 60px;
+}
+
+footer {
+position:fixed;
+width:100%;
+bottom:0;
+padding-left:155px;
+background-color:#eee;
+}
+
+label {
+display: inline;
+}
+
+h1, h2, h3, h4 {
+margin-bottom:8px;
+}
+
+.modal form {
+ margin: 0px; 
+}
+
+.padding {
+  display:block;
+  margin-top:10px;
+}
+
+.user-info-first-col {
+  width:100px;
+}
+
+small {
+  font-size: 0.8em
+}

@@ -1,0 +1,16 @@
+{
+"identifier": "<%= @map.identifier %>",
+"subject": "<%= @map.subject %>",
+"title": "<%= @map.title %>",
+"author": "<%= @map.author %>",
+"date": "<%= @map.date %>",
+"height": <%= @map.height %>,
+"width": <%= @map.width %>,
+"updated_at": "<%= @map.updated_at %>",
+"created_at": "<%= @map.created_at %>",
+"thumbnail_uri": "<%= @map.thumbnail_uri %>",
+"tileset_uri": "<%= @map.tileset_uri %>"
+<% unless @map.overlay_tileset_uri.nil?%>
+,"overlay_tileset_uri": "<%= @map.overlay_tileset_uri %>"
+<% end %>
+}

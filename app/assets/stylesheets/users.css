@@ -1,0 +1,26 @@
+.user-list {
+  overflow: hidden;
+  color: #333;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.single-user-container {
+  width: 190px;
+  height: 50px;
+  float: left;
+  overflow: hidden;
+  margin-bottom:10px; 
+}
+
+.single-user-container img {
+  display: block;
+  float:left;
+}
+
+.single-user-container .user-info {
+  width: 100px;
+  float:left;
+  padding-left:5px;
+  white-space:nowrap;
+}

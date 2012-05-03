@@ -1,55 +1,34 @@
 MaphubPortal::Application.routes.draw do
 
+  devise_for :admins, :users
   
-  devise_for :users, :admins
-
-  resources :annotations
-  
-  resources :collections do
-    resources :maps
-  end
-  
-  resources :control_points do
-    collection do
-      get 'find'
-    end
-  end
-  
-  resources :maps do
-    resources :annotations
-    resources :control_points do
-      collection do
-        get 'find'
-      end
-    end
-    resources :collections
-  end
-  
-  resources :users do
+  # administrator namespace
+  namespace :admin do 
+    resources :users
     resources :maps
     resources :annotations
-    resources :collections
   end
   
-  # deactivate a user (the controller will check that you can only deactivate yourself)
-  match 'users/:id/deactivate' => 'users#deactivate', :as => :deactivate
+  resources :users, :only => [:show, :update, :index] do 
+    resources :annotations, :only => [:show, :index]
+    resources :control_points, :only => [:show, :index]
+  end
+  
+  resources :maps, :only => [:show, :index] do 
+    resources :annotations, :only => [:create, :index, :update]
+    resources :control_points, :only => [:create, :index, :update]
+  end
+  
+  resources :annotations, :only => [:create, :update, :show]
+  resources :control_points, :only => [:show]
+  
+  # default homepage
+  root :to => "home#index"
+  
   match "terms" => 'home#terms'
   match "contact" => 'home#contact'
   match "help" => 'home#help'
   
-  # search controller
-  match 'search' => 'home#search'
-  match 'search/:q' => 'home#search'
-  
-  # default homepage
-  get "home/index"
-  root :to => "home#index"
-  
-  # administrator namespace (create separate controllers for these!)
-  namespace 'admin' do 
-    resources :maps, :collections, :users, :annotations
-  end
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -97,9 +76,13 @@ MaphubPortal::Application.routes.draw do
   #     resources :products
   #   end
 
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => 'welcome#index'
+
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  # match ':controller(/:action(/:id))(.:format)'
 end

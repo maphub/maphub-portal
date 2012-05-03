@@ -1,1 +1,1 @@
-<%= link_to annotation.title, annotation %>, by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.updated_at) %> ago
+<a href="#" rel="tooltip" title="<%= simple_format h annotation.body %>"><%= annotation.truncated_body %></a><small> by <%= link_to annotation.user.username, annotation.user %>, <%= time_ago_in_words(annotation.updated_at) %> ago</small>
