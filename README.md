@@ -1,3 +1,19 @@
+# Windows notes
+Doesn't work at all on Windows any more due to libv8 dependency which rubyracer (?) and less depend on. libv8 isn't available, and doesn't compile, on Windows. Ignoring it (which used to work with troublesome dependencies) prevents various things from working (like rails even starting up).
+
+# Ubuntu 12.04 notes
+Need to install (sudo apt-get install ...): ruby1.9.1 (which installs 1.9.3), git, rubygems, ruby-bundler, libxml2-dev libxslt-dev sqlite3 libsqlite3-dev rails
+Can't run "gem update --system" in Ubuntu, gives a warning about that overwriting Debian files...
+Need to run "sudo bundle install", needs to modify /var/lib/gems
+Running "rails server" seems to just create/overwrite files.
+Need to run "sudo gem update" after "sudo bundle install" to update all the dependencies, like activerecord.
+
+
+
+###############################################################################
+
+
+
 # About
 
 MapHub is a Web portal for annotating online historic maps. 
