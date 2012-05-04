@@ -44,6 +44,10 @@ class Map < ActiveRecord::Base
     "#{self.title[0..30]}..."
   end
   
+  def no_control_points
+    self.control_points.count
+  end
+  
   # Extracts image dimensions from ImageProperties.xml;
   def extract_dimensions
     tileset_uri.chomp!('/') # remove trailing slash just in case
