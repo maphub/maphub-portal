@@ -10,7 +10,20 @@
 "created_at": "<%= @map.created_at %>",
 "thumbnail_uri": "<%= @map.thumbnail_uri %>",
 "tileset_uri": "<%= @map.tileset_uri %>"
-<% unless @map.overlay_tileset_uri.nil?%>
+<% unless @map.overlay_tileset_uri.nil? %>
 ,"overlay_tileset_uri": "<%= @map.overlay_tileset_uri %>"
+<% end %>
+<% if @map.control_points.count > 0 %>
+,"controlpoints": [
+<% @map.control_points.each_with_index do |controlpoint, index | %>
+    {
+    "lat": <%= controlpoint.lat %>,
+    "lng": <%= controlpoint.lng %>,
+    "x": <%= controlpoint.x %>,
+    "y": <%= controlpoint.y %>
+    }
+    <% if index < @map.control_points.count-1 %>,<% end %>
+<% end %>
+]
 <% end %>
 }
