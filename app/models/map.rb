@@ -60,24 +60,4 @@ class Map < ActiveRecord::Base
     
   end
     
-  # Writes map metadata in a given RDF serialization format
-  def to_rdf(format, options = {})
-    
-    httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
-    
-    # building the graph
-    baseURI = RDF::URI.new(httpURI)
-    graph = RDF::Graph.new
-    graph << [baseURI, RDF::DC.title, self.title] unless self.title.nil?
-    graph << [baseURI, RDF::DC.subject, self.subject] unless self.subject.nil?
-    
-    # Serializing RDF graph to string
-    RDF::Writer.for(format.to_sym).buffer do |writer| 
-      writer.prefix :dcterms, RDF::URI('http://purl.org/dc/terms/')
-      writer << graph
-    end
-    
-  end
-  
-
 end
