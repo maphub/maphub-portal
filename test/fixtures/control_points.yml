@@ -1,19 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  label: MyString
-  geonames_uri: MyString
-  lat: 
-  lng: 
-  x: 
-  y: 
+cp1:
+    geonames_id: 1
+    lat: 80
+    lng: -180
+    x: 0
+    y: 0
 
-two:
-  name: MyString
-  label: MyString
-  geonames_uri: MyString
-  lat: 
-  lng: 
-  x: 
-  y: 
+cp2:
+    geonames_id: 2
+    lat: 80
+    lng: 180
+    x: 1000
+    y: 0
+
+cp3:
+    geonames_id: 3
+    lat: -80
+    lng: 0
+    x: 500
+    y: 500
