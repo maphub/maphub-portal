@@ -3,10 +3,11 @@ class MapsController < ApplicationController
   # Show all maps
   def index
     @maps = Map.all
-    
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json {render :json => @map}
+      format.json # index.json.erb
+#		format.json { render :file => 'index.json.erb', :content_type => 'application/json' }
     end
   end
   
