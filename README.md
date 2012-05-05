@@ -1,3 +1,4 @@
+Test
 # Windows notes
 Doesn't work at all on Windows any more due to libv8 dependency which rubyracer (?) and less depend on. libv8 isn't available, and doesn't compile, on Windows. Ignoring it (which used to work with troublesome dependencies) prevents various things from working (like rails even starting up).
 
