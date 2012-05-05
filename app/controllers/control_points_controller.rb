@@ -27,15 +27,8 @@ class ControlPointsController < ApplicationController
   # GET /control_points/1
   # GET /control_points/1.xml
   def show
-    begin
-      @control_point = ControlPoint.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      #
-      # There are no control points for this map.
-      #
-      @control_point = []
-    end
-  
+    @control_point = ControlPoint.find(params[:id])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @control_point }
