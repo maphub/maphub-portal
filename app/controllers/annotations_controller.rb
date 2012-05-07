@@ -101,8 +101,9 @@ class AnnotationsController < ApplicationController
     end
   end
   
+  # GET /annotations/tags/:text
   def tags
-    # TODO: resolve tags through Annotation.find_tags
+    # resolve tags through Annotation.find_tags and return them right away
     render :json => Annotation.find_tags(params[:text])
   end
   

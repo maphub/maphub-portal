@@ -17,3 +17,4 @@
 //= require bootstrap
 
 //= require OpenLayers.js
+//= require doTimeout.js

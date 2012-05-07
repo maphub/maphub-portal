@@ -23,8 +23,19 @@ class Annotation < ActiveRecord::Base
   
   # Finds tags for given input text
   def self.find_tags(text)
-    # TODO implement lookup
-    text.to_json
+    
+    # TODO implement real lookup
+    tags = []
+    5.times do
+      r = rand(1000)
+      tag = {
+        dbpedia_uri: "dbpedia-uri-#{r}",
+        label: "label-#{r}"
+      }
+      tags << tag
+    end
+    
+    tags.to_json
   end
   
   # Writes annotation metadata in a given RDF serialization format

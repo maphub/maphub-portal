@@ -1,6 +1,10 @@
 //= require OpenLayers
 
+// declare namespace
 MapHub = {}
+
+// ----------------------------------------------------------------------------
+
 MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, control_points_url, editable) {
   
   /* Callbacks for added / removed features */
@@ -127,6 +131,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
 }
 
+// ----------------------------------------------------------------------------
+
 MapHub.AnnotationView.prototype.initAutoComplete = function() {
   $('input#place-search').autocomplete({
       source: function( request, response ) {
@@ -171,6 +177,8 @@ MapHub.AnnotationView.prototype.initAutoComplete = function() {
     });
 }
 
+// ----------------------------------------------------------------------------
+
 /* Loads the annotations for this map via a JSON request */
 MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
   var wkt_parser = new OpenLayers.Format.WKT();
@@ -187,6 +195,8 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
   });
 }
 
+
+// ----------------------------------------------------------------------------
 
 MapHub.AnnotationTooltip = function(annotation) {
   this.div = document.createElement("div");
@@ -215,4 +225,39 @@ MapHub.AnnotationTooltip.prototype.hide = function() {
 
 MapHub.AnnotationTooltip.prototype.remove = function() {
   // TODO
+}
+
+// ----------------------------------------------------------------------------
+
+MapHub.TaggingView = function(callback_url) {
+  this.callback_url = callback_url;
+  var self = this;
+  
+  $("#annotation_body").keyup(function(){
+    $(this).doTimeout('annotation-timeout', 500, function(){
+      // fetch tags for this text
+      var text = encodeURI($("#annotation_body").val());
+      if(!(text === "")) {
+        var request = self.callback_url + text;
+        $.getJSON(request, function(data) {
+          $("#modal-annotation-tags").empty();
+          $.each(data, function(key, val) {
+            // returned tags are in val, with their attributes
+            var dbpedia_uri = val.dbpedia_uri;
+            var label = val.label;
+            
+            // create new tag element
+            var tag = $( document.createElement('span') );
+            
+            // set style (label)
+            tag.attr("class", "label");
+            tag.text(label);
+            
+            // append to the form
+            tag.appendTo($("#modal-annotation-tags"));
+          });
+        }); 
+      }
+    });
+  });
 }

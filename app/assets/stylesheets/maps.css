@@ -30,3 +30,8 @@
 .map-grid-image:hover {
   border: 2px solid #006699;
 }
+
+#modal-annotation-tags span.label {
+  float:left;
+  margin-right:5px;
+}
