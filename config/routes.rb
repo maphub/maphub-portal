@@ -22,9 +22,13 @@ MaphubPortal::Application.routes.draw do
   resources :annotations, :only => [:create, :update, :show]
   resources :control_points, :only => [:show]
   
+  # tag lookup for annotations
+  match 'annotations/tags/:text' => 'annotations#tags'
+  
   # default homepage
   root :to => "home#index"
   
+  # static content
   match "terms" => 'home#terms'
   match "contact" => 'home#contact'
   match "help" => 'home#help'
