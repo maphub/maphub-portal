@@ -1,0 +1,16 @@
+<tr>
+  <td width="190px">
+    <%= render :partial => "users/badge", :locals => { :user => annotation.user } %>
+  </td>
+  <td>
+    <p><%= simple_format h annotation.body %></p>
+    <div class="tags-list">
+    <% annotation.tags.each do |t| %>
+      <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
+    <% end %>
+    </div>
+  </td> 
+  <td width="70px">
+    <small><%= time_ago_in_words(annotation.updated_at) %> ago</small>
+  </td>
+</tr>

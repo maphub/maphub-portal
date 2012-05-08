@@ -247,14 +247,32 @@ MapHub.TaggingView = function(callback_url) {
             var label = val.label;
             
             // create new tag element
-            var tag = $( document.createElement('span') );
-            
+            var tag = $(document.createElement('span'));
             // set style (label)
             tag.attr("class", "label");
             tag.text(label);
-            
+            // link it
+            var linked_tag = $(document.createElement('a'));
+            linked_tag.attr("href", dbpedia_uri);
+            linked_tag.attr("target", "_blank");
+            linked_tag.html(tag)
             // append to the form
-            tag.appendTo($("#modal-annotation-tags"));
+            linked_tag.appendTo($("#modal-annotation-tags"));
+            
+            // create hidden input fields
+            var input_label = $(document.createElement('input'));
+            input_label.attr("type", "text");
+            input_label.css("display", "none");
+            input_label.attr("name", "label[]");
+            input_label.attr("value", label);
+            input_label.appendTo($("#modal-annotation-tags"));
+            
+            var input_dbpedia_uri = $(document.createElement('input'));
+            input_dbpedia_uri.attr("type", "text");
+            input_dbpedia_uri.css("display", "none");
+            input_dbpedia_uri.attr("name", "dbpedia_uri[]");
+            input_dbpedia_uri.attr("value", dbpedia_uri);
+            input_dbpedia_uri.appendTo($("#modal-annotation-tags"));
           });
         }); 
       }

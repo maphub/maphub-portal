@@ -58,6 +58,9 @@ class AnnotationsController < ApplicationController
   # POST /annotations.xml
   def create
     @annotation = Annotation.new(params[:annotation])
+    params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
+      tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
+    end
     @annotation.user = current_user
     @annotation.map = Map.find(params[:map_id])
     @map = @annotation.map # we have to do this so the form is correctly displayed on error
