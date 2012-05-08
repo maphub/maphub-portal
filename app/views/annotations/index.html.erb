@@ -11,6 +11,7 @@
   <thead>
   <tr>
     <th width="800px">Body</th>
+    <th>Tags</th>
     <th>Created</th>
     <% if @parent.class.name == "Map" %>
       <th>User</th>
@@ -23,6 +24,13 @@
 <% @annotations.each do |annotation| %>
   <tr>
     <td><%= simple_format h annotation.body %></td>
+    <td>
+      <div class="tags-list">
+      <% annotation.tags.each do |t| %>
+        <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
+      <% end %>
+      </div>
+    </td>
     <td><%= annotation.created_at %></td>
     <% if @parent.class.name == "Map" %>
       <td><%= link_to annotation.user.username, annotation.user %></td>
