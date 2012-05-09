@@ -9,8 +9,16 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   /* Callbacks for added / removed features */
   function featureSelected(evt) {
-    evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
-    evt.feature.tooltip.show(0,0);
+    if (!evt.feature.tooltip) {
+      evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
+    }
+    // get the screen coordinates
+    var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
+    var coords = this.map.getPixelFromLonLat(lonlat);
+    evt.feature.tooltip.show(
+      coords.x,
+      coords.y
+    );
   }
   
   function featureUnselected(evt) {
@@ -198,31 +206,37 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
 
 // ----------------------------------------------------------------------------
 
+// Creates a new tooltip div for that annotation and appends it to
+// the #annotation-selected div
 MapHub.AnnotationTooltip = function(annotation) {
-  this.div = document.createElement("div");
-  this.div.setAttribute("class", "annotation-tooltip");
+  this.div = $(document.createElement("div"));
+  this.div.attr("class", "annotation-tooltip");
+  this.div.attr("id", "annotation-tooltip-" + annotation.id);
   
-  this.div_body = document.createElement("div");
-  this.div_body.setAttribute("class", "annotation-tooltip-body");
-  this.div_body.innerHTML = annotation.body;
-  this.div.appendChild(this.div_body); 
+  this.div_body = $(document.createElement("div"));
+  this.div_body.attr("class", "annotation-tooltip-body");
   
-  document.getElementById("annotation-selected").appendChild(this.div);
+  this.div_body.html(annotation.body);
+  
+  this.div_body.appendTo(this.div);
+  this.div.prependTo("#annotation-selected");
+  
+  this.div.hide();
 }
 
-MapHub.AnnotationTooltip.OFFSET_X = 0;
-MapHub.AnnotationTooltip.OFFSET_Y = 0;
-
+// simply show an annotation tooltip if it already exists
 MapHub.AnnotationTooltip.prototype.show = function(x, y) {
-  this.div.style.left = x + MapHub.AnnotationTooltip.OFFSET_X + "px";
-  this.div.style.top = y + MapHub.AnnotationTooltip.OFFSET_Y + "px";
-  this.div.style.display = "block";
+  this.div.css("left", x);
+  this.div.css("top", y);
+  this.div.show();
 }
 
+// hide an annotation tooltip if it already exists
 MapHub.AnnotationTooltip.prototype.hide = function() {
-  this.div.style.display = "none";
+  this.div.hide();
 }
 
+// completely remove an annotation tooltip from the DOM
 MapHub.AnnotationTooltip.prototype.remove = function() {
   // TODO
 }
@@ -236,7 +250,7 @@ MapHub.TaggingView = function(callback_url) {
   $("#annotation_body").keyup(function(){
     $(this).doTimeout('annotation-timeout', 500, function(){
       // fetch tags for this text
-      var text = encodeURI($("#annotation_body").val());
+      var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
       if(!(text === "")) {
         var request = self.callback_url + text;
         $.getJSON(request, function(data) {

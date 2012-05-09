@@ -32,7 +32,9 @@ MaphubPortal::Application.routes.draw do
   match "help" => 'home#help'
   
   # tag lookup for annotations
-  match 'annotations/tags/:text' => 'annotations#tags', :as => "annotation_tag_find"
+  # the last constraint allows any characters in the parameter, see http://stackoverflow.com/questions/5369654
+  # this is somehow interfering with other routes - dunno why though
+  match 'annotations/tags/:text' => 'annotations#tags', :as => "annotation_tag_find" #, :constraints => { :text => /[^\/]+/ }
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

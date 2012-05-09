@@ -20,6 +20,7 @@ $(document).ready(function(){
 
 <!-- TODO: check if Fluid Layout (http://twitter.github.com/bootstrap/scaffolding.html) suits better for this view-->
 <div class="row">
+  <div id="annotation-selected">
   <p id="notice"><%= notice %></p>
   
   <div class="span12">
@@ -58,20 +59,12 @@ $(document).ready(function(){
         
         <hr>
         
-        <div class="well"> 
-            <h4>Current Annotation</h4>
-             <div id="annotation-selected">
-               <!-- annotations will be appended here through JS -->
-             </div>
-        </div>
-        
-        <hr>
-        
       </div>
       
     </div>
   </div>
-</div>
+  </div> <!-- end: #annotation-selected -->
+</div> <!-- end: .row -->
 
 <div class="row">
   <div class="span8">
