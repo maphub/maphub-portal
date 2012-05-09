@@ -63,6 +63,7 @@ class ControlPointsController < ApplicationController
     @control_point.user = current_user
     @control_point.map = Map.find(params[:map_id])
     @map = @control_point.map # we have to do this so the form is correctly displayed on error
+    @map.updated_at = Time.now
     respond_to do |format|
       if @control_point.save
         format.html { redirect_to(@control_point, :notice => 'Control Point was successfully created.') }
