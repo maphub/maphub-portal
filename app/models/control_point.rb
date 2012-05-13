@@ -3,7 +3,13 @@ class ControlPoint < ActiveRecord::Base
   belongs_to :user, :counter_cache => true
   belongs_to :map
   
+  after_create :update_map
+  
   validates_presence_of :geonames_id, :lat, :lng, :x, :y
+    
+  def update_map
+    map.update_attribute(:updated_at, Time.now)
+  end
   
   
   # The Geonames RDF URI for this place

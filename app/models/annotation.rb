@@ -5,15 +5,16 @@ class Annotation < ActiveRecord::Base
   
   has_many :tags
   
+  after_create :update_map
+  
   validates_presence_of :body, :map
 
   def truncated_body
-    if body.length > 30
-      truncated_body = body[0, 30] + "..."
-    else
-      truncated_body = body
-    end
-    truncated_body
+    (body.length > 30) ? body[0, 30] + "..." : body
+  end
+  
+  def update_map
+    map.update_attribute(:updated_at, Time.now)
   end
   
   def segment
