@@ -209,16 +209,28 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
 // Creates a new tooltip div for that annotation and appends it to
 // the #annotation-selected div
 MapHub.AnnotationTooltip = function(annotation) {
+  // outer tooltip container
   this.div = $(document.createElement("div"));
   this.div.attr("class", "annotation-tooltip");
   this.div.attr("id", "annotation-tooltip-" + annotation.id);
   
+  // body
   this.div_body = $(document.createElement("div"));
   this.div_body.attr("class", "annotation-tooltip-body");
+  // copy from JSON?
+  // this.div_body.html(annotation.body);
+  // copy from existing table row instead:
+  this.div_body.html($("#annotation-" + annotation.id + " .annotation-body").html());
   
-  this.div_body.html(annotation.body);
+  // user
+  this.div_user = $(document.createElement("div"));
+  this.div_user.attr("class", "annotation-tooltip-user single-user-container");
+  // copy from existing table row instead:
+  this.div_user.html($("#annotation-" + annotation.id + " .single-user-container").html());
   
+  // append everything
   this.div_body.appendTo(this.div);
+  this.div_user.appendTo(this.div);
   this.div.prependTo("#annotation-selected");
   
   this.div.hide();

@@ -15,7 +15,7 @@ class AnnotationsController < ApplicationController
     else
       @annotations = Annotation.all
     end
-    
+    #@annotations.each { |a| a.body = simple_format a.body }
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @annotations }
