@@ -33,15 +33,32 @@ $(document).ready(function(){
       
       <!-- Right column-->
       <div class="span4">
+      
+
+          <!-- <div id="panel" class="olControlEditingToolbar"></div> -->
+          
+        <div id="control-toggle">
+          <div class="btn-group" data-toggle="buttons-radio">
+            <button class="btn btn-primary" id="control-toggle-navigate" value="none">Navigate</button>
+            <button class="btn" id="control-toggle-annotation">Annotate</button>
+            <button class="btn" id="control-toggle-control-point" value="point">Control Point</button>
+          </div>
+          <br>
+          <div id="control-toggle-annotation-types" class="btn-group" data-toggle="buttons-radio">
+            <button class="btn" value="polygon">Polygon</button>
+            <button class="btn" value="line">Line</button>
+            <button class="btn" value="box">Box</button>
+          </div>
+        </div>
         
-        <h4>Map Metadata</h4>
-        <p><strong>Title: </strong><%= @map.title %></p>
-        <p><strong>Subject: </strong><%= @map.subject %></p>
-        <p><strong>Author: </strong><%= @map.author %></p>
-        <p><strong>Date: </strong><%= @map.date %></p>
-        
+        <br>
+        <h4><%= @map.title %></h4><br>
+        <strong>Subject: </strong><%= @map.subject %><br>
+        <strong>Author: </strong><%= @map.author %><br>
+        <strong>Date: </strong><%= @map.date %>
+
         <hr>
-        
+
         <h4>Geography</h4>
         <p>
           <strong>Control Points:</strong>
@@ -51,14 +68,7 @@ $(document).ready(function(){
               (show all)
             </a>
         </p>
-        
-        <hr>
-        
-        <h4>User Annotations</h4>
-        <p>Some general infos; top contributor for this map, tagcloud, etc.</p>
-        
-        <hr>
-        
+
       </div>
       
     </div>

@@ -131,8 +131,58 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   select.activate();
 
   /* Allow creation of features */
-  if (editable)
-    this.map.addControl(new OpenLayers.Control.EditingToolbar(this.editLayer));
+  // http://stackoverflow.com/questions/10572005/
+  if (editable) {
+    
+    // this.map.addControl(new OpenLayers.Control.EditingToolbar(
+    //   this.editLayer, {
+    //    div: document.getElementById("panel") 
+    //   }));
+    
+    this.drawControls = {
+        point: new OpenLayers.Control.DrawFeature(this.editLayer,
+            OpenLayers.Handler.Point),
+        line: new OpenLayers.Control.DrawFeature(this.editLayer,
+            OpenLayers.Handler.Path),
+        polygon: new OpenLayers.Control.DrawFeature(this.editLayer,
+            OpenLayers.Handler.Polygon),
+        box: new OpenLayers.Control.DrawFeature(this.editLayer,
+            OpenLayers.Handler.RegularPolygon, {
+                handlerOptions: {
+                    sides: 4,
+                    irregular: true
+                }
+            }
+        )
+    };
+    
+    for(var key in this.drawControls) {
+        this.map.addControl(this.drawControls[key]);
+    }
+    
+    // hide the types for an annotation
+    $("#control-toggle-annotation-types").hide();
+    $("#control-toggle-annotation").click(function() {
+      $("#control-toggle-annotation-types").slideToggle();
+    });
+    $("#control-toggle-control-point, #control-toggle-navigate").click(function(){
+      $("#control-toggle-annotation-types").slideUp();
+    });
+    
+    var self=this;
+    $("#control-toggle button").click(function(){
+      for(key in self.drawControls) {
+          var control = self.drawControls[key];
+          if(this.value == key) {
+              control.activate();
+          } else {
+              control.deactivate();
+          }
+      }      
+    });
+    
+  }
+
 
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
@@ -260,7 +310,7 @@ MapHub.TaggingView = function(callback_url) {
   var self = this;
   
   $("#annotation_body").keyup(function(){
-    $(this).doTimeout('annotation-timeout', 500, function(){
+    $(this).doTimeout('annotation-timeout', 1000, function(){
       // fetch tags for this text
       var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
       if(!(text === "")) {
