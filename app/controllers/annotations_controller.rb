@@ -15,11 +15,17 @@ class AnnotationsController < ApplicationController
     else
       @annotations = Annotation.all
     end
-    #@annotations.each { |a| a.body = simple_format a.body }
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @annotations }
-      format.json { render :json => @annotations }
+      format.json { 
+        # prepare for JSON view, we need to sanitize
+        @annotations.each do |a| 
+          a.body = ERB::Util::html_escape a.body
+          a.body = ActionController::Base.helpers.simple_format a.body
+        end
+        render :json => @annotations 
+      }
     end
   end
 

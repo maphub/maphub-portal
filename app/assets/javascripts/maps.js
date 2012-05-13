@@ -218,9 +218,9 @@ MapHub.AnnotationTooltip = function(annotation) {
   this.div_body = $(document.createElement("div"));
   this.div_body.attr("class", "annotation-tooltip-body");
   // copy from JSON?
-  // this.div_body.html(annotation.body);
+  this.div_body.html(annotation.body);
   // copy from existing table row instead:
-  this.div_body.html($("#annotation-" + annotation.id + " .annotation-body").html());
+  //this.div_body.html($("#annotation-" + annotation.id + " .annotation-body").html());
   
   // user
   this.div_user = $(document.createElement("div"));
