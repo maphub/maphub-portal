@@ -15,7 +15,7 @@ MaphubPortal::Application.routes.draw do
     resources :control_points, :only => [:show, :index]
   end
   
-  resources :maps, :only => [:show, :index] do 
+  resources :maps, :only => [:show, :index, :update] do 
     resources :annotations, :only => [:create, :index, :update]
     resources :control_points, :only => [:create, :index, :update]
   end

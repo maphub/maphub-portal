@@ -63,6 +63,10 @@ ActiveRecord::Schema.define(:version => 20120507161941) do
     t.integer  "height"
     t.string   "author"
     t.string   "date"
+    t.float    "sw_lat"
+    t.float    "sw_lng"
+    t.float    "ne_lat"
+    t.float    "ne_lng"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
