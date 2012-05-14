@@ -27,4 +27,8 @@
 <% end %>
 ]
 <% end %>
+<% if @map.sw_lat %>,"sw_lat": "<%= @map.sw_lat -%>"<% end -%>
+<% if @map.sw_lng %>,"sw_lng": "<%= @map.sw_lng -%>"<% end -%>
+<% if @map.ne_lat %>,"ne_lat": "<%= @map.ne_lat -%>"<% end -%>
+<% if @map.ne_lng %>,"ne_lng": "<%= @map.ne_lng -%>"<% end -%>
 }
