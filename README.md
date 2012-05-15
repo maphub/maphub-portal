@@ -37,6 +37,15 @@ Create the database and add some test data
 
 Finally, open <http://localhost:3000/> in your browser and log into MapHub with `user1@example.com` and `test`. 
 
+## Deploying on Port 80
+
+The server can run on port 80, but in most cases it needs root permission to do so. Execute the following to have the server run in background:
+
+    nohup rvmsudo rails server -port 80 &>/dev/null 2> /dev/null &
+    
+Then, bring the process to the foreground with `fg` and type in the password.
+
+Now we need to suspend the process and get it to the background again. Press `Ctrl-Z` and enter `bg`.
 
 ## Updating the database / Reindexing data
 
