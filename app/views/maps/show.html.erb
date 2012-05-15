@@ -33,10 +33,8 @@ $(document).ready(function(){
       
       <!-- Right column-->
       <div class="span4">
-      
-
-          <!-- <div id="panel" class="olControlEditingToolbar"></div> -->
-          
+        
+        <% if user_signed_in? %>
         <div id="control-toggle">
           <div class="btn-group" data-toggle="buttons-radio">
             <button class="btn btn-primary" id="control-toggle-navigate" value="none">Navigate</button>
@@ -50,7 +48,9 @@ $(document).ready(function(){
             <button class="btn" value="box">Box</button>
           </div>
         </div>
-        
+        <% else %>
+        <div class="alert alert-info">You need to be <%= link_to 'signed in', new_user_session_path %> in order to create annotations and control points for this map!</div>
+        <% end %>
         <br>
         <h4><%= @map.title %></h4><br>
         <strong>Subject: </strong><%= @map.subject %><br>
