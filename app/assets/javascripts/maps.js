@@ -411,7 +411,13 @@ MapHub.TaggingView = function(callback_url) {
       
       if(!(text === "")) {
         // main request sent to controller
-        var request = self.callback_url + text + "/" + boundary_bottom + "/" + boundary_left + "/" + boundary_right + "/" + boundary_top;
+        var request = self.callback_url           + "?"
+          + "text="             + text            + "&" 
+          + "boundary_bottom="  + boundary_bottom + "&"
+          + "boundary_left="    + boundary_left   + "&"
+          + "boundary_right="   + boundary_right  + "&"
+          + "boundary_top="     + boundary_top
+          ;
         
         // fetch tags for this text
         $.getJSON(request, function(data) {

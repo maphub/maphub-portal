@@ -35,7 +35,7 @@ MaphubPortal::Application.routes.draw do
   # the last constraint allows any characters in the parameter, see http://stackoverflow.com/questions/5369654
   # this is somehow interfering with other routes - dunno why though
   # boundary coordinates are optional here
-  match '/maps/:map/annotations/tags/:text(/:bottom/:left/:right/:top)' => 'annotations#tags', :as => "annotation_tag_find"
+  match '/maps/:map/annotations/tags' => 'annotations#tags', :as => "annotation_tag_find"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

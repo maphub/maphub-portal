@@ -13,7 +13,7 @@ function initOpenLayers() {
 $(document).ready(function(){
   initOpenLayers();
   window.tagging_view = new MapHub.TaggingView(
-    "<%= annotation_tag_find_url(:map => @map.id, :text => "") %>"
+    "<%= annotation_tag_find_url(:map => @map.id) %>"
   );
 });
 <% end %>
