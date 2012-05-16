@@ -6,6 +6,7 @@ class CreateControlPoints < ActiveRecord::Migration
       t.integer :map_id
       t.string :geonames_id
       t.string :geonames_label
+      t.string :wkt_data
       t.decimal :lat, :precision => 12, :scale => 10
       t.decimal :lng, :precision => 12, :scale => 10
       t.decimal :x

@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 <!-- TODO: check if Fluid Layout (http://twitter.github.com/bootstrap/scaffolding.html) suits better for this view-->
 <div class="row">
-  <div id="annotation-selected">
+  <div id="tooltip-selected">
   <p id="notice"><%= notice %></p>
   
   <div class="span12">
@@ -129,6 +129,7 @@ $(document).ready(function(){
       <%= f.text_field :lng, :style => "display:none" %>
       <%= f.text_field :x, :style => "display:none" %>
       <%= f.text_field :y, :style => "display:none" %>
+      <%= f.text_field :wkt_data, :style => "display:none" %>
       <div class="modal-body">
         <p>Enter a location that belongs to this point: <br/>
         <input name="place-search" id="place-search" size="40"/></p>

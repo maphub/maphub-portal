@@ -9,16 +9,18 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   /* Callbacks for added / removed features */
   function featureSelected(evt) {
+    var class_name = evt.feature.geometry.CLASS_NAME;
     if (!evt.feature.tooltip) {
-      evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
+      if (class_name == "OpenLayers.Geometry.Point") {
+        evt.feature.tooltip = new MapHub.ControlPointTooltip(evt.feature.control_point);
+      } else {
+        evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
+      }
     }
     // get the screen coordinates
     var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
     var coords = this.map.getPixelFromLonLat(lonlat);
-    evt.feature.tooltip.show(
-      coords.x,
-      coords.y
-    );
+    evt.feature.tooltip.show(coords.x, coords.y);
   }
   
   function featureUnselected(evt) {
@@ -61,7 +63,10 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   }
   
   function controlPointAdded(evt) {
+    var wkt_data = evt.feature.geometry.toString();
+
     // set x/y in form
+    $("#control_point_wkt_data").attr("value", wkt_data);
     $("#control_point_x").attr("value", evt.feature.geometry.x);
     $("#control_point_y").attr("value", evt.feature.geometry.y);
     
@@ -72,15 +77,16 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   }
   
   
-  this.zoomify_width = width;
-  this.zoomify_height = height;
-  this.zoomify_url = zoomify_url;
+  this.zoomify_width = width;       // pixel width ...
+  this.zoomify_height = height;     // ... and height of map
+  this.zoomify_url = zoomify_url;   // remote zoomify tileset
   
-  this.annotations_url = annotations_url;
-  this.control_points_url = control_points_url;
-  this.editable = editable;
-  this.features = [];
-  this.annotations = [];
+  this.annotations_url = annotations_url;         // JSON request URL for annotations
+  this.control_points_url = control_points_url;   // JSON request URL for control points
+  this.editable = editable;     // whether to show the control panel
+  this.features         = [];   // all features, regardless of type
+  this.annotations      = [];   // all annotations on this map
+  this.control_points   = [];   // all control points on this map
   
   /* The zoomify layer */
   this.baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", this.zoomify_url, 
@@ -94,6 +100,12 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
   this.annotationLayer.events.register("featureselected", this.annotationLayer, featureSelected);
   this.annotationLayer.events.register("featureunselected", this.annotationLayer, featureUnselected);
+
+  /* The control points layer */
+  this.controlPointsLayer = new OpenLayers.Layer.Vector( "Control Points" );
+  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, featureSelected);
+  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, featureUnselected);
+
 
   /* Display options */
   var options = {
@@ -110,10 +122,12 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addLayer(this.baseLayer);
   this.map.addLayer(this.editLayer);
   this.map.addLayer(this.annotationLayer);
+  this.map.addLayer(this.controlPointsLayer);
 
 
-  // remotely load already existing annotations via JSON
+  // remotely load already existing annotations and control points via JSON
   this.remoteLoadAnnotations();
+  this.remoteLoadControlPoints();
 
   // add autocomplete
   this.initAutoComplete();
@@ -124,23 +138,41 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
   this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 
-  /* Allow selection of features upon hovering */
-  var highlight = new OpenLayers.Control.SelectFeature(
+  /* Allow selection of annotations upon clicking */
+  var highlightAnnotation = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer], { 
       hover: true,
       highlightOnly: true
       }
   );
-  var select = new OpenLayers.Control.SelectFeature(
+  var selectAnnotation = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer], { 
       clickout: true,
       }
   );
-  this.map.addControl(highlight);
-  this.map.addControl(select);
-  highlight.activate();
-  select.activate();
+  this.map.addControl(highlightAnnotation);
+  this.map.addControl(selectAnnotation);
+  highlightAnnotation.activate();
+  selectAnnotation.activate();
+  
+  /* Allow selection of control points upon clicking */
+  var highlightControlPoint = new OpenLayers.Control.SelectFeature(
+    [this.controlPointsLayer], { 
+      hover: true,
+      highlightOnly: true
+      }
+  );
+  var selectControlPoint = new OpenLayers.Control.SelectFeature(
+    [this.controlPointsLayer], { 
+      clickout: true,
+      }
+  );
+  this.map.addControl(highlightControlPoint);
+  this.map.addControl(selectControlPoint);
+  highlightControlPoint.activate();
+  selectControlPoint.activate();
 
+  
   /* Allow creation of features */
   // http://stackoverflow.com/questions/10572005/
   if (editable) {
@@ -189,7 +221,6 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     });
     
   }
-  
   
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
@@ -260,11 +291,27 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
   });
 }
 
+/* Loads the annotations for this map via a JSON request */
+MapHub.AnnotationView.prototype.remoteLoadControlPoints = function() {
+  var wkt_parser = new OpenLayers.Format.WKT();
+  var self = this;
+  
+  $.getJSON(this.control_points_url, function(data) { 
+    $.each(data, function(key, val) {
+      var feature = wkt_parser.read(val.wkt_data);
+      feature.control_point = val;
+      self.features.push(feature);
+      self.control_points.push(val);
+    });
+    self.controlPointsLayer.addFeatures(self.features);
+  });
+}
+
+
 
 // ----------------------------------------------------------------------------
 
-// Creates a new tooltip div for that annotation and appends it to
-// the #annotation-selected div
+// Creates a new tooltip div for that annotation
 MapHub.AnnotationTooltip = function(annotation) {
   // outer tooltip container
   this.div = $(document.createElement("div"));
@@ -285,7 +332,7 @@ MapHub.AnnotationTooltip = function(annotation) {
   // append everything
   this.div_body.appendTo(this.div);
   this.div_user.appendTo(this.div);
-  this.div.prependTo("#annotation-selected");
+  this.div.prependTo("#tooltip-selected");
   
   this.div.hide();
 }
@@ -304,6 +351,45 @@ MapHub.AnnotationTooltip.prototype.hide = function() {
 
 // completely remove an annotation tooltip from the DOM
 MapHub.AnnotationTooltip.prototype.remove = function() {
+  // TODO, do we need this? might be slow
+}
+
+
+// ----------------------------------------------------------------------------
+
+// Creates a new tooltip div for that control point
+MapHub.ControlPointTooltip = function(control_point) {
+  // outer tooltip container
+  this.div = $(document.createElement("div"));
+  this.div.attr("class", "control-point-tooltip");
+  this.div.attr("id", "control-point-tooltip-" + control_point.id);
+  
+  // body
+  this.div_body = $(document.createElement("div"));
+  this.div_body.attr("class", "control-point-tooltip-body");
+  this.div_body.html(control_point.geonames_label);
+  
+  // append everything
+  this.div_body.appendTo(this.div);
+  this.div.prependTo("#tooltip-selected");
+  
+  this.div.hide();
+}
+
+// simply show a control point tooltip if it already exists
+MapHub.ControlPointTooltip.prototype.show = function(x, y) {
+  this.div.css("left", x);
+  this.div.css("top", y);
+  this.div.show();
+}
+
+// hide a control point tooltip if it already exists
+MapHub.ControlPointTooltip.prototype.hide = function() {
+  this.div.hide();
+}
+
+// completely remove a control point tooltip from the DOM
+MapHub.ControlPointTooltip.prototype.remove = function() {
   // TODO, do we need this? might be slow
 }
 
