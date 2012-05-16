@@ -64,8 +64,10 @@ class AnnotationsController < ApplicationController
   # POST /annotations.xml
   def create
     @annotation = Annotation.new(params[:annotation])
-    params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
-      tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
+    unless params[:label].nil?
+      params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
+        tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
+      end
     end
     @annotation.user = current_user
     @annotation.map = Map.find(params[:map_id])
@@ -110,10 +112,19 @@ class AnnotationsController < ApplicationController
     end
   end
   
-  # GET /annotations/tags/:text
+  # GET /maps/1/annotations/tags/:text/(optional boundaries)
   def tags
-    # resolve tags through Annotation.find_tags and return them right away
-    render :json => Annotation.find_tags(params[:text])
+    # empty return container for tags
+    ret = []
+    
+    # 1) find tags from the raw text
+    ret = ret.concat Annotation.find_tags_from_text(params[:text])
+    
+    # 2) find tags from the boundaries of the annotation, relative to this map
+    ret = ret.concat Annotation.find_tags_from_boundary(Map.find(params[:map]), params[:bottom], params[:left], params[:right], params[:top])
+    
+    # return JSON of tags
+    render :json => ret.to_json
   end
   
   private

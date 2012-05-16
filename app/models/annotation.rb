@@ -23,8 +23,7 @@ class Annotation < ActiveRecord::Base
   end
   
   # Finds tags for given input text
-  def self.find_tags(text)
-    
+  def self.find_tags_from_text(text)
     # TODO implement real lookup
     tags = []
     5.times do
@@ -35,8 +34,17 @@ class Annotation < ActiveRecord::Base
       }
       tags << tag
     end
+    tags
+  end
+  
+  # Finds matching nearby Wikipedia articles for the location
+  def self.find_tags_from_boundary(map, bottom, left, right, top)
+    # if there are more than two control points, we have the boundaries for this map
+    # if map.control_points_count > 2
     
-    tags.to_json
+    # TODO implement GeoNames Lookup
+    
+    # end
   end
   
   # Writes annotation metadata in a given RDF serialization format

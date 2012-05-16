@@ -36,13 +36,23 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     }
   }
   
+  // This function is called when an annotation was drawn
   function annotationAdded(evt) {    
-    var wkt_data = evt.feature.geometry.toString();
+    var wkt_data        = evt.feature.geometry.toString();
+    var boundary_bottom = evt.feature.geometry.bounds.bottom;
+    var boundary_left   = evt.feature.geometry.bounds.left;
+    var boundary_right  = evt.feature.geometry.bounds.right;
+    var boundary_top    = evt.feature.geometry.bounds.top;
     var self = this;
     
-    // reinitialize title and body, and copy WKT data
+    // reinitialize title and body, and copy WKT data as well as bounds
     $("#annotation_body").attr("value", "Add your annotation here!");
     $("#annotation_wkt_data").attr("value", wkt_data);
+    
+    $("#annotation_boundary_bottom").attr("value", boundary_bottom);
+    $("#annotation_boundary_left").attr("value", boundary_left);
+    $("#annotation_boundary_right").attr("value", boundary_right);
+    $("#annotation_boundary_top").attr("value", boundary_top);
     
     // show the popup
     $("#modal-annotation").modal();
@@ -60,6 +70,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     $("#modal-control-point").modal();
     $("#place-search").focus();
   }
+  
   
   this.zoomify_width = width;
   this.zoomify_height = height;
@@ -133,12 +144,6 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   /* Allow creation of features */
   // http://stackoverflow.com/questions/10572005/
   if (editable) {
-    
-    // this.map.addControl(new OpenLayers.Control.EditingToolbar(
-    //   this.editLayer, {
-    //    div: document.getElementById("panel") 
-    //   }));
-    
     this.drawControls = {
         point: new OpenLayers.Control.DrawFeature(this.editLayer,
             OpenLayers.Handler.Point),
@@ -156,6 +161,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
         )
     };
     
+    // add controls to map
     for(var key in this.drawControls) {
         this.map.addControl(this.drawControls[key]);
     }
@@ -169,6 +175,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
       $("#control-toggle-annotation-types").slideUp();
     });
     
+    // check for toggled types
     var self=this;
     $("#control-toggle button").click(function(){
       for(key in self.drawControls) {
@@ -182,8 +189,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     });
     
   }
-
-
+  
+  
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
   
@@ -267,10 +274,7 @@ MapHub.AnnotationTooltip = function(annotation) {
   // body
   this.div_body = $(document.createElement("div"));
   this.div_body.attr("class", "annotation-tooltip-body");
-  // copy from JSON?
   this.div_body.html(annotation.body);
-  // copy from existing table row instead:
-  //this.div_body.html($("#annotation-" + annotation.id + " .annotation-body").html());
   
   // user
   this.div_user = $(document.createElement("div"));
@@ -300,7 +304,7 @@ MapHub.AnnotationTooltip.prototype.hide = function() {
 
 // completely remove an annotation tooltip from the DOM
 MapHub.AnnotationTooltip.prototype.remove = function() {
-  // TODO
+  // TODO, do we need this? might be slow
 }
 
 // ----------------------------------------------------------------------------
@@ -311,10 +315,19 @@ MapHub.TaggingView = function(callback_url) {
   
   $("#annotation_body").keyup(function(){
     $(this).doTimeout('annotation-timeout', 1000, function(){
-      // fetch tags for this text
+      
+      // get text and boundary values to submit to controller
       var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
+      var boundary_bottom = $("#annotation_boundary_bottom").val();
+      var boundary_left   = $("#annotation_boundary_left").val();
+      var boundary_right  = $("#annotation_boundary_right").val();
+      var boundary_top    = $("#annotation_boundary_top").val();
+      
       if(!(text === "")) {
-        var request = self.callback_url + text;
+        // main request sent to controller
+        var request = self.callback_url + text + "/" + boundary_bottom + "/" + boundary_left + "/" + boundary_right + "/" + boundary_top;
+        
+        // fetch tags for this text
         $.getJSON(request, function(data) {
           $("#modal-annotation-tags").empty();
           $.each(data, function(key, val) {

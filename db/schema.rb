@@ -37,8 +37,16 @@ ActiveRecord::Schema.define(:version => 20120507161941) do
     t.integer  "user_id"
     t.integer  "map_id"
     t.string   "wkt_data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "boundary_bottom"
+    t.integer  "boundary_left"
+    t.integer  "boundary_right"
+    t.integer  "boundary_top"
+    t.float    "sw_lat"
+    t.float    "sw_lng"
+    t.float    "ne_lat"
+    t.float    "ne_lng"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "control_points", :force => true do |t|

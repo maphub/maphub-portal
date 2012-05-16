@@ -13,7 +13,7 @@ function initOpenLayers() {
 $(document).ready(function(){
   initOpenLayers();
   window.tagging_view = new MapHub.TaggingView(
-    "<%= annotation_tag_find_url('') %>"
+    "<%= annotation_tag_find_url(:map => @map.id, :text => "") %>"
   );
 });
 <% end %>
@@ -100,6 +100,10 @@ $(document).ready(function(){
         <%= f.text_area :body, :cols => 80, :rows => 10, :style => "width: 500px" %>
       </p>
       <%= f.text_field :wkt_data, :style => "display:none" %>
+      <%= f.text_field :boundary_bottom, :style => "display:none" %>
+      <%= f.text_field :boundary_left, :style => "display:none" %>
+      <%= f.text_field :boundary_right, :style => "display:none" %>
+      <%= f.text_field :boundary_top, :style => "display:none" %>
       <h4>Tags</h4>
       <div id="modal-annotation-tags" class="tags-list">
         <span id="no-tags"><em>Write some text to generate matching tags for this annotation &hellip;</em></span>
