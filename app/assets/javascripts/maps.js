@@ -27,6 +27,18 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     evt.feature.tooltip.hide();
   }
   
+  
+  function controlPointSelected(evt) {
+    evt.feature.tooltip = new MapHub.ControlPointTooltip(evt.feature.control_point);
+    var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
+    var coords = this.map.getPixelFromLonLat(lonlat);
+    evt.feature.tooltip.show(coords.x, coords.y);
+  }
+  
+  function controlPointUnselected(evt) {
+    evt.feature.tooltip.hide();
+  }
+  
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
     // is this a Control Point or an Annotation?
@@ -76,17 +88,19 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     $("#place-search").focus();
   }
   
+  /* ============================================================================== */
   
-  this.zoomify_width = width;       // pixel width ...
-  this.zoomify_height = height;     // ... and height of map
-  this.zoomify_url = zoomify_url;   // remote zoomify tileset
+  this.zoomify_width  = width;        // pixel width ...
+  this.zoomify_height = height;       // ... and height of map
+  this.zoomify_url    = zoomify_url;  // remote zoomify tileset
   
-  this.annotations_url = annotations_url;         // JSON request URL for annotations
-  this.control_points_url = control_points_url;   // JSON request URL for control points
-  this.editable = editable;     // whether to show the control panel
-  this.features         = [];   // all features, regardless of type
-  this.annotations      = [];   // all annotations on this map
-  this.control_points   = [];   // all control points on this map
+  this.annotations_url          = annotations_url;      // JSON request URL for annotations
+  this.control_points_url       = control_points_url;   // JSON request URL for control points
+  this.editable                 = editable;             // whether to show the control panel
+  this.features_annotations     = [];   // all annotation features
+  this.features_control_points  = [];   // all control point features
+  this.annotations              = [];   // all annotations on this map
+  this.control_points           = [];   // all control points on this map
   
   /* The zoomify layer */
   this.baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", this.zoomify_url, 
@@ -134,6 +148,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
   this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
 
+  // ================================================================================
+
   /* Allow selection of annotations upon clicking */
   var highlightAnnotation = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer], { 
@@ -165,13 +181,15 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
       clickout: true
       }
   );
-  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, featureSelected);
-  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, featureUnselected);
+  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, controlPointSelected);
+  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, controlPointUnselected);
   this.map.addControl(highlightControlPoint);
   this.map.addControl(selectControlPoint);
-  highlightControlPoint.activate();
-  selectControlPoint.activate();
-
+  // highlightControlPoint.activate();
+  // selectControlPoint.activate();
+  // TODO this breaks everything else - why?
+  
+  // ================================================================================
   
   /* Allow creation of features */
   // http://stackoverflow.com/questions/10572005/
@@ -221,6 +239,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     });
     
   }
+  
+  // ================================================================================
   
   this.map.setBaseLayer(this.baseLayer);
   this.map.zoomToMaxExtent();
@@ -284,10 +304,10 @@ MapHub.AnnotationView.prototype.remoteLoadAnnotations = function() {
     $.each(data, function(key, val) {
       var feature = wkt_parser.read(val.wkt_data);
       feature.annotation = val;
-      self.features.push(feature);
+      self.features_annotations.push(feature);
       self.annotations.push(val);
     });
-    self.annotationLayer.addFeatures(self.features);
+    self.annotationLayer.addFeatures(self.features_annotations);
   });
 }
 
@@ -300,10 +320,10 @@ MapHub.AnnotationView.prototype.remoteLoadControlPoints = function() {
     $.each(data, function(key, val) {
       var feature = wkt_parser.read(val.wkt_data);
       feature.control_point = val;
-      self.features.push(feature);
+      self.features_control_points.push(feature);
       self.control_points.push(val);
     });
-    self.controlPointsLayer.addFeatures(self.features);
+    self.controlPointsLayer.addFeatures(self.features_control_points);
   });
 }
 
@@ -349,11 +369,6 @@ MapHub.AnnotationTooltip.prototype.hide = function() {
   this.div.hide();
 }
 
-// completely remove an annotation tooltip from the DOM
-MapHub.AnnotationTooltip.prototype.remove = function() {
-  // TODO, do we need this? might be slow
-}
-
 
 // ----------------------------------------------------------------------------
 
@@ -386,11 +401,6 @@ MapHub.ControlPointTooltip.prototype.show = function(x, y) {
 // hide a control point tooltip if it already exists
 MapHub.ControlPointTooltip.prototype.hide = function() {
   this.div.hide();
-}
-
-// completely remove a control point tooltip from the DOM
-MapHub.ControlPointTooltip.prototype.remove = function() {
-  // TODO, do we need this? might be slow
 }
 
 // ----------------------------------------------------------------------------
