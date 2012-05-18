@@ -27,18 +27,6 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     evt.feature.tooltip.hide();
   }
   
-  
-  function controlPointSelected(evt) {
-    evt.feature.tooltip = new MapHub.ControlPointTooltip(evt.feature.control_point);
-    var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
-    var coords = this.map.getPixelFromLonLat(lonlat);
-    evt.feature.tooltip.show(coords.x, coords.y);
-  }
-  
-  function controlPointUnselected(evt) {
-    evt.feature.tooltip.hide();
-  }
-  
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
     // is this a Control Point or an Annotation?
@@ -150,44 +138,24 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
 
   // ================================================================================
 
-  /* Allow selection of annotations upon clicking */
-  var highlightAnnotation = new OpenLayers.Control.SelectFeature(
-    [this.annotationLayer], { 
-      hover: true,
-      highlightOnly: true
+  var select = new OpenLayers.Control.SelectFeature(
+    [this.annotationLayer, this.controlPointsLayer], { 
+      hover: true
       }
   );
-  var selectAnnotation = new OpenLayers.Control.SelectFeature(
-    [this.annotationLayer], { 
-      clickout: true
-      }
-  );
-  this.annotationLayer.events.register("featureselected", this.annotationLayer, featureSelected);
-  this.annotationLayer.events.register("featureunselected", this.annotationLayer, featureUnselected);
-  this.map.addControl(highlightAnnotation);
-  this.map.addControl(selectAnnotation);
-  highlightAnnotation.activate();
-  selectAnnotation.activate();
+  this.map.addControl(select);
+  select.activate();
   
-  /* Allow selection of control points upon clicking */
-  var highlightControlPoint = new OpenLayers.Control.SelectFeature(
-    [this.controlPointsLayer], { 
-      hover: true,
-      highlightOnly: true
-      }
-  );
-  var selectControlPoint = new OpenLayers.Control.SelectFeature(
-    [this.controlPointsLayer], { 
-      clickout: true
-      }
-  );
-  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, controlPointSelected);
-  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, controlPointUnselected);
-  this.map.addControl(highlightControlPoint);
-  this.map.addControl(selectControlPoint);
-  // highlightControlPoint.activate();
-  // selectControlPoint.activate();
-  // TODO this breaks everything else - why?
+  this.annotationLayer.events.on({
+    "featureselected": featureSelected,
+    "featureunselected": featureUnselected
+  });
+  
+  this.controlPointsLayer.events.on({
+    "featureselected": featureSelected,
+    "featureunselected": featureUnselected
+  });
+  
   
   // ================================================================================
   
