@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'net/http'
+
 class Annotation < ActiveRecord::Base
 
   belongs_to :user, :counter_cache => true
@@ -39,12 +42,48 @@ class Annotation < ActiveRecord::Base
   
   # Finds matching nearby Wikipedia articles for the location
   def self.find_tags_from_boundary(map, bottom, left, right, top)
+    
     # if there are more than two control points, we have the boundaries for this map
-    # if map.control_points_count > 2
+    if map.control_points.count > 2
+      
+      # get the edges of the boundary box
+      north, west = ControlPoint.compute_latlng_from_known_xy(top, left, map.control_points.first(3))
+      south, east = ControlPoint.compute_latlng_from_known_xy(bottom, right, map.control_points.first(3))
+      
+      logger.debug "Boundaries:     #{bottom} #{left} #{right} #{top}"
+      logger.debug "New boundaries: #{south.to_f.round(2)} #{west.round(2)} #{east.round(2)} #{north.round(2)}"
+      
+      params = { north: north, west: west, east: east, south: south }
+
+      # compose query
+      query = "http://api.geonames.org/wikipediaBoundingBoxJSON?"
+      params.each do |key, val|
+        query << "#{key}=#{val.to_f}&"
+      end
+      
+      # add username, we kinda need this, TODO: get our own?
+      query << "maxRows=5&"
+      query << "username=slhck"
+      logger.debug "#{query.inspect}"
+      
+      # parse response
+      url = URI.parse(query)
+      response = Net::HTTP.get_response(url)
+      if response.code == "200"
+        response = ActiveSupport::JSON.decode response.body
+        tags = []
+        response["geonames"].each do |entry|
+          tag = {
+            label: entry["title"].gsub(" ", "-").downcase,
+            dbpedia_uri: entry["wikipediaUrl"]
+          }
+          tags << tag
+        end
+      end
+      
+    end
     
-    # TODO implement GeoNames Lookup
-    
-    # end
+    tags
   end
   
   # Writes annotation metadata in a given RDF serialization format

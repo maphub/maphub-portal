@@ -98,14 +98,10 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
 
   /* The annotation layer */
   this.annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
-  this.annotationLayer.events.register("featureselected", this.annotationLayer, featureSelected);
-  this.annotationLayer.events.register("featureunselected", this.annotationLayer, featureUnselected);
-
+  
   /* The control points layer */
   this.controlPointsLayer = new OpenLayers.Layer.Vector( "Control Points" );
-  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, featureSelected);
-  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, featureUnselected);
-
+  
 
   /* Display options */
   var options = {
@@ -147,9 +143,11 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   );
   var selectAnnotation = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer], { 
-      clickout: true,
+      clickout: true
       }
   );
+  this.annotationLayer.events.register("featureselected", this.annotationLayer, featureSelected);
+  this.annotationLayer.events.register("featureunselected", this.annotationLayer, featureUnselected);
   this.map.addControl(highlightAnnotation);
   this.map.addControl(selectAnnotation);
   highlightAnnotation.activate();
@@ -164,9 +162,11 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   );
   var selectControlPoint = new OpenLayers.Control.SelectFeature(
     [this.controlPointsLayer], { 
-      clickout: true,
+      clickout: true
       }
   );
+  this.controlPointsLayer.events.register("featureselected", this.controlPointsLayer, featureSelected);
+  this.controlPointsLayer.events.register("featureunselected", this.controlPointsLayer, featureUnselected);
   this.map.addControl(highlightControlPoint);
   this.map.addControl(selectControlPoint);
   highlightControlPoint.activate();
