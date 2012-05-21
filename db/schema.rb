@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507161941) do
+ActiveRecord::Schema.define(:version => 20120521073652) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -47,6 +47,21 @@ ActiveRecord::Schema.define(:version => 20120507161941) do
     t.float    "ne_lng"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "boundaries", :force => true do |t|
+    t.integer  "boundary_object_id"
+    t.string   "boundary_object_type"
+    t.decimal  "ne_x",                 :null => false
+    t.decimal  "ne_y",                 :null => false
+    t.decimal  "sw_x",                 :null => false
+    t.decimal  "sw_y",                 :null => false
+    t.decimal  "ne_lat"
+    t.decimal  "ne_lng"
+    t.decimal  "sw_lat"
+    t.decimal  "sw_lng"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "control_points", :force => true do |t|

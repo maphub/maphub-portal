@@ -6,6 +6,9 @@ class Annotation < ActiveRecord::Base
   belongs_to :user, :counter_cache => true
   belongs_to :map
   
+  has_one :boundary, :as => :boundary_object
+  accepts_nested_attributes_for :boundary
+  
   has_many :tags
   
   after_create :update_map
@@ -41,16 +44,16 @@ class Annotation < ActiveRecord::Base
   end
   
   # Finds matching nearby Wikipedia articles for the location
-  def self.find_tags_from_boundary(map, bottom, left, right, top)
-    
+  def self.find_tags_from_boundary(map, boundary)
+    tags = []
     # if there are more than two control points, we have the boundaries for this map
     if map.control_points.count > 2
       
       # get the edges of the boundary box
-      north, west = ControlPoint.compute_latlng_from_known_xy(top, left, map.control_points.first(3))
-      south, east = ControlPoint.compute_latlng_from_known_xy(bottom, right, map.control_points.first(3))
+      north, east = ControlPoint.compute_latlng_from_known_xy(boundary.ne_y, boundary.ne_x, map.control_points.first(3))
+      south, west = ControlPoint.compute_latlng_from_known_xy(boundary.sw_y, boundary.sw_x, map.control_points.first(3))
       
-      logger.debug "Boundaries:     #{bottom} #{left} #{right} #{top}"
+      logger.debug "Boundaries:     #{boundary.inspect}"
       logger.debug "New boundaries: #{south.to_f.round(2)} #{west.round(2)} #{east.round(2)} #{north.round(2)}"
       
       params = { north: north, west: west, east: east, south: south }
@@ -71,7 +74,6 @@ class Annotation < ActiveRecord::Base
       response = Net::HTTP.get_response(url)
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
-        tags = []
         response["geonames"].each do |entry|
           tag = {
             label: entry["title"].gsub(" ", "-").downcase,

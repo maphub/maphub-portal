@@ -41,20 +41,15 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   // This function is called when an annotation was drawn
   function annotationAdded(evt) {    
     var wkt_data        = evt.feature.geometry.toString();
-    var boundary_bottom = evt.feature.geometry.bounds.bottom;
-    var boundary_left   = evt.feature.geometry.bounds.left;
-    var boundary_right  = evt.feature.geometry.bounds.right;
-    var boundary_top    = evt.feature.geometry.bounds.top;
-    var self = this;
     
     // reinitialize title and body, and copy WKT data as well as bounds
     $("#annotation_body").attr("value", "Add your annotation here!");
     $("#annotation_wkt_data").attr("value", wkt_data);
     
-    $("#annotation_boundary_bottom").attr("value", boundary_bottom);
-    $("#annotation_boundary_left").attr("value", boundary_left);
-    $("#annotation_boundary_right").attr("value", boundary_right);
-    $("#annotation_boundary_top").attr("value", boundary_top);
+    $("#annotation_boundary_attributes_ne_x").attr("value", evt.feature.geometry.bounds.right);
+    $("#annotation_boundary_attributes_ne_y").attr("value", evt.feature.geometry.bounds.top);
+    $("#annotation_boundary_attributes_sw_x").attr("value", evt.feature.geometry.bounds.left);
+    $("#annotation_boundary_attributes_sw_y").attr("value", evt.feature.geometry.bounds.bottom);
     
     // show the popup
     $("#modal-annotation").modal();
@@ -380,21 +375,16 @@ MapHub.TaggingView = function(callback_url) {
   $("#annotation_body").keyup(function(){
     $(this).doTimeout('annotation-timeout', 1000, function(){
       
-      // get text and boundary values to submit to controller
+      // get text to submit to controller
       var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
-      var boundary_bottom = $("#annotation_boundary_bottom").val();
-      var boundary_left   = $("#annotation_boundary_left").val();
-      var boundary_right  = $("#annotation_boundary_right").val();
-      var boundary_top    = $("#annotation_boundary_top").val();
-      
       if(!(text === "")) {
         // main request sent to controller
         var request = self.callback_url           + "?"
           + "text="             + text            + "&" 
-          + "boundary_bottom="  + boundary_bottom + "&"
-          + "boundary_left="    + boundary_left   + "&"
-          + "boundary_right="   + boundary_right  + "&"
-          + "boundary_top="     + boundary_top
+          + "annotation[boundary][ne_x]="   + $("#annotation_boundary_attributes_ne_x").val()  + "&"
+          + "annotation[boundary][ne_y]="   + $("#annotation_boundary_attributes_ne_y").val()  + "&"
+          + "annotation[boundary][sw_x]="   + $("#annotation_boundary_attributes_sw_x").val()  + "&"
+          + "annotation[boundary][sw_y]="   + $("#annotation_boundary_attributes_sw_y").val()
           ;
         
         // fetch tags for this text

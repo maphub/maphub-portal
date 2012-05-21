@@ -94,16 +94,20 @@ $(document).ready(function(){
       <a class="close" data-dismiss="modal">×</a>
       <h3>Add Annotation</h3>
   </div>
-  <%= form_for([@map, Annotation.new], :remote => true ) do |f| %>
+  <% @annotation = Annotation.new %>
+  <%= form_for([@map, @annotation], :remote => true ) do |f| %>
     <div class="modal-body">
       <p>
         <%= f.text_area :body, :cols => 80, :rows => 10, :style => "width: 500px" %>
       </p>
       <%= f.text_field :wkt_data, :style => "display:none" %>
-      <%= f.text_field :boundary_bottom, :style => "display:none" %>
-      <%= f.text_field :boundary_left, :style => "display:none" %>
-      <%= f.text_field :boundary_right, :style => "display:none" %>
-      <%= f.text_field :boundary_top, :style => "display:none" %>
+      <% @boundary = @annotation.build_boundary %>
+      <%= f.fields_for :boundary do |b| %>
+        <%= b.text_field :ne_x, :style => "display:none" %>
+        <%= b.text_field :ne_y, :style => "display:none" %>
+        <%= b.text_field :sw_x, :style => "display:none" %>
+        <%= b.text_field :sw_y, :style => "display:none" %>
+      <% end %>
       <h4>Tags</h4>
       <div id="modal-annotation-tags" class="tags-list">
         <span id="no-tags"><em>Write some text to generate matching tags for this annotation &hellip;</em></span>

@@ -12,6 +12,7 @@ class CreateMaps < ActiveRecord::Migration
       t.float :sw_lng
       t.float :ne_lat
       t.float :ne_lng
+      
       t.timestamps
     end
   end

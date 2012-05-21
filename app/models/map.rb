@@ -10,6 +10,9 @@ class Map < ActiveRecord::Base
   has_many :annotations
   has_many :control_points
   
+  has_one :boundary, :as => :boundary_object
+  accepts_nested_attributes_for :boundary
+  
   before_validation :extract_dimensions
   validates_presence_of :identifier, :title, :width, :height
   

@@ -63,15 +63,23 @@ class AnnotationsController < ApplicationController
   # POST /annotations
   # POST /annotations.xml
   def create
+    #@boundary = Boundary.new(params[:boundary])
+    
+    
     @annotation = Annotation.new(params[:annotation])
+    
+    # create tags from plain form fields
     unless params[:label].nil?
       params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
         tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
       end
     end
+    
+    # associate user and map
     @annotation.user = current_user
     @annotation.map = Map.find(params[:map_id])
     @map = @annotation.map # we have to do this so the form is correctly displayed on error
+    
     respond_to do |format|
       if @annotation.save
         format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
@@ -112,16 +120,15 @@ class AnnotationsController < ApplicationController
     end
   end
   
-  # GET /maps/1/annotations/tags/:text/(optional boundaries)
+  # GET /maps/1/annotations/tags?text=text&(optional boundaries)
   def tags
-    # empty return container for tags
-    ret = []
-    
     # 1) find tags from the raw text
-    ret = ret.concat Annotation.find_tags_from_text(params[:text])
+    ret = Annotation.find_tags_from_text(params[:text])
     
     # 2) find tags from the boundaries of the annotation, relative to this map
-    ret = ret.concat Annotation.find_tags_from_boundary(Map.find(params[:map]), params[:boundary_bottom], params[:boundary_left], params[:boundary_right], params[:boundary_top])
+    map = Map.find(params[:map])
+    boundary = Boundary.new(params[:annotation]["boundary"])
+    ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
     
     # return JSON of tags
     render :json => ret.to_json
