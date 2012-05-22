@@ -9,6 +9,9 @@ $("#modal-control-point").modal('hide');
 //   $("#modal-control-point-confirm").modal('hide');
 // });
 
+$("#viewer").empty();
+initOpenLayers();
+
 // update the CP count in the view
 $.getJSON(window.annotation_view.control_points_url, function(data) { 
   var count = 0;

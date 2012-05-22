@@ -85,19 +85,66 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.annotations              = [];   // all annotations on this map
   this.control_points           = [];   // all control points on this map
   
+  // ================================================================================
+  
+  var annotationStyleMap = new OpenLayers.StyleMap({
+    'default': new OpenLayers.Style({
+      'strokeColor': "#cc4400",
+      'fillOpacity': "0.4",
+      'fillColor': "#cc4400"
+    }),
+    'select': new OpenLayers.Style({
+      'strokeColor': "#ff0000",
+    }),
+    'temporary': new OpenLayers.Style({
+      'strokeColor': "#005580",
+      'fillColor': "#00A9FF",
+      'fillOpacity': "0.4",
+    })
+  });
+  
+  var controlPointStyleMap = new OpenLayers.StyleMap({
+    'default': new OpenLayers.Style({
+      'externalGraphic': "/assets/openlayers/pin.png",
+      'graphicWidth': '15',
+      'graphicWidth': '25',
+      'graphicXOffset': -13,
+      'graphicYOffset': -25
+    }),
+    'select': new OpenLayers.Style({
+      'externalGraphic': "/assets/openlayers/pin.png",
+      'graphicWidth': '15',
+      'graphicWidth': '25',
+      'graphicXOffset': -13,
+      'graphicYOffset': -25
+    }),
+    'temporary': new OpenLayers.Style({
+      'externalGraphic': "/assets/openlayers/pin.png",
+      'graphicWidth': '15',
+      'graphicWidth': '25',
+      'graphicXOffset': -13,
+      'graphicYOffset': -25
+    })
+  });
+  
+  // ================================================================================
+  
   /* The zoomify layer */
   this.baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", this.zoomify_url, 
       new OpenLayers.Size( this.zoomify_width, this.zoomify_height ) );
 
   /* The editing controls layer */
-  this.editLayer = new OpenLayers.Layer.Vector( "Editable" );
+  this.editLayer = new OpenLayers.Layer.Vector( "Editable", { styleMap: annotationStyleMap });
   this.editLayer.events.register("featureadded", this.editLayer, featureAdded);
+  
+  this.controlPointEditLayer = new OpenLayers.Layer.Vector( "Control Point Editable", { styleMap: controlPointStyleMap });
+  this.controlPointEditLayer.events.register("featureadded", this.controlPointEditLayer, featureAdded);
 
   /* The annotation layer */
-  this.annotationLayer = new OpenLayers.Layer.Vector( "Annotations" );
+  this.annotationLayer = new OpenLayers.Layer.Vector("Annotations", { styleMap: annotationStyleMap });
   
   /* The control points layer */
-  this.controlPointsLayer = new OpenLayers.Layer.Vector( "Control Points" );
+  this.controlPointsLayer = new OpenLayers.Layer.Vector( "Control Points", { styleMap: controlPointStyleMap } );
   
 
   /* Display options */
@@ -114,6 +161,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   // add all layers to the map
   this.map.addLayer(this.baseLayer);
   this.map.addLayer(this.editLayer);
+  this.map.addLayer(this.controlPointEditLayer);
   this.map.addLayer(this.annotationLayer);
   this.map.addLayer(this.controlPointsLayer);
 
@@ -130,12 +178,13 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.MousePosition());
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
   this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
-
+  
   // ================================================================================
 
   var select = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer, this.controlPointsLayer], { 
-      hover: true
+      hover: true,
+      renderIntent: "temporary"
       }
   );
   this.map.addControl(select);
@@ -158,7 +207,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   // http://stackoverflow.com/questions/10572005/
   if (editable) {
     this.drawControls = {
-        point: new OpenLayers.Control.DrawFeature(this.editLayer,
+        point: new OpenLayers.Control.DrawFeature(this.controlPointEditLayer,
             OpenLayers.Handler.Point),
         line: new OpenLayers.Control.DrawFeature(this.editLayer,
             OpenLayers.Handler.Path),
