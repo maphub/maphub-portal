@@ -17,8 +17,8 @@ class ControlPoint < ActiveRecord::Base
     "http://sws.geonames.org/#{self.geonames_id}/"
   end
   
-  def fragment_uri
-    self.map.raw_image_uri + "#xywh=#{self.x.to_i},#{self.y.to_i},1,1"
+  def fragment
+    "xywh=#{self.x.to_i},#{self.y.to_i},1,1"
   end
   
   
@@ -118,6 +118,8 @@ class ControlPoint < ActiveRecord::Base
   # Writes annotation metadata in a given RDF serialization format
   def to_rdf(format, options = {})
     
+    # TODO: type of tagging
+    
     httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
     
     # Defining the custom vocabulary # TODO: move this to separate lib
@@ -134,6 +136,8 @@ class ControlPoint < ActiveRecord::Base
     baseURI = RDF::URI.new(httpURI)
     graph = RDF::Graph.new
     graph << [baseURI, RDF.type, oa.Annotation]
+    graph << [baseURI, RDF.type, oax.Tagging]
+    graph << [baseURI, RDF.type, maphub.GeoReference]
     unless self.created_at.nil?
       graph << [
         baseURI,
@@ -146,8 +150,6 @@ class ControlPoint < ActiveRecord::Base
         oa.generated, 
         RDF::Literal.new(self.updated_at, :datatype => RDF::XSD::dateTime)]
     end
-    graph << [baseURI, oa.hasMotivation, oax.Tagging]
-    graph << [baseURI, RDF.type, maphub.GeoReference]
     graph << [baseURI, oa.generator, RDF::URI("http://www.maphub.info")]
     
     # Adding user and provenance data
@@ -159,11 +161,23 @@ class ControlPoint < ActiveRecord::Base
 
     
     # Adding the body
-    graph << [baseURI, oax.hasSemanticTag, RDF::URI(self.geonames_uri)]
-    
+    unless self.geonames_uri.nil?
+      graph << [baseURI, oax.hasSemanticTag, RDF::URI(self.geonames_uri)]      
+    end
+
     # Adding the target
-    graph << [baseURI, oa.hasTarget, RDF::URI(self.fragment_uri)]
-    graph << [RDF::URI(self.fragment_uri), oa.hasSource, self.map.raw_image_uri]
+    specific_target_uuid = UUIDTools::UUID.timestamp_create().to_s
+    specific_target = RDF::URI.new(specific_target_uuid)
+    graph << [baseURI, oa.hasTarget, specific_target]
+    graph << [specific_target, RDF.type, oa.SpecificResource]
+    graph << [specific_target, oa.hasSource, self.map.raw_image_uri]
+    
+    # the Point selector
+    point_selector_uuid = UUIDTools::UUID.timestamp_create().to_s
+    point_selector_node = RDF::URI.new(point_selector_uuid)
+    graph << [specific_target, oa.hasSelector, point_selector_node]
+    graph << [point_selector_node, RDF.type, oa.FragmentSelector]
+    graph << [point_selector_node, RDF.value, self.fragment]
     
     # Serializing RDF graph to string
     RDF::Writer.for(format.to_sym).buffer do |writer|
@@ -177,6 +191,5 @@ class ControlPoint < ActiveRecord::Base
     end
     
   end
-
   
 end
