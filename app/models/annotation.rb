@@ -145,13 +145,22 @@ class Annotation < ActiveRecord::Base
       graph << [specific_target, RDF.type, oa.SpecificResource]
       
       # the SVG selector
-      selector_uuid = UUIDTools::UUID.timestamp_create().to_s
-      selector_node = RDF::URI.new(selector_uuid)
-      graph << [specific_target, oa.hasSelector, selector_node]
-      graph << [selector_node, RDF.type, ct.ContentAsText]
-      graph << [selector_node, RDF::DC.format, "image/svg"]
-      graph << [selector_node, ct.chars, self.segment.to_svg(self.map.width, 
-        self.map.height)]
+      svg_selector_uuid = UUIDTools::UUID.timestamp_create().to_s
+      svg_selector_node = RDF::URI.new(svg_selector_uuid)
+      graph << [specific_target, oa.hasSelector, svg_selector_node]
+      graph << [svg_selector_node, RDF.type, ct.ContentAsText]
+      graph << [svg_selector_node, RDF::DC.format, "image/svg"]
+      graph << [svg_selector_node,
+                  ct.chars,
+                  self.segment.to_svg(self.map.width, self.map.height)]
+      
+      # the WKT selector
+      wkt_selector_uuid = UUIDTools::UUID.timestamp_create().to_s
+      wkt_selector_node = RDF::URI.new(wkt_selector_uuid)
+      graph << [specific_target, oa.hasSelector, wkt_selector_node]
+      graph << [wkt_selector_node, RDF.type, ct.ContentAsText]
+      graph << [wkt_selector_node, RDF::DC.format, "application/wkt"]
+      graph << [wkt_selector_node, ct.chars, self.wkt_data]
 
       # the target source
       graph << [specific_target, oa.hasSource, self.map.raw_image_uri]
@@ -189,14 +198,10 @@ class Segment
   end
   
   def to_svg(width, height)
+    # TODO: add namespace
     %{
     <?xml version="1.0" standalone="no"?>
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
-      "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-      <svg width="#{width}px" height="#{height}px"
-         xmlns="http://www.w3.org/2000/svg" version="1.1">
          #{svg_shape}
-      </svg>
     }
   end
 
@@ -247,7 +252,7 @@ class Linestring < Segment
   end
     
   def svg_shape
-    %{<polyline 
+    %{<polyline xmlns="http://www.w3.org/2000/svg"
               points="#{to_s}" />
     }
   end
@@ -269,7 +274,7 @@ class Polygon < Linestring
   end
 
   def svg_shape
-    %{<polygon 
+    %{<polygon xmlns="http://www.w3.org/2000/svg"
               points="#{to_s}" />
     }
   end
