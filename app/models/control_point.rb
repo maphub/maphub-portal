@@ -131,6 +131,10 @@ class ControlPoint < ActiveRecord::Base
     maphub = RDF::Vocabulary.new(maphub_uri)
     foaf_uri = RDF::URI('http://xmlns.com/foaf/spec/')
     foaf = RDF::Vocabulary.new(foaf_uri)
+    dcterms_uri = RDF::URI('http://purl.org/dc/dcmitype/')
+    dcterms = RDF::Vocabulary.new(dcterms_uri)
+    dc_uri = RDF::URI('http://purl.org/dc/elements/1.1/')
+    dc = RDF::Vocabulary.new(dc_uri)
     
     # Building the annotation graph
     baseURI = RDF::URI.new(httpURI)
@@ -170,7 +174,12 @@ class ControlPoint < ActiveRecord::Base
     specific_target = RDF::URI.new(specific_target_uuid)
     graph << [baseURI, oa.hasTarget, specific_target]
     graph << [specific_target, RDF.type, oa.SpecificResource]
-    graph << [specific_target, oa.hasSource, self.map.raw_image_uri]
+    source_node = RDF::URI.new(self.map.raw_image_uri)
+    graph << [specific_target, oa.hasSource, source_node]
+    
+    # Source details
+    graph << [source_node, RDF.type, dcterms.StillImage]
+    graph << [source_node, dc.format, "image/jp2"]
     
     # the Point selector
     point_selector_uuid = UUIDTools::UUID.timestamp_create().to_s
@@ -187,6 +196,8 @@ class ControlPoint < ActiveRecord::Base
       writer.prefix :rdf, RDF::URI(RDF.to_uri)
       writer.prefix :maphub, maphub_uri
       writer.prefix :foaf, foaf_uri
+      writer.prefix :dcterms, dcterms_uri
+      writer.prefix :dc, dc_uri
       writer << graph
     end
     
