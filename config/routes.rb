@@ -20,8 +20,8 @@ MaphubPortal::Application.routes.draw do
     resources :control_points, :only => [:create, :index, :update]
   end
   
-  resources :annotations, :only => [:create, :update, :show]
-  resources :control_points, :only => [:show]
+  resources :annotations, :only => [:index, :create, :update, :show]
+  resources :control_points, :only => [:index, :show]
   
   # default homepage
   root :to => "home#index"
