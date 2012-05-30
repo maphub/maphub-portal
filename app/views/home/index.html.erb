@@ -12,16 +12,16 @@
     
 <div class="row">
     <div class="span4">
-      <h2>Top Contributors <small>show all</small></h2>
-      Render partial here
+      <h2>Top Contributors</h2>
+      <%= render :partial => "users/top_contributors" %>
     </div>
     <div class="span4">
-      <h2>Recent Annotations <small>show all</small></h2>
-      Render partial here
+      <h2>Recent Annotations <small><%= link_to "show all", annotations_url %></small></h2>
+      <%= render :partial => "annotations/recent" %>
     </div>
     <div class="span4">
-      <h2>Recent Georeferences <small>show all</small></h2>
-      Render partial here
+      <h2>Recent Control Points <small><%= link_to "show all", control_points_url %></small></h2>
+      <%= render :partial => "control_points/recent" %>
     </div>
 </div>
     

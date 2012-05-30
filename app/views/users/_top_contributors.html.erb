@@ -1,0 +1,9 @@
+<%
+users = User.find(:all, :order => 'annotations_count').reverse
+%>
+<ul>
+<% for user in users %>  
+  <% break if user.annotations_count.nil? %>
+  <li><%= link_to user.username, user %>, <%= pluralize(user.annotations_count, "annotation") %></li>
+<% end %>
+</ul>

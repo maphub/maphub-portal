@@ -20,6 +20,9 @@
       <th>User</th>
     <% elsif @parent.class.name == "User" %>
       <th>Map</th>
+    <% else %>
+      <th>User</th>
+      <th>Map</th>
     <% end %>
   </tr>
 </thead>
@@ -35,6 +38,9 @@
     <% if @parent.class.name == "Map" %>
       <td><%= link_to control_point.user.username, control_point.user %></td>
     <% elsif @parent.class.name == "User" %>
+      <td><%= link_to control_point.map.title, control_point.map %></td>
+    <% else %>
+      <td><%= link_to control_point.user.username, control_point.user %></td>
       <td><%= link_to control_point.map.title, control_point.map %></td>
     <% end %>
   </tr>
