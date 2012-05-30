@@ -148,9 +148,11 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
 
   /* Display options */
+  var bounds = new OpenLayers.Bounds(0, 0, this.zoomify_width, this.zoomify_height)
   var options = {
       controls: [], 
-      maxExtent: new OpenLayers.Bounds(0, 0, this.zoomify_width, this.zoomify_height),
+      maxExtent: bounds,
+      restrictedExtent: bounds,
       maxResolution: Math.pow(2, this.baseLayer.numberOfTiers-1),
       numZoomLevels: this.baseLayer.numberOfTiers,
       units: 'pixels'

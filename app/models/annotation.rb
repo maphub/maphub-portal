@@ -49,12 +49,23 @@ class Annotation < ActiveRecord::Base
     # if there are more than two control points, we have the boundaries for this map
     if map.control_points.count > 2
       
-      # get the edges of the boundary box
-      north, east = ControlPoint.compute_latlng_from_known_xy(boundary.ne_y, boundary.ne_x, map.control_points.first(3))
-      south, west = ControlPoint.compute_latlng_from_known_xy(boundary.sw_y, boundary.sw_x, map.control_points.first(3))
+      cp = map.control_points.first(3)  # => TODO, maybe don't just blindly take the first three ones?
       
-      logger.debug "Boundaries:     #{boundary.inspect}"
-      logger.debug "New boundaries: #{south.to_f.round(2)} #{west.round(2)} #{east.round(2)} #{north.round(2)}"
+      # get the edges of the boundary box
+      north, east = ControlPoint.compute_latlng_from_known_xy(boundary.ne_x, boundary.ne_y, cp)
+      south, west = ControlPoint.compute_latlng_from_known_xy(boundary.sw_x, boundary.sw_y, cp)
+      
+      # logger.debug "Boundaries:"
+      # logger.debug " N #{boundary.ne_y}"
+      # logger.debug " E #{boundary.ne_x}"
+      # logger.debug " S #{boundary.sw_y}"
+      # logger.debug " W #{boundary.sw_x}"
+      # 
+      # logger.debug "New boundaries:"
+      # logger.debug " N #{north}"
+      # logger.debug " E #{east}"
+      # logger.debug " S #{south}"
+      # logger.debug " W #{west}"
       
       params = { north: north, west: west, east: east, south: south }
 
@@ -68,8 +79,9 @@ class Annotation < ActiveRecord::Base
       query << "maxRows=5&"
       query << "username=slhck"
       logger.debug "#{query.inspect}"
-      
+            
       # parse response
+      begin
       url = URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
@@ -82,7 +94,9 @@ class Annotation < ActiveRecord::Base
           tags << tag
         end
       end
-      
+      rescue Error => e
+        logger.warn("Failed to fetch tags for query #{query}")
+      end
     end
     
     tags
