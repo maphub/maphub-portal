@@ -25,6 +25,10 @@ MaphubPortal::Application.routes.draw do
   
   # default homepage
   root :to => "home#index"
+
+  # search controller
+  match 'search' => 'home#search'
+  match 'search/:q' => 'home#search'
   
   # static content
   match "terms" => 'home#terms'

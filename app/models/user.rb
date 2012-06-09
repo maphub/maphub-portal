@@ -10,11 +10,9 @@ class User < ActiveRecord::Base
   # Default scope (inactive users are filtered out)
   default_scope :conditions => {:deleted_at => nil}
   
-   # Unique attributes
-  validates_uniqueness_of :username, :email
-  
-  # User name length restrictions
+  # Validation
   validates_length_of :username, :in => 2..30
+  validates_uniqueness_of :username, :email
   
   # Hooks
   after_create :send_sign_up_notification

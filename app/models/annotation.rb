@@ -2,19 +2,26 @@ require 'open-uri'
 require 'net/http'
 
 class Annotation < ActiveRecord::Base
-
-  belongs_to :user, :counter_cache => true
-  belongs_to :map
   
-  has_one :boundary, :as => :boundary_object
-  accepts_nested_attributes_for :boundary
+  # Validation
+  validates_presence_of :body, :map
   
-  has_many :tags
-  
+  # Hooks
   after_create :update_map
   
-  validates_presence_of :body, :map
-
+  # Model associations
+  belongs_to :user, :counter_cache => true
+  belongs_to :map
+  has_one :boundary, :as => :boundary_object
+  accepts_nested_attributes_for :boundary
+  has_many :tags
+  
+  # Search
+  searchable do
+    text :body, :boost => 2.0
+  end
+  
+  
   def truncated_body
     (body.length > 30) ? body[0, 30] + "..." : body
   end

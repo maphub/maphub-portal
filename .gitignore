@@ -12,6 +12,11 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/*.log.lck
 /tmp
 
 .DS_Store
+
+# Sunspot Solr
+/solr/data
+/solr/pids

@@ -1,11 +1,14 @@
 class ControlPoint < ActiveRecord::Base
   
-  belongs_to :user, :counter_cache => true
-  belongs_to :map
+  # Validation
+  validates_presence_of :geonames_id, :lat, :lng, :x, :y
   
+  # Hooks
   after_create :update_map, :recalc_boundaries
   
-  validates_presence_of :geonames_id, :lat, :lng, :x, :y
+  # Model associations
+  belongs_to :user, :counter_cache => true
+  belongs_to :map
     
   def update_map
     map.update_attribute(:updated_at, Time.now)

@@ -23,6 +23,32 @@
 -->
     <!-- Le JS -->
     <%= javascript_include_tag "application" %>
+    
+    <!-- Search feature -->
+    <script type="text/javascript">
+      $(document).ready(function(){
+        <% if @q.nil? %>
+          var activeSearch = false;
+          var searchBoxDefault = "Search maphub...";  
+        <% else %>
+          var activeSearch = true;
+          var searchBoxDefault = "<%= @q %>";
+          
+        <% end %>
+
+        $("#searchbox").attr("value", searchBoxDefault);
+
+        // show/hide default text if needed
+        $("#searchbox").focus(function(){
+          if (($(this).attr("value") == searchBoxDefault) && (!activeSearch))
+            $(this).attr("value", "");
+        });
+        $("#searchbox").blur(function(){
+          if ($(this).attr("value") == "") 
+            $(this).attr("value", searchBoxDefault);
+        });
+      });
+    </script>
   </head>
   <body>
 
@@ -35,6 +61,9 @@
               <li class="<%= 'active' if params[:controller] == "maps" %>"><%= link_to "maps", maps_path  %></li>
               <li class="<%= 'active' if params[:controller] == "users" %>"><%= link_to "users", users_path  %></li>
             </ul>
+            <%= form_tag search_path, :method => 'get', :class => "navbar-search" do %>
+              <%= text_field_tag :q, params[:q], :id => "searchbox", :class => "search-qurey", :size => "40" %>
+            <% end %>
             <ul class="nav pull-right">
                 <% if not user_signed_in? %>
                     <li><%= link_to 'Log in', new_user_session_path %></li>

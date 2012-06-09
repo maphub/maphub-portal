@@ -1,5 +1,6 @@
 class Boundary < ActiveRecord::Base
   
+  # Model associations
   belongs_to :boundary_object, :polymorphic => true
   
   # updates map-based coordinates to real-world coordinates

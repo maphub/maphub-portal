@@ -7,15 +7,28 @@ require 'net/http'
 
 class Map < ActiveRecord::Base
   
+  # Hooks  
+  before_validation :extract_dimensions
+  after_create :create_boundary_object
+  
+  # Validation
+  validates_presence_of :identifier, :title, :width, :height
+  
+  # Model associations
   has_many :annotations
   has_many :control_points
-  
   has_one :boundary, :as => :boundary_object
   accepts_nested_attributes_for :boundary
   
-  before_validation :extract_dimensions
-  after_create :create_boundary_object
-  validates_presence_of :identifier, :title, :width, :height
+  # Search
+  searchable do 
+    text :title, :boost => 2.0
+    text :subject
+    string :author
+    string :identifier
+    integer :width
+    integer :height
+  end
   
   # creates an empty boundary object for the map after creation
   def create_boundary_object
@@ -61,7 +74,7 @@ class Map < ActiveRecord::Base
   
   # a truncated title
   def short_title
-    "#{self.title[0..30]}..."
+    (title.length > 30) ? title[0, 30] + "..." : title
   end
   
   # the number of control points

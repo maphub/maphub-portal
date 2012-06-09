@@ -13,6 +13,10 @@ gem 'acts_as_markup'
 gem 'linkeddata'
 gem 'uuidtools'
 
+gem 'sunspot_rails'
+gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
+gem 'progress_bar'
+
 gem 'twitter-bootstrap-rails'
 #, :git => "git://github.com/seyhunak/twitter-bootstrap-rails.git", :branch => "static"
 
