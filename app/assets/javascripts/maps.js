@@ -233,7 +233,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     // hide the types for an annotation
     $("#control-toggle-annotation-types").hide();
     $("#control-toggle-annotation").click(function() {
-      $("#control-toggle-annotation-types").slideToggle();
+      $("#control-toggle-annotation-types").slideDown();
     });
     $("#control-toggle-control-point, #control-toggle-navigate").click(function(){
       $("#control-toggle-annotation-types").slideUp();

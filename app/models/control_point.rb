@@ -3,7 +3,7 @@ class ControlPoint < ActiveRecord::Base
   belongs_to :user, :counter_cache => true
   belongs_to :map
   
-  after_create :update_map
+  after_create :update_map, :recalc_boundaries
   
   validates_presence_of :geonames_id, :lat, :lng, :x, :y
     
@@ -11,6 +11,15 @@ class ControlPoint < ActiveRecord::Base
     map.update_attribute(:updated_at, Time.now)
   end
   
+  # recalculates the edges of the map boundary into real-world coordinates
+  def recalc_boundaries
+    if map.control_points.count > 2
+      map.boundary.recalc
+      for annotation in map.annotations
+        annotation.boundary.recalc
+      end
+    end
+  end
   
   # The Geonames RDF URI for this place
   def geonames_uri

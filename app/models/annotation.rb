@@ -55,18 +55,6 @@ class Annotation < ActiveRecord::Base
       north, east = ControlPoint.compute_latlng_from_known_xy(boundary.ne_x, boundary.ne_y, cp)
       south, west = ControlPoint.compute_latlng_from_known_xy(boundary.sw_x, boundary.sw_y, cp)
       
-      # logger.debug "Boundaries:"
-      # logger.debug " N #{boundary.ne_y}"
-      # logger.debug " E #{boundary.ne_x}"
-      # logger.debug " S #{boundary.sw_y}"
-      # logger.debug " W #{boundary.sw_x}"
-      # 
-      # logger.debug "New boundaries:"
-      # logger.debug " N #{north}"
-      # logger.debug " E #{east}"
-      # logger.debug " S #{south}"
-      # logger.debug " W #{west}"
-      
       params = { north: north, west: west, east: east, south: south }
 
       # compose query

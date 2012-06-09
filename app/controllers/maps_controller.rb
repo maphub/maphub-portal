@@ -27,12 +27,14 @@ class MapsController < ApplicationController
   # PUT /maps/1.xml
   def update
     @map = Map.find(params[:id])
-    @map.update_attributes({
+    boundary = @map.boundary
+    boundary.update_attributes({
     	'ne_lat' => params['ne_lat'],
     	'ne_lng' => params['ne_lng'],
     	'sw_lat' => params['sw_lat'],
     	'sw_lng' => params['sw_lng']
     })
+    boundary.save
     redirect_to :action => 'index'
   end
 end

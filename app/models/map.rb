@@ -14,7 +14,18 @@ class Map < ActiveRecord::Base
   accepts_nested_attributes_for :boundary
   
   before_validation :extract_dimensions
+  after_create :create_boundary_object
   validates_presence_of :identifier, :title, :width, :height
+  
+  # creates an empty boundary object for the map after creation
+  def create_boundary_object
+    boundary = self.build_boundary
+    boundary.ne_x = self.width
+    boundary.ne_y = self.height
+    boundary.sw_x = 0
+    boundary.sw_y = 0
+    boundary.save
+  end
   
   # TODO: this should be in a central APP configuration file
   def map_base_uri
@@ -37,6 +48,7 @@ class Map < ActiveRecord::Base
     "#{self.tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
+  # the URI of the Google Maps overlay tileset
   def overlay_tileset_uri
     begin
       uri = "#{map_base_uri}/ts_google/#{self.identifier}/"
@@ -47,10 +59,12 @@ class Map < ActiveRecord::Base
     end
   end
   
+  # a truncated title
   def short_title
     "#{self.title[0..30]}..."
   end
   
+  # the number of control points
   def no_control_points
     self.control_points.count
   end
