@@ -1,6 +1,12 @@
 # About
 
-MapHub is a Web portal for annotating online historic maps. 
+MapHub is a Web portal for annotating online historic maps.
+
+## Prerequisites
+
+- Ruby 1.9.3
+- Ruby Gems
+- Java VM (for solr)
 
 ## Running Maphub in Development Mode
 
@@ -26,6 +32,10 @@ Update your gem tool with `gem update --system` and install the bundler gem with
     
     bundle install
     
+Now, start the Solr engine.
+
+    bundle exec rake sunspot:solr:start
+
 Then, run the Rails application, probably in a separate console window.
 
     rails server
@@ -52,3 +62,15 @@ Now we need to suspend the process and get it to the background again. Press `Ct
 If you made some changes to the database or first create the database, run the following command, which recreates the database and adds sample data.
 
     bundle exec rake db:drop && bundle exec rake db:migrate && bundle exec rake db:seed
+    
+Sunspot also needs to be reindexed if its models have changed:
+
+    bundle exec rake sunspot:solr:reindex
+    
+## Shutting down
+
+When you're shutting down, stop Solr with
+
+    bundle exec rake sunspot:solr:stop
+    
+Also stop the `rails server` command.
