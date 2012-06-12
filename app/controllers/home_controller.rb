@@ -2,17 +2,21 @@ class HomeController < ApplicationController
 
   def search
     
-    @results = Hash.new
+    @results = []
     @q = params[:q]
     
     unless params[:q].nil?
-      @results[:maps] = Map.search do
+      maps = Map.search do
         keywords params[:q]
       end.results
       
-      @results[:annotations] = Annotation.search do
+      annotations = Annotation.search do
         keywords params[:q]
       end.results
+      
+      # get the maps from the annotations and put them into one array
+      annotation_maps = annotations.collect { |a| a.map }
+      @results = maps.concat(annotation_maps).uniq
     end
     
     respond_to do |format|
