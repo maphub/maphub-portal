@@ -20,3 +20,7 @@
 # Sunspot Solr
 /solr/data
 /solr/pids
+
+# Pow
+.powenv
+
