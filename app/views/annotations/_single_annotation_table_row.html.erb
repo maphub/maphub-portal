@@ -12,7 +12,15 @@
     <% end %>
     </div>
   </td> 
-  <td width="70px">
-    <small><%= time_ago_in_words(annotation.updated_at) %> ago</small>
+  <td width="80px">
+    <p><small><%= time_ago_in_words(annotation.updated_at) %> ago</small></p>
+    <% if user_signed_in? and current_user == annotation.user %>
+      <small>
+      <%= link_to annotation, :confirm => "Are you sure you want to delete your annotation?", :method => :delete, :class => "annotation" do %>
+        <i class='icon-trash'></i> Delete
+      <% end %>
+      </small>
+      <%=  %>
+    <% end %>
   </td>
 </tr>

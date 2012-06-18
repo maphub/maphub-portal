@@ -112,7 +112,10 @@ class AnnotationsController < ApplicationController
   def destroy
     @annotation = Annotation.find(params[:id])
     @map = @annotation.map
-    @annotation.destroy
+    
+    if current_user == @annotation.user
+      @annotation.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to(map_url @map) }

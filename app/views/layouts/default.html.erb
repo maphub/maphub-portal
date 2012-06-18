@@ -71,11 +71,24 @@
                 <% end %>
                 <% if user_signed_in? -%>
                 <li style="padding-bottom:-10px">
-                <%= link_to image_tag(current_user.gravatar_url(:size => 20)), current_user %>
+
                 </li>
-                    <li><%= link_to current_user.username, current_user %></li>
-                    <li><%= link_to 'my account', edit_user_registration_path  %></li>
-                    <li><%= link_to 'sign out', destroy_user_session_path, :method => :delete %></li>
+                    <li>
+                      <%= link_to current_user do %>
+                        <%= image_tag(current_user.gravatar_url(:size => 20)) %>&nbsp;&nbsp;
+                        <%= current_user.username %>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to edit_user_registration_path do  %>
+                        <i class="icon-user icon-white"></i>&nbsp;&nbsp;my account
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to destroy_user_session_path, :method => :delete do %>
+                        <i class="icon-remove icon-white"></i>&nbsp;&nbsp;sign out
+                      <% end %>
+                    </li>
                 <% end -%>
                 <% if admin_signed_in? -%>
                     <li><%= current_admin.username %></li>

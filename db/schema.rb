@@ -79,10 +79,6 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
     t.integer  "height"
     t.string   "author"
     t.string   "date"
-    t.float    "sw_lat"
-    t.float    "sw_lng"
-    t.float    "ne_lat"
-    t.float    "ne_lng"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -90,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
   create_table "tags", :force => true do |t|
     t.string   "label"
     t.string   "dbpedia_uri"
+    t.string   "description"
     t.integer  "annotation_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

@@ -11,17 +11,17 @@ MaphubPortal::Application.routes.draw do
   
   
   resources :users, :only => [:show, :update, :index] do 
-    resources :annotations, :only => [:show, :index]
-    resources :control_points, :only => [:show, :index]
+    resources :annotations, :only => [:show, :index, :destroy]
+    resources :control_points, :only => [:show, :index, :destroy]
   end
   
   resources :maps, :only => [:show, :index, :update] do 
-    resources :annotations, :only => [:create, :index, :update]
-    resources :control_points, :only => [:create, :index, :update]
+    resources :annotations, :only => [:create, :index, :update, :destroy]
+    resources :control_points, :only => [:create, :index, :update, :destroy]
   end
   
-  resources :annotations, :only => [:index, :create, :update, :show]
-  resources :control_points, :only => [:index, :show]
+  resources :annotations, :only => [:index, :create, :update, :show, :destroy]
+  resources :control_points, :only => [:index, :show, :destroy]
   
   # default homepage
   root :to => "home#index"

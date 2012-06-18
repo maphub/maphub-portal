@@ -43,7 +43,8 @@ class Annotation < ActiveRecord::Base
       r = rand(1000)
       tag = {
         dbpedia_uri: "dbpedia-uri-#{r}",
-        label: "label-#{r}"
+        label: "label-#{r}",
+        description: "This is a test tag."
       }
       tags << tag
     end
@@ -81,10 +82,12 @@ class Annotation < ActiveRecord::Base
       response = Net::HTTP.get_response(url)
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
+        logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
             label: entry["title"].gsub(" ", "-").downcase,
-            dbpedia_uri: entry["wikipediaUrl"]
+            dbpedia_uri: entry["wikipediaUrl"],
+            description: entry["summary"]
           }
           tags << tag
         end
