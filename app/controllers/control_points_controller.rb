@@ -95,7 +95,11 @@ class ControlPointsController < ApplicationController
   def destroy
     @control_point = ControlPoint.find(params[:id])
     @map = @control_point.map
-    @control_point.destroy
+    
+    if current_user == @control_point.user
+      @control_point.destroy
+    end
+    
 
     respond_to do |format|
       format.html { redirect_to(map_url @map) }

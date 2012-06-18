@@ -5,16 +5,16 @@ MapHub = {}
 
 // ----------------------------------------------------------------------------
 
-MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, control_points_url, editable) {
+MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, control_points_url, editable, user_id) {
   
   /* Callbacks for added / removed features */
   function featureSelected(evt) {
     var class_name = evt.feature.geometry.CLASS_NAME;
     if (!evt.feature.tooltip) {
       if (class_name == "OpenLayers.Geometry.Point") {
-        evt.feature.tooltip = new MapHub.ControlPointTooltip(evt.feature.control_point);
+        evt.feature.tooltip = new MapHub.ControlPointTooltip(evt.feature.control_point, self.user_id);
       } else {
-        evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation);
+        evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation, self.user_id);
       }
     }
     // get the screen coordinates
@@ -80,6 +80,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.annotations_url          = annotations_url;      // JSON request URL for annotations
   this.control_points_url       = control_points_url;   // JSON request URL for control points
   this.editable                 = editable;             // whether to show the control panel
+  this.user_id                  = user_id;              // the currently logged in user ID
   this.features_annotations     = [];   // all annotation features
   this.features_control_points  = [];   // all control point features
   this.annotations              = [];   // all annotations on this map
@@ -346,7 +347,7 @@ MapHub.AnnotationView.prototype.remoteLoadControlPoints = function() {
 // ----------------------------------------------------------------------------
 
 // Creates a new tooltip div for that annotation
-MapHub.AnnotationTooltip = function(annotation) {
+MapHub.AnnotationTooltip = function(annotation, user_id) {
   // outer tooltip container
   this.div = $(document.createElement("div"));
   this.div.attr("class", "annotation-tooltip");
@@ -387,7 +388,7 @@ MapHub.AnnotationTooltip.prototype.hide = function() {
 // ----------------------------------------------------------------------------
 
 // Creates a new tooltip div for that control point
-MapHub.ControlPointTooltip = function(control_point) {
+MapHub.ControlPointTooltip = function(control_point, user_id) {
   // outer tooltip container
   this.div = $(document.createElement("div"));
   this.div.attr("class", "control-point-tooltip");
@@ -398,8 +399,15 @@ MapHub.ControlPointTooltip = function(control_point) {
   this.div_body.attr("class", "control-point-tooltip-body");
   this.div_body.html(control_point.geonames_label);
   
+  this.div_delete = $(document.createElement("div"));
+  this.div_delete.attr("class", "control-point-tooltip-body");
+  this.div_delete.html("<hr><small><a href='/control_points/" + control_point.id + "' data-confirm='Are you sure?' data-method='delete' rel='nofollow'><i class='icon-trash'></i> Delete</a></small>");
+  
   // append everything
   this.div_body.appendTo(this.div);
+  if (user_id == control_point.user_id) {
+    this.div_delete.appendTo(this.div);
+  }
   this.div.prependTo("#tooltip-selected");
   
   this.div.hide();
@@ -445,6 +453,7 @@ MapHub.TaggingView = function(callback_url) {
             // returned tags are in val, with their attributes
             var dbpedia_uri = val.dbpedia_uri;
             var label = val.label;
+            var description = val.description;
             
             // create new tag element
             var tag = $(document.createElement('span'));
@@ -453,8 +462,10 @@ MapHub.TaggingView = function(callback_url) {
             tag.text(label);
             // link it
             var linked_tag = $(document.createElement('a'));
-            linked_tag.attr("href", dbpedia_uri);
+            linked_tag.attr("href", "http://" + dbpedia_uri);
             linked_tag.attr("target", "_blank");
+            linked_tag.attr("rel", "tooltip");
+            linked_tag.attr("title", description);
             linked_tag.html(tag)
             // append to the form
             linked_tag.appendTo($("#modal-annotation-tags"));
@@ -473,6 +484,13 @@ MapHub.TaggingView = function(callback_url) {
             input_dbpedia_uri.attr("name", "dbpedia_uri[]");
             input_dbpedia_uri.attr("value", dbpedia_uri);
             input_dbpedia_uri.appendTo($("#modal-annotation-tags"));
+            
+            var input_description = $(document.createElement('input'));
+            input_description.attr("type", "text");
+            input_description.css("display", "none");
+            input_description.attr("name", "description[]");
+            input_description.attr("value", description);
+            input_description.appendTo($("#modal-annotation-tags"));
           });
         }); 
       }

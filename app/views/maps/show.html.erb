@@ -7,7 +7,8 @@ function initOpenLayers() {
       "<%= @map.tileset_uri + '/' %>",
       "<%= map_annotations_url(@map, :format => :json) %>",
       "<%= map_control_points_url(@map, :format => :json) %>",
-      <%= user_signed_in? ? "true" : "false" %>
+      <%= user_signed_in? ? "true" : "false" %>,
+      <%= user_signed_in? ? current_user.id : "0" %>
   );
 }
 $(document).ready(function(){

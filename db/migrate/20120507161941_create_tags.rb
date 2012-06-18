@@ -3,6 +3,7 @@ class CreateTags < ActiveRecord::Migration
     create_table :tags do |t|
       t.string :label
       t.string :dbpedia_uri
+      t.string :description
       t.integer :annotation_id
       t.timestamps
     end
