@@ -37,17 +37,36 @@ class Annotation < ActiveRecord::Base
   
   # Finds tags for given input text
   def self.find_tags_from_text(text)
-    # TODO implement real lookup
     tags = []
-    5.times do
-      r = rand(1000)
-      tag = {
-        dbpedia_uri: "dbpedia-uri-#{r}",
-        label: "label-#{r}",
-        description: "This is a test tag."
-      }
-      tags << tag
+    
+    return tags if text.length < 5
+    
+    query = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify?"
+    query << "source=#{URI::encode(text)}"
+    query << "&disambiguationPolicy=loose"
+    query << "&responseFormat=json"
+    
+    logger.debug "#{query.inspect}"
+    
+    begin
+    url = URI.parse(query)
+    response = Net::HTTP.get_response(url)
+    if response.code == "200"
+      response = ActiveSupport::JSON.decode response.body
+      logger.debug response["detectedTopics"]
+      response["detectedTopics"].each do |entry|
+        tag = {
+          label: entry["title"],
+          dbpedia_uri: "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_"),
+          description: "This needs to be fetched from Wikipedia first"
+        }
+        tags << tag
+      end
     end
+    rescue Error => e
+      logger.warn("Failed to fetch tags for query #{query}")
+    end
+    
     tags
   end
   
@@ -85,8 +104,10 @@ class Annotation < ActiveRecord::Base
         logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
-            label: entry["title"].gsub(" ", "-").downcase,
-            dbpedia_uri: entry["wikipediaUrl"],
+            label: entry["title"].gsub(" ", "-"),
+            dbpedia_uri: "http://" +
+                entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
+                                            "dbpedia.org/resource/"),
             description: entry["summary"]
           }
           tags << tag

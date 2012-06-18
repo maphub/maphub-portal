@@ -462,7 +462,7 @@ MapHub.TaggingView = function(callback_url) {
             tag.text(label);
             // link it
             var linked_tag = $(document.createElement('a'));
-            linked_tag.attr("href", "http://" + dbpedia_uri);
+            linked_tag.attr("href", dbpedia_uri);
             linked_tag.attr("target", "_blank");
             linked_tag.attr("rel", "tooltip");
             linked_tag.attr("title", description);
