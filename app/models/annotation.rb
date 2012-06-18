@@ -55,9 +55,16 @@ class Annotation < ActiveRecord::Base
       response = ActiveSupport::JSON.decode response.body
       logger.debug response["detectedTopics"]
       response["detectedTopics"].each do |entry|
+        title = entry["title"],
+        dbpedia_uri = "http://dbpedia.org/resource/" + 
+                        entry["title"].gsub(" ", "_")
+        
+        # TODD: for description, resolve dbpedia / json URI, extract
+        # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
+        
         tag = {
-          label: entry["title"],
-          dbpedia_uri: "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_"),
+          label: title,
+          dbpedia_uri: dbpedia_uri,
           description: "This needs to be fetched from Wikipedia first"
         }
         tags << tag
