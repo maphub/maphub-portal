@@ -46,18 +46,17 @@ class Annotation < ActiveRecord::Base
     query << "&disambiguationPolicy=loose"
     query << "&responseFormat=json"
     
-    logger.debug "#{query.inspect}"
+    #logger.debug "#{query.inspect}"
     
     begin
     url = URI.parse(query)
     response = Net::HTTP.get_response(url)
     if response.code == "200"
       response = ActiveSupport::JSON.decode response.body
-      logger.debug response["detectedTopics"]
+      #logger.debug response["detectedTopics"]
       response["detectedTopics"].each do |entry|
-        title = entry["title"],
-        dbpedia_uri = "http://dbpedia.org/resource/" + 
-                        entry["title"].gsub(" ", "_")
+        title = entry["title"]
+        dbpedia_uri = "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")
         
         # TODD: for description, resolve dbpedia / json URI, extract
         # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
@@ -73,7 +72,6 @@ class Annotation < ActiveRecord::Base
     rescue Error => e
       logger.warn("Failed to fetch tags for query #{query}")
     end
-    
     tags
   end
   
@@ -100,7 +98,7 @@ class Annotation < ActiveRecord::Base
       # add username, we kinda need this, TODO: get our own?
       query << "maxRows=5&"
       query << "username=slhck"
-      logger.debug "#{query.inspect}"
+      #logger.debug "#{query.inspect}"
             
       # parse response
       begin
@@ -108,10 +106,10 @@ class Annotation < ActiveRecord::Base
       response = Net::HTTP.get_response(url)
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
-        logger.debug response["geonames"].first
+        #logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
-            label: entry["title"].gsub(" ", "-"),
+            label: entry["title"].gsub(" ", "-") + "-boundary",
             dbpedia_uri: "http://" +
                 entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
                                             "dbpedia.org/resource/"),
@@ -124,7 +122,6 @@ class Annotation < ActiveRecord::Base
         logger.warn("Failed to fetch tags for query #{query}")
       end
     end
-    
     tags
   end
   

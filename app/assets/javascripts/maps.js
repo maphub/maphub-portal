@@ -458,17 +458,31 @@ MapHub.TaggingView = function(callback_url) {
             // create new tag element
             var tag = $(document.createElement('span'));
             // set style (label)
-            tag.attr("class", "label");
+            tag.attr("class", "label label-neutral");
             tag.text(label);
             // link it
             var linked_tag = $(document.createElement('a'));
-            linked_tag.attr("href", dbpedia_uri);
-            linked_tag.attr("target", "_blank");
+            //linked_tag.attr("href", dbpedia_uri);
+            //linked_tag.attr("href", "#");
+            //linked_tag.attr("target", "_blank");
             linked_tag.attr("rel", "tooltip");
             linked_tag.attr("title", description);
             linked_tag.html(tag)
             // append to the form
             linked_tag.appendTo($("#modal-annotation-tags"));
+            
+            tag.click(function() {
+              if ($(this).hasClass("label-neutral")) {
+                $(this).removeClass("label-neutral");
+                $(this).addClass("label-success");
+              } else if ($(this).hasClass("label-success")) {
+                $(this).removeClass("label-success");
+                $(this).addClass("label-important");
+              } else if ($(this).hasClass("label-important")) {
+                $(this).removeClass("label-important");
+                $(this).addClass("label-neutral");
+              }
+            });
             
             // create hidden input fields
             var input_label = $(document.createElement('input'));
