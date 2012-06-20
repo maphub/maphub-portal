@@ -109,7 +109,7 @@ class Annotation < ActiveRecord::Base
         #logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
-            label: entry["title"].gsub(" ", "-") + "-boundary",
+            label: entry["title"].gsub(" ", "-"),
             dbpedia_uri: "http://" +
                 entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
                                             "dbpedia.org/resource/"),
