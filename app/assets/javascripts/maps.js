@@ -59,7 +59,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   function controlPointAdded(evt) {
     var wkt_data = evt.feature.geometry.toString();
-
+    
     // set x/y in form
     $("#control_point_wkt_data").attr("value", wkt_data);
     $("#control_point_x").attr("value", evt.feature.geometry.x);
@@ -180,7 +180,8 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.Navigation());
   this.map.addControl(new OpenLayers.Control.MousePosition());
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
-  this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
+  // Removed keyboard navigation for the time being, see issue #42
+  //this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
   
   // ================================================================================
 
