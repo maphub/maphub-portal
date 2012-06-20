@@ -8,6 +8,7 @@ class Annotation < ActiveRecord::Base
   
   # Hooks
   after_create :update_map
+  after_create :enrich_tags
   
   # Model associations
   belongs_to :user, :counter_cache => true
@@ -28,6 +29,29 @@ class Annotation < ActiveRecord::Base
   
   def update_map
     map.update_attribute(:updated_at, Time.now)
+  end
+  
+  def enrich_tags
+  	
+  	@tags = Tag.all
+  	for i in @tags.length-1 do
+  	@title = @tags[i]["label"]
+  	
+	  query = "http://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=SELECT+?label+WHERE+{+{+<http://dbpedia.org/resource/" + @title.gsub(" ", "_") + ">+<http://www.w3.org/2000/01/rdf-schema#label>+?label+}+}&format=application/sparql-results+json&timeout=0&debug=on"
+	  query = URI.escape(query)
+	   
+		    
+      url= URI.parse(query)
+      esponse = Net::HTTP.get_response(url)
+      if response.code == "200"
+        	response= ActiveSupport::JSON.decode response.body
+        	abstract = response["results"]["bindings"][i]["label"]["value"]
+			
+			for j in 0..response["results"]["bindings"].length-1 do
+				@tags[i]["enrichment"] += " " + response["results"]["bindings"][j]["label"]["value"]
+			end
+	end
+  
   end
   
   def segment

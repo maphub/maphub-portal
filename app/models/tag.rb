@@ -1,7 +1,8 @@
 class Tag < ActiveRecord::Base
   
   # Validation
-  validates_presence_of :dbpedia_uri, :label
+  validates_presence_of :dbpedia_uri, :label, :enrichment
+  :selected
   
   # Model associations
   belongs_to :map
