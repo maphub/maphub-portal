@@ -41,7 +41,7 @@ class Annotation < ActiveRecord::Base
     
     return tags if text.length < 5
     
-    query = "http://wikipedia-miner.cms.waikato.ac.nz/services/wikify?"
+    query = "http://samos.mminf.univie.ac.at:8080/wikipediaminer/services/wikify?"
     query << "source=#{URI::encode(text)}"
     query << "&disambiguationPolicy=loose"
     query << "&responseFormat=json"
@@ -55,21 +55,46 @@ class Annotation < ActiveRecord::Base
       response = ActiveSupport::JSON.decode response.body
       logger.debug response["detectedTopics"]
       response["detectedTopics"].each do |entry|
-        title = entry["title"],
+        title = entry["title"]
         dbpedia_uri = "http://dbpedia.org/resource/" + 
                         entry["title"].gsub(" ", "_")
         
-        # TODD: for description, resolve dbpedia / json URI, extract
+        #Constructs the dbpedia JSON request URI via SPARQL
+        query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
+        
+        url_abstract = URI.parse(query_abstract)
+        response_abstract = Net::HTTP.get_response(url_abstract)
+        if response_abstract.code == "200"
+        	response_abstract = ActiveSupport::JSON.decode response_abstract.body
+        	abstract = response_abstract["results"]["bindings"][0]["abstract"]["value"]
+        	abstract_text = abstract[0...294] + " (...)"
+        
+        # TODO: for description, resolve dbpedia / json URI, extract
         # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
+        
+        #Old code for running dbpedia JSON request directly through dbpedia
+        
+        #query_abstract = "http://dbpedia.org/data/" + entry["title"].gsub(" ", "_") + ".json"
+        #url_abstract = URI.parse(query_abstract)
+        #response_abstract = Net::HTTP.get_response(url_abstract)
+        #if response_abstract.code == "200"
+        #	response_abstract = ActiveSupport::JSON.decode response_abstract.body
+        #	abstract = response_abstract["http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")]["http://dbpedia.org/ontology/abstract"].select {|lang| lang["lang"] == "en"}
+        #	abstract_text = abstract[0]["value"][0...294] + " (...)"
+        
+        
+
+        
         
         tag = {
           label: title,
           dbpedia_uri: dbpedia_uri,
-          description: "This needs to be fetched from Wikipedia first"
+          description: abstract_text
         }
         tags << tag
       end
     end
+  end
     rescue Error => e
       logger.warn("Failed to fetch tags for query #{query}")
     end
