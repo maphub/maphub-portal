@@ -61,6 +61,10 @@ class Annotation < ActiveRecord::Base
 
         
         #Constructs the dbpedia JSON request URI via SPARQL
+        #query_abstract =  "http://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=select ?abstract where { <http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_") + "> <http://dbpedia.org/ontology/abstract> ?abstract . FILTER ( lang(?abstract) = \"en\" ) }&format=application/sparql-results+json&timeout=0&debug=on"
+
+		#query_abstract = URI.encode(query_abstract)
+        
         query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
         
         url_abstract = URI.parse(query_abstract)
