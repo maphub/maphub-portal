@@ -51,7 +51,7 @@ class Annotation < ActiveRecord::Base
 				@tags[i]["enrichment"] += " " + response["results"]["bindings"][j]["label"]["value"]
 			end
 	end
-  
+  end
   end
   
   def segment
