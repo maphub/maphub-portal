@@ -33,7 +33,7 @@ class Annotation < ActiveRecord::Base
   
   def enrich_tags
   	
-  	@tags = Tag.all
+  	@tags = Tag.all.select{|tag| tag.annotation_id == self.id}
   	for i in @tags.length-1 do
   	@title = @tags[i]["label"]
   	
@@ -42,7 +42,7 @@ class Annotation < ActiveRecord::Base
 	   
 		    
       url= URI.parse(query)
-      esponse = Net::HTTP.get_response(url)
+      response = Net::HTTP.get_response(url)
       if response.code == "200"
         	response= ActiveSupport::JSON.decode response.body
         	abstract = response["results"]["bindings"][i]["label"]["value"]
