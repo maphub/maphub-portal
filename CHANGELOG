@@ -1,3 +1,9 @@
+2012/06/29:
+    RELEASE 0.2
+    
+    * implemented Geonames / Wikiminer / DBPedia lookup
+    * implemented search
+
 2012/05/01:
     RELEASE 0.1:
     
