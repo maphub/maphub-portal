@@ -95,9 +95,12 @@ ActiveRecord::Schema.define(:version => 20120622203955) do
     t.string   "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+<<<<<<< HEAD
+=======
     t.string   "enrichment"
     t.integer  "selected"
     t.integer  "map_id"
+>>>>>>> Added the ability to search for maps via tags (only works for annotations/tags created after this update is implemented)
   end
 
   create_table "users", :force => true do |t|
