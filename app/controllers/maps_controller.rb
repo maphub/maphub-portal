@@ -2,8 +2,8 @@ class MapsController < ApplicationController
   
   # Show all maps
   def index
-    @maps = Map.all
-
+    @maps = Map.order(:updated_at).page(params[:page]).per(20) 
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json {render :json => @maps.to_json(

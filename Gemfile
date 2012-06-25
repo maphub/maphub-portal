@@ -13,6 +13,8 @@ gem 'acts_as_markup'
 gem 'linkeddata'
 gem 'uuidtools'
 
+gem 'kaminari' # pagination, we need these views too: https://github.com/gabetax/twitter-bootstrap-kaminari-views/
+
 gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 gem 'progress_bar'
