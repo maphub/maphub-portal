@@ -70,8 +70,13 @@ class AnnotationsController < ApplicationController
     
     # create tags from plain form fields
     unless params[:label].nil?
-      params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
-        tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
+      [params[:label], params[:dbpedia_uri], params[:description], params[:status]].transpose.each do |label, dbpedia_uri, description, status|
+        tag = @annotation.tags.build(
+        :label => label, 
+        :dbpedia_uri => dbpedia_uri,
+        :description => description,
+        :status => status
+        )
       end
     end
     

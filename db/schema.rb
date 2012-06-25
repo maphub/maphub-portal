@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
     t.string   "dbpedia_uri"
     t.string   "description"
     t.integer  "annotation_id"
+    t.string   "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

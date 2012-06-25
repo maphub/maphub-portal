@@ -5,6 +5,7 @@ class CreateTags < ActiveRecord::Migration
       t.string :dbpedia_uri
       t.string :description
       t.integer :annotation_id
+      t.string :status
       t.timestamps
     end
   end
