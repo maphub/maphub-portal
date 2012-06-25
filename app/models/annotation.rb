@@ -8,7 +8,7 @@ class Annotation < ActiveRecord::Base
   
   # Hooks
   after_create :update_map
-  #after_create :enrich_tags
+  after_save :enrich_tags
   
   # Model associations
   belongs_to :user, :counter_cache => true
@@ -34,13 +34,12 @@ class Annotation < ActiveRecord::Base
   def enrich_tags
   	
   	@tags = Tag.all.select{|tag| tag.annotation_id == self.id}
-  	for i in @tags.length-1 do
+  	for i in 0..@tags.length-1 do
   	@title = @tags[i]["label"]
+  	@taglist = ""
   	
-	  query = "http://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=SELECT+?label+WHERE+{+{+<http://dbpedia.org/resource/" + @title.gsub(" ", "_") + ">+<http://www.w3.org/2000/01/rdf-schema#label>+?label+}+}&format=application/sparql-results+json&timeout=0&debug=on"
-	  query = URI.escape(query)
-	   
-		    
+	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + @title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
+	     
       url= URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
@@ -48,11 +47,14 @@ class Annotation < ActiveRecord::Base
         	abstract = response["results"]["bindings"][i]["label"]["value"]
 			
 			for j in 0..response["results"]["bindings"].length-1 do
-				@tags[i]["enrichment"] += " " + response["results"]["bindings"][j]["label"]["value"]
+				
+					@taglist += " " + response["results"]["bindings"][j]["label"]["value"]
 			end
-	end
-  end
-  end
+		end
+		@tags[i].update_attribute(:enrichment, @taglist)
+  	end
+ end
+  
 
   
   def segment

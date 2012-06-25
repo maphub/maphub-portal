@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
   # Search
   searchable do
     text :label, :boost => 2.0
+    text :enrichment
   end
   
   # Validation
