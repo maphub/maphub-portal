@@ -2,7 +2,7 @@ class Tag < ActiveRecord::Base
   
   # Search
   searchable do
-    text :label, :boost => 2.0
+    text :label, :boost => 3.0
     text :enrichment
   end
   
@@ -26,9 +26,9 @@ class Tag < ActiveRecord::Base
     self.status == "neutral"
   end
   
-=======
+
 =======
 >>>>>>> Finished semantic tag enrichment
   belongs_to :annotation
->>>>>>> Added the ability to search for maps via tags (only works for annotations/tags created after this update is implemented)
+
 end
