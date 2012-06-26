@@ -7,11 +7,10 @@ class Tag < ActiveRecord::Base
   end
   
   # Validation
-  validates_presence_of :dbpedia_uri, :label, :enrichment
-  :selected
+  validates_presence_of :dbpedia_uri, :label
   
   # Model associations
-		belongs_to :annotation
+  belongs_to :map
   
   # Pseudo functions
   def accepted?
@@ -23,5 +22,5 @@ class Tag < ActiveRecord::Base
   def neutral?
     self.status == "neutral"
   end
-
+ 
 end

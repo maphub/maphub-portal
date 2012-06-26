@@ -11,9 +11,7 @@ class Tag < ActiveRecord::Base
   :selected
   
   # Model associations
-<<<<<<< HEAD
-  belongs_to :map
-<<<<<<< HEAD
+		belongs_to :annotation
   
   # Pseudo functions
   def accepted?
@@ -25,10 +23,5 @@ class Tag < ActiveRecord::Base
   def neutral?
     self.status == "neutral"
   end
-  
-
-=======
->>>>>>> Finished semantic tag enrichment
-  belongs_to :annotation
 
 end
