@@ -18,10 +18,10 @@ class HomeController < ApplicationController
       	keywords params[:q]
       end.results
       
-      # get the maps from the annotations and put them into one array
-     annotation_maps = annotations.collect { |a| a.map }
-      tag_maps = tags.collect { |t| t.map }
-      @results = tag_maps.uniq
+      # get the maps from the annotations and tags and put them into one array
+      annotation_maps = annotations.collect { |a| a.map }
+      tag_maps = tags.collect { |t| t.annotation.map }
+      @results = maps.concat(tag_maps).concat(annotation_maps).uniq
     #  @results = maps.concat(tag_maps).uniq
     end
     

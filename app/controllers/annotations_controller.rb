@@ -77,8 +77,6 @@ class AnnotationsController < ApplicationController
         :description => description,
         :status => status
         )
-      params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri, map_id|
-        tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri, :map_id => Map.find(params[:map_id]).id)
       end
     end
     

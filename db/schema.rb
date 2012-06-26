@@ -11,11 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120521073652) do
-=======
-ActiveRecord::Schema.define(:version => 20120622203955) do
->>>>>>> Added the ability to search for maps via tags (only works for annotations/tags created after this update is implemented)
+
+ActiveRecord::Schema.define(:version => 20120626192449) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -96,8 +93,6 @@ ActiveRecord::Schema.define(:version => 20120622203955) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "enrichment"
-    t.integer  "selected"
-    t.integer  "map_id"
   end
 
   create_table "users", :force => true do |t|

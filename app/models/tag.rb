@@ -2,7 +2,7 @@ class Tag < ActiveRecord::Base
   
   # Search
   searchable do
-    text :label, :boost => 2.0
+    text :label, :boost => 3.0
     text :enrichment
   end
   
@@ -11,6 +11,7 @@ class Tag < ActiveRecord::Base
   :selected
   
   # Model associations
+<<<<<<< HEAD
   belongs_to :map
 <<<<<<< HEAD
   
@@ -26,6 +27,8 @@ class Tag < ActiveRecord::Base
   end
   
 
+=======
+>>>>>>> Finished semantic tag enrichment
   belongs_to :annotation
 
 end

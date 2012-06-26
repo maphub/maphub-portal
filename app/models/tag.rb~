@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
   # Search
   searchable do
     text :label, :boost => 2.0
+    text :enrichment
   end
   
   # Validation
@@ -10,6 +11,7 @@ class Tag < ActiveRecord::Base
   :selected
   
   # Model associations
+<<<<<<< HEAD
   belongs_to :map
 <<<<<<< HEAD
   
@@ -25,6 +27,8 @@ class Tag < ActiveRecord::Base
   end
   
 =======
+=======
+>>>>>>> Finished semantic tag enrichment
   belongs_to :annotation
 >>>>>>> Added the ability to search for maps via tags (only works for annotations/tags created after this update is implemented)
 end

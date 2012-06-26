@@ -78,10 +78,12 @@ class AnnotationsController < ApplicationController
         :description => description,
         :status => status
         )
-=======
       params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri, map_id|
         tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri, :map_id => Map.find(params[:map_id]).id)
->>>>>>> Added the ability to search for maps via tags (only works for annotations/tags created after this update is implemented)
+=======
+      params[:label].zip(params[:dbpedia_uri]).each do |label, dbpedia_uri|
+        tag = @annotation.tags.build(:label => label, :dbpedia_uri => dbpedia_uri)
+>>>>>>> Finished semantic tag enrichment
       end
     end
     

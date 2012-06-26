@@ -31,48 +31,36 @@ class Annotation < ActiveRecord::Base
     map.update_attribute(:updated_at, Time.now)
   end
   
+  #Upon saving an annotation, enrich the associated tags with all available
+  #translations of that tag via dbpedia using the SPARQL query:
+  #
+	# select ?label
+	# where {
+	# <http://dbpedia.org/resource/[ENTRY TITLE]> 
+	# <http://www.w3.org/2000/01/rdf-schema#label> ?label
+	# }
   def enrich_tags
   	
-  	@tags = Tag.all.select{|tag| tag.annotation_id == self.id}
-<<<<<<< HEAD
-  	for i in @tags.length-1 do
-  	@title = @tags[i]["label"]
+  	tags = Tag.all.select{|tag| tag.annotation_id == self.id}
+  	for i in 0..tags.length-1 do
+  	title = tags[i]["label"]
+  	taglist = ""
   	
-	  query = "http://dbpedia.org/sparql?default-graph-uri=http://dbpedia.org&query=SELECT+?label+WHERE+{+{+<http://dbpedia.org/resource/" + @title.gsub(" ", "_") + ">+<http://www.w3.org/2000/01/rdf-schema#label>+?label+}+}&format=application/sparql-results+json&timeout=0&debug=on"
-	  query = URI.escape(query)
-	   
-		    
-=======
-  	for i in 0..@tags.length-1 do
-  	@title = @tags[i]["label"]
-  	@taglist = ""
-  	
-	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + @title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
+	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
 	     
->>>>>>> Tags are now enriched with translations and maps can be searched with those translations
       url= URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
-        	response= ActiveSupport::JSON.decode response.body
-        	abstract = response["results"]["bindings"][i]["label"]["value"]
+      	response= ActiveSupport::JSON.decode response.body
 			
-			for j in 0..response["results"]["bindings"].length-1 do
-<<<<<<< HEAD
-				@tags[i]["enrichment"] += " " + response["results"]["bindings"][j]["label"]["value"]
+				for j in 0..response["results"]["bindings"].length-1 do
+					taglist += " " + response["results"]["bindings"][j]["label"]["value"]
+				end
 			end
-	end
-  end
-  end
-=======
-				
-					@taglist += " " + response["results"]["bindings"][j]["label"]["value"]
-			end
-		end
-		@tags[i].update_attribute(:enrichment, @taglist)
+			tags[i].update_attribute(:enrichment, taglist)
   	end
- end
+ 	end
   
->>>>>>> Tags are now enriched with translations and maps can be searched with those translations
 
   
   def segment
@@ -98,21 +86,35 @@ class Annotation < ActiveRecord::Base
     response = Net::HTTP.get_response(url)
     if response.code == "200"
       response = ActiveSupport::JSON.decode response.body
+      
       #logger.debug response["detectedTopics"]
+      
       response["detectedTopics"].each do |entry|
         title = entry["title"]
         dbpedia_uri = "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")
         
-        #Constructs the dbpedia JSON request URI via SPARQL
-
+<<<<<<< HEAD
+        # Constructs the dbpedia JSON request URI via SPARQL
+=======
+        #Constructs the dbpedia JSON request URI via SPARQL query:
+        #
+				# select ?abstract
+				# where {
+				# <http://dbpedia.org/resource/[ENTRY TITLE] 
+				# <http://dbpedia.org/ontology/abstract> ?abstract .
+				# FILTER ( lang(?abstract) = "en" )
+				# }
+>>>>>>> Finished semantic tag enrichment
         query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-        
         url_abstract = URI.parse(query_abstract)
         response_abstract = Net::HTTP.get_response(url_abstract)
         if response_abstract.code == "200"
-        	response_abstract = ActiveSupport::JSON.decode response_abstract.body
-        	abstract = response_abstract["results"]["bindings"][0]["abstract"]["value"]
-        	abstract_text = abstract[0...294] + " (...)"
+          response_abstract = ActiveSupport::JSON.decode response_abstract.body
+          abstract = response_abstract["results"]["bindings"][0]["abstract"]["value"]
+          abstract_text = abstract[0...294] + " (...)"
+        else
+          abstract_text = "Abstract could not be found."
+        end
         
         # TODO: for description, resolve dbpedia / json URI, extract
         # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
@@ -127,19 +129,15 @@ class Annotation < ActiveRecord::Base
         #	abstract = response_abstract["http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")]["http://dbpedia.org/ontology/abstract"].select {|lang| lang["lang"] == "en"}
         #	abstract_text = abstract[0]["value"][0...294] + " (...)"
         
-        
-
-        
-        
         tag = {
           label: title,
           dbpedia_uri: dbpedia_uri,
           description: abstract_text
         }
         tags << tag
-      end
-    end
-  end
+        
+      end # each response entry
+    end # if response is found
     rescue Error => e
       logger.warn("Failed to fetch tags for query #{query}")
     end
@@ -180,7 +178,7 @@ class Annotation < ActiveRecord::Base
         #logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
-            label: entry["title"].gsub(" ", "-"),
+            label: entry["title"],
             dbpedia_uri: "http://" +
                 entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
                                             "dbpedia.org/resource/"),

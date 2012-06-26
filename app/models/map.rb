@@ -17,7 +17,6 @@ class Map < ActiveRecord::Base
   # Model associations
   has_many :annotations
   has_many :control_points
-  has_many :tags
   has_one :boundary, :as => :boundary_object
   accepts_nested_attributes_for :boundary
   
