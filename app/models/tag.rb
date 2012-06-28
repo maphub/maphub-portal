@@ -1,16 +1,10 @@
 class Tag < ActiveRecord::Base
   
-  # Search
-  searchable do
-    text :label, :boost => 3.0
-    text :enrichment
-  end
-  
   # Validation
   validates_presence_of :dbpedia_uri, :label
   
   # Model associations
-  belongs_to :map
+  belongs_to :annotation
   
   # Pseudo functions
   def accepted?

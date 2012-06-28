@@ -31,6 +31,14 @@ class Annotation < ActiveRecord::Base
     map.update_attribute(:updated_at, Time.now)
   end
   
+  #Upon saving an annotation, enrich the associated tags with all available
+  #translations of that tag via dbpedia using the SPARQL query:
+  #
+	# select ?label
+	# where {
+	# <http://dbpedia.org/resource/[ENTRY TITLE]> 
+	# <http://www.w3.org/2000/01/rdf-schema#label> ?label
+	# }
   def enrich_tags
   	
   	tags = Tag.all.select{|tag| tag.annotation_id == self.id}
@@ -40,7 +48,7 @@ class Annotation < ActiveRecord::Base
   	
 	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
 	     
-      url= URI.parse(query)
+      url= Addressable::URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
       	response= ActiveSupport::JSON.decode response.body
@@ -84,8 +92,6 @@ class Annotation < ActiveRecord::Base
         dbpedia_uri = "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")
         
 
-        # Constructs the dbpedia JSON request URI via SPARQL
-
         #Constructs the dbpedia JSON request URI via SPARQL query:
         #
 				# select ?abstract
@@ -96,7 +102,6 @@ class Annotation < ActiveRecord::Base
 				# }
 
         #Constructs the dbpedia JSON request URI via SPARQL
-
 
         query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
         url_abstract = URI.parse(query_abstract)
