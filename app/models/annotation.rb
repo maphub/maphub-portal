@@ -30,14 +30,14 @@ class Annotation < ActiveRecord::Base
   
   # Enrich the associated tags with all available DBPedia labels
   def enrich_tags
-    
     tags.each do |tag|
-      dbpedia_uri = tag.dbpedia_uri
-      enrichment = Annotation.fetch_enrichment(dbpedia_uri) 
-      if enrichment.length > 0 and tag.accepted?
-        logger.debug("Enriching tag: #{dbpedia_uri}")
-        tag.update_attribute(:enrichment, enrichment)
-        tag.save!
+      if tag.accepted?
+        enrichment = Annotation.fetch_enrichment(tag.dbpedia_uri) 
+        if enrichment.length > 0
+          logger.debug("Enriching tag: #{tag.dbpedia_uri}")
+          tag.update_attribute(:enrichment, enrichment)
+          tag.save!
+        end
       end
     end
     # Reindex the map
