@@ -225,8 +225,10 @@ class Annotation < ActiveRecord::Base
     httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
     
     # Defining the custom vocabulary # TODO: move this to separate lib
-    oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core#')
+    oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core/')
     oa = RDF::Vocabulary.new(oa_uri)
+    oax_uri = RDF::URI('http://www.w3.org/ns/openannotation/extensions/')
+    oax = RDF::Vocabulary.new(oax_uri) 
     ct_uri = RDF::URI('http://www.w3.org/2011/content#')
     ct = RDF::Vocabulary.new(ct_uri)
     foaf_uri = RDF::URI('http://xmlns.com/foaf/spec/')
@@ -256,6 +258,14 @@ class Annotation < ActiveRecord::Base
     graph << [baseURI, oa.annotator, user_node]
     graph << [user_node, foaf.mbox, RDF::Literal.new(self.user.email)]
     graph << [user_node, foaf.name, RDF::Literal.new(self.user.username)]
+    
+    # Adding semantic tags
+    tags.each do |tag|
+      if tag.accepted?
+        semantic_tag = RDF::URI.new(tag.dbpedia_uri)
+        graph << [baseURI, oax.hasSemanticTag, semantic_tag]
+      end
+    end
     
     # Creating the body
     unless self.body.nil?
@@ -304,6 +314,7 @@ class Annotation < ActiveRecord::Base
       writer.prefix :ct, ct_uri
       writer.prefix :rdf, RDF::URI(RDF.to_uri)
       writer.prefix :foaf, foaf_uri
+      writer.prefix :oax, oax_uri
       writer << graph
     end
     
