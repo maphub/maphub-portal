@@ -7,28 +7,25 @@ class Annotation < ActiveRecord::Base
   validates_presence_of :body, :map
   
   # Hooks
-  after_create :update_map
-  after_save :enrich_tags
-  after_commit :reindex_parent
-  
+  after_save :enrich_tags, :update_map
+
   # Model associations
   belongs_to :user, :counter_cache => true
   belongs_to :map
   has_one :boundary, :as => :boundary_object
   accepts_nested_attributes_for :boundary
   has_many :tags
-  
-  # Search-related methods
-  def reindex_parent
-    map.solr_index!
-  end
+    
+  # Virtual attributes
   
   def truncated_body
     (body.length > 30) ? body[0, 30] + "..." : body
   end
   
   def update_map
-    map.update_attribute(:updated_at, Time.now)
+    logger.debug("Informing parent about new annotation.")
+    map.touch
+    map.index
   end
   
   # Enrich the associated tags with all available DBPedia labels
@@ -36,13 +33,15 @@ class Annotation < ActiveRecord::Base
     
     tags.each do |tag|
       dbpedia_uri = tag.dbpedia_uri
-      enrichment = Annotation.fetch_enrichment(dbpedia_uri)
+      enrichment = Annotation.fetch_enrichment(dbpedia_uri) 
       if enrichment.length > 0 and tag.accepted?
         logger.debug("Enriching tag: #{dbpedia_uri}")
-        tag.update_attribute(:enrichment, enrichment) 
+        tag.update_attribute(:enrichment, enrichment)
+        tag.save!
       end
     end
-
+    # Reindex the map
+    logger.debug("Reindexing the map")
   end
   
   # Finds tags for given input text

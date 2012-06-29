@@ -32,20 +32,28 @@ class Map < ActiveRecord::Base
   
   # Collects all annotations into a single string
   def annotations_content
-      annotations.collect(&:body).join(" ")
+    annotations.collect(&:body).join(" ")
   end
   
   # Collects all tag labels into a single string
   def annotations_tags
-      annotations.collect(&:tags).flatten.collect(&:label).join(" ")
+    tag_labels = []
+    annotations.each do |annotation|
+      tag_labels << annotation.tags.collect(&:label).join(" ")
+    end
+    tag_labels.join(" ")
   end
   
   # Collects all enrichment labels into a single string
   def annotations_enrichments
-    annotations.collect(&:tags).flatten.collect(&:enrichment).join(" ")
+    tag_enrichments = []
+    annotations.each do |annotation|
+      tag_enrichments << annotation.tags.collect(&:enrichment).join(" ")
+    end
+    tag_enrichments.join(" ")
   end
   
-  # creates an empty boundary object for the map after creation
+  # Creates an empty boundary object for the map after creation
   def create_boundary_object
     boundary = self.build_boundary
     boundary.ne_x = self.width

@@ -65,7 +65,6 @@ class AnnotationsController < ApplicationController
   def create
     #@boundary = Boundary.new(params[:boundary])
     
-    
     @annotation = Annotation.new(params[:annotation])
     
     # create tags from plain form fields
@@ -121,6 +120,8 @@ class AnnotationsController < ApplicationController
     if current_user == @annotation.user
       @annotation.destroy
     end
+    
+    @map.solr_index!
 
     respond_to do |format|
       format.html { redirect_to(map_url @map) }
