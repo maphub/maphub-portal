@@ -32,36 +32,35 @@ class Annotation < ActiveRecord::Base
   
   #Upon saving an annotation, enrich the associated tags with all available
   #translations of that tag via dbpedia using the SPARQL query:
-  #
-	# select ?label
-	# where {
-	# <http://dbpedia.org/resource/[ENTRY TITLE]> 
-	# <http://www.w3.org/2000/01/rdf-schema#label> ?label
-	# }
   def enrich_tags
-  	
-  	tags = Tag.all.select{|tag| tag.annotation_id == self.id}
-  	for i in 0..tags.length-1 do
-  	title = tags[i]["label"]
-  	taglist = ""
-  	
-	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-	     
-      url= Addressable::URI.parse(query)
-      response = Net::HTTP.get_response(url)
-      if response.code == "200"
-      	response= ActiveSupport::JSON.decode response.body
-			
-				for j in 0..response["results"]["bindings"].length-1 do
-					taglist += " " + response["results"]["bindings"][j]["label"]["value"]
-				end
-			end
-			tags[i].update_attribute(:enrichment, taglist)
-  	end
- 	end
-  
-  def segment
-    Segment.create_from_wkt_data(self.wkt_data)
+    
+    tags.each do |tag|
+      dbpedia_uri = tag.dbpedia_uri
+      enrichment = Annotation.fetch_enrichment(dbpedia_uri)
+      if enrichment.length > 0 and tag.accepted?
+        logger.debug("Enriching tag: #{dbpedia_uri}")
+        tag.update_attribute(:enrichment, enrichment) 
+      end
+    end
+    
+    # tags = Tag.all.select{|tag| tag.annotation_id == self.id}
+    # for i in 0..tags.length-1 do
+    # title = tags[i]["label"]
+    # taglist = ""
+    # 
+    # query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
+    #    
+    #   url= Addressable::URI.parse(query)
+    #   response = Net::HTTP.get_response(url)
+    #   if response.code == "200"
+    #     response= ActiveSupport::JSON.decode response.body
+    #   
+    #     for j in 0..response["results"]["bindings"].length-1 do
+    #       taglist += " " + response["results"]["bindings"][j]["label"]["value"]
+    #     end
+    #   end
+    #   tags[i].update_attribute(:enrichment, taglist)
+    # end
   end
   
   # Finds tags for given input text
@@ -76,16 +75,14 @@ class Annotation < ActiveRecord::Base
     query << "&disambiguationPolicy=loose"
     query << "&responseFormat=json"
     
-    #logger.debug "#{query.inspect}"
+    logger.debug("Executing Wikify query: " + query)
     
     begin
       url = URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
-      
-        #logger.debug response["detectedTopics"]
-      
+        
         response["detectedTopics"].each do |entry|
           title = entry["title"]
           dbpedia_uri = "http://dbpedia.org/resource/" + 
@@ -106,6 +103,51 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
+  # Creates a DBPedia SPARQL request URI from a given sparql query
+  def self.create_dbpedia_sparql_request_uri(sparql_query)
+    uri = "http://dbpedia.org/sparql?"
+    uri << URI.encode_www_form("default-graph-uri" => 
+                                          "http://dbpedia.org")
+    uri << "&" + URI.encode_www_form("query" => sparql_query)
+    uri << "&" + URI.encode_www_form("format" => 
+                                            "application/sparql-results+json")
+    uri << "&" + URI.encode_www_form("timeout" => "0")
+    uri << "&" + URI.encode_www_form("debug" => "on")
+  end
+  
+  # Fetches enrichments (= label translations) for a given DBPedia resource
+  def self.fetch_enrichment(dbpedia_uri)
+    
+    enrichments = []
+    
+    sparql_query = <<-eos
+      select ?label
+      where {
+        <#{dbpedia_uri}> <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+      }
+    eos
+    
+    logger.debug("Executing SPARQL query: " + sparql_query)
+    
+    query_uri = create_dbpedia_sparql_request_uri(sparql_query)
+    request_uri = URI.parse(query_uri)
+    response_abstract = Net::HTTP.get_response(request_uri)
+    
+    if response_abstract.code == "200"
+      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+      begin
+        bindings = response_abstract["results"]["bindings"]
+        bindings.each do |binding|
+          enrichments << binding["label"]["value"]
+        end
+      rescue Error, Exception => e
+        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
+      end
+    end
+    enrichments.uniq.join(" ")
+  end
+  
+  
   # Fetches the abstract for a given DBPedia resource
   def self.fetch_abstract(dbpedia_uri)
     
@@ -121,17 +163,9 @@ class Annotation < ActiveRecord::Base
     
     logger.debug("Executing SPARQL query: " + sparql_query)
     
-    query_uri = "http://dbpedia.org/sparql?"
-    query_uri << URI.encode_www_form("default-graph-uri" => 
-                                          "http://dbpedia.org")
-    query_uri << "&" + URI.encode_www_form("query" => sparql_query)
-    query_uri << "&" + URI.encode_www_form("format" => 
-                                            "application/sparql-results+json")
-    query_uri << "&" + URI.encode_www_form("timeout" => "0")
-    query_uri << "&" + URI.encode_www_form("debug" => "on")
-    
-    query_uri = URI.parse(query_uri)
-    response_abstract = Net::HTTP.get_response(query_uri)
+    query_uri = create_dbpedia_sparql_request_uri(sparql_query)
+    request_uri = URI.parse(query_uri)
+    response_abstract = Net::HTTP.get_response(request_uri)
     
     if response_abstract.code == "200"
       response_abstract = ActiveSupport::JSON.decode response_abstract.body
@@ -195,6 +229,13 @@ class Annotation < ActiveRecord::Base
       end
     end
     tags
+  end
+
+  ##### Open Annotation Serialization methods #######
+
+  # Creates a segment object from WKT data
+  def segment
+    Segment.create_from_wkt_data(self.wkt_data)
   end
   
   # Writes annotation metadata in a given RDF serialization format
