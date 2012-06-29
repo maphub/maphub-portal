@@ -22,7 +22,6 @@ class Annotation < ActiveRecord::Base
     text :body, :boost => 2.0
   end
   
-  
   def truncated_body
     (body.length > 30) ? body[0, 30] + "..." : body
   end
@@ -62,7 +61,6 @@ class Annotation < ActiveRecord::Base
  	end
   
   def segment
-    # TODO: parse only once after creation
     Segment.create_from_wkt_data(self.wkt_data)
   end
   
@@ -74,72 +72,79 @@ class Annotation < ActiveRecord::Base
     
     query = "http://samos.mminf.univie.ac.at:8080/wikipediaminer/services/wikify?"
     query << "source=#{URI::encode(text)}"
+    query << "&minProbability=0.1"
     query << "&disambiguationPolicy=loose"
     query << "&responseFormat=json"
     
     #logger.debug "#{query.inspect}"
     
     begin
-    url = URI.parse(query)
-    response = Net::HTTP.get_response(url)
-    if response.code == "200"
-      response = ActiveSupport::JSON.decode response.body
+      url = URI.parse(query)
+      response = Net::HTTP.get_response(url)
+      if response.code == "200"
+        response = ActiveSupport::JSON.decode response.body
       
-      #logger.debug response["detectedTopics"]
+        #logger.debug response["detectedTopics"]
       
-      response["detectedTopics"].each do |entry|
-        title = entry["title"]
-        dbpedia_uri = "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")
-        
-
-        #Constructs the dbpedia JSON request URI via SPARQL query:
-        #
-				# select ?abstract
-				# where {
-				# <http://dbpedia.org/resource/[ENTRY TITLE] 
-				# <http://dbpedia.org/ontology/abstract> ?abstract .
-				# FILTER ( lang(?abstract) = "en" )
-				# }
-
-        #Constructs the dbpedia JSON request URI via SPARQL
-
-        query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-        url_abstract = URI.parse(query_abstract)
-        response_abstract = Net::HTTP.get_response(url_abstract)
-        if response_abstract.code == "200"
-          response_abstract = ActiveSupport::JSON.decode response_abstract.body
-          abstract = response_abstract["results"]["bindings"][0]["abstract"]["value"]
-          abstract_text = abstract[0...294] + " (...)"
-        else
-          abstract_text = "Abstract could not be found."
-        end
-        
-        # TODO: for description, resolve dbpedia / json URI, extract
-        # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
-        
-        #Old code for running dbpedia JSON request directly through dbpedia
-        
-        #query_abstract = "http://dbpedia.org/data/" + entry["title"].gsub(" ", "_") + ".json"
-        #url_abstract = URI.parse(query_abstract)
-        #response_abstract = Net::HTTP.get_response(url_abstract)
-        #if response_abstract.code == "200"
-        #	response_abstract = ActiveSupport::JSON.decode response_abstract.body
-        #	abstract = response_abstract["http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")]["http://dbpedia.org/ontology/abstract"].select {|lang| lang["lang"] == "en"}
-        #	abstract_text = abstract[0]["value"][0...294] + " (...)"
-        
-        tag = {
-          label: title,
-          dbpedia_uri: dbpedia_uri,
-          description: abstract_text
-        }
-        tags << tag
-        
-      end # each response entry
-    end # if response is found
+        response["detectedTopics"].each do |entry|
+          title = entry["title"]
+          dbpedia_uri = "http://dbpedia.org/resource/" + 
+                          entry["title"].gsub(" ", "_")
+          # Try to fetch abstrac from DBPedia
+          abstract_text = fetch_abstract(dbpedia_uri)
+          tag = {
+            label: title,
+            dbpedia_uri: dbpedia_uri,
+            description: abstract_text
+          }
+          tags << tag
+        end # each response entry
+      end # if response is found
     rescue Error => e
       logger.warn("Failed to fetch tags for query #{query}")
     end
     tags
+  end
+  
+  # Fetches the abstract for a given DBPedia resource
+  def self.fetch_abstract(dbpedia_uri)
+    
+    abstract_text = "Abstract could not be found."
+    
+    sparql_query = <<-eos
+      select ?abstract
+      where {
+        <#{dbpedia_uri}> <http://dbpedia.org/ontology/abstract> ?abstract .
+        FILTER ( lang(?abstract) = "en" )
+      }
+    eos
+    
+    logger.debug("Executing SPARQL query: " + sparql_query)
+    
+    query_uri = "http://dbpedia.org/sparql?"
+    query_uri << URI.encode_www_form("default-graph-uri" => 
+                                          "http://dbpedia.org")
+    query_uri << "&" + URI.encode_www_form("query" => sparql_query)
+    query_uri << "&" + URI.encode_www_form("format" => 
+                                            "application/sparql-results+json")
+    query_uri << "&" + URI.encode_www_form("timeout" => "0")
+    query_uri << "&" + URI.encode_www_form("debug" => "on")
+    
+    query_uri = URI.parse(query_uri)
+    response_abstract = Net::HTTP.get_response(query_uri)
+    
+    if response_abstract.code == "200"
+      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+      begin
+        bindings = response_abstract["results"]["bindings"][0]
+        abstract = bindings["abstract"]["value"]
+        abstract_text = abstract[0...294] + " (...)"
+      rescue Error, Exception => e
+        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
+      end
+    end
+      
+    abstract_text
   end
   
   # Finds matching nearby Wikipedia articles for the location
