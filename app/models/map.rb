@@ -25,9 +25,24 @@ class Map < ActiveRecord::Base
     text :title, :boost => 2.0
     text :subject
     string :author
-    string :identifier
-    integer :width
-    integer :height
+    text :annotations_content, :boost => 1.0
+    text :annotations_tags, :boost => 1.0
+    text :annotations_enrichments, :boost => 1.0
+  end
+  
+  # Collects all annotations into a single string
+  def annotations_content
+      annotations.collect(&:body).join(" ")
+  end
+  
+  # Collects all tag labels into a single string
+  def annotations_tags
+      annotations.collect(&:tags).flatten.collect(&:label).join(" ")
+  end
+  
+  # Collects all enrichment labels into a single string
+  def annotations_enrichments
+    annotations.collect(&:tags).flatten.collect(&:enrichment).join(" ")
   end
   
   # creates an empty boundary object for the map after creation

@@ -9,6 +9,7 @@ class Annotation < ActiveRecord::Base
   # Hooks
   after_create :update_map
   after_save :enrich_tags
+  after_commit :reindex_parent
   
   # Model associations
   belongs_to :user, :counter_cache => true
@@ -17,9 +18,9 @@ class Annotation < ActiveRecord::Base
   accepts_nested_attributes_for :boundary
   has_many :tags
   
-  # Search
-  searchable do
-    text :body, :boost => 2.0
+  # Search-related methods
+  def reindex_parent
+    map.solr_index!
   end
   
   def truncated_body
@@ -30,8 +31,7 @@ class Annotation < ActiveRecord::Base
     map.update_attribute(:updated_at, Time.now)
   end
   
-  #Upon saving an annotation, enrich the associated tags with all available
-  #translations of that tag via dbpedia using the SPARQL query:
+  # Enrich the associated tags with all available DBPedia labels
   def enrich_tags
     
     tags.each do |tag|
@@ -42,25 +42,7 @@ class Annotation < ActiveRecord::Base
         tag.update_attribute(:enrichment, enrichment) 
       end
     end
-    
-    # tags = Tag.all.select{|tag| tag.annotation_id == self.id}
-    # for i in 0..tags.length-1 do
-    # title = tags[i]["label"]
-    # taglist = ""
-    # 
-    # query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-    #    
-    #   url= Addressable::URI.parse(query)
-    #   response = Net::HTTP.get_response(url)
-    #   if response.code == "200"
-    #     response= ActiveSupport::JSON.decode response.body
-    #   
-    #     for j in 0..response["results"]["bindings"].length-1 do
-    #       taglist += " " + response["results"]["bindings"][j]["label"]["value"]
-    #     end
-    #   end
-    #   tags[i].update_attribute(:enrichment, taglist)
-    # end
+
   end
   
   # Finds tags for given input text
