@@ -1,12 +1,19 @@
 2012/06/29:
     RELEASE 0.2
     
-    * implemented Geonames / Wikiminer / DBPedia lookup
-    * implemented search
+    New features:
+        * Multilingual search based on semantic enrichments
+        * Semantic enrichment (via DBpedia abstracts)
+        * Map search based on metadata, annotations, and semantic tags
+        * User-feedback (accept, reject, neutral) for proposed tags
+        * Semantic tagging (via Geonames and Wikiminer)
+        * Raster-image -> lat/lng projection and mapping functions
+        * W3C Open Annotation interface
 
 2012/05/01:
     RELEASE 0.1:
     
-    * implemented Open Annotation RDF serialization
-    * implemented annotation and control point creation
-    * implemented user management and core infrastructure components
+    New features:
+        * Open Annotation RDF serialization
+        * Annotation and control point creation
+        * User management and core infrastructure components

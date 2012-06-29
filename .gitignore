@@ -24,3 +24,5 @@
 # Pow
 .powenv
 
+# Maphub files
+db/seeds/maps.yaml
