@@ -51,9 +51,13 @@ Finally, open <http://localhost:3000/> in your browser and log into MapHub with 
 
 The server can run on port 80, but in most cases it needs root permission to do so. Execute the following to have the server run in background:
 
-    nohup rvmsudo rails server -port 80 &>/dev/null 2> /dev/null &
+    rvmsudo rails server -p 80
     
-Then, bring the process to the foreground with `fg` and type in the password.
+Once you've made sure that works, cancel it and enter:
+
+    nohup rvmsudo rails server -p 80 &> /dev/null 2> /dev/null &
+    
+If the server runs normally, you're finished. If not, it's still asking for the password. Bring the process to the foreground with `fg` and type in the password.
 
 Now we need to suspend the process and get it to the background again. Press `Ctrl-Z` and enter `bg`.
 
