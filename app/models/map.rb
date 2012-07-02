@@ -39,7 +39,11 @@ class Map < ActiveRecord::Base
   def annotations_tags
     tag_labels = []
     annotations.each do |annotation|
-      tag_labels << annotation.tags.collect(&:label).join(" ")
+    	annotation.tags.each do |tag|
+    		if tag.accepted?
+      		tag_labels << tag.label
+      	end
+      end
     end
     tag_labels.join(" ")
   end
@@ -48,7 +52,11 @@ class Map < ActiveRecord::Base
   def annotations_enrichments
     tag_enrichments = []
     annotations.each do |annotation|
-      tag_enrichments << annotation.tags.collect(&:enrichment).join(" ")
+    	annotation.tags.each do |tag|
+    		if tag.accepted?
+      		tag_enrichments << tag.enrichment
+      	end
+      end
     end
     tag_enrichments.join(" ")
   end

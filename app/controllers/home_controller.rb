@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   def search
     
     @maps = []
+    @q = params[:q]
     
     @search = Map.search do
       keywords params[:q]

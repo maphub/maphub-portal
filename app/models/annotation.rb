@@ -59,12 +59,10 @@ class Annotation < ActiveRecord::Base
     logger.debug("Executing Wikify query: " + query)
     
     begin
-
       url = URI.parse(query)
       response = Net::HTTP.get_response(url)
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
-        
         response["detectedTopics"].each do |entry|
           title = entry["title"]
           dbpedia_uri = "http://dbpedia.org/resource/" + 
