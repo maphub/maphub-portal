@@ -25,12 +25,35 @@ class Map < ActiveRecord::Base
     text :title, :boost => 2.0
     text :subject
     string :author
-    string :identifier
-    integer :width
-    integer :height
+    text :annotations_content, :boost => 1.0
+    text :annotations_tags, :boost => 1.0
+    text :annotations_enrichments, :boost => 1.0
   end
   
-  # creates an empty boundary object for the map after creation
+  # Collects all annotations into a single string
+  def annotations_content
+    annotations.collect(&:body).join(" ")
+  end
+  
+  # Collects all tag labels into a single string
+  def annotations_tags
+    tag_labels = []
+    annotations.each do |annotation|
+      tag_labels << annotation.tags.collect(&:label).join(" ")
+    end
+    tag_labels.join(" ")
+  end
+  
+  # Collects all enrichment labels into a single string
+  def annotations_enrichments
+    tag_enrichments = []
+    annotations.each do |annotation|
+      tag_enrichments << annotation.tags.collect(&:enrichment).join(" ")
+    end
+    tag_enrichments.join(" ")
+  end
+  
+  # Creates an empty boundary object for the map after creation
   def create_boundary_object
     boundary = self.build_boundary
     boundary.ne_x = self.width

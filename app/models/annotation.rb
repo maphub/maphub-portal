@@ -7,63 +7,41 @@ class Annotation < ActiveRecord::Base
   validates_presence_of :body, :map
   
   # Hooks
-  after_create :update_map
-  after_save :enrich_tags
-  
+  after_save :enrich_tags, :update_map
+
   # Model associations
   belongs_to :user, :counter_cache => true
   belongs_to :map
   has_one :boundary, :as => :boundary_object
   accepts_nested_attributes_for :boundary
   has_many :tags
-  
-  # Search
-  searchable do
-    text :body, :boost => 2.0
-  end
-  
+    
+  # Virtual attributes
   
   def truncated_body
     (body.length > 30) ? body[0, 30] + "..." : body
   end
   
   def update_map
-    map.update_attribute(:updated_at, Time.now)
+    logger.debug("Informing parent about new annotation.")
+    map.touch
+    map.index
   end
   
-  #Upon saving an annotation, enrich the associated tags with all available
-  #translations of that tag via dbpedia using the SPARQL query:
-  #
-	# select ?label
-	# where {
-	# <http://dbpedia.org/resource/[ENTRY TITLE]> 
-	# <http://www.w3.org/2000/01/rdf-schema#label> ?label
-	# }
+  # Enrich the associated tags with all available DBPedia labels
   def enrich_tags
-  	
-  	tags = Tag.all.select{|tag| tag.annotation_id == self.id}
-  	for i in 0..tags.length-1 do
-  	title = tags[i]["label"]
-  	taglist = ""
-  	
-	  query = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Flabel%0D%0Awhere+%7B%0D%0A%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + title.gsub(" ", "_").gsub("-", "_") + "%3E+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23label%3E+%3Flabel%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-	     
-      url= Addressable::URI.parse(query)
-      response = Net::HTTP.get_response(url)
-      if response.code == "200"
-      	response= ActiveSupport::JSON.decode response.body
-			
-				for j in 0..response["results"]["bindings"].length-1 do
-					taglist += " " + response["results"]["bindings"][j]["label"]["value"]
-				end
-			end
-			tags[i].update_attribute(:enrichment, taglist)
-  	end
- 	end
-  
-  def segment
-    # TODO: parse only once after creation
-    Segment.create_from_wkt_data(self.wkt_data)
+    tags.each do |tag|
+      if tag.accepted?
+        enrichment = Annotation.fetch_enrichment(tag.dbpedia_uri) 
+        if enrichment.length > 0
+          logger.debug("Enriching tag: #{tag.dbpedia_uri}")
+          tag.update_attribute(:enrichment, enrichment)
+          tag.save!
+        end
+      end
+    end
+    # Reindex the map
+    logger.debug("Reindexing the map")
   end
   
   # Finds tags for given input text
@@ -74,72 +52,115 @@ class Annotation < ActiveRecord::Base
     
     query = "http://samos.mminf.univie.ac.at:8080/wikipediaminer/services/wikify?"
     query << "source=#{URI::encode(text)}"
+    query << "&minProbability=0.1"
     query << "&disambiguationPolicy=loose"
     query << "&responseFormat=json"
     
-    #logger.debug "#{query.inspect}"
+    logger.debug("Executing Wikify query: " + query)
     
     begin
-    url = Addressable::URI.parse(query)
-    response = Net::HTTP.get_response(url)
-    if response.code == "200"
-      response = ActiveSupport::JSON.decode response.body
-      
-      #logger.debug response["detectedTopics"]
-      
-      response["detectedTopics"].each do |entry|
-        title = entry["title"]
-        dbpedia_uri = "http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")
-        
 
-        #Constructs the dbpedia JSON request URI via SPARQL query:
-        #
-				# select ?abstract
-				# where {
-				# <http://dbpedia.org/resource/[ENTRY TITLE] 
-				# <http://dbpedia.org/ontology/abstract> ?abstract .
-				# FILTER ( lang(?abstract) = "en" )
-				# }
-
-        #Constructs the dbpedia JSON request URI via SPARQL
-
-        query_abstract = "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fabstract%0D%0Awhere+%7B%0D%0A++++%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F" + entry["title"].gsub(" ", "_") + "%3E+%3Chttp%3A%2F%2Fdbpedia.org%2Fontology%2Fabstract%3E+%3Fabstract+.%0D%0A++++FILTER+%28+lang%28%3Fabstract%29+%3D+%22en%22+%29+%0D%0A%7D&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on"
-        url_abstract = URI.parse(query_abstract)
-        response_abstract = Net::HTTP.get_response(url_abstract)
-        if response_abstract.code == "200"
-          response_abstract = ActiveSupport::JSON.decode response_abstract.body
-          abstract = response_abstract["results"]["bindings"][0]["abstract"]["value"]
-          abstract_text = abstract[0...294] + " (...)"
-        else
-          abstract_text = "Abstract could not be found."
-        end
+      url = URI.parse(query)
+      response = Net::HTTP.get_response(url)
+      if response.code == "200"
+        response = ActiveSupport::JSON.decode response.body
         
-        # TODO: for description, resolve dbpedia / json URI, extract
-        # dbpedia-abstract in "en" (see https://github.com/maphub/maphub-portal/issues/11)
-        
-        #Old code for running dbpedia JSON request directly through dbpedia
-        
-        #query_abstract = "http://dbpedia.org/data/" + entry["title"].gsub(" ", "_") + ".json"
-        #url_abstract = URI.parse(query_abstract)
-        #response_abstract = Net::HTTP.get_response(url_abstract)
-        #if response_abstract.code == "200"
-        #	response_abstract = ActiveSupport::JSON.decode response_abstract.body
-        #	abstract = response_abstract["http://dbpedia.org/resource/" + entry["title"].gsub(" ", "_")]["http://dbpedia.org/ontology/abstract"].select {|lang| lang["lang"] == "en"}
-        #	abstract_text = abstract[0]["value"][0...294] + " (...)"
-        
-        tag = {
-          label: title,
-          dbpedia_uri: dbpedia_uri,
-          description: abstract_text
-        }
-        tags << tag
-        
-      end # each response entry
-    end # if response is found
+        response["detectedTopics"].each do |entry|
+          title = entry["title"]
+          dbpedia_uri = "http://dbpedia.org/resource/" + 
+                          entry["title"].gsub(" ", "_")
+          # Try to fetch abstrac from DBPedia
+          abstract_text = fetch_abstract(dbpedia_uri)
+          tag = {
+            label: title,
+            dbpedia_uri: dbpedia_uri,
+            description: abstract_text
+          }
+          tags << tag
+        end # each response entry
+      end # if response is found
     rescue Error => e
       logger.warn("Failed to fetch tags for query #{query}")
     end
     tags
+  end
+  
+  # Creates a DBPedia SPARQL request URI from a given sparql query
+  def self.create_dbpedia_sparql_request_uri(sparql_query)
+    uri = "http://dbpedia.org/sparql?"
+    uri << URI.encode_www_form("default-graph-uri" => 
+                                          "http://dbpedia.org")
+    uri << "&" + URI.encode_www_form("query" => sparql_query)
+    uri << "&" + URI.encode_www_form("format" => 
+                                            "application/sparql-results+json")
+    uri << "&" + URI.encode_www_form("timeout" => "0")
+    uri << "&" + URI.encode_www_form("debug" => "on")
+  end
+  
+  # Fetches enrichments (= label translations) for a given DBPedia resource
+  def self.fetch_enrichment(dbpedia_uri)
+    
+    enrichments = []
+    
+    sparql_query = <<-eos
+      select ?label
+      where {
+        <#{dbpedia_uri}> <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+      }
+    eos
+    
+    logger.debug("Executing SPARQL query: " + sparql_query)
+    
+    query_uri = create_dbpedia_sparql_request_uri(sparql_query)
+    request_uri = URI.parse(query_uri)
+    response_abstract = Net::HTTP.get_response(request_uri)
+    
+    if response_abstract.code == "200"
+      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+      begin
+        bindings = response_abstract["results"]["bindings"]
+        bindings.each do |binding|
+          enrichments << binding["label"]["value"]
+        end
+      rescue Error, Exception => e
+        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
+      end
+    end
+    enrichments.uniq.join(" ")
+  end
+  
+  
+  # Fetches the abstract for a given DBPedia resource
+  def self.fetch_abstract(dbpedia_uri)
+    
+    abstract_text = "Abstract could not be found."
+    
+    sparql_query = <<-eos
+      select ?abstract
+      where {
+        <#{dbpedia_uri}> <http://dbpedia.org/ontology/abstract> ?abstract .
+        FILTER ( lang(?abstract) = "en" )
+      }
+    eos
+    
+    logger.debug("Executing SPARQL query: " + sparql_query)
+    
+    query_uri = create_dbpedia_sparql_request_uri(sparql_query)
+    request_uri = URI.parse(query_uri)
+    response_abstract = Net::HTTP.get_response(request_uri)
+    
+    if response_abstract.code == "200"
+      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+      begin
+        bindings = response_abstract["results"]["bindings"][0]
+        abstract = bindings["abstract"]["value"]
+        abstract_text = abstract[0...294] + " (...)"
+      rescue Error, Exception => e
+        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
+      end
+    end
+      
+    abstract_text
   end
   
   # Finds matching nearby Wikipedia articles for the location
@@ -191,6 +212,13 @@ class Annotation < ActiveRecord::Base
     end
     tags
   end
+
+  ##### Open Annotation Serialization methods #######
+
+  # Creates a segment object from WKT data
+  def segment
+    Segment.create_from_wkt_data(self.wkt_data)
+  end
   
   # Writes annotation metadata in a given RDF serialization format
   def to_rdf(format, options = {})
@@ -198,8 +226,10 @@ class Annotation < ActiveRecord::Base
     httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
     
     # Defining the custom vocabulary # TODO: move this to separate lib
-    oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core#')
+    oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core/')
     oa = RDF::Vocabulary.new(oa_uri)
+    oax_uri = RDF::URI('http://www.w3.org/ns/openannotation/extensions/')
+    oax = RDF::Vocabulary.new(oax_uri) 
     ct_uri = RDF::URI('http://www.w3.org/2011/content#')
     ct = RDF::Vocabulary.new(ct_uri)
     foaf_uri = RDF::URI('http://xmlns.com/foaf/spec/')
@@ -229,6 +259,14 @@ class Annotation < ActiveRecord::Base
     graph << [baseURI, oa.annotator, user_node]
     graph << [user_node, foaf.mbox, RDF::Literal.new(self.user.email)]
     graph << [user_node, foaf.name, RDF::Literal.new(self.user.username)]
+    
+    # Adding semantic tags
+    tags.each do |tag|
+      if tag.accepted?
+        semantic_tag = RDF::URI.new(tag.dbpedia_uri)
+        graph << [baseURI, oax.hasSemanticTag, semantic_tag]
+      end
+    end
     
     # Creating the body
     unless self.body.nil?
@@ -277,6 +315,7 @@ class Annotation < ActiveRecord::Base
       writer.prefix :ct, ct_uri
       writer.prefix :rdf, RDF::URI(RDF.to_uri)
       writer.prefix :foaf, foaf_uri
+      writer.prefix :oax, oax_uri
       writer << graph
     end
     
