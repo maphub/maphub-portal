@@ -50,7 +50,7 @@ class Annotation < ActiveRecord::Base
     
     return tags if text.length < 5
     
-    query = "http://samos.mminf.univie.ac.at:8080/wikipediaminer/services/wikify?"
+    query = Rails.configuration.wikipedia_miner_uri + "wikipediaminer/services/wikify?"
     query << "source=#{URI::encode(text)}"
     query << "&minProbability=0.1"
     query << "&disambiguationPolicy=loose"
@@ -183,7 +183,7 @@ class Annotation < ActiveRecord::Base
       
       # add username, we kinda need this, TODO: get our own?
       query << "maxRows=5&"
-      query << "username=slhck"
+      query << Rails.configuration.geoname_user
       #logger.debug "#{query.inspect}"
             
       # parse response

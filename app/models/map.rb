@@ -73,29 +73,29 @@ class Map < ActiveRecord::Base
   
   # TODO: this should be in a central APP configuration file
   def map_base_uri
-    "http://samos.mminf.univie.ac.at/maps"
+    Rails.configuration.map_base_uri
   end
   
   def raw_image_uri
-    "#{map_base_uri}/raw/#{self.identifier}.jp2"    
+    "#{map_base_uri}/raw/#{identifier}.jp2"    
   end
   
   def tileset_uri
-    "#{map_base_uri}/ts_zoomify/#{self.identifier}"
+    "#{map_base_uri}/ts_zoomify/#{identifier}"
   end
   
   def thumbnail_uri
-    "#{map_base_uri}/thumbnails/#{self.identifier}.jpg"
+    "#{map_base_uri}/thumbnails/#{identifier}.jpg"
   end
   
   def thumbnail_small_uri
-    "#{self.tileset_uri}/TileGroup0/0-0-0.jpg"
+    "#{tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
   # the URI of the Google Maps overlay tileset
   def overlay_tileset_uri
     begin
-      uri = "#{map_base_uri}/ts_google/#{self.identifier}/"
+      uri = "#{map_base_uri}/ts_google/#{identifier}/"
       response_code = Net::HTTP.get_response(URI.parse(uri)).code
       (response_code == "200") ? uri : nil
     rescue
