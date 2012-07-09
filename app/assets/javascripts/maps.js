@@ -16,6 +16,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
       } else {
         evt.feature.tooltip = new MapHub.AnnotationTooltip(evt.feature.annotation, self.user_id);
       }
+      self.tooltips.push(evt.feature.tooltip);
     }
     // get the screen coordinates
     var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
@@ -29,7 +30,15 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
+    
+    // deactivate keyboard shortcuts
     self.keyboard_shortcuts.deactivate();
+    
+    // hide all tooltips
+    for (var i in self.tooltips) {
+      self.tooltips[i].hide();
+    }
+    
     // is this a Control Point or an Annotation?
     var class_name = evt.feature.geometry.CLASS_NAME;
     if (class_name == "OpenLayers.Geometry.Point") {
@@ -91,6 +100,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.features_control_points  = [];   // all control point features
   this.annotations              = [];   // all annotations on this map
   this.control_points           = [];   // all control points on this map
+  this.tooltips                 = [];   // all tooltips on this map
   
   // ================================================================================
   
