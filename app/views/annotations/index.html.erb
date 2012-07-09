@@ -27,7 +27,9 @@
     <td>
       <div class="tags-list">
       <% annotation.tags.each do |t| %>
-        <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
+        <% if t.accepted? %>
+          <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
+        <% end %>
       <% end %>
       </div>
     </td>
