@@ -8,7 +8,7 @@ require 'net/http'
 class Map < ActiveRecord::Base
   
   # Hooks  
-  before_validation :extract_dimensions
+  before_validation :tileset_exists?, :extract_dimensions
   after_create :create_boundary_object
   
   # Validation
@@ -92,6 +92,10 @@ class Map < ActiveRecord::Base
     "#{tileset_uri}/TileGroup0/0-0-0.jpg"
   end
   
+  def image_properties_uri
+    "#{tileset_uri}/ImageProperties.xml"
+  end
+  
   # the URI of the Google Maps overlay tileset
   def overlay_tileset_uri
     begin
@@ -113,6 +117,17 @@ class Map < ActiveRecord::Base
     self.control_points.count
   end
   
+  # checks whether the remote tileset exists
+  def tileset_exists?
+    url = URI.parse "#{image_properties_uri}"
+    begin
+      response = Net::HTTP.get_response(url)
+      return response.code == "200"
+    rescue
+      false
+    end
+  end
+  
   # Extracts image dimensions from ImageProperties.xml;
   def extract_dimensions
     tileset_uri.chomp!('/') # remove trailing slash just in case
@@ -122,7 +137,6 @@ class Map < ActiveRecord::Base
       self.width = response.body.match(/width="(\d*)"/i).captures.first
       self.height = response.body.match(/height="(\d*)"/i).captures.first
     end
-    
   end
-    
+  
 end

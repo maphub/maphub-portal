@@ -57,13 +57,17 @@ else
   puts "Creating sample maps"
 
   maps.each_with_index do |id, index|
-    Map.create do |map|
+    new_map = Map.new do |map|
+      puts "Creating map #{id}"
       map.identifier  = id
       map.title       = "Map #{index+1}"
       map.subject     = "Lorem ipsum dolor sit amet. Sunt in culpa qui officia deserunt mollit anim id est laborum."
       map.author      = "Anonymous"
       map.date        = "1877"
     end
-    puts "Created map #{id}"
+    unless new_map.valid?
+      puts "Can't validate map. Please check if the map really exists at <#{new_map.tileset_uri}>"
+    end
+    new_map.save
   end
 end
