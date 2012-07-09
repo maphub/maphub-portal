@@ -8,7 +8,7 @@ require 'net/http'
 class Map < ActiveRecord::Base
   
   # Hooks  
-  before_validation :tileset_exists?, :extract_dimensions
+  before_validation :has_tileset?, :extract_dimensions
   after_create :create_boundary_object
   
   # Validation
@@ -71,7 +71,7 @@ class Map < ActiveRecord::Base
     boundary.save
   end
   
-  # TODO: this should be in a central APP configuration file
+  # virtual attributes
   def map_base_uri
     Rails.configuration.map_base_uri
   end
@@ -96,15 +96,12 @@ class Map < ActiveRecord::Base
     "#{tileset_uri}/ImageProperties.xml"
   end
   
-  # the URI of the Google Maps overlay tileset
   def overlay_tileset_uri
-    begin
-      uri = "#{map_base_uri}/ts_google/#{identifier}/"
-      response_code = Net::HTTP.get_response(URI.parse(uri)).code
-      (response_code == "200") ? uri : nil
-    rescue
-      nil
-    end
+    "#{map_base_uri}/ts_google/#{identifier}"
+  end
+  
+  def overlay_properties_uri
+    "#{overlay_tileset_uri}/tilemapresource.xml"
   end
   
   # a truncated title
@@ -117,9 +114,20 @@ class Map < ActiveRecord::Base
     self.control_points.count
   end
   
+  # checks whether the overlay tileset exists
+  def has_overlay?
+    url = URI.parse overlay_properties_uri
+    begin
+      response = Net::HTTP.get_response(url)
+      return response.code == "200"
+    rescue
+      false
+    end
+  end
+  
   # checks whether the remote tileset exists
-  def tileset_exists?
-    url = URI.parse "#{image_properties_uri}"
+  def has_tileset?
+    url = URI.parse image_properties_uri
     begin
       response = Net::HTTP.get_response(url)
       return response.code == "200"
