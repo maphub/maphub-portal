@@ -137,21 +137,37 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   // ================================================================================
   
   /* The zoomify layer */
-  this.baseLayer = new OpenLayers.Layer.Zoomify( "Zoomify", this.zoomify_url, 
-      new OpenLayers.Size( this.zoomify_width, this.zoomify_height ) );
+  this.baseLayer = new OpenLayers.Layer.Zoomify(
+    "Zoomify", 
+    this.zoomify_url,
+    new OpenLayers.Size( this.zoomify_width, this.zoomify_height ),
+    { displayInLayerSwitcher: false }
+  );
 
   /* The editing controls layer */
-  this.editLayer = new OpenLayers.Layer.Vector( "Editable", { styleMap: annotationStyleMap });
+  this.editLayer = new OpenLayers.Layer.Vector(
+    "Editable", 
+    { styleMap: annotationStyleMap, displayInLayerSwitcher: false }
+  );
   this.editLayer.events.register("featureadded", this.editLayer, featureAdded);
   
-  this.controlPointEditLayer = new OpenLayers.Layer.Vector( "Control Point Editable", { styleMap: controlPointStyleMap });
+  this.controlPointEditLayer = new OpenLayers.Layer.Vector( 
+    "Control Point Editable", 
+    { styleMap: controlPointStyleMap, displayInLayerSwitcher: false }
+  );
   this.controlPointEditLayer.events.register("featureadded", this.controlPointEditLayer, featureAdded);
 
   /* The annotation layer */
-  this.annotationLayer = new OpenLayers.Layer.Vector("Annotations", { styleMap: annotationStyleMap });
+  this.annotationLayer = new OpenLayers.Layer.Vector(
+    "Annotations", 
+    { styleMap: annotationStyleMap }
+  );
   
   /* The control points layer */
-  this.controlPointsLayer = new OpenLayers.Layer.Vector( "Control Points", { styleMap: controlPointStyleMap } );
+  this.controlPointsLayer = new OpenLayers.Layer.Vector( 
+    "Control Points", 
+    { styleMap: controlPointStyleMap }
+  );
   
 
   /* Display options */
@@ -190,6 +206,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.keyboard_shortcuts = new OpenLayers.Control.KeyboardDefaults();
   this.map.addControl(this.keyboard_shortcuts);
   
+  this.map.addControl(new OpenLayers.Control.LayerSwitcher(
+    {'div':OpenLayers.Util.getElement('layerswitcher')})
+    );
   
   // ================================================================================
 
