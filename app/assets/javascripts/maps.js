@@ -29,6 +29,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   // This function is called when a feature was added to the Edit layer
   function featureAdded(evt) {
+    self.keyboard_shortcuts.deactivate();
     // is this a Control Point or an Annotation?
     var class_name = evt.feature.geometry.CLASS_NAME;
     if (class_name == "OpenLayers.Geometry.Point") {
@@ -40,7 +41,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   // This function is called when an annotation was drawn
   function annotationAdded(evt) {    
-    var wkt_data        = evt.feature.geometry.toString();
+    var wkt_data = evt.feature.geometry.toString();
     
     // reinitialize title and body, and copy WKT data as well as bounds
     $("#annotation_body").attr("value", "Add your annotation here!");
@@ -186,7 +187,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.MousePosition());
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
   // Removed keyboard navigation for the time being, see issue #42
-  //this.map.addControl(new OpenLayers.Control.KeyboardDefaults());
+  this.keyboard_shortcuts = new OpenLayers.Control.KeyboardDefaults();
+  this.map.addControl(this.keyboard_shortcuts);
+  
   
   // ================================================================================
 
@@ -269,6 +272,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
 }
 
 // ----------------------------------------------------------------------------
+
 
 MapHub.AnnotationView.prototype.initAutoComplete = function() {
   $('input#place-search').autocomplete({
