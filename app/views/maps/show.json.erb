@@ -11,8 +11,15 @@
 "created_at": "<%= @map.created_at %>",
 "thumbnail_uri": "<%= @map.thumbnail_uri %>",
 "tileset_uri": "<%= @map.tileset_uri %>"
-<% unless @map.overlay_tileset_uri.nil? %>
+<% if @map.has_overlay? %>
 ,"overlay_tileset_uri": "<%= @map.overlay_tileset_uri %>"
+,"overlay_boundary": {
+<% overlay_boundary = @map.overlay_boundary %>
+"sw_lat": "<%= overlay_boundary.sw_lat -%>",
+"sw_lng": "<%= overlay_boundary.sw_lng -%>",
+"ne_lat": "<%= overlay_boundary.ne_lat -%>",
+"ne_lng": "<%= overlay_boundary.ne_lng -%>"
+}
 <% end %>
 <% if @map.control_points.count > 0 %>
 ,"controlpoints": [

@@ -1,5 +1,7 @@
 require 'open-uri'
 require 'net/http'
+require 'nokogiri'
+require 'ostruct'
 
 # This class represents data about a historic map.
 #
@@ -144,6 +146,20 @@ class Map < ActiveRecord::Base
     if response.code == "200"
       self.width = response.body.match(/width="(\d*)"/i).captures.first
       self.height = response.body.match(/height="(\d*)"/i).captures.first
+    end
+  end
+  
+  # Exctracs boundary information from overlay tileset 
+  def overlay_boundary
+    doc = Nokogiri::XML(open(overlay_properties_uri))
+    unless doc.nil?
+      bounding_box = doc.xpath("//BoundingBox[@minx]")
+      ret = OpenStruct.new 
+      ret.ne_lat = bounding_box.attribute("maxx").content
+      ret.ne_lng = bounding_box.attribute("maxy").content
+      ret.sw_lat = bounding_box.attribute("minx").content
+      ret.sw_lng = bounding_box.attribute("miny").content
+      return ret
     end
   end
   
