@@ -79,8 +79,9 @@ ActiveRecord::Schema.define(:version => 20120628194435) do
     t.integer  "height"
     t.string   "author"
     t.string   "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "overlay_available"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "tags", :force => true do |t|

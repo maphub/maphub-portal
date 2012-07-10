@@ -8,6 +8,7 @@ class CreateMaps < ActiveRecord::Migration
       t.integer :height
       t.string :author
       t.string :date
+      t.boolean :overlay_available
       t.timestamps
     end
   end

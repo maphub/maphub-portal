@@ -85,6 +85,11 @@ $(document).ready(function(){
         
         </div>
         
+        
+        <% else %>
+        <div class="alert alert-info">You need to be <%= link_to 'signed in', new_user_session_path %> in order to create annotations and control points for this map!</div>
+        <% end %>
+        
         <% if @map.has_overlay? %>
         <!--Creates Javascript variables for latitude and longitude of the current map -->
         	<!--A dropdown button to toggle between Regular Map view and Google map view -->
@@ -101,10 +106,6 @@ $(document).ready(function(){
         <h4>Layers</h4>
         <div id="layerswitcher"></div>
         <hr>
-        
-        <% else %>
-        <div class="alert alert-info">You need to be <%= link_to 'signed in', new_user_session_path %> in order to create annotations and control points for this map!</div>
-        <% end %>
         
         <br>
         

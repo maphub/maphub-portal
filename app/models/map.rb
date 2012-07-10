@@ -118,12 +118,18 @@ class Map < ActiveRecord::Base
   
   # checks whether the overlay tileset exists
   def has_overlay?
-    url = URI.parse overlay_properties_uri
-    begin
-      response = Net::HTTP.get_response(url)
-      return response.code == "200"
-    rescue
-      false
+    if self.overlay_available
+      return true
+    else
+      url = URI.parse overlay_properties_uri
+      begin
+        response = Net::HTTP.get_response(url)
+        self.overlay_available = (response.code == "200")
+        self.save
+        return self.overlay_available
+      rescue
+        false
+      end
     end
   end
   
