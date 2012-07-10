@@ -1,4 +1,9 @@
 <%= javascript_include_tag params[:controller] %>
+
+<% google_maps_src = "http://maps.googleapis.com/maps/api/js?key=" + Rails.configuration.google_maps_api_key + "&sensor=true" %>
+<script src="<%= raw google_maps_src %>" type="text/javascript"></script>
+
+<!-- Initialize OpenLayers and Google Overlay view-->
 <%= javascript_tag do %>
 function initOpenLayers() {
   window.annotation_view = new MapHub.AnnotationView(
@@ -11,16 +16,40 @@ function initOpenLayers() {
       <%= user_signed_in? ? current_user.id : "0" %>
   );
 }
-$(document).ready(function(){
-  initOpenLayers();
+
+function initGoogleOverlay() {
+  window.overlay_view = new MapHub.OverlayView();
+}
+
+function initTaggingView() {
   window.tagging_view = new MapHub.TaggingView(
     "<%= annotation_tag_find_url(:map => @map.id) %>",
     1000
   );
+}
+
+// this is called when the page is loaded first: initialize OpenLayers
+$(document).ready(function(){
+  initOpenLayers();   // initialize OpenLayers by default
+  initTaggingView();
+  
+  <% if @map.has_overlay? %>
+    initGoogleOverlay();
+    $("#overlay_viewer").hide();
+  <% end %>
+  
+  $("#map-type-regular").click(function() {
+    $("#viewer").fadeIn();
+  });
+  
+  $("#map-type-google").click(function() {
+    $("#viewer").fadeOut();
+    $("#overlay_viewer").fadeIn();
+  });
+  
 });
 <% end %>
 
-<!-- TODO: check if Fluid Layout (http://twitter.github.com/bootstrap/scaffolding.html) suits better for this view-->
 <div class="row">
   <div id="tooltip-selected">
   <p id="notice"><%= notice %></p>
@@ -31,6 +60,7 @@ $(document).ready(function(){
       <!-- Map View -->
       <div class="span8">
         <div id="viewer" class="span8" style="height:600px;"></div>
+        <div id="overlay_viewer" class="span8" style="height:600px;"></div>
       </div>
       
       <!-- Right column-->
@@ -38,28 +68,46 @@ $(document).ready(function(){
         
         <% if user_signed_in? %>
         <div id="control-toggle">
+        
           <div class="btn-group" data-toggle="buttons-radio">
             <button class="btn btn-primary" id="control-toggle-navigate" value="none">Navigate</button>
             <button class="btn" id="control-toggle-annotation">Annotate</button>
             <button class="btn" id="control-toggle-control-point" value="point">Control Point</button>
           </div>
           <br>
+        
           <div id="control-toggle-annotation-types" class="btn-group" data-toggle="buttons-radio">
             <button class="btn" value="polygon">Polygon</button>
             <button class="btn" value="line">Line</button>
             <button class="btn" value="box">Box</button>
           </div>
           <br>
+        
         </div>
+        
+        <% if @map.has_overlay? %>
+        <!--Creates Javascript variables for latitude and longitude of the current map -->
+        	<!--A dropdown button to toggle between Regular Map view and Google map view -->
+        	<div class="dropdown" id="map-type-selector">
+        		<button class="btn dropdown-toggle" data-toggle="dropdown" href="#map-type-selector">Map View<b class="caret"></b></button>
+        		<ul class="dropdown-menu">
+        			<li><a id="map-type-regular">Regular Map</a></li>
+        			<li><a id="map-type-google">Google Maps</a> </li>
+        		</ul>
+        	</div> <!--end class="dropdown"-->
+        	<br>
+        <% end %>
+        
         <h4>Layers</h4>
-        <div id="layerswitcher">
-          
-        </div>
+        <div id="layerswitcher"></div>
         <hr>
+        
         <% else %>
         <div class="alert alert-info">You need to be <%= link_to 'signed in', new_user_session_path %> in order to create annotations and control points for this map!</div>
         <% end %>
+        
         <br>
+        
         <h4><%= @map.title %></h4><br>
         <strong>Subject: </strong><%= @map.subject %><br>
         <strong>Author: </strong><%= @map.author %><br>

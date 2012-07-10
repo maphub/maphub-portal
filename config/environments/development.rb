@@ -1,11 +1,13 @@
 MaphubPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-	#Config variables
+	# Config variables
 	config.map_base_uri = "http://samos.mminf.univie.ac.at/maps"
+	#config.map_base_uri = "http://localhost:8000/maps"
 	config.wikipedia_miner_uri = "http://samos.mminf.univie.ac.at:8080/"
-	#config.geoname_query = "http://api.geonames.org/wikipediaBoundingBoxJSON?"
+	config.geoname_query = "http://api.geonames.org/wikipediaBoundingBoxJSON?"
 	config.geoname_user = "username=slhck"
+	config.google_maps_api_key = "AIzaSyBlzM3vloWBjycG494laUkc5DEHrMI6M0I"
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

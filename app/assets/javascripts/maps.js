@@ -602,3 +602,10 @@ MapHub.TaggingView = function(callback_url, timeout) {
 MapHub.TaggingView.prototype.reset = function() {
   this.tags = new Array();
 }
+
+// ----------------------------------------------------------------------------
+
+
+MapHub.OverlayView = function() {
+  
+}
