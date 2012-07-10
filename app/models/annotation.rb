@@ -77,8 +77,8 @@ class Annotation < ActiveRecord::Base
           tags << tag
         end # each response entry
       end # if response is found
-    rescue Error => e
-      logger.warn("Failed to fetch tags for query #{query}")
+    rescue
+      logger.warn("Failed to fetch text-based tags for query #{query}")
     end
     tags
   end
@@ -120,7 +120,7 @@ class Annotation < ActiveRecord::Base
         bindings.each do |binding|
           enrichments << binding["label"]["value"]
         end
-      rescue Error, Exception => e
+      rescue
         logger.warn("Could not fetch abstract from #{dbpedia_uri}")
       end
     end
@@ -153,7 +153,7 @@ class Annotation < ActiveRecord::Base
         bindings = response_abstract["results"]["bindings"][0]
         abstract = bindings["abstract"]["value"]
         abstract_text = abstract[0...294] + " (...)"
-      rescue Error, Exception => e
+      rescue
         logger.warn("Could not fetch abstract from #{dbpedia_uri}")
       end
     end
@@ -184,7 +184,7 @@ class Annotation < ActiveRecord::Base
       # add username, we kinda need this, TODO: get our own?
       query << "maxRows=5&"
       query << Rails.configuration.geoname_user
-      #logger.debug "#{query.inspect}"
+      logger.debug "Executing GeoNames query: #{query}"
             
       # parse response
       begin
@@ -204,8 +204,8 @@ class Annotation < ActiveRecord::Base
           tags << tag
         end
       end
-      rescue Error => e
-        logger.warn("Failed to fetch tags for query #{query}")
+      rescue
+        logger.warn("Failed to fetch boundary-based tags for query #{query}")
       end
     end
     tags
