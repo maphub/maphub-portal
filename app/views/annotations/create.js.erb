@@ -10,19 +10,16 @@ $(response).hide().prependTo("#annotation-table").fadeIn("slow");
 $(".tooltip").tooltip();
 $("a[rel=tooltip]").tooltip();
 
-// first clear the editing layer, then load the newly created annotation
+// first clear everything, then reload OpenLayers
 $("#viewer").empty();
+$("#layerswitcher").empty();
 initOpenLayers();
 
 // slide down the panel
 $("#modal-annotation").modal('hide');
 
-// confirmation / error dialog, disabled
-// $("#modal-annotation-confirm").modal();
-//  $("#modal-annotation-confirm-close").click(function(){
-//    $("#modal-annotation-confirm").modal('hide');
-// });
-
 //reset the tags
 window.tagging_view.reset();
+
+// re-enable annotation mode
 $("#control-toggle-annotation-types button.active").click();

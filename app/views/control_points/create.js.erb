@@ -3,13 +3,9 @@
 // slide down the panel
 $("#modal-control-point").modal('hide');
 
-// confirmation / error dialog disabled
-// $("#modal-control-point-confirm").modal();
-// $("#modal-control-point-confirm-close").click(function(){
-//   $("#modal-control-point-confirm").modal('hide');
-// });
-
+// first clear everything, then reload OpenLayers
 $("#viewer").empty();
+$("#layerswitcher").empty();
 initOpenLayers();
 
 // update the CP count in the view
