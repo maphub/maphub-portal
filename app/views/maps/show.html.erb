@@ -1,7 +1,9 @@
 <%= javascript_include_tag params[:controller] %>
 
-<% google_maps_src = "http://maps.googleapis.com/maps/api/js?key=" + Rails.configuration.google_maps_api_key + "&sensor=true" %>
-<script src="<%= raw google_maps_src %>" type="text/javascript"></script>
+<% if @map.has_overlay? %>
+  <% google_maps_src = "http://maps.googleapis.com/maps/api/js?key=" + Rails.configuration.google_maps_api_key + "&sensor=true" %>
+  <script src="<%= raw google_maps_src %>" type="text/javascript"></script>
+<% end %>
 
 <!-- Initialize OpenLayers and Google Overlay view-->
 <%= javascript_tag do %>
@@ -18,7 +20,15 @@ function initOpenLayers() {
 }
 
 function initGoogleOverlay() {
-  window.overlay_view = new MapHub.OverlayView();
+    <% if @map.has_overlay? %>
+      var ne_lat = <%=@map.overlay_boundary.ne_lat%>;
+      var ne_lng = <%=@map.overlay_boundary.ne_lng%>;
+      var sw_lat = <%=@map.overlay_boundary.sw_lat%>;
+      var sw_lng = <%=@map.overlay_boundary.sw_lng%>;
+      if (typeof window.overlay_view === 'undefined') {
+        window.overlay_view = new MapHub.OverlayView(ne_lat, ne_lng, sw_lat, sw_lng);  
+      }
+    <% end %>
 }
 
 function initTaggingView() {
@@ -34,17 +44,22 @@ $(document).ready(function(){
   initTaggingView();
   
   <% if @map.has_overlay? %>
-    initGoogleOverlay();
-    $("#overlay_viewer").hide();
+    
   <% end %>
   
+  $("#overlay_viewer").hide();
+  
   $("#map-type-regular").click(function() {
-    $("#viewer").fadeIn();
+    $("#overlay_viewer").hide();
+    $("#viewer").show();
+    $("#control-toggle button").removeAttr("disabled");
   });
   
   $("#map-type-google").click(function() {
-    $("#viewer").fadeOut();
-    $("#overlay_viewer").fadeIn();
+    initGoogleOverlay();
+    $("#viewer").hide();
+    $("#overlay_viewer").show();
+    $("#control-toggle button").attr("disabled", "disabled");
   });
   
 });
@@ -60,9 +75,8 @@ $(document).ready(function(){
       <!-- Map View -->
       <div class="span8">
         <div id="viewer" class="span8" style="height:600px;"></div>
-        <div id="overlay_viewer" class="span8" style="height:600px;"></div>
+        <div id="overlay_viewer" style="height:600px;"></div>
       </div>
-      
       <!-- Right column-->
       <div class="span4">
         
@@ -94,7 +108,7 @@ $(document).ready(function(){
         <!--Creates Javascript variables for latitude and longitude of the current map -->
         	<!--A dropdown button to toggle between Regular Map view and Google map view -->
         	<div class="dropdown" id="map-type-selector">
-        		<button class="btn dropdown-toggle" data-toggle="dropdown" href="#map-type-selector">Map View<b class="caret"></b></button>
+        		<button class="btn dropdown-toggle" data-toggle="dropdown" href="#map-type-selector">Map View&nbsp;<b class="caret"></b></button>
         		<ul class="dropdown-menu">
         			<li><a id="map-type-regular">Regular Map</a></li>
         			<li><a id="map-type-google">Google Maps</a> </li>

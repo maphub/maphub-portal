@@ -606,6 +606,16 @@ MapHub.TaggingView.prototype.reset = function() {
 // ----------------------------------------------------------------------------
 
 
-MapHub.OverlayView = function() {
+MapHub.OverlayView = function(ne_lat, ne_lng, sw_lat, sw_lng) {
+
+  var median_lat = (ne_lat + sw_lat)/2;
+  var median_lng = (ne_lng + sw_lng)/2;
+  var myLatlng = new google.maps.LatLng(median_lat, median_lng);
+  var myOptions = {
+    zoom: 3,
+    center: myLatlng,
+    mapTypeId: google.maps.MapTypeId.HYBRID,
+  }
+  var map = new google.maps.Map(document.getElementById("overlay_viewer"), myOptions);
   
 }
