@@ -21,7 +21,7 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     // get the screen coordinates
     var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
     var coords = this.map.getPixelFromLonLat(lonlat);
-    evt.feature.tooltip.show(coords.x, coords.y);
+    evt.feature.tooltip.show(coords.x - 50, coords.y);
   }
   
   function featureUnselected(evt) {
@@ -67,7 +67,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     $("#no-tags").show();
     
     // show the popup
-    $("#modal-annotation").modal();
+    $("#modal-annotation").modal({
+      'backdrop': 'static'
+    });
     $("#annotation_body").focus();
     $("#annotation_body").select();
   }
@@ -82,7 +84,9 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     
     // reset the place search box and slide up panel
     $("#place-search").attr("value", "");
-    $("#modal-control-point").modal();
+    $("#modal-control-point").modal({
+      'backdrop': 'static'
+    });
     $("#place-search").focus();
   }
   
@@ -166,7 +170,14 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
     { styleMap: controlPointStyleMap, displayInLayerSwitcher: false }
   );
   this.controlPointEditLayer.events.register("featureadded", this.controlPointEditLayer, featureAdded);
-
+  
+  // if the close button is clicked, we remove all temporary features
+  $("a.close").click(function() {
+    self.editLayer.removeAllFeatures();
+    self.controlPointEditLayer.removeAllFeatures();
+  });
+  
+  
   /* The annotation layer */
   this.annotationLayer = new OpenLayers.Layer.Vector(
     "Annotations", 
@@ -212,7 +223,6 @@ MapHub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   this.map.addControl(new OpenLayers.Control.Navigation());
   this.map.addControl(new OpenLayers.Control.MousePosition());
   this.map.addControl(new OpenLayers.Control.PanZoomBar());
-  // Removed keyboard navigation for the time being, see issue #42
   this.keyboard_shortcuts = new OpenLayers.Control.KeyboardDefaults();
   this.map.addControl(this.keyboard_shortcuts);
   
