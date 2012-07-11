@@ -16,7 +16,7 @@ maphub.Map = function(parameters) {
   } else {
     this.deleteHiddenTiles = parameters.deleteHiddenTiles;
   }
-
+  
   if (typeof parameters['tileSize'] == 'undefined') {
     this.tileSize = new google.maps.Size(256,256);
   } else {
@@ -29,9 +29,10 @@ maphub.Map = function(parameters) {
   );
   
   this.overlayTilesetUri = parameters.overlay_tileset_uri;
+  this.minTileset = parameters.min_tileset;
   this.maxTileset = parameters.max_tileset;
   
-  document.map = this;
+  window.overlay_view = this;
 };
 
 
@@ -45,7 +46,9 @@ maphub.Map.prototype.render = function(container) {
       center: this.mapBounds.getCenter(),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       streetViewControl: false,
-      zoom: 5
+      zoom: this.minTileset,
+      minZoom: this.minTileset,
+      maxZoom: this.maxTileset
     };
     this.googleMap = new google.maps.Map(container, mapOptions);
     
