@@ -6,7 +6,7 @@ gem 'sqlite3'
 # Custom gems:
 
 gem 'devise'
-gem 'yaml_db'
+gem 'yaml_db', :git => "git://github.com/lostapathy/yaml_db.git" # need this fork because of known bug in Rails > 3.2
 gem 'gravtastic'
 gem 'acts_as_markup'
 
@@ -20,7 +20,6 @@ gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in developm
 gem 'progress_bar'
 
 gem 'twitter-bootstrap-rails'
-#, :git => "git://github.com/seyhunak/twitter-bootstrap-rails.git", :branch => "static"
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/lostapathy/yaml_db.git
+  revision: 98e9a5dca43e3fedd3268c76a73af40d1bdf1dfd
+  specs:
+    yaml_db (0.2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -214,7 +220,6 @@ GEM
       builder
       expression_parser
     wikitext (2.1.1)
-    yaml_db (0.2.2)
 
 PLATFORMS
   ruby
@@ -236,4 +241,4 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   uuidtools
-  yaml_db
+  yaml_db!
