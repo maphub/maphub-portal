@@ -61,7 +61,8 @@ maphub.AnnotationView = function(parameters) {
     
     // show the popup
     $("#modal-annotation").modal({
-      'backdrop': 'static'
+      'backdrop': 'static',
+      keyboard: false
     });
     $("#annotation_body").focus();
     $("#annotation_body").select();
@@ -78,7 +79,8 @@ maphub.AnnotationView = function(parameters) {
     // reset the place search box and slide up panel
     $("#place-search").attr("value", "");
     $("#modal-control-point").modal({
-      'backdrop': 'static'
+      'backdrop': 'static',
+      keyboard: false
     });
     $("#place-search").focus();
   }
