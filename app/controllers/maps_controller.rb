@@ -20,6 +20,7 @@ class MapsController < ApplicationController
       format.html # show.html.erb
       format.json # show.json.erb
       format.rdf  # show.rdf.erb
+      format.kml # show.kml.erb
     end
   end
 

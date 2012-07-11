@@ -18,3 +18,5 @@ Mime::Type.register "text/plain", :nt
 ActionController::Renderers.add :nt do |obj, options|
   obj.respond_to?(:to_rdf) ? obj.to_rdf(:ntriples, options) : obj
 end
+
+Mime::Type.register "application/vnd.google-earth.kml+xml", :kml
