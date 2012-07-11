@@ -1,14 +1,11 @@
-<%= javascript_include_tag params[:controller] %>
+<%= javascript_include_tag '//www.google.com/jsapi' %>
 
-<% if @map.has_overlay? %>
-  <% google_maps_src = "http://maps.googleapis.com/maps/api/js?key=" + Rails.configuration.google_maps_api_key + "&sensor=true" %>
-  <script src="<%= raw google_maps_src %>" type="text/javascript"></script>
-<% end %>
+<%= javascript_include_tag params[:controller] %>
 
 <!-- Initialize OpenLayers and Google Overlay view-->
 <%= javascript_tag do %>
 function initOpenLayers() {
-  window.annotation_view = new MapHub.AnnotationView(
+  window.annotation_view = new maphub.AnnotationView(
       <%= @map.width %>,
       <%= @map.height %>,
       "<%= @map.tileset_uri + '/' %>",
@@ -21,18 +18,21 @@ function initOpenLayers() {
 
 function initGoogleOverlay() {
     <% if @map.has_overlay? %>
-      var ne_lat = <%=@map.overlay_boundary.ne_lat%>;
-      var ne_lng = <%=@map.overlay_boundary.ne_lng%>;
-      var sw_lat = <%=@map.overlay_boundary.sw_lat%>;
-      var sw_lng = <%=@map.overlay_boundary.sw_lng%>;
       if (typeof window.overlay_view === 'undefined') {
-        window.overlay_view = new MapHub.OverlayView(ne_lat, ne_lng, sw_lat, sw_lng);  
+        window.overlay_view = new maphub.OverlayView(
+          <%= @map.id %>,
+          <%=@map.overlay_boundary.ne_lat%>,
+          <%=@map.overlay_boundary.ne_lng%>,
+          <%=@map.overlay_boundary.sw_lat%>,
+          <%=@map.overlay_boundary.sw_lng%>,
+          "<%= @map.overlay_tileset_uri %>"
+        );
       }
     <% end %>
 }
 
 function initTaggingView() {
-  window.tagging_view = new MapHub.TaggingView(
+  window.tagging_view = new maphub.TaggingView(
     "<%= annotation_tag_find_url(:map => @map.id) %>",
     1000
   );
@@ -42,10 +42,6 @@ function initTaggingView() {
 $(document).ready(function(){
   initOpenLayers();   // initialize OpenLayers by default
   initTaggingView();
-  
-  <% if @map.has_overlay? %>
-    
-  <% end %>
   
   $("#overlay_viewer").hide();
   
