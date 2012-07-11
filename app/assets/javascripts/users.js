@@ -14,5 +14,4 @@ $(document).ready(function(){
       $('#about-myself').show();
     });
   });
-
 });

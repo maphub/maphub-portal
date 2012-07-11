@@ -1,32 +1,33 @@
 <%= javascript_include_tag '//www.google.com/jsapi' %>
-
 <%= javascript_include_tag params[:controller] %>
 
 <!-- Initialize OpenLayers and Google Overlay view-->
 <%= javascript_tag do %>
 function initOpenLayers() {
-  window.annotation_view = new maphub.AnnotationView(
-      <%= @map.width %>,
-      <%= @map.height %>,
-      "<%= @map.tileset_uri + '/' %>",
-      "<%= map_annotations_url(@map, :format => :json) %>",
-      "<%= map_control_points_url(@map, :format => :json) %>",
-      <%= user_signed_in? ? "true" : "false" %>,
-      <%= user_signed_in? ? current_user.id : "0" %>
-  );
+  window.annotation_view = new maphub.AnnotationView({
+      width: <%= @map.width %>,
+      height: <%= @map.height %>,
+      zoomify_url: "<%= @map.tileset_uri + '/' %>",
+      annotations_url: "<%= map_annotations_url(@map, :format => :json) %>",
+      control_points_url: "<%= map_control_points_url(@map, :format => :json) %>",
+      editable: <%= user_signed_in? ? "true" : "false" %>,
+      user_id: <%= user_signed_in? ? current_user.id : "0" %>
+  });
 }
 
 function initGoogleOverlay() {
     <% if @map.has_overlay? %>
+      <% overlay_boundary = @map.overlay_boundary %>
       if (typeof window.overlay_view === 'undefined') {
-        window.overlay_view = new maphub.OverlayView(
-          <%= @map.id %>,
-          <%=@map.overlay_boundary.ne_lat%>,
-          <%=@map.overlay_boundary.ne_lng%>,
-          <%=@map.overlay_boundary.sw_lat%>,
-          <%=@map.overlay_boundary.sw_lng%>,
-          "<%= @map.overlay_tileset_uri %>"
-        );
+        window.overlay_view = new maphub.OverlayView({
+          id: <%= @map.id %>,
+          ne_lat: <%= overlay_boundary.ne_lat%>,
+          ne_lng: <%= overlay_boundary.ne_lng%>,
+          sw_lat: <%= overlay_boundary.sw_lat%>,
+          sw_lng: <%= overlay_boundary.sw_lng%>,
+          overlay_tileset_uri: "<%= @map.overlay_tileset_uri %>",
+          max_tileset: <%= overlay_boundary.max_tileset %> 
+        });
       }
     <% end %>
 }
@@ -38,26 +39,22 @@ function initTaggingView() {
   );
 }
 
-// this is called when the page is loaded first: initialize OpenLayers
 $(document).ready(function(){
   initOpenLayers();   // initialize OpenLayers by default
   initTaggingView();
   
   $("#overlay_viewer").hide();
-  
   $("#map-type-regular").click(function() {
     $("#overlay_viewer").hide();
     $("#viewer").show();
     $("#control-toggle button").removeAttr("disabled");
   });
-  
   $("#map-type-google").click(function() {
     initGoogleOverlay();
     $("#viewer").hide();
     $("#overlay_viewer").show();
     $("#control-toggle button").attr("disabled", "disabled");
   });
-  
 });
 <% end %>
 

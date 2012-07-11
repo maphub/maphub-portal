@@ -160,11 +160,15 @@ class Map < ActiveRecord::Base
     doc = Nokogiri::XML(open(overlay_properties_uri))
     unless doc.nil?
       bounding_box = doc.xpath("//BoundingBox[@minx]")
+      max_tileset = doc.xpath("//TileSets/TileSet[last()]")
+      
       ret = OpenStruct.new 
       ret.ne_lat = bounding_box.attribute("maxx").content
       ret.ne_lng = bounding_box.attribute("maxy").content
       ret.sw_lat = bounding_box.attribute("minx").content
       ret.sw_lng = bounding_box.attribute("miny").content
+      ret.max_tileset = max_tileset.attribute("order").content
+      
       return ret
     end
   end

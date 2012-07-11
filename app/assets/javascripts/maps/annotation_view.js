@@ -1,4 +1,4 @@
-maphub.AnnotationView = function(width, height, zoomify_url, annotations_url, control_points_url, editable, user_id) {
+maphub.AnnotationView = function(parameters) {
   
   /* Callbacks for added / removed features */
   function featureSelected(evt) {
@@ -85,14 +85,14 @@ maphub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   /* ============================================================================== */
   
-  this.zoomify_width  = width;        // pixel width ...
-  this.zoomify_height = height;       // ... and height of map
-  this.zoomify_url    = zoomify_url;  // remote zoomify tileset
+  this.zoomify_width  = parameters.width;        // pixel width ...
+  this.zoomify_height = parameters.height;       // ... and height of map
+  this.zoomify_url    = parameters.zoomify_url;  // remote zoomify tileset
   
-  this.annotations_url          = annotations_url;      // JSON request URL for annotations
-  this.control_points_url       = control_points_url;   // JSON request URL for control points
-  this.editable                 = editable;             // whether to show the control panel
-  this.user_id                  = user_id;              // the currently logged in user ID
+  this.annotations_url          = parameters.annotations_url;      // JSON request URL for annotations
+  this.control_points_url       = parameters.control_points_url;   // JSON request URL for control points
+  this.editable                 = parameters.editable;             // whether to show the control panel
+  this.user_id                  = parameters.user_id;              // the currently logged in user ID
   this.features_annotations     = [];   // all annotation features
   this.features_control_points  = [];   // all control point features
   this.annotations              = [];   // all annotations on this map
@@ -249,7 +249,7 @@ maphub.AnnotationView = function(width, height, zoomify_url, annotations_url, co
   
   /* Allow creation of features */
   // http://stackoverflow.com/questions/10572005/
-  if (editable) {
+  if (parameters.editable) {
     this.drawControls = {
         point: new OpenLayers.Control.DrawFeature(this.controlPointEditLayer,
             OpenLayers.Handler.Point),
