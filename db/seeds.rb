@@ -70,4 +70,16 @@ else
     end
     new_map.save
   end
+  
+  puts "Creating demonstrator Maps"
+  
+  demo_map = Map.new
+  demo_map.identifier = "g3200.ct000725C"
+  demo_map.title = "Universalis cosmographia secundum Ptholomaei traditionem et Americi Vespucii
+    alioru[m]que lustrationes"
+  demo_map.subject = "World maps"
+  demo_map.author = "Waldseemueller, Martin"
+  demo_map.date = "1507"
+  demo_map.save
+
 end
