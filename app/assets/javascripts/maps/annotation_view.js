@@ -95,7 +95,8 @@ maphub.AnnotationView = function(parameters) {
   this.control_points_url       = parameters.control_points_url;   // JSON request URL for control points
   this.editable                 = parameters.editable;             // whether to show the control panel
   this.user_id                  = parameters.user_id;              // the currently logged in user ID
-  this.features_annotations     = [];   // all annotation features
+  this.features_annotations     = [];   // all other's annotation features
+  this.features_annotations_own = [];   // all my annotation features
   this.features_control_points  = [];   // all control point features
   this.annotations              = [];   // all annotations on this map
   this.control_points           = [];   // all control points on this map
@@ -173,9 +174,15 @@ maphub.AnnotationView = function(parameters) {
   });
   
   
-  /* The annotation layer */
+  /* The annotation layer for all other's annotations */
   this.annotationLayer = new OpenLayers.Layer.Vector(
-    "Annotations", 
+    "Annotations created by others", 
+    { styleMap: annotationStyleMap }
+  );
+  
+  /* The annotation layer for all other's annotations */
+  this.annotationLayerOwn = new OpenLayers.Layer.Vector(
+    "Annotations created by me", 
     { styleMap: annotationStyleMap }
   );
   
@@ -204,6 +211,7 @@ maphub.AnnotationView = function(parameters) {
   this.map.addLayer(this.editLayer);
   this.map.addLayer(this.controlPointEditLayer);
   this.map.addLayer(this.annotationLayer);
+  this.map.addLayer(this.annotationLayerOwn);
   this.map.addLayer(this.controlPointsLayer);
 
 
@@ -228,7 +236,7 @@ maphub.AnnotationView = function(parameters) {
   // ================================================================================
 
   var select = new OpenLayers.Control.SelectFeature(
-    [this.annotationLayer, this.controlPointsLayer], { 
+    [this.annotationLayer, this.annotationLayerOwn, this.controlPointsLayer], { 
       hover: true,
       renderIntent: "temporary"
       }
@@ -237,6 +245,11 @@ maphub.AnnotationView = function(parameters) {
   select.activate();
   
   this.annotationLayer.events.on({
+    "featureselected": featureSelected,
+    "featureunselected": featureUnselected
+  });
+  
+  this.annotationLayerOwn.events.on({
     "featureselected": featureSelected,
     "featureunselected": featureUnselected
   });
@@ -363,11 +376,18 @@ maphub.AnnotationView.prototype.remoteLoadAnnotations = function() {
     $.each(data, function(key, val) {
       var feature = wkt_parser.read(val.wkt_data);
       feature.annotation = val;
-      self.features_annotations.push(feature);
+      // if this is our own annotation
+      if (feature.annotation.user_id == self.user_id) {
+        self.features_annotations_own.push(feature)
+      } else {
+        self.features_annotations.push(feature);
+      }
       self.annotations.push(val);
     });
     self.annotationLayer.addFeatures(self.features_annotations);
+    self.annotationLayerOwn.addFeatures(self.features_annotations_own);
   });
+  
 }
 
 /* Loads the annotations for this map via a JSON request */
