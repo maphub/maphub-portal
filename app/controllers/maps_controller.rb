@@ -1,5 +1,7 @@
 class MapsController < ApplicationController
   
+  before_filter :get_base_uri
+  
   # Show all maps
   def index
     @maps = Map.order(:updated_at).page(params[:page]).per(20) 

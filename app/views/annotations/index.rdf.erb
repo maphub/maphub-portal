@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+    xmlns:ore="http://www.openarchives.org/ore/terms/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/" >
+
+    <!-- About the Aggregation for the ArXiv document -->
+    <rdf:Description rdf:about="<%= @base_uri %>">
+        <!-- The Resource is an ORE Aggregation  -->
+        <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+        <!-- Metadata about the Aggregation: title and authors -->
+        <dc:title>Maphub Annotations</dc:title>
+        <!-- The Aggregation aggregates ... -->
+        <% @annotations.each do |annotation| %>
+        <ore:aggregates rdf:resource="<%= @base_uri + "/" + annotation.id.to_s %>"/>
+        <% end %>
+    </rdf:Description>
+
+</rdf:RDF>

@@ -5,12 +5,11 @@ class ApplicationController < ActionController::Base
   
   # Cuts a possible filename from the given URI
   # => http://localhost:3000/maps/1.rdf => http://localhost:3000/maps/1
-  def base_uri(uri)
-    ext = File.extname(uri)
+  def get_base_uri
+    ext = File.extname(request.url)
     unless ext.length == 0
-      uri = uri[0..(ext.length + 1)*-1]
+      @base_uri = request.url[0..(ext.length + 1)*-1]
     end
-    uri
   end
   
 end

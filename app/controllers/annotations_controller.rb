@@ -1,7 +1,7 @@
 class AnnotationsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :get_parent
+  before_filter :get_parent, :get_base_uri
 
   # GET /annotations
   # GET /annotations.xml
@@ -26,6 +26,7 @@ class AnnotationsController < ApplicationController
         end
         render :json => @annotations 
       }
+      format.rdf
     end
   end
 
@@ -37,9 +38,9 @@ class AnnotationsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @annotation }
       format.json { render :json => @annotation } 
-      format.rdf  {render :rdf => @annotation, :httpURI => base_uri(request.url)}
-      format.ttl  {render :ttl => @annotation, :httpURI => base_uri(request.url)}
-      format.nt  {render :nt => @annotation, :httpURI => base_uri(request.url)}
+      format.rdf  {render :rdf => @annotation, :httpURI => @base_uri}
+      format.ttl  {render :ttl => @annotation, :httpURI => @base_uri}
+      format.nt  {render :nt => @annotation, :httpURI => @base_uri}
     end
   end
 
