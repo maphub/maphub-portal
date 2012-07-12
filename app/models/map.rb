@@ -106,6 +106,10 @@ class Map < ActiveRecord::Base
     "#{overlay_tileset_uri}/tilemapresource.xml"
   end
   
+  def kml_uri
+    "#{overlay_tileset_uri}/doc.kml"
+  end
+  
   # a truncated title
   def short_title
     (title.length > 30) ? title[0, 30] + "..." : title

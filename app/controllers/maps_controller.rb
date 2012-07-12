@@ -22,7 +22,10 @@ class MapsController < ApplicationController
       format.html # show.html.erb
       format.json # show.json.erb
       format.rdf  # show.rdf.erb
-      format.kml # show.kml.erb
+      format.kml {
+        kml_data = open(@map.kml_uri).read
+        send_data kml_data, :type => :kml, :filename => "#{@map.identifier}.kml"
+      }
     end
   end
 
