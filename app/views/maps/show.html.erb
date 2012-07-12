@@ -18,18 +18,20 @@ function initOpenLayers() {
 function initGoogleOverlay() {
     <% if @map.has_overlay? %>
       <% overlay_boundary = @map.overlay_boundary %>
-      if (typeof window.overlay_view === 'undefined') {
-        window.overlay_view = new maphub.OverlayView({
-          id: <%= @map.id %>,
-          ne_lat: <%= overlay_boundary.ne_lat%>,
-          ne_lng: <%= overlay_boundary.ne_lng%>,
-          sw_lat: <%= overlay_boundary.sw_lat%>,
-          sw_lng: <%= overlay_boundary.sw_lng%>,
-          overlay_tileset_uri: "<%= @map.overlay_tileset_uri %>",
-          min_tileset: <%= overlay_boundary.min_tileset %>,
-          max_tileset: <%= overlay_boundary.max_tileset %>
-        });
-      }
+        <% unless overlay_boundary.nil? %>
+          if (typeof window.overlay_view === 'undefined') {
+            window.overlay_view = new maphub.OverlayView({
+              id: <%= @map.id %>,
+              ne_lat: <%= overlay_boundary.ne_lat%>,
+              ne_lng: <%= overlay_boundary.ne_lng%>,
+              sw_lat: <%= overlay_boundary.sw_lat%>,
+              sw_lng: <%= overlay_boundary.sw_lng%>,
+              overlay_tileset_uri: "<%= @map.overlay_tileset_uri %>",
+              min_tileset: <%= overlay_boundary.min_tileset %>,
+              max_tileset: <%= overlay_boundary.max_tileset %>
+            });
+          }
+        <% end %>
     <% end %>
 }
 

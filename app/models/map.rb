@@ -157,7 +157,12 @@ class Map < ActiveRecord::Base
   
   # Exctracs boundary information from overlay tileset 
   def overlay_boundary
-    doc = Nokogiri::XML(open(overlay_properties_uri))
+    begin
+      doc = Nokogiri::XML(open(overlay_properties_uri))
+    rescue
+      self.overlay_available = false
+      return nil
+    end
     unless doc.nil?
       bounding_box = doc.xpath("//BoundingBox[@minx]")
       min_tileset = doc.xpath("//TileSets/TileSet[1]")
