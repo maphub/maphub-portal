@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'net/http'
+require 'timeout'
 
 class Annotation < ActiveRecord::Base
   
@@ -60,7 +61,14 @@ class Annotation < ActiveRecord::Base
     
     begin
       url = URI.parse(query)
-      response = Net::HTTP.get_response(url)
+      begin
+        status = Timeout::timeout(Rails.configuration.remote_timeout) {
+          response = Net::HTTP.get_response(url)
+        }
+      rescue Timeout::Error
+        logger.warn("Fetching text-based tags timed out after #{Rails.configuration.remote_timeout} seconds.")
+        return tags
+      end
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
         response["detectedTopics"].each do |entry|
@@ -189,7 +197,14 @@ class Annotation < ActiveRecord::Base
       # parse response
       begin
       url = URI.parse(query)
-      response = Net::HTTP.get_response(url)
+      begin
+        status = Timeout::timeout(Rails.configuration.remote_timeout) {
+          response = Net::HTTP.get_response(url)
+        }
+      rescue Timeout::Error
+        logger.warn("Fetching boundary-based tags timed out after #{Rails.configuration.remote_timeout} seconds.")
+        return tags
+      end
       if response.code == "200"
         response = ActiveSupport::JSON.decode response.body
         #logger.debug response["geonames"].first

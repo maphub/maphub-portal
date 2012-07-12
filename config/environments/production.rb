@@ -1,6 +1,15 @@
 MaphubPortal::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Config variables
+  config.map_base_uri = "http://samos.mminf.univie.ac.at/maps"
+  config.wikipedia_miner_uri = "http://samos.mminf.univie.ac.at:8080/"
+  config.geoname_query = "http://api.geonames.org/wikipediaBoundingBoxJSON?"
+  config.geoname_user = "username=slhck"
+  config.google_maps_api_key = "AIzaSyBlzM3vloWBjycG494laUkc5DEHrMI6M0I"
+  config.remote_timeout = 5
+
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
