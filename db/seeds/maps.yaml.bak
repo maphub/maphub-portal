@@ -1,700 +1,884 @@
---- 
-map: 1
-id: 3865sm.gcw0102100
-title: Complete map of the march of the 1st Brigade, 1st Cavalry Divn., Dept. of Cumberland on the Stoneman expedition through Tenn., Va., N.C., S.C., Geo., & Ala., March to June 1865
-author: Wiser, Angelo.
-subject: History
-date: "1865"
---- 
-map: 2
-id: g3160.ct001890
-title: Joslin's six inch celestial globe from the best authorities
-author: Joslin, Gilman.
-subject: Celestial globes
-date: "1840"
---- 
-map: 3
-id: g3170.ct001892
-title: Laing's Planetarium
-author: Laing Planetarium Company
-subject: Globes
-date: "[ca. 1895]"
---- 
-map: 4
-id: g3181c.ct002143
-title: Geology of the solar system, 1997
-author: Carroll, Roger D.
-subject: Geology
-date: "1997"
---- 
-map: 5
-id: g3182v.ct001241
-title: Topographic map of Venus
-author: Geological Survey (U.S.)
-subject: Remote-sensing maps
-date: "[1990]"
---- 
-map: 6
-id: g3190.ct002144a
-title: synopsis of the universe, or, the visible world epitomiz'd
-author: Wright, Thomas
-subject: Astronomy
-date: "1742"
---- 
-map: 7
-id: g3190.ct003131
-title: Mercator map of the starry heavens
-author: Croswell, William
-subject: Constellations
-date: "1810"
---- 
-map: 8
-id: g3195.ct000379
-title: Meet-konstige vertoning van de grote en merk-waardige zons-verduistering
-author: Panser, Simon.
-subject: Maps
-date: 1748]
---- 
-map: 9
-id: g3196a.ct002487
-title: USAF lunar reference mosaic
-author: Aeronautical Chart and Information Center (U.S.)
-subject: Remote-sensing maps
-date: "[1966]"
---- 
-map: 10
-id: g3196c.wc000001
-title: "[Maps of the surface of the Moon"
-author: Davis, Donald E.
-subject: Geomorphology
-date: 1971]
---- 
-map: 11
-id: g3200.awh00011
-title: Map of the world with the most recent discoveries
-author: Van Schaack, Mary.
-subject: World maps, Manuscript
-date: "1811"
---- 
-map: 12
-id: g3200.ct000123
-title: "Planiglobii terrestris cum utroq hemisph\xC3\xA6rio c\xC3\xA6lesti generalis repr\xC3\xA6sentatio"
-author: Homann, Johann Baptist
-subject: 
-date: 1716?]
---- 
-map: 13
-id: g3200.ct000159
-title: Western New World or Hemisphere. Eastern Old World or Hemisphere
-author: Faden, William
-subject: World maps
-date: 1786]
---- 
-map: 14
-id: g3200.ct000160
-title: Map of the World from the best authorities
-author: Carey, Mathew
-subject: World maps
-date: 1795]
---- 
-map: 15
-id: g3200.ct000193
-title: historical atlas, in a series of maps of the world as known at different periods, constructed upon an uniform scale, and coloured according to the political changes of each period
-author: Quin, Edward
-subject: Historical geography
-date: "1846"
---- 
-map: 16
-id: g3200.ct000195
-title: He mau palapala aina, a me na niele e pili ana. Hookahi ke pai ana
-author: 
-subject: World maps
-date: "1840"
---- 
-map: 17
-id: g3200.ct000217
-title: Antiquissima orbis delineatio
-author: 
-subject: World maps
-date: 1905?]
---- 
-map: 18
-id: g3200.ct000270
-title: "[Nova et accuratissima totius terrarum orbis tabula]"
-author: Blaeu, Joan
-subject: World maps
-date: 1664?]
---- 
-map: 19
-id: g3200.ct000271
-title: "[Sphendon\xC4\x93], hoc est, fvnda Posidonii"
-author: Posidonius.
-subject: World maps
-date: "[1630]"
---- 
-map: 20
-id: g3200.ct000272
-title: Typus universalis terre
-author: Reisch, Gregor
-subject: World maps
-date: 1889]
---- 
-map: 21
-id: g3200.ct000382
-title: Political map of the world, June 1998
-author: United States
-subject: World maps
-date: "1998"
---- 
-map: 22
-id: g3200.ct000425
-title: Political map of the world
-author: United States
-subject: World maps
-date: 1982]
---- 
-map: 23
-id: g3200.ct000575
-title: Standard map of the World
-author: Geographia Map Company
-subject: 
-date: "1942"
---- 
-map: 24
+map: 624
 id: g3200.ct000725C
-title: Universalis cosmographia secundum Ptholomaei traditionem et Americi Vespucii alioru[m]que lustrationes
-author: "Waldseem\xC3\xBCller, Martin"
+title: Universalis cosmographia secundum Ptholomaei traditionem et Americi Vespucii
+  alioru[m]que lustrationes
+author: Waldseemüller, Martin
 subject: World maps
 date: 1507]
---- 
-map: 25
+---
+map: 625
 id: g3200.ct000805
 title: new and correct map of the world
 author: Godson, W.
 subject: Early works to 1800
-date: "[1702]"
---- 
-map: 26
+date: ! '[1702]'
+---
+map: 626
 id: g3200.ct000951
 title: Chart
 author: Maury, M. F.
 subject: Maps
-date: "1848"
---- 
-map: 27
+date: '1848'
+---
+map: 627
 id: g3200.ct001129
 title: Political map of the world, June 2003
 author: United States
 subject: World maps
-date: "2003"
---- 
-map: 28
+date: '2003'
+---
+map: 628
 id: g3200.ct001162
 title: Political map of the world, April 2001
 author: United States
 subject: World maps
-date: "2001"
---- 
-map: 29
+date: '2001'
+---
+map: 629
 id: g3200.ct001163
 title: Political map of the world, June 1999
 author: United States
 subject: World maps
 date: 1999]
---- 
-map: 30
+---
+map: 630
 id: g3200.ct001217r
 title: Nova totius terrarum orbis geographica ac hydrographica tabula
 author: Blaeu, Willem Janszoon
 subject: World maps
-date: "[1606]"
---- 
-map: 31
+date: ! '[1606]'
+---
+map: 631
 id: g3200.ct001219
 title: new map of the world
 author: Kitchen, T. (Thomas)
 subject: World maps
-date: "1799"
---- 
-map: 32
+date: '1799'
+---
+map: 632
 id: g3200.ct001220
-title: new and elegant imperial sheet atlas, comprehending general and particular maps of every part of the world
+title: new and elegant imperial sheet atlas, comprehending general and particular
+  maps of every part of the world
 author: Robert Laurie and James Whittle
 subject: Atlases, British
-date: "1808"
---- 
-map: 33
+date: '1808'
+---
+map: 633
 id: g3200.ct001232
 title: Political map of the world, June 2002
 author: United States
 subject: World maps
-date: "2002"
---- 
-map: 34
+date: '2002'
+---
+map: 634
 id: g3200.ct001256
 title: Outline of post-war new world map
 author: Gomberg, Maurice.
 subject: World maps
-date: "1942"
---- 
-map: 35
+date: '1942'
+---
+map: 635
 id: g3200.ct001304
 title: Political map of the world, April 2004
 author: United States
 subject: World maps
-date: "2004"
---- 
-map: 36
+date: '2004'
+---
+map: 636
 id: g3200.ct001352
 title: Mappemonde a l'usage du roy
 author: L'Isle, Guillaume de
 subject: World maps
-date: "1720"
---- 
-map: 37
+date: '1720'
+---
+map: 637
 id: g3200.ct001393
 title: Noua, et integra uniuersi orbis descriptio
 author: Fine, Oronce
 subject: World maps
-date: "1531"
---- 
-map: 38
+date: '1531'
+---
+map: 638
 id: g3200.ct001465
 title: Mappa totius mundi
 author: L'Isle, Guillaume de
 subject: World maps
-date: "[1775?]"
---- 
-map: 39
+date: ! '[1775?]'
+---
+map: 639
 id: g3200.ct001471
-title: Noua orbis terrarum delineatio singulari ratione accommodata meridiano tabb. Rudolphi astronomicarum
+title: Noua orbis terrarum delineatio singulari ratione accommodata meridiano tabb.
+  Rudolphi astronomicarum
 author: Eckebrecht, Philipp
 subject: World maps
-date: "1630"
---- 
-map: 40
+date: '1630'
+---
+map: 640
 id: g3200.ct001472
 title: Nova totius terrarum orbis tabula
 author: Wit, Frederik de.
 subject: World maps
-date: "1660"
---- 
-map: 41
+date: '1660'
+---
+map: 641
 id: g3200.ct001473
 title: Orbis terrarum nova et accuratissima tabula
 author: Visscher, Nicolaes
 subject: World maps
-date: "[1690?]"
---- 
-map: 42
+date: ! '[1690?]'
+---
+map: 642
 id: g3200.ct001474r
 title: Nova orbis tabula, ad usum serenissimi Burgundiae Ducis
 author: Jaillot, Alexis Hubert
 subject: World maps
-date: "1694"
---- 
-map: 43
+date: '1694'
+---
+map: 643
 id: g3200.ct001475
-title: "globe terrestre repr\xC3\xA9sent\xC3\xA9 en deux plans-h\xC3\xA9misph\xC3\xA8res"
+title: globe terrestre représenté en deux plans-hémisphères
 author: Nolin, Jean Baptiste
 subject: World maps
-date: "1708"
---- 
-map: 44
+date: '1708'
+---
+map: 644
 id: g3200.ct001476
 title: Bowles's new and accurate map of the world, or Terrestrial globe
 author: Bowles, Carington
 subject: World maps
-date: "[1780?]"
---- 
-map: 45
+date: ! '[1780?]'
+---
+map: 645
 id: g3200.ct001491
-title: "Kem\xC3\xA2liyle nak\xC5\x9F olunmu\xC5\x9F c\xC3\xBCmle cihan num\xC3\xBBnesi"
-author: "H\xC3\xA2c\xC4\xB1 Ahmed"
+title: Kemâliyle nakş olunmuş cümle cihan numûnesi
+author: Hâcı Ahmed
 subject: World maps
 date: 1795]
---- 
-map: 46
+---
+map: 646
 id: g3200.ct001506
 title: Political map of the world, April 2005
 author: United States
 subject: World maps
-date: "2005"
---- 
-map: 47
+date: '2005'
+---
+map: 647
 id: g3200.ct001813
 title: Sankai yochi zenzu
 author: Nagakubo, Sekisui
 subject: World maps
-date: "[1785?]"
---- 
-map: 48
+date: ! '[1785?]'
+---
+map: 648
 id: g3200.ct001891
 title: Joslin's six inch terrestrial globe, containing the latest discoveries
 author: Joslin, Gilman.
 subject: Globes
-date: "[ca. 1840]"
---- 
-map: 49
+date: ! '[ca. 1840]'
+---
+map: 649
 id: g3200.ct001903
 title: Weltkarte des Idrisi vom Jahr 1154 n. Ch., Charta Rogeriana
-author: "Idr\xC4\xABs\xC4\xAB"
+author: Idrīsī
 subject: World maps, Manuscript
-date: "1928"
---- 
-map: 50
+date: '1928'
+---
+map: 650
 id: g3200.ct001910
 title: Political map of the world, April 2006
 author: United States
 subject: World maps
-date: "2006"
---- 
-map: 51
+date: '2006'
+---
+map: 651
 id: g3200.ct002063
-title: "[Political world map]"
+title: ! '[Political world map]'
 author: United States
 subject: World maps
-date: "2000"
---- 
-map: 52
+date: '2000'
+---
+map: 652
 id: g3200.ct002064
-title: "[Political world map]"
+title: ! '[Political world map]'
 author: United States
 subject: World maps
-date: "2000"
---- 
-map: 53
+date: '2000'
+---
+map: 653
 id: g3200.ct002065
-title: "[Political map of the world]"
+title: ! '[Political map of the world]'
 author: United States
 subject: World maps
 date: 2000]
---- 
-map: 54
+---
+map: 654
 id: g3200.ct002066
-title: "[Political world map]"
+title: ! '[Political world map]'
 author: United States
 subject: World maps
 date: 2001]
---- 
-map: 55
+---
+map: 655
 id: g3200.ct002087
 title: Genoese world map
 author: Toscanelli, Paolo del Pozzo
 subject: World maps
-date: "[1912]"
---- 
-map: 56
+date: ! '[1912]'
+---
+map: 656
 id: g3200.ct002200
-title: "[Political map of the world]"
+title: ! '[Political map of the world]'
 author: United States
 subject: World maps
-date: "2008"
---- 
-map: 57
+date: '2008'
+---
+map: 657
 id: g3200.ct002354
-title: Colton's illustrated & embellished steel plate map of the world on Mercator's projection
+title: Colton's illustrated & embellished steel plate map of the world on Mercator's
+  projection
 author: Johnson, D. Griffing.
 subject: 
-date: "1854"
---- 
-map: 58
+date: '1854'
+---
+map: 658
 id: g3200.ct002401
 title: Political map of the world, September 2008
 author: United States
 subject: World maps
-date: "2008"
---- 
-map: 59
+date: '2008'
+---
+map: 659
 id: g3200.ct002413
 title: Political map of the world, April 2007
 author: United States
 subject: World maps
-date: "2007"
---- 
-map: 60
+date: '2007'
+---
+map: 660
 id: g3200.ct002450
-title: Carta universal en que se contiene todo lo que del mundo se ha descubierto fasta agora
+title: Carta universal en que se contiene todo lo que del mundo se ha descubierto
+  fasta agora
 author: Ribero, Diego
 subject: World maps
-date: "[1887?]"
---- 
-map: 61
+date: ! '[1887?]'
+---
+map: 661
 id: g3200.ct003158
-title: "[Political map of the world]"
+title: ! '[Political map of the world]'
 author: United States
 subject: World maps
 date: 1989]
---- 
-map: 62
+---
+map: 662
 id: g3200.ct003160
 title: world (guide to regional maps)
 author: United States
 subject: World maps
 date: 1991]
---- 
-map: 63
+---
+map: 663
 id: g3200.ct003167
 title: Political map of the world, June 2009
 author: United States
 subject: World maps
-date: "2009"
---- 
-map: 64
+date: '2009'
+---
+map: 664
 id: g3200.ct003173
 title: Carte generale de la terre
 author: Flecheux, M.
 subject: World maps
-date: "1782"
---- 
-map: 65
+date: '1782'
+---
+map: 665
 id: g3200.cwh00200
-title: "[Map of the world on the Mercator projection]"
+title: ! '[Map of the world on the Mercator projection]'
 author: 
 subject: World maps, Manuscript
-date: "[1875]"
---- 
-map: 66
+date: ! '[1875]'
+---
+map: 666
 id: g3200.ex000006Za
 title: Kun yu wan guo quan tu
 author: Ricci, Matteo
 subject: World maps
-date: "1602"
---- 
-map: 67
+date: '1602'
+---
+map: 667
 id: g3200.mf000001
 title: new & correct map of the whole World
 author: Moll, Herman
 subject: World maps
-date: "1719"
---- 
-map: 68
+date: '1719'
+---
+map: 668
 id: g3200.mf000070
 title: Vniversale descrittione di tvtta la terra conoscivta fin qvi
 author: Forlani, Paolo.
 subject: World maps
-date: "1565"
---- 
-map: 69
+date: '1565'
+---
+map: 669
 id: g3200m.gct00001
 title: Portolan atlas of 9 charts and a world map, etc
 author: Agnese, Battista
 subject: World maps, Manuscript
-date: "[ca. 1544]"
---- 
-map: 70
+date: ! '[ca. 1544]'
+---
+map: 670
 id: g3200m.gct00003
 title: Theatrum orbis terrarum
 author: Ortelius, Abraham
 subject: Atlases, Dutch
-date: "1570"
---- 
-map: 71
+date: '1570'
+---
+map: 671
 id: g3200m.gct00035
 title: theatre du monde, ou, Novvel atlas
 author: Blaeu, Willem Janszoon
 subject: Atlases, Dutch
-date: "1647"
---- 
-map: 72
+date: '1647'
+---
+map: 672
 id: g3200m.gct00037
 title: Joint operations graphic (Ground)
 author: United States
 subject: World maps
 date: 1965-
---- 
-map: 73
+---
+map: 673
 id: g3200m.gct00052
-title: "Taboas geraes de toda a navega\xC3\xA7\xC3\xA3o"
-author: "Albernaz, Jo\xC3\xA3o Teixeira"
+title: Taboas geraes de toda a navegação
+author: Albernaz, João Teixeira
 subject: Atlases, Portuguese
-date: "1630"
---- 
-map: 74
+date: '1630'
+---
+map: 674
 id: g3200m.gct00054
-title: "[Mitchell's school atlas"
+title: ! '[Mitchell''s school atlas'
 author: Mitchell, S. Augustus (Samuel Augustus)
 subject: Atlases
 date: 1839]
---- 
-map: 75
+---
+map: 675
 id: g3200m.gct00074
-title: new universal atlas, comprising separate maps of all the principal empires, kingdoms & states throughout the world, and forming a distinct atlas of the United States
+title: new universal atlas, comprising separate maps of all the principal empires,
+  kingdoms & states throughout the world, and forming a distinct atlas of the United
+  States
 author: Greenleaf, J. (Jeremiah)
 subject: Atlases
-date: "1848"
---- 
-map: 76
+date: '1848'
+---
+map: 676
 id: g3200m.gct00087
-title: "[Geografia tavole moderne di geografia]"
-author: "Lafr\xC3\xA9ry, Antoine"
+title: ! '[Geografia tavole moderne di geografia]'
+author: Lafréry, Antoine
 subject: Atlases, Italian
 date: 1575?]
---- 
-map: 77
+---
+map: 677
 id: g3200m.gct00126
 title: Theatrum orbis terrarum
 author: Ortelius, Abraham
 subject: Atlases, Dutch
-date: "1570"
---- 
-map: 78
+date: '1570'
+---
+map: 678
 id: g3200m.gct00190
 title: atlas of ancient geography
 author: Tanner, Henry Schenck
 subject: Geography, Ancient
-date: "1826"
---- 
-map: 79
+date: '1826'
+---
+map: 679
 id: g3200m.gct00192
 title: new and elegent general atlas, containing maps of each of the United States
 author: Lucas, Fielding
 subject: Atlases
-date: "[1817?]"
---- 
-map: 80
+date: ! '[1817?]'
+---
+map: 680
 id: g3200m.gcw0013960
-title: Johnson's new illustrated (steel plate) family atlas, with descriptions, geographical, statistical, and historical
+title: Johnson's new illustrated (steel plate) family atlas, with descriptions, geographical,
+  statistical, and historical
 author: Johnson, A. J. (Alvin Jewett)
 subject: Atlases
-date: "1862"
---- 
-map: 81
+date: '1862'
+---
+map: 681
 id: g3200m.gcws0186
-title: new universal atlas containing maps of the various empires, kingdoms, states and republics of the world
+title: new universal atlas containing maps of the various empires, kingdoms, states
+  and republics of the world
 author: Mitchell, S. Augustus (Samuel Augustus)
 subject: Atlases
-date: "1849"
---- 
-map: 82
+date: '1849'
+---
+map: 682
 id: g3200m.gcws0193
-title: new universal atlas, containing maps of the various empires, kingdoms, states and republics of the world
+title: new universal atlas, containing maps of the various empires, kingdoms, states
+  and republics of the world
 author: Tanner, Henry Schenck
 subject: Atlases
-date: "1844"
---- 
-map: 83
+date: '1844'
+---
+map: 683
 id: g3201a.cp000005
 title: Presidents from Illinois
 author: Jackson, Nicholas A.
 subject: Homes and haunts
-date: "2008"
---- 
-map: 84
+date: '2008'
+---
+map: 684
 id: g3201a.ct002269
 title: Night lights
 author: Goddard Space Flight Center
 subject: Remote-sensing images
 date: 2004?]
---- 
-map: 85
+---
+map: 685
 id: g3201b.ct000455a
 title: Rand McNally & Co.'s new twelve inch terrestrial globe [gores]
 author: Rand McNally and Company
 subject: World maps
-date: "1891"
---- 
-map: 86
+date: '1891'
+---
+map: 686
 id: g3201b.ct000489
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 1999]
---- 
-map: 87
+---
+map: 687
 id: g3201b.ct000726
-title: "[Terrestrial globe gores]"
+title: ! '[Terrestrial globe gores]'
 author: Hondius, Jodocus
 subject: World maps
-date: "1615"
---- 
-map: 88
+date: '1615'
+---
+map: 688
 id: g3201b.ct000879
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2002]
---- 
-map: 89
+---
+map: 689
 id: g3201b.ct000880
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2000]
---- 
-map: 90
+---
+map: 690
 id: g3201b.ct001065a
 title: Globo terrestre
 author: Cassini, Gio. Ma. (Giovanni Maria)
 subject: Travel
-date: "1790"
---- 
-map: 91
+date: '1790'
+---
+map: 691
 id: g3201b.ct001131
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2003]
---- 
-map: 92
+---
+map: 692
 id: g3201b.ct001136
-title: "[50\xCA\xBA military globe gores]"
+title: ! '[50ʺ military globe gores]'
 author: United States
 subject: World maps
 date: c1942
---- 
-map: 93
+---
+map: 693
 id: g3201b.ct001302
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2004]
---- 
-map: 94
+---
+map: 694
 id: g3201b.ct001417
 title: Rand McNally & Co.'s new twelve inch terrestrial globe [gores]
 author: Rand McNally and Company
 subject: World maps
-date: "1887"
---- 
-map: 95
+date: '1887'
+---
+map: 695
 id: g3201b.ct001924
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2006]
---- 
-map: 96
+---
+map: 696
 id: g3201b.ct002226
 title: Standard time zones of the world
 author: United States
 subject: Time
 date: 2007]
---- 
-map: 97
+---
+map: 697
 id: g3201b.ct002355a
 title: Mechanischer Welt Globus zum Gebrauche des kleinen Geographen
 author: Kaiser, Joseph Franz
 subject: World maps
-date: "[1840]"
---- 
-map: 98
+date: ! '[1840]'
+---
+map: 698
 id: g3201b.ct002582
 title: Azimuthal equidistant projection centered on Kabul, Afghanistan
 author: United States
 subject: Azimuthal equidistant projection (Cartography)
 date: 2001]
---- 
-map: 99
+---
+map: 699
 id: g3201b.ct002661
-title: "Azimuthal equidistant projection centered on Asuncion, Paraguay 25\xE2\x81\xB015\xCA\xB9S., 57\xE2\x81\xB039\xCA\xB9W"
+title: Azimuthal equidistant projection centered on Asuncion, Paraguay 25⁰15ʹS., 57⁰39ʹW
 author: United States
 subject: Azimuthal equidistant projection (Cartography)
 date: 1971]
---- 
-map: 100
+---
+map: 700
 id: g3201b.ct002662
-title: "Azimuthal equidistant projection centered on Athens, 37\xE2\x81\xB059\xCA\xB9N., 23\xE2\x81\xB044\xCA\xB9E"
+title: Azimuthal equidistant projection centered on Athens, 37⁰59ʹN., 23⁰44ʹE
 author: United States
 subject: Azimuthal equidistant projection (Cartography)
 date: 1970]
+---
+map: 701
+id: g3201b.ct002663
+title: Azimuthal equidistant projection centered on Abīs al Mustajaddah, Egypt, 31⁰08ʹN,
+  30⁰06ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1989?]
+---
+map: 702
+id: g3201b.ct002664
+title: Azimuthal equidistant projection, centered on Beijing, China, 39⁰55ʹN, 116⁰23ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1988]
+---
+map: 703
+id: g3201b.ct002665
+title: Azimuthal equidistant projection centered on Cairo, Egypt, 30⁰03ʹN, 31⁰15ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1985]
+---
+map: 704
+id: g3201b.ct002666
+title: Azimuthal equidistant projection centered on Kinshasa, 4⁰18ʹS., 15⁰18ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1969]
+---
+map: 705
+id: g3201b.ct002667
+title: Azimuthal equidistant projection centered on Cairo
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1975?]
+---
+map: 706
+id: g3201b.ct002668
+title: Azimuthal equidistant projection centered on Clark Airbase, Philippines, 15⁰11ʹN
+  120⁰32ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1986]
+---
+map: 707
+id: g3201b.ct002670
+title: Azimuthal equidistant projection centered on Frankfurt, West Germany, 50⁰07ʹN,
+  8⁰41ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1986]
+---
+map: 708
+id: g3201b.ct002672
+title: Azimuthal equidistant projection centered on Kinshasa, Zaire, 4⁰18ʹS 15⁰18ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1987]
+---
+map: 709
+id: g3201b.ct002673
+title: Azimuthal equidistant projection centered on Madrid, 40⁰24ʹN., 3⁰41ʹW
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1969]
+---
+map: 710
+id: g3201b.ct002674
+title: Azimuthal equidistant projection centered on Moscow, 55⁰45ʹN., 37⁰35ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1970]
+---
+map: 711
+id: g3201b.ct002675
+title: Azimuthal equidistant projection centered on Moscow, USSR, 55⁰45ʹN 37⁰35ʹE,
+  scale 1:32,000,000
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1985]
+---
+map: 712
+id: g3201b.ct002676
+title: Azimuthal equidistant projection centered on Panama City, Panama, 8⁰58ʹN 79⁰32ʹW
+author: United States
+subject: Azimuthal equidistant projeciton (Cartography)
+date: 1988]
+---
+map: 713
+id: g3201b.ct002677
+title: Azimuthal equidistant projection centered on Panama City, 8⁰58ʹN., 79⁰32ʹW
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1969]
+---
+map: 714
+id: g3201b.ct002678
+title: Azimuthal equidistant projection centered on Paris, 48⁰52ʹN., 2⁰20ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1970]
+---
+map: 715
+id: g3201b.ct002679
+title: Azimuthal equidistant projection centered on Peking, China 39⁰36ʹN., 116⁰24ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1971]
+---
+map: 716
+id: g3201b.ct002680
+title: Azimuthal equidistant projection centered on Rio de Janeiro, 22⁰54ʹS., 43⁰14ʹW
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1969]
+---
+map: 717
+id: g3201b.ct002681
+title: Azimuthal equidistant projection centered on Nicosia, 35⁰10ʹN., 33⁰22ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1970]
+---
+map: 718
+id: g3201b.ct002682
+title: Azimuthal equidistant projection centered on Nairobi, Kenya, 1⁰17ʹS., 36⁰49ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1971]
+---
+map: 719
+id: g3201b.ct002683
+title: Azimuthal equidistant projection centered on Seoul, 37⁰34ʹN., 127⁰00ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1968]
+---
+map: 720
+id: g3201b.ct002684
+title: Azimuthal equidistant projection centered on Taipei, 25⁰03ʹN., 121⁰30ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1968]
+---
+map: 721
+id: g3201b.ct002685
+title: Azimuthal equidistant projection centered on Teheran, 35⁰40ʹN., 51⁰26ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1968]
+---
+map: 722
+id: g3201b.ct002686
+title: Azimuthal equidistant projection centered on Tokyo, Japan, 35⁰42ʹN 139⁰46ʹE
+author: United States
+subject: Azimuthal equidistant projection (Cartography)
+date: 1990]
+---
+map: 723
+id: g3201b.ct003165
+title: Standard time zones of the world
+author: United States
+subject: Time
+date: 2009]
+---
+map: 724
+id: g3201b.hl000014
+title: Erster gedruckter Globus, Martin Hylacomylus (Waltzemüller)
+author: Waldseemüller, Martin
+subject: World maps
+date: '1879'
+---
+map: 725
+id: g3201b.hl000015
+title: Globus aus der Mitte des XVI Jahrhunderts
+author: Oterschaden, Johannes.
+subject: World maps
+date: '1879'
+---
+map: 726
+id: g3201c.awh00012
+title: Seismicity of the earth, 1960-1980
+author: Espinosa, A. F.
+subject: Earthquakes
+date: 1982]
+---
+map: 727
+id: g3201c.ct000234
+title: Athanasii Kircheri e Soc. Jesu, Mundus subterraneus in XII libros digestus
+author: Kircher, Athanasius
+subject: Science
+date: anno 1668
+---
+map: 728
+id: g3201c.ct000881
+title: Physical map of the world, June 2002
+author: United States
+subject: World maps, Physical
+date: '2002'
+---
+map: 729
+id: g3201c.ct001130
+title: Physical map of the world, June 2003
+author: United States
+subject: World maps, Physical
+date: '2003'
+---
+map: 730
+id: g3201c.ct001301
+title: Map of the world shewing the extent and direction of the wind and the route
+  to be followed in a circumnavigation of the globe
+author: Wilkes, Charles
+subject: Winds
+date: '1856'
+---
+map: 731
+id: g3201c.ct001316
+title: Map of America by Diego Ribero 1529
+author: Kohl, J. G. (Johann Georg)
+subject: Maps, Manuscript
+date: ! '[1840?]'
+---
+map: 732
+id: g3201c.ct001317
+title: Physical map of the world, April 2004
+author: United States
+subject: World maps, Physical
+date: '2004'
+---
+map: 733
+id: g3201c.ct001359
+title: This dynamic planet
+author: 
+subject: Volcanoes
+date: '1994'
+---
+map: 734
+id: g3201c.ct001507
+title: Physical map of the world, April 2005
+author: United States
+subject: World maps, Physical
+date: '2005'
+---
+map: 735
+id: g3201c.ct001513
+title: ! '[Heezen-Tharp collection]'
+author: Heezen, Bruce C.
+subject: Ocean bottom
+date: ! '[1957?-1995?]'
+---
+map: 736
+id: g3201c.ct001909
+title: Physical map of the world, April 2006
+author: United States
+subject: World maps, Physical
+date: '2006'
+---
+map: 737
+id: g3201c.ct002412
+title: Physical map of the world, April 2007
+author: United States
+subject: World maps, Physical
+date: '2007'
+---
+map: 738
+id: g3201c.ct003146
+title: Physical map of the world, 2002
+author: United States
+subject: World maps, Physical
+date: ! '[2002]'
+---
+map: 739
+id: g3201c.ct003168
+title: Physical map of the world, June 2009
+author: United States
+subject: World maps, Physical
+date: '2009'
+---
+map: 740
+id: g3201cm.gcws0183
+title: physical atlas
+author: Johnston, Alexander Keith
+subject: Physical geography
+date: '1848'
+---
+map: 741
+id: g3201e.ct000242
+title: Carte figurative et approximative représentant pour l'année 1858 les émigrants
+  du globe, les pays dóu ils partent et ceux oú ils arrivent
+author: Minard, Charles Joseph
+subject: Emigration and immigration
+date: '1862'
+---
+map: 742
+id: g3201e.ct001288
+title: Emerging or reemerging disease threat since 1990
+author: United States
+subject: Diseases
+date: ! '[2003]'
+---
+map: 743
+id: g3201e.ct001290
+title: Cumulative number of reported probable SARS cases/deaths (1 November 2002 to
+  8 July 2003)
+author: United States
+subject: SARS (Disease)
+date: ! '[2003]'
+---
+map: 744
+id: g3201e.ct001291
+title: Typology of countries by health-care status, December 2002
+author: United States
+subject: Medical care
+date: ! '[2003]'
+---
+map: 745
+id: g3201e.ct003157
+title: Major marijuana and hashish cultivation areas and trafficking routes, 1989
+author: United States
+subject: Marijuana
+date: 1990]
+---
+map: 746
+id: g3201e.ct003159
+title: Narcotics growing areas and trafficking routes, 1993
+author: United States
+subject: Drug traffic
+date: 1993]
+---
+map: 747
+id: g3201e.ct003161
+title: Major religions in key areas of concern
+author: United States
+subject: Religion
+date: 1988]
