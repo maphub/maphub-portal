@@ -78,18 +78,9 @@ $(document).ready(function(){
         <div id="control-toggle">
         
           <div class="btn-group" data-toggle="buttons-radio">
-            <button class="btn btn-primary" id="control-toggle-navigate" value="none">
-              <i class="icon-move icon-white"></i>
-              Navigate
-            </button>
-            <button class="btn" id="control-toggle-annotation">
-              <i class="icon-pencil"></i>
-              Annotate
-            </button>
-            <button class="btn" id="control-toggle-control-point" value="point">
-              <i class="icon-map-marker"></i>
-              Control Point
-            </button>
+            <button class="btn btn-primary" id="control-toggle-navigate" value="none">Navigate</button>
+            <button class="btn" id="control-toggle-annotation">Annotate</button>
+            <button class="btn" id="control-toggle-control-point" value="point">Control Point</button>
           </div>
           <br>
         
@@ -108,30 +99,16 @@ $(document).ready(function(){
         <% end %>
         
         <% if @map.has_overlay? %>
-          <div>
-            
-            <!--A dropdown button to toggle between Regular Map view and Google map view -->
-            <div class="dropdown pull-left" id="map-type-selector">
-              <button class="btn dropdown-toggle" data-toggle="dropdown" href="#map-type-selector">
-                <i class="icon-eye-open"></i>
-                Map View&nbsp;<b class="caret"></b>
-              </button>
-              <ul class="dropdown-menu">
-                <li><a id="map-type-regular">Regular Map</a></li>
-                <li><a id="map-type-google">Google Maps</a> </li>
-              </ul>
-            </div> <!--end class="dropdown"-->
-            
-            <!-- A KML download button -->
-            <%= link_to map_path(@map, :format => :kml) do %>
-              <div class="btn pull-left" style="margin-left:10px">
-                <i class="icon-globe"></i>
-                Download KML
-              </div>
-            <% end %>
-            
-          </div><br>
-          <br style="clear:both;">
+        <!--Creates Javascript variables for latitude and longitude of the current map -->
+        	<!--A dropdown button to toggle between Regular Map view and Google map view -->
+        	<div class="dropdown" id="map-type-selector">
+        		<button class="btn dropdown-toggle" data-toggle="dropdown" href="#map-type-selector">Map View&nbsp;<b class="caret"></b></button>
+        		<ul class="dropdown-menu">
+        			<li><a id="map-type-regular">Regular Map</a></li>
+        			<li><a id="map-type-google">Google Maps</a> </li>
+        		</ul>
+        	</div> <!--end class="dropdown"-->
+        	<br>
         <% end %>
         
         <h4>Layers</h4>
