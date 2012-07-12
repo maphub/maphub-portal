@@ -18,7 +18,8 @@ gem 'sunspot_rails'
 gem 'sunspot_solr' # optional pre-packaged Solr distribution for use in development
 gem 'progress_bar'
 
-gem 'twitter-bootstrap-rails', '2.0.4' # new versions break 
+gem 'twitter-bootstrap-rails', '2.0.6' # new versions after 2.0.7 break OpenLayers view
+gem 'therubyracer'
 
 # Gems used only for assets and not required
 # in production environments by default.
