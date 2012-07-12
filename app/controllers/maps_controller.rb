@@ -24,18 +24,4 @@ class MapsController < ApplicationController
     end
   end
 
-  # PUT /maps/1
-  # PUT /maps/1.xml
-  def update
-    @map = Map.find(params[:id])
-    boundary = @map.boundary
-    boundary.update_attributes({
-    	'ne_lat' => params['ne_lat'],
-    	'ne_lng' => params['ne_lng'],
-    	'sw_lat' => params['sw_lat'],
-    	'sw_lng' => params['sw_lng']
-    })
-    boundary.save
-    redirect_to :action => 'index'
-  end
 end

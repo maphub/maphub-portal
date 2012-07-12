@@ -26,7 +26,7 @@ class Map < ActiveRecord::Base
   searchable do 
     text :title, :boost => 2.0
     text :subject
-    string :author
+    text :author
     text :annotations_content, :boost => 1.0
     text :annotations_tags, :boost => 1.0
     text :annotations_enrichments, :boost => 1.0

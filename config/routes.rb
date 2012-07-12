@@ -2,20 +2,12 @@ MaphubPortal::Application.routes.draw do
 
   devise_for :admins, :users
   
-  # administrator namespace
-  namespace :admin do 
-    resources :users
-    resources :maps
-    resources :annotations
-  end
-  
-  
   resources :users, :only => [:show, :update, :index] do 
     resources :annotations, :only => [:show, :index, :destroy]
     resources :control_points, :only => [:show, :index, :destroy]
   end
   
-  resources :maps, :only => [:show, :index, :update] do 
+  resources :maps, :only => [:show, :index] do 
     resources :annotations, :only => [:create, :index, :update, :destroy]
     resources :control_points, :only => [:create, :index, :update, :destroy]
   end
