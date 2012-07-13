@@ -61,6 +61,7 @@ class Annotation < ActiveRecord::Base
     
     begin
       url = URI.parse(query)
+      response = nil
       begin
         status = Timeout::timeout(Rails.configuration.remote_timeout) {
           response = Net::HTTP.get_response(url)
@@ -197,6 +198,8 @@ class Annotation < ActiveRecord::Base
       # parse response
       begin
       url = URI.parse(query)
+      response = nil
+      
       begin
         status = Timeout::timeout(Rails.configuration.remote_timeout) {
           response = Net::HTTP.get_response(url)
@@ -205,9 +208,9 @@ class Annotation < ActiveRecord::Base
         logger.warn("Fetching boundary-based tags timed out after #{Rails.configuration.remote_timeout} seconds.")
         return tags
       end
-      if response.code == "200"
+      
+      if not response.nil? and response.code == "200"
         response = ActiveSupport::JSON.decode response.body
-        #logger.debug response["geonames"].first
         response["geonames"].each do |entry|
           tag = {
             label: entry["title"],
