@@ -56,6 +56,8 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     fattr (2.2.1)
+    google-webfonts (0.1.2)
+      actionpack (>= 3.0.0)
     gravtastic (3.2.6)
     haml (3.1.6)
     highline (1.6.13)
@@ -212,6 +214,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
+  google-webfonts
   gravtastic
   jquery-rails
   kaminari
