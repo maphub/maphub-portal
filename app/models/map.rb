@@ -121,17 +121,27 @@ class Map < ActiveRecord::Base
   end
   
   # checks whether the overlay tileset exists
+  def check_for_overlay
+    url = URI.parse overlay_properties_uri
+    # make a normal check for a 200 OK response
+    begin
+      response = Net::HTTP.get_response(url)
+      self.overlay_available = (response.code == "200")
+    # if there was an error during resolving ...
+    rescue
+      self.overlay_available = false
+    end
+    self.overlay_available
+  end
+  
+  # checks whether the overlay tileset exists, without making remote queries if possible
+  # this means that whenever a Google Map overlay goes offline, we won't notice
   def has_overlay?
+    # if we don't know whether there's an overlay at all, do a check and return that
     if self.overlay_available.nil?
-      url = URI.parse overlay_properties_uri
-      begin
-        response = Net::HTTP.get_response(url)
-        self.overlay_available = (response.code == "200")
-        self.save
-        return self.overlay_available
-      rescue
-        false
-      end
+      return check_for_overlay
+      
+    # otherwise, return what we know already, at the risk of serving a dead link, but keeping speed
     else
       return self.overlay_available
     end
@@ -148,7 +158,7 @@ class Map < ActiveRecord::Base
     end
   end
   
-  # Extracts image dimensions from ImageProperties.xml;
+  # Extracts image dimensions from ImageProperties.xml
   def extract_dimensions
     tileset_uri.chomp!('/') # remove trailing slash just in case
     url = URI.parse "#{tileset_uri}/ImageProperties.xml"
