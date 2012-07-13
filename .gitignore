@@ -29,3 +29,6 @@ db/seeds/maps.yaml
 
 # ignore editor backup files
 *.*~
+
+# ignore precompiled assets
+public/assets

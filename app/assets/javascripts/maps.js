@@ -1,5 +1,5 @@
 //= require maphub
-//= require OpenLayers
+
 //= require maps/annotation_view
 //= require maps/tagging_view
 //= require maps/overlay_view

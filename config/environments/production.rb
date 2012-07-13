@@ -24,13 +24,17 @@ MaphubPortal::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
   
-  # Change prefix so OpenLayers images load correctly
-  config.assets.prefix = "/"
+  config.assets.precompile += %w( openlayers.js maps.js users.js )
+  config.assets.precompile += %w( maps/annotation_tooltip.js maps/annotation_view.js maps/control_point_tooltip.js maps/overlay_view.js maps/tagging_view.js )
+  config.assets.precompile += %w( maps/overlays/alpha_overlay.js maps/overlays/ext_draggable_object.js maps/overlays/map.js maps/overlays/tile_overlay.js )
+
+  config.assets.css_compressor = :yui
+  config.assets.js_compressor = :uglifier
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH

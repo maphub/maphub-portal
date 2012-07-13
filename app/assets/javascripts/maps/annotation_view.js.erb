@@ -120,28 +120,18 @@ maphub.AnnotationView = function(parameters) {
     })
   });
   
+  var controlPointStyle = new OpenLayers.Style({
+    'externalGraphic': "<%= asset_path 'pin.png' %>",
+    'graphicWidth': '15',
+    'graphicWidth': '25',
+    'graphicXOffset': -13,
+    'graphicYOffset': -25
+  });
+  
   var controlPointStyleMap = new OpenLayers.StyleMap({
-    'default': new OpenLayers.Style({
-      'externalGraphic': "/assets/openlayers/pin.png",
-      'graphicWidth': '15',
-      'graphicWidth': '25',
-      'graphicXOffset': -13,
-      'graphicYOffset': -25
-    }),
-    'select': new OpenLayers.Style({
-      'externalGraphic': "/assets/openlayers/pin.png",
-      'graphicWidth': '15',
-      'graphicWidth': '25',
-      'graphicXOffset': -13,
-      'graphicYOffset': -25
-    }),
-    'temporary': new OpenLayers.Style({
-      'externalGraphic': "/assets/openlayers/pin.png",
-      'graphicWidth': '15',
-      'graphicWidth': '25',
-      'graphicXOffset': -13,
-      'graphicYOffset': -25
-    })
+    'default': controlPointStyle,
+    'select': controlPointStyle,
+    'temporary': controlPointStyle
   });
   
   // ================================================================================
@@ -211,7 +201,9 @@ maphub.AnnotationView = function(parameters) {
   this.map.addLayer(this.editLayer);
   this.map.addLayer(this.controlPointEditLayer);
   this.map.addLayer(this.annotationLayer);
-  this.map.addLayer(this.annotationLayerOwn);
+  if (parameters.editable) {
+    this.map.addLayer(this.annotationLayerOwn);
+  }
   this.map.addLayer(this.controlPointsLayer);
 
 

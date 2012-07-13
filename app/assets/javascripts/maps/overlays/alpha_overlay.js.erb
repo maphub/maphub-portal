@@ -32,7 +32,7 @@ maphub.AlphaOverlay.constructor = maphub.AlphaOverlay;
  */
 maphub.AlphaOverlay.SliderWidth = 57;
 maphub.AlphaOverlay.InitialOpacity = 75;
-maphub.AlphaOverlay.SliderImageURL = '/assets/opacity-slider.png';
+maphub.AlphaOverlay.SliderImageURL = "<%= asset_path ('opacity-slider.png') %>";
 
 maphub.AlphaOverlay.prototype.getTile = function(point, zoomLevel, container) {
   /*
