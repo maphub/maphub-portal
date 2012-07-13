@@ -13,9 +13,13 @@
 */
 
 /*
-*= require style.css
-*
 * This one's from http://addyosmani.github.com/jquery-ui-bootstrap/
 *= require jquery-ui-1.8.16.custom.css
 *= require jquery.ui.1.8.16.ie.css
+*/
+
+/*
+* OpenLayers additional style
+* require ie6-style.css
+* require google.css
 */

@@ -191,7 +191,8 @@ maphub.AnnotationView = function(parameters) {
       restrictedExtent: bounds,
       maxResolution: Math.pow(2, this.baseLayer.numberOfTiers-1),
       numZoomLevels: this.baseLayer.numberOfTiers,
-      units: 'pixels'
+      units: 'pixels',
+      theme: "<%= asset_path 'theme/default/style.css' %>"
   };
 
   this.map = new OpenLayers.Map("viewer", options);
