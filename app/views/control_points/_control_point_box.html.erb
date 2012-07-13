@@ -1,0 +1,32 @@
+<div class ="control_point_container">
+  <div class="row">
+    <div class="span8 offset2">
+    
+      <p><strong>URI: </strong> <%= control_point_url(control_point) %></p>
+      <p><strong>Short Name: </strong><%= control_point.name %></p>    
+      <p><strong>GeoNames Label: </strong><%= control_point.geonames_label %></p>    
+      <p><strong>Annotated: </strong> <%= control_point.created_at %></p>
+      <p><strong>Annotator: </strong> <%= control_point.user.username %> , <%= control_point.user.email %></p>
+      <p><strong>Generator: </strong> http://www.maphub.info</p>
+      <p><strong>Target: </strong> <%= control_point.map.raw_image_uri %></p>
+      <p><strong>Georeference Point: </strong>http://sws.geonames.org/<%= control_point.geonames_id %></p>    
+      <p><strong>Real-World Coordinates: </strong><%= control_point.lat %>,  <%= control_point.lng %></p>
+      <p><strong>Map Coordinates: </strong><%= control_point.x %>, <%= control_point.y %></p>        
+        <%= link_to control_point_path(control_point, :format => :json), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> JSON
+          <% end %>
+        <%= link_to control_point_path(control_point, :format => :xml), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> XML
+        <% end %>
+        <%= link_to control_point_path(control_point, :format => :rdf), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> RDF/XML
+        <% end %>
+        <%= link_to control_point_path(control_point, :format => :ttl), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> TTL
+        <% end %>
+        <%= link_to control_point_path(control_point, :format => :nt), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> NT
+        <% end %>
+    </div><!-- end span8 -->
+  </div><!-- end row -->
+</div><!-- end control_point_container -->

@@ -6,41 +6,11 @@
   <% end %>
 </div>
 
-<div class="row">
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th width="800px">Body</th>
-    <th>Tags</th>
-    <th>Created</th>
-    <% if @parent.class.name == "Map" %>
-      <th>User</th>
-    <% elsif @parent.class.name == "User" %>
-      <th>Map</th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
 <% @annotations.each do |annotation| %>
-  <tr>
-    <td><%= simple_format h annotation.body %></td>
-    <td>
-      <div class="tags-list">
-      <% annotation.tags.each do |t| %>
-        <% if t.accepted? %>
-          <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
-        <% end %>
-      <% end %>
-      </div>
-    </td>
-    <td><%= annotation.created_at %></td>
-    <% if @parent.class.name == "Map" %>
-      <td><%= link_to annotation.user.username, annotation.user %></td>
-    <% elsif @parent.class.name == "User" %>
-      <td><%= link_to annotation.map.title, annotation.map %></td>
-    <% end %>
-  </tr>
+	<%= render :partial => "annotations/annotation_box", :locals => { :annotation => annotation } %>
 <% end %>
-</tbody>
-</table>
+
+<div class="row">
+    <div class="span12"><center><%= paginate @annotations %></center></div>
 </div>
+

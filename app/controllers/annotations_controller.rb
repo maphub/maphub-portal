@@ -11,9 +11,9 @@ class AnnotationsController < ApplicationController
   # GET /map/:map_id/annotations.xml  
   def index
     unless @parent.nil?
-      @annotations = @parent.annotations
+      @annotations = @parent.annotations.order(:updated_at).page(params[:page]).per(10)
     else
-      @annotations = Annotation.all
+      @annotations = Annotation.order(:updated_at).page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html # index.html.erb

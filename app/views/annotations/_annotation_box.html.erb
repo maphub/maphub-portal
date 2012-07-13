@@ -1,0 +1,43 @@
+<div class ="annotation_container">
+  <div class="row">
+    <div class="span8 offset2">
+
+      <p><strong>URI: </strong> <%= annotation_url(annotation) %></p>
+      <p><strong>Annotated: </strong> <%= annotation.created_at %></p>
+      <p><strong>Annotator: </strong> <%= annotation.user.username %> , <%= annotation.user.email %></p>
+      <p><strong>Generator: </strong> http://www.maphub.info</p>
+      <p><strong>Target: </strong> <%= annotation.map.raw_image_uri %></p>
+      <p><strong>Selector: </strong> <code><%= annotation.wkt_data %></code></p>
+      <p><strong>Body: </strong><%= annotation.body %></p>      
+      <% if annotation.tags.count > 0 %>
+      <p><strong>Semantic Tags: </strong>
+        <div class = "tags-list">
+          <% annotation.tags.each do |t| %>
+          <% if t.accepted? %>
+          <%= render :partial => "tags/single_tag", :locals => { :tag => t } %>
+          <% end %>
+          <% end %>
+        </p>
+        <br style="clear:both"><br />
+      </div><!-- end tags-list -->
+      <% end %>
+      <p>
+        <%= link_to annotation_path(annotation, :format => :json), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> JSON
+        <% end %>
+        <%= link_to annotation_path(annotation, :format => :xml), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> XML
+        <% end %>
+        <%= link_to annotation_path(annotation, :format => :rdf), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> RDF/XML
+        <% end %>
+        <%= link_to annotation_path(annotation, :format => :ttl), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> TTL
+        <% end %>
+        <%= link_to annotation_path(annotation, :format => :nt), :class => "btn btn-info" do  %>
+          <i class="icon-file icon-white"></i> NT
+        <% end %>
+      </p>
+    </div><!-- end span8 -->
+  </div><!-- end row -->
+</div><!-- end annotation_container -->

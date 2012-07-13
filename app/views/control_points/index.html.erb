@@ -6,45 +6,10 @@
   <% end %>
 </div>
 
-<div class="row">
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Short Name</th>
-    <th>Full GeoNames Label</th>
-    <th>Real-world Coordinates</th>
-    <th>Map Coordinates</th>
-    <th>Created</th>
-    <% if @parent.class.name == "Map" %>
-      <th>User</th>
-    <% elsif @parent.class.name == "User" %>
-      <th>Map</th>
-    <% else %>
-      <th>User</th>
-      <th>Map</th>
-    <% end %>
-  </tr>
-</thead>
-<tbody>
 <% @control_points.each do |control_point| %>
-  <tr>
-    <td><%= control_point.id %></td>
-    <td><%= control_point.name %></td>
-    <td><%= control_point.geonames_label %></td>
-    <td><%= "#{control_point.lat}; #{control_point.lng}" %></td>
-    <td><%= "#{control_point.x}; #{control_point.y}" %></td>
-    <td><%= control_point.created_at %></td>
-    <% if @parent.class.name == "Map" %>
-      <td><%= link_to control_point.user.username, control_point.user %></td>
-    <% elsif @parent.class.name == "User" %>
-      <td><%= link_to control_point.map.title, control_point.map %></td>
-    <% else %>
-      <td><%= link_to control_point.user.username, control_point.user %></td>
-      <td><%= link_to control_point.map.title, control_point.map %></td>
-    <% end %>
-  </tr>
+	<%= render :partial => "control_points/control_point_box", :locals => { :control_point => control_point } %>
 <% end %>
-</tbody>
-</table>
+
+<div class="row">
+    <div class="span12"><center><%= paginate @control_points %></center></div>
 </div>

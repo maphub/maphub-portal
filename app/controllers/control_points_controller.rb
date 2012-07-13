@@ -12,9 +12,9 @@ class ControlPointsController < ApplicationController
   def index
     
     unless @parent.nil?
-      @control_points = @parent.control_points
+      @control_points = @parent.control_points.order(:updated_at).page(params[:page]).per(10)
     else
-      @control_points = ControlPoint.all
+      @control_points = ControlPoint.order(:updated_at).page(params[:page]).per(10)
     end
       
     respond_to do |format|
