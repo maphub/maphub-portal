@@ -211,7 +211,7 @@ $(document).ready(function(){
       </div>
     </div>
     <div class="modal-footer">
-      <%= f.submit "Save annotation", :class => "btn btn-primary", :id => "annotation-submit-button" %>
+      <%= f.submit "Save annotation", :class => "btn btn-primary", :id => "annotation-submit-button", :disable_with => 'Saving...' %>
     </div>
   <% end %>
 </div>
@@ -236,7 +236,7 @@ $(document).ready(function(){
         <input name="place-search" id="place-search" size="40"/></p>
       </div>
       <div class="modal-footer">
-        <%= f.submit "Save control point", :class => "btn btn-primary" %>
+        <%= f.submit "Save control point", :class => "btn btn-primary", :disable_with => 'Saving...' %>
       </div>
     <% end %>
 </div>

@@ -3,7 +3,10 @@ maphub.TaggingView = function(callback_url, timeout) {
   this.timeout = timeout;
   this.tags = new Array();
   this.status = "idle";
-  var self = this; // store the function for later
+  
+  // store the function for later
+  var self = this; 
+  window.tagging_view = this;
   
   // after waiting, create the tags
   $("#annotation_body").keyup(function(){
