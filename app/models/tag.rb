@@ -16,5 +16,10 @@ class Tag < ActiveRecord::Base
   def neutral?
     self.status == "neutral"
   end
+  
+  #Virtual Attribute
+  def wikipedia_uri
+    "#{dbpedia_uri}".gsub("dbpedia.org/resource", "wikipedia.org/wiki")    
+  end
  
 end
