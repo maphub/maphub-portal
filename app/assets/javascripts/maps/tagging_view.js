@@ -11,7 +11,7 @@ maphub.TaggingView = function(callback_url, timeout) {
       
       // get text to submit to controller
       var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
-      if(!(text === "") || !(text == "Add your annotation here!")) {
+      if(!(text === "") || (text != "Add your annotation here!")) {
         if (self.status != "loading") {        
           // main request sent to controller
           var request = self.callback_url           + "?"

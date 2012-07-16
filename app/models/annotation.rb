@@ -116,24 +116,34 @@ class Annotation < ActiveRecord::Base
       }
     eos
     
-    logger.debug("Executing SPARQL query: " + sparql_query)
-    
     query_uri = create_dbpedia_sparql_request_uri(sparql_query)
-    request_uri = URI.parse(query_uri)
-    response_abstract = Net::HTTP.get_response(request_uri)
     
-    if response_abstract.code == "200"
-      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+    logger.debug("Executing SPARQL query: " + query_uri)
+    
+    begin
+      request_uri = URI.parse(query_uri)
+      response_abstract = nil
       begin
+        status = Timeout::timeout(Rails.configuration.remote_timeout) {
+          response_abstract = Net::HTTP.get_response(request_uri)
+        }
+      rescue Timeout::Error
+        logger.warn("Fetching enrichments timed out after #{Rails.configuration.remote_timeout} seconds.")
+        return enrichments
+      end
+    
+      if not response_abstract.nil? and response_abstract.code == "200"
+        response_abstract = ActiveSupport::JSON.decode response_abstract.body
         bindings = response_abstract["results"]["bindings"]
         bindings.each do |binding|
           enrichments << binding["label"]["value"]
         end
-      rescue
-        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
       end
+      return enrichments.uniq.join(" ")
+    rescue
+      logger.warn("Could not fetch abstract from #{dbpedia_uri}.")
+      return enrichments
     end
-    enrichments.uniq.join(" ")
   end
   
   
@@ -150,23 +160,31 @@ class Annotation < ActiveRecord::Base
       }
     eos
     
-    logger.debug("Executing SPARQL query: " + sparql_query)
-    
     query_uri = create_dbpedia_sparql_request_uri(sparql_query)
-    request_uri = URI.parse(query_uri)
-    response_abstract = Net::HTTP.get_response(request_uri)
     
-    if response_abstract.code == "200"
-      response_abstract = ActiveSupport::JSON.decode response_abstract.body
+    logger.debug("Executing SPARQL query: " + query_uri)
+    
+    begin
+      request_uri = URI.parse(query_uri)
+      response_abstract = nil
       begin
+        status = Timeout::timeout(Rails.configuration.remote_timeout) {
+          response_abstract = Net::HTTP.get_response(request_uri)
+        }
+      rescue Timeout::Error
+        logger.warn("Fetching abstract timed out after #{Rails.configuration.remote_timeout} seconds.")
+        return abstract_text
+      end
+      
+      if response_abstract.code == "200"
+        response_abstract = ActiveSupport::JSON.decode response_abstract.body
         bindings = response_abstract["results"]["bindings"][0]
         abstract = bindings["abstract"]["value"]
         abstract_text = abstract[0...294] + " (...)"
-      rescue
-        logger.warn("Could not fetch abstract from #{dbpedia_uri}")
       end
+    rescue
+      logger.warn("Could not fetch abstract from #{dbpedia_uri}.")
     end
-      
     abstract_text
   end
   
@@ -197,31 +215,31 @@ class Annotation < ActiveRecord::Base
             
       # parse response
       begin
-      url = URI.parse(query)
-      response = nil
+        url = URI.parse(query)
+        response = nil
       
-      begin
-        status = Timeout::timeout(Rails.configuration.remote_timeout) {
-          response = Net::HTTP.get_response(url)
-        }
-      rescue Timeout::Error
-        logger.warn("Fetching boundary-based tags timed out after #{Rails.configuration.remote_timeout} seconds.")
-        return tags
-      end
-      
-      if not response.nil? and response.code == "200"
-        response = ActiveSupport::JSON.decode response.body
-        response["geonames"].each do |entry|
-          tag = {
-            label: entry["title"],
-            dbpedia_uri: "http://" +
-                entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
-                                            "dbpedia.org/resource/"),
-            description: entry["summary"]
+        begin
+          status = Timeout::timeout(Rails.configuration.remote_timeout) {
+            response = Net::HTTP.get_response(url)
           }
-          tags << tag
+        rescue Timeout::Error
+          logger.warn("Fetching boundary-based tags timed out after #{Rails.configuration.remote_timeout} seconds.")
+          return tags
         end
-      end
+      
+        if not response.nil? and response.code == "200"
+          response = ActiveSupport::JSON.decode response.body
+          response["geonames"].each do |entry|
+            tag = {
+              label: entry["title"],
+              dbpedia_uri: "http://" +
+                  entry["wikipediaUrl"].gsub("en.wikipedia.org/wiki/",
+                                              "dbpedia.org/resource/"),
+              description: entry["summary"]
+            }
+            tags << tag
+          end
+        end
       rescue
         logger.warn("Failed to fetch boundary-based tags for query #{query}")
       end
