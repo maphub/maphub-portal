@@ -12,4 +12,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Returns the URI scheme name and authority
+  # => http://localhost:3000/maps/1.rdf => http://localhost:3000
+  def get_host
+    request_url = Addressable::URI.parse(request.url)
+    @host = request_url.scheme + "://" + request_url.host
+  end
+  
 end

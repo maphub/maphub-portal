@@ -5,7 +5,7 @@
       <p><strong>URI: </strong> <%= annotation_url(annotation) %></p>
       <p><strong>Annotated: </strong> <%= annotation.created_at %></p>
       <p><strong>Annotator: </strong> <%= annotation.user.username %> , <%= annotation.user.email %></p>
-      <p><strong>Generator: </strong> http://www.maphub.info</p>
+      <p><strong>Generator: </strong> <%= host %></p>
       <p><strong>Target: </strong> <%= annotation.map.raw_image_uri %></p>
       <p><strong>Selector: </strong> <code><%= annotation.wkt_data %></code></p>
       <p><strong>Body: </strong><%= annotation.body %></p>      

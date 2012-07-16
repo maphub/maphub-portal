@@ -1,7 +1,7 @@
 class ControlPointsController < ApplicationController
   
   before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :get_parent, :get_base_uri
+  before_filter :get_parent, :get_base_uri, :get_host
 
   # GET /control_points
   # GET /control_points.xml
@@ -34,9 +34,15 @@ class ControlPointsController < ApplicationController
       format.html # show.html.erb
       format.xml  { render :xml => @control_point }
       format.json { render :json => @control_point }
-      format.rdf  {render :rdf => @control_point, :httpURI => @base_uri}
-      format.ttl  {render :ttl => @control_point, :httpURI => @base_uri}
-      format.nt  {render :nt => @control_point, :httpURI => @base_uri}
+      format.rdf  { render :rdf => @control_point, 
+                           :httpURI => @base_uri,
+                           :host => @host}
+      format.ttl  { render :ttl => @control_point, 
+                           :httpURI => @base_uri,
+                           :host => @host}
+      format.nt   { render :nt => @control_point, 
+                           :httpURI => @base_uri,
+                           :host => @host}
     end
   end
 

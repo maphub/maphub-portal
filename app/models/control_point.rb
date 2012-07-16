@@ -91,38 +91,38 @@ class ControlPoint < ActiveRecord::Base
   def self.compute_latlng_from_known_xy(x, y, control_points)
       raise ArgumentError if control_points.length != 3
 
-  		# Compute matrix coefficients
-  		x1 = control_points[0].x;
-  		y1 = control_points[0].y;
-  		x2 = control_points[1].x;
-  		y2 = control_points[1].y;
-  		x3 = control_points[2].x;
-  		y3 = control_points[2].y;
+      # Compute matrix coefficients
+      x1 = control_points[0].x;
+      y1 = control_points[0].y;
+      x2 = control_points[1].x;
+      y2 = control_points[1].y;
+      x3 = control_points[2].x;
+      y3 = control_points[2].y;
 
-  		u1 = control_points[0].lat; 
-  		v1 = control_points[0].lng;
-  		u2 = control_points[1].lat;
-  		v2 = control_points[1].lng;
-  		u3 = control_points[2].lat;
-  		v3 = control_points[2].lng;
+      u1 = control_points[0].lat; 
+      v1 = control_points[0].lng;
+      u2 = control_points[1].lat;
+      v2 = control_points[1].lng;
+      u3 = control_points[2].lat;
+      v3 = control_points[2].lng;
 
-  		a = (u2 * (y3 - y1) - u3 * (y2 - y1) - u1 * (y3 - y2))/
-  		    ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));		
-  		b = (u2 * (x3 - x1) - u3 * (x2 - x1) - u1 * (x3 - x2))/
-  		    ((y2 - y1) * (x3 - x1) - (y3 - y1) * (x2 - x1));
-  		c = u1 - a * x1 - b * y1;
+      a = (u2 * (y3 - y1) - u3 * (y2 - y1) - u1 * (y3 - y2))/
+          ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));    
+      b = (u2 * (x3 - x1) - u3 * (x2 - x1) - u1 * (x3 - x2))/
+          ((y2 - y1) * (x3 - x1) - (y3 - y1) * (x2 - x1));
+      c = u1 - a * x1 - b * y1;
 
-  		d = (v2 * (y3 - y1) - v3 * (y2 - y1) - v1 * (y3 - y2))/
-  		    ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
-  		e = (v2 * (x3 - x1) - v3 * (x2 - x1) - v1 * (x3 - x2))/
-  		    ((y2 - y1) * (x3 - x1) - (y3 - y1) * (x2 - x1));			
-  		f = v1 - d * x1 - e * y1;
+      d = (v2 * (y3 - y1) - v3 * (y2 - y1) - v1 * (y3 - y2))/
+          ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
+      e = (v2 * (x3 - x1) - v3 * (x2 - x1) - v1 * (x3 - x2))/
+          ((y2 - y1) * (x3 - x1) - (y3 - y1) * (x2 - x1));      
+      f = v1 - d * x1 - e * y1;
 
-  		# Compute transform
-  		u = a * x + b * y + c;
-  		v = d * x + e * y + f;
+      # Compute transform
+      u = a * x + b * y + c;
+      v = d * x + e * y + f;
 
-  		return u,v
+      return u,v
   end
   
   
@@ -133,6 +133,7 @@ class ControlPoint < ActiveRecord::Base
     # TODO: type of tagging
     
     httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
+    host = options[:host] ||= "http://maphub.info"
     
     # Defining the custom vocabulary # TODO: move this to separate lib
     oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core/')
@@ -166,7 +167,7 @@ class ControlPoint < ActiveRecord::Base
         oa.generated, 
         RDF::Literal.new(self.updated_at, :datatype => RDF::XSD::dateTime)]
     end
-    graph << [baseURI, oa.generator, RDF::URI("http://www.maphub.info")]
+    graph << [baseURI, oa.generator, RDF::URI(host)]
     
     # Adding user and provenance data
     user_uuid = UUIDTools::UUID.timestamp_create().to_s

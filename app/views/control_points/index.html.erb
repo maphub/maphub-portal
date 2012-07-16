@@ -7,7 +7,7 @@
 </div>
 
 <% @control_points.each do |control_point| %>
-	<%= render :partial => "control_points/control_point_box", :locals => { :control_point => control_point } %>
+	<%= render :partial => "control_points/control_point_box", :locals => { :control_point => control_point, :host => @host } %>
 <% end %>
 
 <div class="row">

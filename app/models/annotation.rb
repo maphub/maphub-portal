@@ -240,6 +240,7 @@ class Annotation < ActiveRecord::Base
   def to_rdf(format, options = {})
     
     httpURI = options[:httpURI] ||= "http://example.com/missingBaseURI"
+    host = options[:host] ||= "http://maphub.info"
     
     # Defining the custom vocabulary # TODO: move this to separate lib
     oa_uri = RDF::URI('http://www.w3.org/ns/openannotation/core/')
@@ -267,7 +268,7 @@ class Annotation < ActiveRecord::Base
         oa.generated, 
         RDF::Literal.new(self.updated_at, :datatype => RDF::XSD::dateTime)]
     end
-    graph << [baseURI, oa.generator, RDF::URI("http://www.maphub.info")]
+    graph << [baseURI, oa.generator, RDF::URI(host)]
     
     # Adding user and provenance data
     user_uuid = UUIDTools::UUID.timestamp_create().to_s

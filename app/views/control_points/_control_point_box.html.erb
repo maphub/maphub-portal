@@ -7,7 +7,7 @@
       <p><strong>GeoNames Label: </strong><%= control_point.geonames_label %></p>    
       <p><strong>Annotated: </strong> <%= control_point.created_at %></p>
       <p><strong>Annotator: </strong> <%= control_point.user.username %> , <%= control_point.user.email %></p>
-      <p><strong>Generator: </strong> http://www.maphub.info</p>
+      <p><strong>Generator: </strong> <%= host %></p>
       <p><strong>Target: </strong> <%= control_point.map.raw_image_uri %></p>
       <p><strong>Georeference Point: </strong>http://sws.geonames.org/<%= control_point.geonames_id %></p>    
       <p><strong>Real-World Coordinates: </strong><%= control_point.lat %>,  <%= control_point.lng %></p>
