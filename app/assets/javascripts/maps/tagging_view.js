@@ -3,7 +3,10 @@ maphub.TaggingView = function(callback_url, timeout) {
   this.timeout = timeout;
   this.tags = new Array();
   this.status = "idle";
-  var self = this; // store the function for later
+  
+  // store the function for later
+  var self = this; 
+  window.tagging_view = this;
   
   // after waiting, create the tags
   $("#annotation_body").keyup(function(){
@@ -11,7 +14,7 @@ maphub.TaggingView = function(callback_url, timeout) {
       
       // get text to submit to controller
       var text = encodeURIComponent($("#annotation_body").val().replace(/[^\w\s]/gi, ''));
-      if(!(text === "") || !(text == "Add your annotation here!")) {
+      if(!(text === "") || (text != "Add your annotation here!")) {
         if (self.status != "loading") {        
           // main request sent to controller
           var request = self.callback_url           + "?"
