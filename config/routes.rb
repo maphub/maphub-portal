@@ -22,6 +22,9 @@ MaphubPortal::Application.routes.draw do
   match 'search' => 'home#search'
   match 'search/:q' => 'home#search'
   
+  # status controller
+  match 'status' => 'home#status'
+  
   # static content
   match "terms" => 'home#terms'
   match "contact" => 'home#contact'

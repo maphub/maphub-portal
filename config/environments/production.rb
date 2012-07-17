@@ -3,7 +3,8 @@ MaphubPortal::Application.configure do
 
   # Config variables
   config.map_base_uri = "http://samos.mminf.univie.ac.at/maps"
-  config.wikipedia_miner_uri = "http://samos.mminf.univie.ac.at:8080/"
+  config.wikipedia_miner_uri = "http://samos.mminf.univie.ac.at:8080/wikipediaminer"
+  config.dbpedia_sparql_uri = "http://dbpedia.org/sparql?"
   config.geoname_query = "http://api.geonames.org/wikipediaBoundingBoxJSON?"
   config.geoname_user = "username=slhck"
   config.google_maps_api_key = "AIzaSyBlzM3vloWBjycG494laUkc5DEHrMI6M0I"

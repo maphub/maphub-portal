@@ -1,0 +1,32 @@
+<div class="row">
+  <h1>Service Status</h1>
+</div>
+
+<div class="row">
+  <table class="table table-striped span10">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Description</th>
+        <th>URL</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @status.each do |key, val| %>
+        <tr>
+          <td><strong><%= key %></strong></td>
+          <td><%= val[:description] %></td>
+          <td><code><%= link_to val[:url], val[:url] %></code></td>
+          <td>
+            <% status = val[:status] %>
+            <div class="alert alert-<%= (status == :available) ? 'success' : 'error' %>">
+              <i class="icon icon-<%= (status == :available) ? 'ok' : 'remove' %>"></i>
+              <%= status %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
