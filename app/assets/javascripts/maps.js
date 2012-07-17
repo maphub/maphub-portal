@@ -5,3 +5,4 @@
 //= require maps/overlay_view
 //= require maps/annotation_tooltip
 //= require maps/control_point_tooltip
+//= require maps/earth_view.js
