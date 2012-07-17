@@ -32,7 +32,6 @@ maphub.Map = function(parameters) {
   this.minTileset = parameters.min_tileset;
   this.maxTileset = parameters.max_tileset;
   this.zoom = Math.floor(parameters.min_tileset + (parameters.max_tileset - parameters.min_tileset) / 2);
-  window.overlay_view = this;
 };
 
 

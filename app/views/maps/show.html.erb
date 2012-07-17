@@ -40,7 +40,7 @@ function initGoogleEarth(){
   <% if @map.has_overlay? %>
     if (typeof window.earth_view === 'undefined') {
       window.earth_view = new maphub.EarthView({
-        overlay_tileset_uri: "<%= @map.overlay_tileset_uri %>"
+        kml_uri: "<%= @map.kml_uri %>"
       });
     }
   <% end %>
@@ -58,17 +58,17 @@ $(document).ready(function(){
   initTaggingView();
   
   $("#overlay_viewer").hide();
-  $("#map3d").hide();
+  $("earth_viewer").hide();
   $("#map-type-regular").click(function() {
     $("#overlay_viewer").hide();
-    $("#map3d").hide();
+    $("earth_viewer").hide();
     $("#viewer").show();
     $("#control-toggle button").removeAttr("disabled");
   });
   $("#map-type-google").click(function() {
     initGoogleOverlay();
     $("#viewer").hide();
-    $("#map3d").hide();
+    $("earth_viewer").hide();
     $("#overlay_viewer").show();
     $("#control-toggle button").attr("disabled", "disabled");
   });
@@ -76,7 +76,7 @@ $(document).ready(function(){
     initGoogleEarth();
     $("#viewer").hide();
     $("#overlay_viewer").hide();
-    $("#map3d").show();
+    $("earth_viewer").show();
     $("#control-toggle button").attr("disabled", "disabled");
   });
 });
@@ -93,7 +93,7 @@ $(document).ready(function(){
       <div class="span8">
         <div id="viewer" class="span8" style="height:600px;"></div>
         <div id="overlay_viewer" style="height:600px;"></div>
-        <div id="map3d" style="height:600px;"></div>
+        <div id="earth_viewer" style="height:600px;"></div>
       </div>
       <!-- Right column-->
       <div class="span4">
