@@ -1,8 +1,14 @@
 
-		RELEASE 0.3
-		
-		New features:
-				* Implemented support for external configuration parameters
+    RELEASE 0.3
+    
+    New features:
+        * Support for external configuration parameters
+        * Google Maps overlay view (if tileset is available)
+        * Google Earth overlay view (if tileset is available)
+        * Google Earth KML download
+        * Status info for remote services at /status
+        * Possibility to switch between layers
+        * New styles
 
 2012/06/29:
     RELEASE 0.2
