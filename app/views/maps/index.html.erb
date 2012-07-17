@@ -1,8 +1,10 @@
 <div class="row">
   <h1>Maps</h1>
+  <table class="table table-striped">
     <% @maps.each do |map| %>
       <%= render :partial => "thumbnail", :locals => { :map => map } %>
     <% end %>
+  </table>
 </div>
 <div class="row">
     <div class="span12"><center><%= paginate @maps %></center></div>

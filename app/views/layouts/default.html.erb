@@ -68,7 +68,7 @@
             <%= form_tag search_path, :method => 'get', :class => "navbar-search" do %>
               <%= text_field_tag :q, params[:q], :id => "searchbox", :class => "search-qurey", :size => "40" %>
             <% end %>
-            <ul class="nav pull-right">
+            <ul class="nav pull-right" id="right-nav">
                 <% if not user_signed_in? %>
                     <li><%= link_to 'Log in', new_user_session_path %></li>
                     <li><%= link_to 'Sign up', new_user_registration_path %></li>

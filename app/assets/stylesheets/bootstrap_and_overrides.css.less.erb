@@ -1,0 +1,494 @@
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+
+// Set the correct sprite paths
+@iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
+@iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
+
+// Bootstrap LESS and overrides
+@baseFontSize:    14.5px;
+@baseLineHeight:  21px;
+@baseFontFamily:  'Gentium Basic', Garamond, "Times New Roman", serif;
+@maphubText:      Architects Daughter, Garamond, "Times New Roman", serif;
+
+
+// Color definitions
+@lightestBrown:   #E7DCCD;
+@lightBrown:      #987860;
+@darkBrown:       #332820;
+@mediumBrown:     #655040;
+@redBrown:        #501614;
+
+@lightBlue:       #4A66A3;
+@darkBlue:        #283a62;
+
+@lightYellow:     #FFEBCD;
+
+@mediumGrey:      #555;
+
+@alternateColor:  #FFF7D4;
+@hoverColor:      #FFF3BD;
+
+@backgroundColor: #FFFAEE;
+@linkColor:       #005580;
+
+
+// ----------------------------------------------------------------------------
+/* General positioning and layout*/
+
+body {
+padding-top: 60px;
+padding-bottom: 40px;
+}
+
+h1, h2, h3, h4 {
+margin-top: 5px;
+margin-bottom: 8px;
+}
+
+h1, h2 {
+margin-top: 10px;
+margin-bottom: 30px;
+padding-bottom: 10px;
+width: 100%;
+}
+
+label {
+display: inline;
+}
+
+
+footer {
+position: fixed;
+width: 100%;
+bottom: 0;
+padding-left: 155px;
+padding-top: 5px;
+}
+
+.padding {
+display: block;
+margin-top: 10px;
+}
+
+img {
+  /* this fixes a bug introduced in Bootstrap 2.0.4 */
+  /* http://osgeo-org.1560.n6.nabble.com/Bootstrap-CSS-Issue-td4621974.html */
+  max-width:none !important;
+}
+
+
+// ----------------------------------------------------------------------------
+/* General Color */
+
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+background-color: @alternateColor;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+background-color: @hoverColor;
+}
+
+body {
+  background-color: @backgroundColor;
+}
+
+code {
+background-color: transparent;
+color: @redBrown;
+border: none;
+}
+
+hr {
+  border-top: 1px solid @darkBlue;
+  border-bottom: 1px solid white;
+}
+
+h1, h2 {
+  border-bottom: 4px solid @darkBlue;
+}
+
+footer {
+  background-color: @backgroundColor;
+}
+
+
+.btn-primary {
+background-color: none;
+background-image: linear-gradient(bottom, @darkBlue 30%, @lightBlue 70%);
+background-image: -o-linear-gradient(bottom, @darkBlue 30%, @lightBlue 70%);
+background-image: -moz-linear-gradient(bottom, @darkBlue 30%, @lightBlue 70%);
+background-image: -webkit-linear-gradient(bottom, @darkBlue 30%, @lightBlue 70%);
+background-image: -ms-linear-gradient(bottom, @darkBlue 30%, @lightBlue 70%);
+background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.3, @darkBlue),
+		color-stop(0.7, @lightBlue)
+	);
+filter: none;
+background-repeat: none;
+}
+
+.btn .btn-primary:hover {
+background-color: black;
+}
+
+h1 small {
+color: @darkBrown;
+}
+
+.special_background {
+background-color: @backgroundColor;
+background-image: url(<%= asset_path 'parchment.jpeg' %>);
+background-repeat: repeat;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
+
+
+// ----------------------------------------------------------------------------
+/* General Fonts and Typography*/
+
+h1, h2 {
+font-family: @maphubText;
+color: @darkBlue;
+}
+
+small {
+font-size: 0.8em;
+}
+
+code {
+font-size: 0.9em;
+}
+
+
+
+// ----------------------------------------------------------------------------
+/* Navbar specific*/
+
+.navbar-inner {
+  background-image: linear-gradient(top, @lightBrown 19%, @mediumBrown 60%, @lightBrown 100%);
+  background-image: -o-linear-gradient(top, @lightBrown 19%, @mediumBrown 60%, @lightBrown 100%);
+  background-image: -moz-linear-gradient(top, @lightBrown 19%, @mediumBrown 60%, @lightBrown 100%);
+  background-image: -webkit-linear-gradient(top, @lightBrown 19%, @mediumBrown 60%, @lightBrown 100%);
+  background-image: -ms-linear-gradient(top, @lightBrown 19%, @mediumBrown 60%, @lightBrown 100%);
+  background-image: -webkit-gradient(
+  		linear,
+  		left top,
+  		left bottom,
+  		color-stop(0.19, @lightBrown),
+  		color-stop(0.6, @mediumBrown),
+  		color-stop(1, @lightBrown)
+  	);
+}
+
+
+/* All normal links in the navbar */
+.navbar .nav > li > a {
+  color: @lightYellow;
+	font-size: 16px;
+	margin-top: 8px;
+}
+
+.navbar .nav i {
+  margin-top: 4px;
+}
+
+/* Active and hovered links */
+.navbar .nav .active > a, .navbar .nav .active > a:hover {
+background-color: transparent;
+color: @lightYellow;
+font-weight:bold;
+font-size: 23px !important;
+}
+
+.navbar-search {
+  margin-top: 12px;
+}
+
+.brand strong {
+  font-family: @maphubText;
+  color: @lightestBrown;
+	font-weight:500;
+	font-size:30px;
+}
+
+#right-nav {
+  margin-right: 0px !important;
+}
+
+
+
+// ----------------------------------------------------------------------------
+/* Annotation and Control Point specific*/
+
+.annotation-container .btn, .control-point-container .btn {
+	.btn-primary;
+}
+
+.annotation-container span.label {
+margin-right: 5px;
+margin-bottom: 5px;
+}
+
+#annotations-header {
+font-family: @maphubText;
+margin-top: 20px;
+color: @darkBrown;
+}
+
+.annotation-tooltip, .control-point-tooltip {
+position: fixed;
+width: 250px;
+z-index: 999999;
+background-color: @backgroundColor;
+border: 2px solid @redBrown;
+  //.border-radius(6px);
+-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+-webkit-background-clip: padding-box;
+-moz-background-clip: padding-box;
+background-clip: padding-box;
+-webkit-background-clip: padding-box;
+-moz-background-clip: padding-box;
+background-clip: padding-box;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
+
+.annotation-tooltip-body, .annotation-tooltip-user, .control-point-tooltip {
+padding: 15px;
+}
+
+
+// ----------------------------------------------------------------------------
+/* Front Page specific */
+
+.first-headers {
+font-family: @maphubText;
+margin-top: 30px;
+border-left: solid 4px @darkBlue;
+border-bottom: solid 4px @darkBlue;
+padding-left: 20px;
+padding-bottom: 10px;
+}
+
+.first-headers small {
+  font-size: 15px;
+}
+
+.front_list li {
+  color: @darkBrown;
+}
+
+#top-main {
+  .special_background;
+}
+
+.carousel {
+  margin-bottom: 0 !important;
+  margin-top: 10px;
+}
+
+.carousel-caption h4, .carousel-caption p {
+  color: @lightYellow;
+}
+
+
+// ----------------------------------------------------------------------------
+/* Map specific*/
+
+
+.map-show-title {
+  .first-headers;
+  font-weight: 400;
+  font-size: 30px;
+  color: @darkBlue;
+  line-height: 1.1;
+}
+
+.map-grid-image {
+float: left;
+width: 65px;
+height: 65px;
+overflow: hidden;
+border: 2px solid white;
+}
+
+.map-grid-image:hover {
+border: 2px solid @lightBlue;
+}
+
+.tags-list span.label {
+float: left;
+margin-right: 5px;
+margin-bottom: 5px;
+color: @lightYellow;
+}
+
+.tags-list span.label input[value="neutral"] {
+background-color: @mediumGrey;
+}
+
+.annotation-container .span8, .control-point-container .span8 {
+  .special_background;
+  padding: 30px;
+  margin-top: 20px;
+  color: @darkBrown;
+  border: 2px solid @darkBrown;
+}
+
+.baseLbl, .baseLayersDiv, .dataLbl {
+display: none;
+}
+
+.dataLayersDiv label {
+padding-left: 5px;
+}
+
+
+
+
+
+// ----------------------------------------------------------------------------
+/* Error messages */
+
+#error_explanation {
+  .special_background;
+  padding: 10px;
+  width: 46%;
+  margin-left: -100px;
+}
+
+#error_explanation h2 {
+  color: @redBrown;
+}
+
+.alert-info {
+  .special_background;
+  border: 2px solid @darkBlue;
+  color: @darkBrown;
+  text-align: center;
+}
+
+.alert-info a {
+  font-weight: 700;
+  color: @redBrown;
+}
+
+.alert {
+  text-shadow: none;
+}
+
+
+// ----------------------------------------------------------------------------
+/* Modals */
+
+.modal {
+background-color: @backgroundColor;
+border-color: @redBrown;
+}
+
+.modal form {
+margin: 0px;
+}
+
+.modal * h3 {
+font-family: @maphubText;
+color: @darkBlue;
+}
+
+.modal-body p textarea {
+border-color: @redBrown;
+box-shadow: none;
+color: @darkBrown;
+}
+.modal-body p input {
+border-color: @redBrown;
+box-shadow: none;
+color: @darkBrown;
+}
+
+.modal-header {
+border-color: @redBrown;
+border-bottom: 2px solid @redBrown;
+}
+.modal-footer {
+background-color: @backgroundColor;
+border-color: @redBrown;
+box-shadow: none;
+border-top: 2px solid @redBrown;
+}
+
+#no-tags {
+color: @darkBrown;
+}
+
+a.close {
+color: @redBrown;
+text-shadow: none;
+opacity: .5;
+}
+
+a.close:hover {
+color: @redBrown;
+opacity: 1;
+cursor: pointer;
+}
+
+
+// ----------------------------------------------------------------------------
+/* User specific */
+
+.user-list {
+overflow: hidden;
+color: @mediumGrey;
+width: 100%;
+padding-top: 20px;
+margin-left: 100px;
+}
+
+.user-info-first-col {
+width: 100px;
+}
+
+.single-user-container {
+width: 190px;
+height: 50px;
+float: left;
+overflow: hidden;
+display: block;
+margin-bottom: 15px;
+}
+
+.single-user-container img {
+display: block;
+float: left;
+}
+
+.single-user-container .user-info {
+width: 100px;
+float: left;
+padding-left: 15px;
+white-space: nowrap;
+}
+
+#user-image {
+margin-top: 30px;
+}
+
+#user-info-table-container {
+  #user-image;
+}
+#user-info-container {
+  #user-image;
+}

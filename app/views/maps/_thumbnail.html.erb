@@ -1,7 +1,16 @@
-<div class="single-map">
-    <div class="single-map-info">
-      <%= link_to map.short_title, map %><br>
-      <%= time_ago_in_words(map.created_at) %> ago<br>
-    </div>
+<tr>
+  <td>
     <%= link_to image_tag(map.thumbnail_small_uri), map %>
-</div>
+  </td>
+  <td valign="top">
+    <h3><%= link_to map.short_title, map %></h3>
+  	<strong>Date</strong>: <%= map.date %><br>
+  	<strong>Author</strong>: <%= map.author %><br>
+    <strong>Subject</strong>: <%= map.subject %><br>
+    <strong>Updated</strong>: <%= time_ago_in_words(map.updated_at) %> ago<br>
+    
+    <% if map.annotations.count > 0 %>
+      <strong><%= pluralize(map.annotations.count, "Annotation") %></strong> (<%= link_to "show all", map_annotations_url(map) %>)
+    <% end%>
+  </td>
+</tr>

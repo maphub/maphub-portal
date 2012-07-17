@@ -98,6 +98,8 @@ $(document).ready(function(){
       <!-- Right column-->
       <div class="span4">
         
+        <h4 class="map-show-title"><%= @map.short_title %></h4>
+        
         <% if user_signed_in? %>
         <div id="control-toggle">
         
@@ -165,7 +167,7 @@ $(document).ready(function(){
         
         <br>
         
-        <h4><%= @map.title %></h4><br>
+        <strong>Title: </strong><%= @map.title %><br>
         <strong>Subject: </strong><%= @map.subject %><br>
         <strong>Author: </strong><%= @map.author %><br>
         <strong>Date: </strong><%= @map.date %>

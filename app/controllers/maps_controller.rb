@@ -4,7 +4,7 @@ class MapsController < ApplicationController
   
   # Show all maps
   def index
-    @maps = Map.order(:updated_at).reverse.page(params[:page]).per(20) 
+    @maps = Map.order(:updated_at).page(params[:page]).per(20) 
     
     respond_to do |format|
       format.html # index.html.erb
