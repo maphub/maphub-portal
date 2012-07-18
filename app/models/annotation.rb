@@ -94,7 +94,7 @@ class Annotation < ActiveRecord::Base
   
   # Creates a DBPedia SPARQL request URI from a given sparql query
   def self.create_dbpedia_sparql_request_uri(sparql_query)
-    uri = Rails.configuration.dbpedia_sparql_uri
+    uri = Rails.configuration.dbpedia_sparql_uri + ""
     uri << URI.encode_www_form("default-graph-uri" => 
                                           "http://dbpedia.org")
     uri << "&" + URI.encode_www_form("query" => sparql_query)
