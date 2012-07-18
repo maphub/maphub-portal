@@ -20,7 +20,7 @@ Admin.create do |a|
 end
 
 puts "Creating users ..."
-for i in 1..10 do
+for i in 1..3 do
   User.create do |a|
     a.username = "user#{i}"
     a.password = 'test'
@@ -61,7 +61,7 @@ else
       puts "Creating map #{id}"
       map.identifier  = id
       map.title       = "Map #{index+1}"
-      map.subject     = "Lorem ipsum dolor sit amet. Sunt in culpa qui officia deserunt mollit anim id est laborum."
+      map.subject     = "Subject of this map."
       map.author      = "Anonymous"
       map.date        = "1877"
     end
