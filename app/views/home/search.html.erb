@@ -7,9 +7,11 @@
   <% if @results.length > 0 %>
     <div class="row">
       <div class="span12">
+        <table class="table table-striped">
         <% for map in @results %>
-          <%= render :partial => "maps/thumbnail", :locals => { :map => map } %>
+          <%= render :partial => "maps/table_row", :locals => { :map => map } %>
         <% end %>
+        </table>
       </div>
     </div>
   <% end %>
