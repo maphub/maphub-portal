@@ -13,14 +13,16 @@ class ControlPointsController < ApplicationController
     
     unless @parent.nil?
       @control_points = @parent.control_points.order(:updated_at).page(params[:page]).per(10)
+      @all_control_points = @parent.control_points
     else
       @control_points = ControlPoint.order(:updated_at).page(params[:page]).per(10)
+      @all_control_points = ControlPoint.all
     end
       
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @control_points }
-      format.json { render :json => @control_points }
+      format.xml  { render :xml => @all_control_points }
+      format.json { render :json => @all_control_points }
       format.rdf
     end
   end

@@ -12,19 +12,21 @@ class AnnotationsController < ApplicationController
   def index
     unless @parent.nil?
       @annotations = @parent.annotations.order(:updated_at).page(params[:page]).per(10)
+      @all_annotations = @parent.annotations
     else
       @annotations = Annotation.order(:updated_at).page(params[:page]).per(10)
+      @all_annotations = Annotation.all
     end
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @annotations }
+      format.xml  { render :xml => @all_annotations }
       format.json { 
         # prepare for JSON view, we need to sanitize
-        @annotations.each do |a| 
+        @all_annotations.each do |a| 
           a.body = ERB::Util::html_escape a.body
           a.body = ActionController::Base.helpers.simple_format a.body
         end
-        render :json => @annotations 
+        render :json => @all_annotations 
       }
       format.rdf
     end

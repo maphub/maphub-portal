@@ -8,9 +8,8 @@ class MapsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json {
-        render :json => @maps.to_json(:only =>[:id,:updated_at], :methods => [:no_control_points])
-      }
+      format.xml  { render :xml => Map.all }
+      format.json { render :json => Map.all.to_json(:only =>[:id,:updated_at], :methods => [:no_control_points]) }
     end
   end
   
