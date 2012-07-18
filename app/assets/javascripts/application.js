@@ -15,6 +15,6 @@
 //= require jquery-ui
 //= require twitter/bootstrap
 //= require bootstrap
-
 //= require OpenLayers.js
 //= require doTimeout.js
+//= require uservoice.js

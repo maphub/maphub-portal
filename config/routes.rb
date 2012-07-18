@@ -28,7 +28,6 @@ MaphubPortal::Application.routes.draw do
   # static content
   match "terms" => 'home#terms'
   match "contact" => 'home#contact'
-  match "help" => 'home#help'
   
   # tag lookup for annotations
   # the last constraint allows any characters in the parameter, see http://stackoverflow.com/questions/5369654
