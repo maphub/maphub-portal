@@ -19,6 +19,15 @@ class Annotation < ActiveRecord::Base
     
   # Virtual attributes
   
+  def google_maps_annotation
+    if map.control_points.count >= 3
+      gmaps_annotation = GoogleMapsAnnotation.new
+      gmaps_annotation.to_latlng(wkt_data, map.control_points.first(3))
+     else
+      ""
+    end
+  end
+  
   def truncated_body
     (body.length > 30) ? body[0, 30] + "..." : body
   end
@@ -358,6 +367,27 @@ class Annotation < ActiveRecord::Base
 
 end
 
+class GoogleMapsAnnotation
+  #Takes a POLYGON or LINESTRING shape and 3 control points from a map
+  #and outputs a formatted string with the lat/lng coordinates of the
+  #shape
+  def to_latlng(shape, cp)
+    latlngcoordinates = ""
+    if shape.start_with?("POLYGON")
+      coordinates = shape["POLYGON".length+2..-3]
+    elsif shape.start_with?("LINESTRING")
+      coordinates = shape["LINESTRING".length+1..-2]
+    end
+    coordinates.split(",").each do |point_pair|
+      coord = point_pair.split(" ")
+      x = coord[0].to_f 
+      y = coord[1].to_f
+      lat, lng = ControlPoint.compute_latlng_from_known_xy(x, y, cp)
+      latlngcoordinates << lat.to_s + " " + lng.to_s + ","
+    end
+    return latlngcoordinates[0..-2] #gets rid of trailing comma
+  end
+end 
 
 # TODO: this should defenitely go to a separate class
 class Segment

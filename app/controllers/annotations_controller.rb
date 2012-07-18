@@ -26,7 +26,7 @@ class AnnotationsController < ApplicationController
           a.body = ERB::Util::html_escape a.body
           a.body = ActionController::Base.helpers.simple_format a.body
         end
-        render :json => @all_annotations 
+        render :json => @all_annotations.to_json(:methods => [:google_maps_annotation]) 
       }
       format.rdf
     end
