@@ -1,2 +1,10 @@
-<a href="<%= map_url(control_point.map) %>" rel="tooltip" title="<%= control_point.geonames_label %>"><%= control_point.name %></a>
-<small> by <%= link_to control_point.user.username, control_point.user %>, <%= time_ago_in_words(control_point.updated_at) %> ago</small>
+<a 
+  href="<%= map_url(control_point.map) %>" 
+  rel="popover" 
+  data-original-title="<img src='<%= control_point.map.thumbnail_small_uri %>'/>"
+  data-content="<center><%= control_point.geonames_label %></center>">  
+  <%= control_point.name %>
+</a>
+
+
+<small>by <%= link_to control_point.user.username, control_point.user %>, <%= time_ago_in_words(control_point.updated_at) %> ago</small>

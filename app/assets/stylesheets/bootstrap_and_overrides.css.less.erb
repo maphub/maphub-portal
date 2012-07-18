@@ -6,7 +6,7 @@
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
 // Bootstrap LESS and overrides
-@baseFontSize:    14.5px;
+@baseFontSize:    15px;
 @baseLineHeight:  21px;
 @baseFontFamily:  'Gentium Basic', Garamond, "Times New Roman", serif;
 @maphubText:      Architects Daughter, Garamond, "Times New Roman", serif;
@@ -77,6 +77,16 @@ img {
   max-width:none !important;
 }
 
+.popover-title {
+  text-align:center;
+  margin-top: 1px;
+  margin-bottom: 0px;
+}
+
+.popover-content {
+  margin-top:0px;
+}
+
 
 // ----------------------------------------------------------------------------
 /* General Color */
@@ -111,7 +121,6 @@ h1, h2 {
 footer {
   background-color: @backgroundColor;
 }
-
 
 .btn-primary {
 background-color: none;
@@ -148,6 +157,14 @@ background-repeat: repeat;
 border-radius: 6px;
 }
 
+.popover-title, .popover-content {
+  background-color: @backgroundColor;
+}
+
+.popover-inner {
+  border-color: @darkBrown;
+  background-color: @darkBrown;
+}
 
 // ----------------------------------------------------------------------------
 /* General Fonts and Typography*/
@@ -158,12 +175,17 @@ color: @darkBlue;
 }
 
 small {
-font-size: 0.8em;
+font-size: 0.9em;
 }
 
 code {
 font-size: 0.9em;
 }
+
+.tooltip {
+  font-size: 0.9em;
+}
+
 
 
 
@@ -247,7 +269,6 @@ width: 250px;
 z-index: 999999;
 background-color: @backgroundColor;
 border: 2px solid @redBrown;
-  //.border-radius(6px);
 -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);

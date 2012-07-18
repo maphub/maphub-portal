@@ -1,0 +1,8 @@
+<div class="small-badge-container">
+  <%= link_to user do %>
+    <%= image_tag(user.gravatar_url(:size => 20)) %>
+  <% end %>
+  <%= link_to user.username, user %>
+  &nbsp;
+  <small><%= pluralize(user.annotations_count, "Annotation") %></small>
+</div>

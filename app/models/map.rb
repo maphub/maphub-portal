@@ -112,7 +112,7 @@ class Map < ActiveRecord::Base
   
   # a truncated title
   def short_title
-    (title.length > 30) ? title[0, 30] + "..." : title
+    (title.length > 50) ? title[0, 50] + "..." : title
   end
   
   # the number of control points

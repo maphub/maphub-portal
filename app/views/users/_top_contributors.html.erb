@@ -1,9 +1,9 @@
 <%
-users = User.find(:all, :order => 'annotations_count').reverse
+users = User.find(:all, :order => 'annotations_count', :limit => 10).reverse
 %>
 <ul>
 <% for user in users %>  
   <% break if user.annotations_count.nil? %>
-  <li><%= link_to user.username, user %>, <%= pluralize(user.annotations_count, "annotation") %></li>
+  <%= render :partial => "users/small_badge", :locals => { :user => user } %>
 <% end %>
 </ul>
