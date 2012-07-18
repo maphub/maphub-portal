@@ -30,6 +30,7 @@ class Map < ActiveRecord::Base
     text :annotations_content, :boost => 1.0
     text :annotations_tags, :boost => 1.0
     text :annotations_enrichments, :boost => 1.0
+    text :identifier
   end
   
   # Collects all annotations into a single string
