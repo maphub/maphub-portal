@@ -13,7 +13,7 @@
         <dc:title>Maphub Controlpoints</dc:title>
         <!-- The Aggregation aggregates ... -->
         <% @control_points.each do |control_point| %>
-        <ore:aggregates rdf:resource="<%= @base_uri + "/" + control_point.id.to_s %>"/>
+        <ore:aggregates rdf:resource="<%= @host + "/control_points/" + control_point.id.to_s + ".rdf" %>"/>
         <% end %>
     </rdf:Description>
 

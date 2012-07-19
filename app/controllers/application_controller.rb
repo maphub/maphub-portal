@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # => http://localhost:3000/maps/1.rdf => http://localhost:3000
   def get_host
     request_url = Addressable::URI.parse(request.url)
-    @host = request_url.scheme + "://" + request_url.host
+    @host = request_url.scheme + "://" + request_url.host + ":" + request_url.port.to_s
   end
   
 end
