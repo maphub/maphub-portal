@@ -203,7 +203,7 @@ class Annotation < ActiveRecord::Base
       params = { north: north, west: west, east: east, south: south }
 
       # compose query
-      query = Rails.configuration.geoname_query
+      query = Rails.configuration.geoname_query + ""
       params.each do |key, val|
         query << "#{key}=#{val.to_f}&"
       end
