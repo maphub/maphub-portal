@@ -59,12 +59,20 @@ class HomeController < ApplicationController
   def test_status(test_url)
     begin
       url = URI.parse(test_url)
-      ret = Net::HTTP.get_response(url).code
-      puts url
-      puts ret
+      ret = ""
+      begin
+        timeout = Timeout::timeout(Rails.configuration.remote_timeout) {
+          ret = Net::HTTP.get_response(url).code
+        }
+      rescue Timeout::Error
+        logger.warn("#{test_url} timed out after #{Rails.configuration.remote_timeout} seconds.")
+        return :unavailable
+      end
+      puts "#{test_url} returns #{ret}."
       status = (["200", "301", "302", "400"].include? ret) ? :available : :unavailable
       puts status
-    rescue
+    rescue Exception => e
+      puts "#{test_url} raises error #{e}"
       status = :unavailable
     end
     status
