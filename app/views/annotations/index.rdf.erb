@@ -13,7 +13,7 @@
         <dc:title>Maphub Annotations</dc:title>
         <!-- The Aggregation aggregates ... -->
         <% @annotations.each do |annotation| %>
-        <ore:aggregates rdf:resource="<%= @base_uri + "/" + annotation.id.to_s %>"/>
+        <ore:aggregates rdf:resource="<%= @host + "/annotations/" + annotation.id.to_s + ".rdf" %>"/>
         <% end %>
     </rdf:Description>
 
