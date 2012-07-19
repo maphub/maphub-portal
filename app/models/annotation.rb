@@ -9,13 +9,13 @@ class Annotation < ActiveRecord::Base
   
   # Hooks
   after_save :enrich_tags, :update_map
-
+  
   # Model associations
   belongs_to :user, :counter_cache => true
   belongs_to :map
   has_one :boundary, :as => :boundary_object
   accepts_nested_attributes_for :boundary
-  has_many :tags
+  has_many :tags, :dependent => :destroy
     
   # Virtual attributes
   

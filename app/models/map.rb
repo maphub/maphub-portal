@@ -17,9 +17,9 @@ class Map < ActiveRecord::Base
   validates_presence_of :identifier, :title, :width, :height
   
   # Model associations
-  has_many :annotations
-  has_many :control_points
-  has_one :boundary, :as => :boundary_object
+  has_many :annotations, :dependent => :destroy
+  has_many :control_points, :dependent => :destroy
+  has_one :boundary, :as => :boundary_object, :dependent => :destroy
   accepts_nested_attributes_for :boundary
   
   # Search
