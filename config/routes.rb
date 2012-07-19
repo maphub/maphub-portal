@@ -26,7 +26,7 @@ MaphubPortal::Application.routes.draw do
   match 'status' => 'home#status'
   
   # static content
-  match "terms" => 'home#terms'
+  match "help" => 'home#help'
   match "contact" => 'home#contact'
   
   # tag lookup for annotations
