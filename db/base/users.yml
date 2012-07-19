@@ -1,0 +1,85 @@
+
+---
+users:
+  columns:
+  - id
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - remember_created_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - username
+  - fullname
+  - location
+  - about_me
+  - deleted_at
+  - annotations_count
+  - control_points_count
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - user1@example.com
+    - $2a$10$g3om04m/Go6Oe5Bb5.E82Oitm.6xZSTNug2kUHRVzT6ekX.yYhlma
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - user1
+    - Test User 1
+    - Vienna, Austria
+    - 
+    - 
+    - 
+    - 
+    - '2012-07-18 23:17:21.516661'
+    - '2012-07-18 23:17:21.516661'
+  - - 2
+    - user2@example.com
+    - $2a$10$hMN./rRX9b5jPEFUusKw1O1eRtA9lIgS9081qyAu0S/iEMDav.XQa
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - user2
+    - Test User 2
+    - Vienna, Austria
+    - 
+    - 
+    - 
+    - 
+    - '2012-07-18 23:17:21.603086'
+    - '2012-07-18 23:17:21.603086'
+  - - 3
+    - user3@example.com
+    - $2a$10$xak8RKnWQpsn7.MJEH9lM.965DjTIdZolOBUskHe7vTLCdCiS7yf6
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - user3
+    - Test User 3
+    - Vienna, Austria
+    - 
+    - 
+    - 
+    - 
+    - '2012-07-18 23:17:21.687302'
+    - '2012-07-18 23:17:21.687302'

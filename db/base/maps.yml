@@ -1,0 +1,99 @@
+
+---
+maps:
+  columns:
+  - id
+  - identifier
+  - title
+  - subject
+  - width
+  - height
+  - author
+  - date
+  - overlay_available
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - g3200.ct000725C
+    - Universalis cosmographia secundum Ptholomaei traditionem et Americi Vespucii
+      alioru[m]que lustrationes
+    - World maps
+    - 18000
+    - 10029
+    - Waldseemüller, Martin
+    - 1507]
+    - 
+    - '2012-07-18 23:17:54.239333'
+    - '2012-07-18 23:17:54.239333'
+  - - 2
+    - g4390.ct002233
+    - new and accurate chart of the West Indies with the adjacent coasts of North
+      and South America
+    - Maps
+    - 5826
+    - 4941
+    - Bowen, Emanuel
+    - 1720?]
+    - 
+    - '2012-07-18 23:17:54.791171'
+    - '2012-07-18 23:17:54.791171'
+  - - 3
+    - g5672m.ct001201
+    - Chart of the Mediterranean Sea
+    - Maps
+    - 8134
+    - 6194
+    - Thomson, John
+    - '1817'
+    - 
+    - '2012-07-18 23:17:55.237209'
+    - '2012-07-18 23:17:55.237209'
+  - - 4
+    - g3290.ct000342
+    - Americae sive qvartae orbis partis nova et exactissima descriptio
+    - Maps
+    - 10492
+    - 11908
+    - Gutiérrez, Diego
+    - '1562'
+    - 
+    - '2012-07-18 23:17:55.686430'
+    - '2012-07-18 23:17:55.686430'
+  - - 5
+    - g4370.ct000179
+    - Northwestern America showing the territory ceded by Russia to the United States
+    - Maps
+    - 11488
+    - 7312
+    - U.S. Coast and Geodetic Survey
+    - '1867'
+    - 
+    - '2012-07-18 23:17:56.134759'
+    - '2012-07-18 23:17:56.134759'
+  - - 6
+    - g4390.ar171300
+    - West Indies, including part of Virginia, North Carolina, East Florida, South
+      Carolina, West Florida, Georgia, Louisiana, and the Gulf of Mexico, with part
+      of the coast of South America
+    - Maps
+    - 11680
+    - 9482
+    - Cary, John
+    - '1783'
+    - 
+    - '2012-07-18 23:17:56.582640'
+    - '2012-07-18 23:17:56.582640'
+  - - 7
+    - g3710.ar070600
+    - A new and accurate map of New Jersey, Pensilvania, New York and New England
+      with the adjacent countries. Drawn from surveys, assisted by the most approved
+      modern maps & charts and regulated by astronomical observations. By Eman. Bowen.
+    - Maps
+    - 5229
+    - 4233
+    - Bowen, Emanuel
+    - d. 1767
+    - 
+    - '2012-07-18 23:17:57.031657'
+    - '2012-07-18 23:17:57.031657'
