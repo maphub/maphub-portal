@@ -29,7 +29,8 @@ function initGoogleOverlay() {
               sw_lng: <%= overlay_boundary.sw_lng%>,
               overlay_tileset_uri: "<%= @map.overlay_tileset_uri %>",
               min_tileset: <%= overlay_boundary.min_tileset %>,
-              max_tileset: <%= overlay_boundary.max_tileset %>
+              max_tileset: <%= overlay_boundary.max_tileset %>,
+              annotations_url: "<%= map_annotations_url(@map, :format => :json) %>"
             });
           }
         <% end %>
