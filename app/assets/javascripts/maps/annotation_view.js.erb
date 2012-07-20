@@ -14,7 +14,7 @@ maphub.AnnotationView = function(parameters) {
     // get the screen coordinates
     var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
     var coords = this.map.getPixelFromLonLat(lonlat);
-    evt.feature.tooltip.show(coords.x - 50, coords.y);
+    evt.feature.tooltip.show(coords.x, coords.y);
   }
   
   function featureUnselected(evt) {
@@ -233,7 +233,7 @@ maphub.AnnotationView = function(parameters) {
 
   var select = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer, this.annotationLayerOwn, this.controlPointsLayer], { 
-      hover: true,
+      // hover: true,
       renderIntent: "temporary"
       }
   );
