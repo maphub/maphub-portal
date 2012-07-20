@@ -14,7 +14,10 @@ maphub.AnnotationView = function(parameters) {
     // get the screen coordinates
     var lonlat = evt.feature.geometry.getBounds().getCenterLonLat();
     var coords = this.map.getPixelFromLonLat(lonlat);
-    evt.feature.tooltip.show(coords.x - 50, coords.y);
+    if (coords.x < 0) {
+      coords.x = 0;
+    }
+    evt.feature.tooltip.show(coords.x, coords.y);
   }
   
   function featureUnselected(evt) {
@@ -111,16 +114,19 @@ maphub.AnnotationView = function(parameters) {
     'default': new OpenLayers.Style({
       'strokeColor': "#cc4400",
       'fillOpacity': "0.4",
-      'fillColor': "#cc4400"
+      'fillColor': "#cc4400",
+      'cursor': 'pointer'
     }),
     'select': new OpenLayers.Style({
-      'strokeColor': "#ff0000",
-    }),
-    'temporary': new OpenLayers.Style({
       'strokeColor': "#005580",
       'fillColor': "#00A9FF",
       'fillOpacity': "0.4",
-    })
+    }),
+    // 'temporary': new OpenLayers.Style({
+    //   'strokeColor': "#005580",
+    //   'fillColor': "#00A9FF",
+    //   'fillOpacity': "0.4",
+    // })
   });
   
   var controlPointStyle = new OpenLayers.Style({
@@ -128,7 +134,8 @@ maphub.AnnotationView = function(parameters) {
     'graphicWidth': '15',
     'graphicWidth': '25',
     'graphicXOffset': -13,
-    'graphicYOffset': -25
+    'graphicYOffset': -25,
+    'cursor': 'pointer'
   });
   
   var controlPointStyleMap = new OpenLayers.StyleMap({
@@ -233,8 +240,10 @@ maphub.AnnotationView = function(parameters) {
 
   var select = new OpenLayers.Control.SelectFeature(
     [this.annotationLayer, this.annotationLayerOwn, this.controlPointsLayer], { 
-      hover: true,
-      renderIntent: "temporary"
+      // hover: true,
+      renderIntent: "select",
+      toggle: true,    
+      // multiple: true,
       }
   );
   this.map.addControl(select);

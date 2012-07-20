@@ -1,3 +1,17 @@
+2012/07/20:
+    RELEASE 0.3.1
+    
+    New features:
+        * Support for annotations in Google Maps view
+        * New sample data available through rake db:data:load_dir
+        * Feedback widget
+
+    Bugfixes:
+        * Guest users would not see annotation/control point tooltips
+        * Introduced timeout handlers for remote services
+        * Configuration paramters were overwritten through the application
+        * Design fixes
+
 2012/07/17:
     RELEASE 0.3
     
