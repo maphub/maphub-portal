@@ -412,3 +412,8 @@ maphub.AnnotationView.prototype.remoteLoadControlPoints = function() {
   });
 }
 
+function removeTooltips(){
+  $.each(window.annotation_view.tooltips, function(){
+    this.hide();
+  });
+}

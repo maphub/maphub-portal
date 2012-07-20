@@ -78,6 +78,8 @@ $(document).ready(function(){
     $("#googleannotation").show();
     $("#control-toggle button").attr("disabled", "disabled");
     refreshGoogleAnnotation();
+    removeTooltips();
+    
   });
   $("#map-type-earth").click(function() {
     initGoogleEarth();
@@ -87,6 +89,7 @@ $(document).ready(function(){
     $("#layerswitcher").hide();
     $("#googleannotation").hide();
     $("#control-toggle button").attr("disabled", "disabled");
+    removeTooltips();
   });
 });
 <% end %>
