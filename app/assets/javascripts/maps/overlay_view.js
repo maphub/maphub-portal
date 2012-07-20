@@ -3,20 +3,28 @@
 //= require maps/overlays/tile_overlay
 //= require maps/overlays/alpha_overlay
 
+var toggleState = 1;
+var annotations_array = [];
+
 maphub.OverlayView = function(parameters) {
   if (parameters) {
     google.load('maps', '3', {
       callback: function() {
         var map = new maphub.Map(parameters);
         map.render(document.getElementById('overlay_viewer'));
+        
         //JSON request to get lat/lng of map's annotations and add them to Google Map
         $.getJSON(parameters.annotations_url, function(data) {
           $.each(data, function(key, val) {
           annotation_type = val.wkt_data[0]; //P or L for POLYGON or LINESTRING
-            addGoogleAnnotation(map["googleMap"], val.google_maps_annotation, 
+            var shape = getGoogleAnnotation(map["googleMap"], val.google_maps_annotation, 
             annotation_type, val.body);
+            shape.setMap(map["googleMap"]);
+            annotations_array.push(shape);
+            console.log('testing');
           });
         });
+       
       },
       other_params: "sensor=true"
     }); 
@@ -25,7 +33,7 @@ maphub.OverlayView = function(parameters) {
 
 //Takes a map and string of lat/lng points and adds the given annotation to
 //the given map
-function addGoogleAnnotation(map, points, type, annotation_text)
+function getGoogleAnnotation(map, points, type, annotation_text)
 {
   var paths = [];
   var pointpairs = points.split(",");
@@ -51,7 +59,7 @@ function addGoogleAnnotation(map, points, type, annotation_text)
       path: paths,
       strokeColor:'#cc4400',
       strokeOpacity: 1.0,
-      strokeWeight:2
+      strokeWeight:3
     });
   }
   //Add an infoWindow to the annotation containing its text
@@ -60,12 +68,35 @@ function addGoogleAnnotation(map, points, type, annotation_text)
     position: new google.maps.LatLng(50, 50),
     maxWidth: 300
   });
-  eventPolygonClick = google.maps.event.addListener(shape, 'click', function(event) { 
+  eventPolygonIn = google.maps.event.addListener(shape, 'mouseover', function(event) { 
    var marker = new google.maps.Marker({
     position: event.latLng
    }); 
    infowindow.open(map, marker);
   });
+  eventPolygonOut = google.maps.event.addListener(shape, 'mouseout', function(event) {
+    infowindow.close();
+  });
 
-  shape.setMap(map);
+  return shape;
+}
+
+//Takes an array of annotations on the map and toggles them to be visible or not
+function toggleGoogleAnnotations(annotations_array)
+{
+  $.each(annotations_array, function(){
+    console.log(this);
+    if(toggleState ==1){
+      this.setVisible(false);
+    }
+    else{
+      this.setVisible(true);
+    }
+  });
+  if(toggleState == 1){
+    toggleState = 0;
+  }
+  else{
+    toggleState = 1;
+  }
 }
