@@ -10,7 +10,7 @@
         * Guest users would not see annotation/control point tooltips
         * Introduced timeout handlers for remote services
         * Configuration paramters were overwritten through the application
-        * 
+        * Design fixes
 
 2012/07/17:
     RELEASE 0.3
