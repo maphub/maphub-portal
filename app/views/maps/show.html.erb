@@ -60,10 +60,13 @@ $(document).ready(function(){
   
   $("#overlay_viewer").hide();
   $("earth_viewer").hide();
+  $("#googleannotation").hide();
   $("#map-type-regular").click(function() {
     $("#overlay_viewer").hide();
     $("#earth_viewer").hide();
     $("#viewer").show();
+    $("#layerswitcher").show();
+    $("#googleannotation").hide();
     $("#control-toggle button").removeAttr("disabled");
   });
   $("#map-type-google").click(function() {
@@ -71,13 +74,18 @@ $(document).ready(function(){
     $("#viewer").hide();
     $("#earth_viewer").hide();
     $("#overlay_viewer").show();
+    $("#layerswitcher").hide();
+    $("#googleannotation").show();
     $("#control-toggle button").attr("disabled", "disabled");
+    refreshGoogleAnnotation();
   });
   $("#map-type-earth").click(function() {
     initGoogleEarth();
     $("#viewer").hide();
     $("#overlay_viewer").hide();
     $("#earth_viewer").show();
+    $("#layerswitcher").hide();
+    $("#googleannotation").hide();
     $("#control-toggle button").attr("disabled", "disabled");
   });
 });
@@ -157,18 +165,17 @@ $(document).ready(function(){
             Download KML
           </div>
           <% end %>
-          
-          <div class="btn pull-left" style="margin-left:10px" onClick="toggleGoogleAnnotations(annotations_array);">
-            <i class="icon-retweet"></i>
-            Toggle
-          </div>
-
+        
         </div><br>
         <br style="clear:both;">
         <% end %>
         
         <h4>Layers</h4>
         <div id="layerswitcher"></div>
+        <div id="googleannotation">
+        <input type="checkbox" onClick="toggleGoogleAnnotations();" checked="checked">
+            Annotations
+            </div>
         <hr>
         
         <br>

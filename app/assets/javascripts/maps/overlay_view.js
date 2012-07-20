@@ -3,8 +3,11 @@
 //= require maps/overlays/tile_overlay
 //= require maps/overlays/alpha_overlay
 
-var toggleState = 1;
-var annotations_array = [];
+var activeInfoWindow;
+this.toggleState = 1; //current visibility of Google Maps annotations
+this.annotations_array = []; //stores all Google Maps annotations for this map
+this.annotations_url_gmap;
+this.map_gmap;
 
 maphub.OverlayView = function(parameters) {
   if (parameters) {
@@ -12,28 +15,38 @@ maphub.OverlayView = function(parameters) {
       callback: function() {
         var map = new maphub.Map(parameters);
         map.render(document.getElementById('overlay_viewer'));
-        
-        //JSON request to get lat/lng of map's annotations and add them to Google Map
-        $.getJSON(parameters.annotations_url, function(data) {
-          $.each(data, function(key, val) {
-          annotation_type = val.wkt_data[0]; //P or L for POLYGON or LINESTRING
-            var shape = getGoogleAnnotation(map["googleMap"], val.google_maps_annotation, 
-            annotation_type, val.body);
-            shape.setMap(map["googleMap"]);
-            annotations_array.push(shape);
-            console.log('testing');
-          });
-        });
-       
+        map_gmap = map;
+        annotations_url_gmap = parameters.annotations_url;
+        makeGoogleAnnotations(map_gmap, annotations_url_gmap);
       },
       other_params: "sensor=true"
     }); 
   }
 }
 
+//Generates the necessary information to put annotations on the Google Maps Overlay
+function makeGoogleAnnotations(map, annotations_url){
+  $.getJSON(annotations_url, function(data) {
+    $.each(data, function(key, val) {
+      annotation_type = val.wkt_data[0]; //P or L for POLYGON or LINESTRING
+      addGoogleAnnotation(map["googleMap"], val.google_maps_annotation, 
+      annotation_type, val.body);
+    });
+  });
+}
+
+//Makes sure that any new annotations are added to the Google Maps Overlay
+function refreshGoogleAnnotation()
+{
+  $.each(this.annotations_array, function(){
+    this.setMap(null);
+    });
+    makeGoogleAnnotations(this.map_gmap, this.annotations_url_gmap);
+}
+
 //Takes a map and string of lat/lng points and adds the given annotation to
-//the given map
-function getGoogleAnnotation(map, points, type, annotation_text)
+//the map
+function addGoogleAnnotation(map, points, type, annotation_text)
 {
   var paths = [];
   var pointpairs = points.split(",");
@@ -63,40 +76,39 @@ function getGoogleAnnotation(map, points, type, annotation_text)
     });
   }
   //Add an infoWindow to the annotation containing its text
-  var infowindow = new google.maps.InfoWindow({
+  var infoWindow = new google.maps.InfoWindow({
     content: annotation_text,
     position: new google.maps.LatLng(50, 50),
     maxWidth: 300
   });
-  eventPolygonIn = google.maps.event.addListener(shape, 'mouseover', function(event) { 
+  eventPolygonClick = google.maps.event.addListener(shape, 'click', function(event) { 
    var marker = new google.maps.Marker({
     position: event.latLng
-   }); 
-   infowindow.open(map, marker);
-  });
-  eventPolygonOut = google.maps.event.addListener(shape, 'mouseout', function(event) {
-    infowindow.close();
+   });
+   if(activeInfoWindow)
+    activeInfoWindow.close();
+   infoWindow.open(map, marker);
+   activeInfoWindow = infoWindow;
   });
 
-  return shape;
+  shape.setMap(map);
+  annotations_array.push(shape);
 }
 
-//Takes an array of annotations on the map and toggles them to be visible or not
-function toggleGoogleAnnotations(annotations_array)
+//Toggles the visibility of the Google Maps annotations
+function toggleGoogleAnnotations()
 {
-  $.each(annotations_array, function(){
-    console.log(this);
+  $.each(this.annotations_array, function(){
     if(toggleState ==1){
       this.setVisible(false);
+      if(activeInfoWindow)
+        activeInfoWindow.close();
     }
     else{
       this.setVisible(true);
     }
   });
-  if(toggleState == 1){
-    toggleState = 0;
-  }
-  else{
-    toggleState = 1;
-  }
+  
+  toggleState = (toggleState==1) ? 0:1;
+  
 }
