@@ -5,13 +5,14 @@ class ControlPoint < ActiveRecord::Base
   
   # Hooks
   after_create :update_map, :recalc_boundaries
+  after_destroy :update_map
   
   # Model associations
   belongs_to :user, :counter_cache => true
   belongs_to :map
     
   def update_map
-    map.update_attribute(:updated_at, Time.now)
+    map.touch
   end
   
   # recalculates the edges of the map boundary into real-world coordinates

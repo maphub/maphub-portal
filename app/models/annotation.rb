@@ -9,6 +9,7 @@ class Annotation < ActiveRecord::Base
   
   # Hooks
   after_save :enrich_tags, :update_map
+  after_destroy :update_map
   
   # Model associations
   belongs_to :user, :counter_cache => true
