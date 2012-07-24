@@ -1,6 +1,5 @@
 <% 
-limit = local_assigns.has_key?(:limit) ? limit : 10
-annotations = local_assigns.has_key?(:user) ? user.annotations.limit(limit).reverse() : annotations = Annotation.order("updated_at").limit(limit).reverse()
+annotations = Annotation.order("updated_at DESC").limit(10)
 %>
 <ul>
   <% for annotation in annotations %>

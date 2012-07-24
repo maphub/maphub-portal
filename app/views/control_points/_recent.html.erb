@@ -1,6 +1,5 @@
 <% 
-limit = local_assigns.has_key?(:limit) ? limit : 10
-control_points = local_assigns.has_key?(:user) ? user.control_points.limit(limit).reverse() : control_points = ControlPoint.order("updated_at").limit(limit).reverse()
+control_points = ControlPoint.order("updated_at DESC").limit(10)
 %>
 <ul>
   <% for control_point in control_points %>
