@@ -1,3 +1,14 @@
+2012/07/24:
+    RELEASE 0.3.2
+    
+    Usability Issues:
+        * Toggle switch for annotations on Google Maps Overlay
+        * Changed order of recent Georeferences on Homescreen
+        * Changed annotation / control point display behavior (now on click)
+    
+    Bugfixes:
+        * Fixed Google Maps Overlay annotation update bug
+
 2012/07/20:
     RELEASE 0.3.1
     
