@@ -8,6 +8,7 @@
     
     Bugfixes:
         * Fixed Google Maps Overlay annotation update bug
+        * Added show views for individual annotations and control points
 
 2012/07/20:
     RELEASE 0.3.1
