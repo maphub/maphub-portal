@@ -56,7 +56,7 @@ class Annotation < ActiveRecord::Base
   end
   
   # Finds tags for given input text
-  def self.find_tags_from_text(text)
+  def self.find_tags_from_text(text, condition)
     tags = []
     
     return tags if text.length < 5
@@ -87,7 +87,11 @@ class Annotation < ActiveRecord::Base
           dbpedia_uri = "http://dbpedia.org/resource/" + 
                           entry["title"].gsub(" ", "_")
           # Try to fetch abstrac from DBPedia
-          abstract_text = fetch_abstract(dbpedia_uri)
+          if condition != "semantic-tagging"
+            abstract_text = fetch_abstract(dbpedia_uri)
+          else
+            abstract_text = title
+          end
           tag = {
             label: title,
             dbpedia_uri: dbpedia_uri,

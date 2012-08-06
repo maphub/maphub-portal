@@ -144,7 +144,7 @@ class AnnotationsController < ApplicationController
     logger.debug("ONCE UPON A PRETTY LITTLE TIME")
     logger.debug(params[:text])
     if session[:conditions][session[:count]] != 'manual_entry'
-      ret = Annotation.find_tags_from_text(params[:text])
+      ret = Annotation.find_tags_from_text(params[:text], session[:conditions][session[:count]])
       
       # 2) find tags from the boundaries of the annotation, relative to this map
     map = Map.find(params[:map])
