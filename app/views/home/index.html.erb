@@ -4,6 +4,12 @@
     </div>
 </header> -->
 
+<!-- Refresh page will reset experiment session variables -->
+<% if params[:refresh] %>
+      <% session[:conditions] = current_user.condition_assignment %>
+      <% session[:count] = 0 %>
+    <% end %>
+
 <div class="row">
     <div class="span8 offset2" id="top-main">
         <%= render :partial => "maps/carousel" %>        

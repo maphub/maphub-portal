@@ -102,6 +102,27 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
+    # Finds tags for given input text
+  def self.find_tags_from_text_manual(text)
+    tags = []
+    
+    return tags if text.length < 5
+    
+    tag_list = URI::decode(text)
+    tag_list = tag_list.split(",")
+  
+        tag_list.each do |entry|
+          
+          tag = {
+            label: entry,
+            description: entry,
+            dbpedia_uri: entry
+          }
+          tags << tag
+        end # each response entry
+    tags
+  end
+  
   # Creates a DBPedia SPARQL request URI from a given sparql query
   def self.create_dbpedia_sparql_request_uri(sparql_query)
     uri = Rails.configuration.dbpedia_sparql_uri + ""

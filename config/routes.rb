@@ -29,6 +29,8 @@ MaphubPortal::Application.routes.draw do
   match "help" => 'home#help'
   match "contact" => 'home#contact'
   
+  match "/refresh" => "home#index", :refresh => true
+  
   # tag lookup for annotations
   # the last constraint allows any characters in the parameter, see http://stackoverflow.com/questions/5369654
   # this is somehow interfering with other routes - dunno why though

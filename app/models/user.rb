@@ -25,6 +25,14 @@ class User < ActiveRecord::Base
   include Gravtastic
   gravtastic :size => 40, :default => "identicon"
   
+  def self.current=(u)
+    @current_user = u
+  end
+  
+  def self.current
+    @current_user
+  end
+  
   def self.find_with_destroyed *args
     self.with_exclusive_scope { find(*args) }
   end
