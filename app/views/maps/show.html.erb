@@ -48,15 +48,15 @@ function initGoogleEarth(){
 }
 
 function initTaggingView() {
-  <% if @current_condition != 'manual-entry' %>
-  console.log("Regular View");
-    window.tagging_view = new maphub.TaggingView(
+  <% if @current_condition == 'manual-entry' %>
+    console.log("Manual View");
+    window.tagging_view = new maphub.ManualTaggingView(
       "<%= annotation_tag_find_url(:map => @map.id) %>",
       1000
     );
   <% else %>
-  console.log("Manual View");
-    window.tagging_view = new maphub.ManualTaggingView(
+    console.log("Regular View");
+    window.tagging_view = new maphub.TaggingView(
       "<%= annotation_tag_find_url(:map => @map.id) %>",
       1000
     );
@@ -228,6 +228,11 @@ $(document).ready(function(){
   </div>
 </div>
 
+<!-- Current Experiment Display -->
+<div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px;">
+  <p><%= @current_condition %></p>
+</div>
+
 <!-- Modal dialogs -->
 
 <div class="modal hide" id="modal-annotation">
@@ -255,7 +260,7 @@ $(document).ready(function(){
             Add tags here (separated by commas)
             
             <%= f.text_area :condition, :cols => 80, :rows => 2, 
-            :style => "width: 500px", :id => "manual_tag_entry" %>
+            :style => "width: 500px", :id => "manual-tag-entry" %>
             
           </p>
           

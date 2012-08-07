@@ -110,8 +110,6 @@ class Annotation < ActiveRecord::Base
   def self.find_tags_from_text_manual(text)
     tags = []
     
-    return tags if text.length < 5
-    
     tag_list = URI::decode(text)
     tag_list = tag_list.split(",")
   

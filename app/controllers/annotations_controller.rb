@@ -141,18 +141,16 @@ class AnnotationsController < ApplicationController
   # GET /maps/1/annotations/tags?text=text&(optional boundaries)
   def tags
     # 1) find tags from the raw text
-    logger.debug("ONCE UPON A PRETTY LITTLE TIME")
-    logger.debug(params[:text])
-    if session[:conditions][session[:count]] != 'manual_entry'
+    if session[:conditions][session[:count]] == 'manual-entry'
+      ret = Annotation.find_tags_from_text_manual(params[:text])
+    else
       ret = Annotation.find_tags_from_text(params[:text], session[:conditions][session[:count]])
       
       # 2) find tags from the boundaries of the annotation, relative to this map
     map = Map.find(params[:map])
     boundary = Boundary.new(params[:annotation]["boundary"])
     ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
-    else
-      ret = Annotation.find_tags_from_text_manual(params[:text])
-    end
+   end
     
     # return JSON of tags
     render :json => ret.to_json
