@@ -49,13 +49,11 @@ function initGoogleEarth(){
 
 function initTaggingView() {
   <% if @current_condition == 'manual-entry' %>
-    console.log("Manual View");
     window.tagging_view = new maphub.ManualTaggingView(
       "<%= annotation_tag_find_url(:map => @map.id) %>",
       1000
     );
   <% else %>
-    console.log("Regular View");
     window.tagging_view = new maphub.TaggingView(
       "<%= annotation_tag_find_url(:map => @map.id) %>",
       1000
@@ -258,12 +256,9 @@ $(document).ready(function(){
       <% if @current_condition == 'manual-entry' %><!-- Manual entry conditional -->
           <p>
             Add tags here (separated by commas)
-            
             <%= f.text_area :condition, :cols => 80, :rows => 2, 
             :style => "width: 500px", :id => "manual-tag-entry" %>
-            
-          </p>
-          
+          </p>   
       <% end %> <!--End manual entry conditional-->
    
         <span><%= image_tag "progress-dots.gif", :style => "display: none;", :id => 'loading-tags' %></span>
@@ -273,12 +268,14 @@ $(document).ready(function(){
         </div>
         
         <br style="clear: both;">
-        <div id="modal-annotation-help">
-          <div id='no-tags' style="display: none;"><em>Add some text to generate matching tags for this annotation &hellip;</em></div>
-          <div id='tagging-help' style="display: none;"><em>Click on a tag to accept it. Click once more to reject it.</em></div>
-          
+        <% if @current_condition != 'manual-entry' %><!-- Manual entry conditional -->
+          <div id="modal-annotation-help">
+            <div id='no-tags' style="display: none;"><em>Add some text to generate matching tags for this annotation &hellip;</em></div>
+            <div id='tagging-help' style="display: none;"><em>Click on a tag to accept it. Click once more to reject it.</em></div>
+            
+          </div>
         </div>
-      </div>
+       <% end %>
     <%= f.hidden_field :condition, :value => @current_condition %>
     <div class="modal-footer">
       <%= f.submit "Save annotation", :class => "btn btn-primary", :id => "annotation-submit-button", :disable_with => 'Saving...' %>

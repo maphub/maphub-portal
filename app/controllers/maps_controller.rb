@@ -22,7 +22,6 @@ class MapsController < ApplicationController
       session[:user_id] = current_user.id
       current_user.update_attribute(:condition_assignment, session[:conditions].join(", "))
           current_user.save!
-      logger.debug("CONDITION IS: " + current_user.condition_assignment)
     end
     
     condition_completed = 
@@ -32,10 +31,10 @@ class MapsController < ApplicationController
     end
     @current_condition = session[:conditions][session[:count]]
     
-    logger.debug("ARRAY IS: " + session[:conditions].to_s)
-    logger.debug("COUNT IS: " + session[:count].to_s)
-    logger.debug("CURRENT VALUE IS: " + @current_condition)
-    logger.debug("COMPLETED IS: " + condition_completed.to_s)
+    #logger.debug("ARRAY IS: " + session[:conditions].to_s)
+    #logger.debug("COUNT IS: " + session[:count].to_s)
+    #logger.debug("CURRENT VALUE IS: " + @current_condition)
+    #logger.debug("COMPLETED IS: " + condition_completed.to_s)
     
     respond_to do |format|
       format.html # show.html.erb

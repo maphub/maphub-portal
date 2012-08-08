@@ -9,13 +9,13 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
   window.tagging_view = this;
   
   // after waiting, create the tags
-  //$("#modal-annotation-tags").empty();
+  //$("#manual-tag-entry").hide();
   $("#manual-tag-entry").keyup(function(){
     $(this).doTimeout('manual-timeout', self.timeout, function(){
-      
+      $("#modal-annotation-tags").empty();
       // get text to submit to controller
       var text = encodeURIComponent($("#manual-tag-entry").val().replace(/[^\w\s,]/gi, ''));
-      console.log(text);
+      
       if(!(text === "") || (text != "Add your annotation here!")) {
         if (self.status != "loading") {        
           // main request sent to controller
@@ -45,12 +45,13 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
               var description = val.description;
             
               // if the tag doesn't exist yet
-              if (self.tags[label] === undefined) {
-              
+             // console.log(self.tags[label]);
+             // if (self.tags[label] === undefined) {
+                
                 // create new tag element
                 var tag = $(document.createElement('span'));
                 // set style (label)
-                tag.attr("class", "label label-neutral");
+                tag.attr("class", "label label-success");
                 tag.text(label);
                 // link it
                 var linked_tag = $(document.createElement('a'));
@@ -63,8 +64,7 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
                 // append to the form
                 linked_tag.appendTo($("#modal-annotation-tags"));
 
-
-                // // create hidden input fields to pass on data
+                // create hidden input fields to pass on data
                 var input_container = $(document.createElement('div'));
                 input_container.attr("class", "tag-fields");
 
@@ -93,7 +93,7 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
                 input_status.attr("type", "text");
                 input_status.css("display", "none");
                 input_status.attr("name", "status[]");
-                input_status.attr("value", "neutral");
+                input_status.attr("value", "accepted");
                 input_status.appendTo(input_container);
 
                 input_container.appendTo($("#modal-annotation-tags"));
@@ -102,23 +102,7 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
                 // so we can manipulate them
                 self.tags[label] = val;
 
-                // toggle accepted / rejected / neutral
-                tag.click(function() {
-                  if ($(this).hasClass("label-neutral")) {
-                    $(this).removeClass("label-neutral").addClass("label-success");
-                    self.tags[label].status = "accepted";
-                    input_status.attr("value", "accepted");
-                  } else if ($(this).hasClass("label-success")) {
-                    $(this).removeClass("label-success").addClass("label-important");
-                    self.tags[label].status = "rejected";
-                    input_status.attr("value", "rejected");
-                  } else if ($(this).hasClass("label-important")) {
-                    $(this).removeClass("label-important").addClass("label-neutral");
-                    self.tags[label].status = "neutral";
-                    input_status.attr("value", "neutral");
-                  }
-                }); // end click handler for tags
-              } // end if tag exists
+            //  } // end if tag exists
             
             }); // end each iteration for returned tags
             self.status = "idle";
@@ -127,6 +111,11 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
       } // end check whether input text is empty
     }); // end timeout function
   }); // end keyup function
+  
+  //$("#remove-tags").click(function(){
+ //   console.log(self.tags);
+  //});
+
 } // end tagging view
 
 // resets the internal structure of the tagging view, i.e. the tags it remembered

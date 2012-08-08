@@ -147,10 +147,10 @@ class AnnotationsController < ApplicationController
       ret = Annotation.find_tags_from_text(params[:text], session[:conditions][session[:count]])
       
       # 2) find tags from the boundaries of the annotation, relative to this map
-    map = Map.find(params[:map])
-    boundary = Boundary.new(params[:annotation]["boundary"])
-    ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
-   end
+      map = Map.find(params[:map])
+      boundary = Boundary.new(params[:annotation]["boundary"])
+      ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
+    end
     
     # return JSON of tags
     render :json => ret.to_json
