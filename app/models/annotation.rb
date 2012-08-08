@@ -125,6 +125,19 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
+  def self.find_tags_from_users(annotations)
+    tags = []
+    
+    annotations.each do |a|
+      a.tags.each do |t|
+        if t.status == "accepted"
+          tags << t
+        end
+      end
+    end
+    tags.shuffle.first(10)
+  end
+  
   # Creates a DBPedia SPARQL request URI from a given sparql query
   def self.create_dbpedia_sparql_request_uri(sparql_query)
     uri = Rails.configuration.dbpedia_sparql_uri + ""
