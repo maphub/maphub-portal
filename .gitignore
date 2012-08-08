@@ -31,4 +31,4 @@ db/seeds/maps.yaml
 *.*~
 
 # ignore precompiled assets
-public/assets
+# public/assets

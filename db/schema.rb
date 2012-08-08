@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120628194435) do
+ActiveRecord::Schema.define(:version => 20120521073652) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -90,9 +90,9 @@ ActiveRecord::Schema.define(:version => 20120628194435) do
     t.string   "description"
     t.integer  "annotation_id"
     t.string   "status"
+    t.string   "enrichment"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "enrichment"
   end
 
   create_table "users", :force => true do |t|
