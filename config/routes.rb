@@ -29,7 +29,7 @@ MaphubPortal::Application.routes.draw do
   match "help" => 'home#help'
   match "contact" => 'home#contact'
   
-  match "/refresh" => "home#index", :refresh => true
+  match "annotations#create" => "maps#show"
   
   # tag lookup for annotations
   # the last constraint allows any characters in the parameter, see http://stackoverflow.com/questions/5369654

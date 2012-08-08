@@ -142,15 +142,14 @@ class AnnotationsController < ApplicationController
   def tags
   
     map = Map.find(params[:map])
-    logger.debug(map.annotations[0].tags)
   
     # 1) find tags from the raw text
-    if session[:conditions][session[:count]] == 'manual-entry'
+    if session[:conditions][0] == 'manual-entry'
       ret = Annotation.find_tags_from_text_manual(params[:text])
-    elsif session[:conditions][session[:count]] == 'user-suggest'
+    elsif session[:conditions][0] == 'user-suggest'
       ret = Annotation.find_tags_from_users(map.annotations)
     else
-      ret = Annotation.find_tags_from_text(params[:text], session[:conditions][session[:count]])
+      ret = Annotation.find_tags_from_text(params[:text], session[:conditions][0])
       
       # 2) find tags from the boundaries of the annotation, relative to this map
       map = Map.find(params[:map])

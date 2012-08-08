@@ -18,23 +18,31 @@ class MapsController < ApplicationController
     @map = Map.find(params[:id])
     if(current_user.condition_assignment == nil)
       session[:conditions] = ['manual-entry', 'user-suggest', 'semantic-tagging', 'semantic-tagging-wiki'].shuffle!
-      session[:count] = 0
-      session[:user_id] = current_user.id
-      current_user.update_attribute(:condition_assignment, session[:conditions].join(", "))
-          current_user.save!
+      current_user.update_attribute(:condition_assignment, session[:conditions][0])    
+#      session[:conditions] = ['manual-entry', 'user-suggest', 'semantic-tagging', 'semantic-tagging-wiki'].shuffle!
+#      session[:count] = 0
+#      session[:user_id] = current_user.id
+#      current_user.update_attribute(:condition_assignment, session[:conditions].join(", "))
+#          current_user.save!
     end
-    
-    condition_completed = 
-    (current_user.annotations.find_by_condition session[:conditions][session[:count]]) != nil
-    if(condition_completed) 
-      session[:count] = session[:count]+1
+    condition_completed = (current_user.annotations.count >= 
+    current_user.condition_assignment.split(",").length)
+#    condition_completed = 
+#    (current_user.annotations.find_by_condition session[:conditions][session[:count]]) != nil
+    if(condition_completed)
+     session[:conditions] = ['manual-entry', 'user-suggest', 
+     'semantic-tagging', 'semantic-tagging-wiki'].shuffle!
+      current_user.update_attribute(:condition_assignment, 
+      current_user.condition_assignment + ", " + session[:conditions][0])  
+#      session[:count] = session[:count]+1
     end
-    @current_condition = session[:conditions][session[:count]]
+    @current_condition = session[:conditions][0]
     
     #logger.debug("ARRAY IS: " + session[:conditions].to_s)
     #logger.debug("COUNT IS: " + session[:count].to_s)
-    #logger.debug("CURRENT VALUE IS: " + @current_condition)
-    #logger.debug("COMPLETED IS: " + condition_completed.to_s)
+    logger.debug("CONDITION LIST IS: " + current_user.condition_assignment)
+    logger.debug("CURRENT VALUE IS: " + @current_condition)
+    logger.debug("COMPLETED IS: " + condition_completed.to_s)
     
     respond_to do |format|
       format.html # show.html.erb
