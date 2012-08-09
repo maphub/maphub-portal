@@ -125,17 +125,52 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
-  def self.find_tags_from_users(annotations)
+  def self.find_tags_from_users(annotations, mid_x, mid_y)
     tags = []
     
     annotations.each do |a|
-      a.tags.each do |t|
-        if t.status == "accepted"
-          tags << t
+      distance = Annotation.find_distance(mid_x, mid_y, a)
+     
+      if tags.empty?   
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.push(t)
+          end
+        end
+      elsif distance < Annotation.find_distance(mid_x, mid_y, tags[0].annotation)
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.unshift(t)
+          end
+        end
+      else
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.push(t)
+          end
         end
       end
     end
-    tags.shuffle.first(10)
+   
+    return tags.first(10)
+  end
+  
+  #calculates the midpoint of the 2 boundary coordinates
+  def self.find_center(ne_x, ne_y, sw_x, sw_y)
+    x = (ne_x + sw_x)/2
+    y = (ne_y + sw_y)/2
+    return x, y
+  end
+  
+  #calculates the distance between a given center point and the center of an annotation
+  def self.find_distance(x1, y1, annotation)
+    
+    ne_x2, ne_y2, sw_x2, sw_x2 = annotation.boundary.ne_x, annotation.boundary.ne_y,
+    annotation.boundary.sw_x, annotation.boundary.sw_y
+    x2, y2 = Annotation.find_center(ne_x2, ne_y2, sw_x2, sw_x2)
+    
+    distance = (x2-x1).abs + (y2-y1).abs
+    return distance
   end
   
   # Creates a DBPedia SPARQL request URI from a given sparql query
