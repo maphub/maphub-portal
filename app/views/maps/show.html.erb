@@ -235,7 +235,7 @@ $(document).ready(function(){
 
 <div class="modal hide" id="modal-annotation">
   <div class="modal-header">
-      <a class="close" data-dismiss="modal">×</a>
+      <a class="close" data-dismiss="modal" onclick="window.tagging_view.reset();">×</a>
       <h3>Add Annotation</h3>
   </div>
   <% @annotation = Annotation.new %>
