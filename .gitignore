@@ -21,9 +21,6 @@
 /solr/data
 /solr/pids
 
-# Pow
-.powenv
-
 # Maphub files
 db/seeds/maps.yaml
 

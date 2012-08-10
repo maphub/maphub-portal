@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: localhost
+    hostname: samos.mminf.univie.ac.at
     port: 8983
     log_level: WARNING
 
