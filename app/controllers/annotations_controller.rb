@@ -144,9 +144,9 @@ class AnnotationsController < ApplicationController
     map = Map.find(params[:map])
     
     # 1) find tags from the raw text
-    if session[:conditions][0] == 'manual-entry'
+    if session[:condition] == 'manual-entry'
       ret = Annotation.find_tags_from_text_manual(params[:text])
-    elsif session[:conditions][0] == 'user-suggest'
+    elsif session[:condition] == 'user-suggest'
     
       mid_x, mid_y = Annotation.find_center(
       params[:annotation][:boundary][:ne_x].to_f,
@@ -156,7 +156,7 @@ class AnnotationsController < ApplicationController
       
       ret = Annotation.find_tags_from_users(map.annotations, mid_x, mid_y)
     else
-      ret = Annotation.find_tags_from_text(params[:text], session[:conditions][0])
+      ret = Annotation.find_tags_from_text(params[:text], session[:condition])
       
       # 2) find tags from the boundaries of the annotation, relative to this map
       map = Map.find(params[:map])
