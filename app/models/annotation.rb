@@ -56,7 +56,7 @@ class Annotation < ActiveRecord::Base
   end
   
   # Finds tags for given input text
-  def self.find_tags_from_text(text)
+  def self.find_tags_from_text(text, condition)
     tags = []
     
     return tags if text.length < 5
@@ -87,7 +87,11 @@ class Annotation < ActiveRecord::Base
           dbpedia_uri = "http://dbpedia.org/resource/" + 
                           entry["title"].gsub(" ", "_")
           # Try to fetch abstrac from DBPedia
-          abstract_text = fetch_abstract(dbpedia_uri)
+          if condition != "semantic-tagging"
+            abstract_text = fetch_abstract(dbpedia_uri)
+          else
+            abstract_text = title
+          end
           tag = {
             label: title,
             dbpedia_uri: dbpedia_uri,
@@ -100,6 +104,73 @@ class Annotation < ActiveRecord::Base
       logger.warn("Failed to fetch text-based tags for query #{query}")
     end
     tags
+  end
+  
+    # Finds tags for given input text
+  def self.find_tags_from_text_manual(text)
+    tags = []
+    
+    tag_list = URI::decode(text)
+    tag_list = tag_list.split(",")
+  
+        tag_list.each do |entry|
+          
+          tag = {
+            label: entry,
+            description: entry,
+            dbpedia_uri: entry
+          }
+          tags << tag
+        end # each response entry
+    tags
+  end
+  
+  def self.find_tags_from_users(annotations, mid_x, mid_y)
+    tags = []
+    
+    annotations.each do |a|
+      distance = Annotation.find_distance(mid_x, mid_y, a)
+     
+      if tags.empty?   
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.push(t)
+          end
+        end
+      elsif distance < Annotation.find_distance(mid_x, mid_y, tags[0].annotation)
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.unshift(t)
+          end
+        end
+      else
+        a.tags.each do |t|
+          if t.status == "accepted"
+            tags.push(t)
+          end
+        end
+      end
+    end
+   
+    return tags.first(10)
+  end
+  
+  #calculates the midpoint of the 2 boundary coordinates
+  def self.find_center(ne_x, ne_y, sw_x, sw_y)
+    x = (ne_x + sw_x)/2
+    y = (ne_y + sw_y)/2
+    return x, y
+  end
+  
+  #calculates the distance between a given center point and the center of an annotation
+  def self.find_distance(x1, y1, annotation)
+    
+    ne_x2, ne_y2, sw_x2, sw_x2 = annotation.boundary.ne_x, annotation.boundary.ne_y,
+    annotation.boundary.sw_x, annotation.boundary.sw_y
+    x2, y2 = Annotation.find_center(ne_x2, ne_y2, sw_x2, sw_x2)
+    
+    distance = (x2-x1).abs + (y2-y1).abs
+    return distance
   end
   
   # Creates a DBPedia SPARQL request URI from a given sparql query
