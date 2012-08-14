@@ -276,6 +276,7 @@ $(document).ready(function(){
           </div>
         </div>
        <% end %>
+       
     <%= f.hidden_field :condition, :value => @current_condition %>
     <div class="modal-footer">
       <%= f.submit "Save annotation", :class => "btn btn-primary", :id => "annotation-submit-button", :disable_with => 'Saving...' %>

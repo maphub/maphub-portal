@@ -93,15 +93,8 @@ class AnnotationsController < ApplicationController
     @annotation.map = Map.find(params[:map_id])
     @map = @annotation.map # we have to do this so the form is correctly displayed on error
     
-    respond_to do |format|
-      if @annotation.save
-        format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
-        format.xml  { render :xml => @annotation, :status => :created, :location => @annotation }
-        format.js { }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @annotation.errors, :status => :unprocessable_entity }
-      end
+    if @annotation.save!
+      #redirect_to maps_path
     end
   end
 

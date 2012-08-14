@@ -33,7 +33,7 @@ class MapsController < ApplicationController
        while (user_assignment_array.last(user_assignment_array.length%4).include? condition_array[count]) do
        count = count+1
        end
-       logger.debug("DAM GURL, LOOK DAT ASSSS")
+       logger.debug("LOOK OVER HERE")
        logger.debug("LAST 4 " + user_assignment_array.last(user_assignment_array.length%4).to_s)
        logger.debug("CONTAINS?: " + condition_array[count].to_s)
        logger.debug("CONDITION ARRAY: " + condition_array.to_s)

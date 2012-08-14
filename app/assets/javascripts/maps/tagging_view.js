@@ -125,6 +125,12 @@ maphub.TaggingView = function(callback_url, timeout) {
       } // end check whether input text is empty
     }); // end timeout function
   }); // end keyup function
+  
+  //Redirects user to Maps Index view after an annotation is saved
+  $("#modal-annotation").on('submit', function(){
+    window.location = '../maps'
+  });
+  
 } // end tagging view
 
 // resets the internal structure of the tagging view, i.e. the tags it remembered

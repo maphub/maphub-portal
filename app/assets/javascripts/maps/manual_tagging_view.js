@@ -112,9 +112,10 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
     }); // end timeout function
   }); // end keyup function
   
-  //$("#remove-tags").click(function(){
- //   console.log(self.tags);
-  //});
+  //Redirects user to Maps Index view after an annotation is saved
+  $("#modal-annotation").on('submit', function(){
+    window.location = '../maps'
+  });
 
 } // end tagging view
 
