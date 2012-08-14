@@ -128,7 +128,9 @@ maphub.TaggingView = function(callback_url, timeout) {
   
   //Redirects user to Maps Index view after an annotation is saved
   $("#modal-annotation").on('submit', function(){
-    window.location = '../maps'
+    $(this).doTimeout('submit-timeout', self.timeout, function(){
+      window.location = '../maps';
+    });
   });
   
 } // end tagging view
