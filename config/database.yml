@@ -1,24 +1,18 @@
 development:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   database: maphub_development
-  pool: 5
-  username: haslhofer
-  password:
+  username: maphub
+  host: localhost
 
 test:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
   database: maphub_test
-  pool: 5
-  username: haslhofer
-  password:
+  username: maphub
+  host: localhost
 
 production:
   adapter: postgresql
-  encoding: unicode
-  database: maphub_production
-  pool: 5
-  username: haslhofer
-  password:
-     
+  encoding: utf8
+  database: maphub_production     

@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
 
   create_table "annotations", :force => true do |t|
-    t.string   "body"
+    t.text     "body"
     t.integer  "user_id"
     t.integer  "map_id"
     t.string   "wkt_data"
@@ -87,10 +87,10 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
   create_table "tags", :force => true do |t|
     t.string   "label"
     t.string   "dbpedia_uri"
-    t.string   "description"
+    t.text     "description"
     t.integer  "annotation_id"
     t.string   "status"
-    t.string   "enrichment"
+    t.text     "enrichment"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

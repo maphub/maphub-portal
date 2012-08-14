@@ -1,7 +1,7 @@
 class CreateAnnotations < ActiveRecord::Migration
   def change
     create_table :annotations do |t|
-      t.string :body
+      t.text :body
       t.integer :user_id
       t.integer :map_id
       t.string :wkt_data
