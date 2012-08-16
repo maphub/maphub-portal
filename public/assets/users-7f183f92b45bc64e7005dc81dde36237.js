@@ -1,1 +1,0 @@
-$(document).ready(function(){$(".edit_user").hide(),$("#toggle-form").click(function(){return $("#about-myself").hide(),$(".edit_user").slideDown(function(){$("#user_about_me").focus()}),!1}),$("#button-cancel").click(function(e){e.preventDefault(),$(".edit_user").slideUp(function(){$("#about-myself").show()})})});
