@@ -1,18 +1,18 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: maphub_development
+  database: maphub_exp_development
   username: maphub
   host: localhost
 
 test:
   adapter: postgresql
   encoding: utf8
-  database: maphub_test
+  database: maphub_exp_test
   username: maphub
   host: localhost
 
 production:
   adapter: postgresql
   encoding: utf8
-  database: maphub_production     
+  database: maphub_exp_production     
