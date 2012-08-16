@@ -50,6 +50,7 @@ maphub.ManualTaggingView = function(callback_url, timeout) {
                 
                 // create new tag element
                 var tag = $(document.createElement('span'));
+                 tag.hide();
                 // set style (label)
                 tag.attr("class", "label label-success");
                 tag.text(label);
