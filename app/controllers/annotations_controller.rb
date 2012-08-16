@@ -71,7 +71,7 @@ class AnnotationsController < ApplicationController
 
   # POST /annotations
   # POST /annotations.xml
-  def create
+ def create
     #@boundary = Boundary.new(params[:boundary])
     
     @annotation = Annotation.new(params[:annotation])

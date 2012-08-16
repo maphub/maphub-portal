@@ -21,7 +21,6 @@ class MapsController < ApplicationController
         session[:condition] = ['manual-entry', 'user-suggest', 'semantic-tagging', 'semantic-tagging-wiki'].shuffle![0]
         current_user.update_attribute(:condition_assignment, session[:condition])    
       end
-      
       user_assignment_array = current_user.condition_assignment.split(", ")
       condition_completed = (current_user.annotations.count >= 
       user_assignment_array.count)
@@ -42,7 +41,7 @@ class MapsController < ApplicationController
         session[:condition] = condition_array[count]       
         current_user.update_attribute(:condition_assignment, 
         current_user.condition_assignment + ", " + session[:condition])  
-      end
+    end
     else
       session[:condition] = 'semantic-tagging-wiki'
     end
@@ -110,10 +109,6 @@ class MapsController < ApplicationController
         render :json => JSON.pretty_generate(map)
       }
     end
-  end
-
-  def test
-    render :show
   end
       
 end
