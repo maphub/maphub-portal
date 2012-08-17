@@ -1,6 +1,6 @@
 production:
   solr:
-    hostname: samos.mminf.univie.ac.at
+    hostname: ec2-184-72-93-190.compute-1.amazonaws.com
     port: 8983
     log_level: WARNING
 
