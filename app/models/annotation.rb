@@ -106,7 +106,7 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
-    # Finds tags for given input text
+    # Finds tags for given input text in manual entry condition
   def self.find_tags_from_text_manual(text)
     tags = []
     
@@ -125,6 +125,7 @@ class Annotation < ActiveRecord::Base
     tags
   end
   
+  # Generates tags from other users' annotations based on proximity to current annotation
   def self.find_tags_from_users(annotations, mid_x, mid_y)
     tags = []
     

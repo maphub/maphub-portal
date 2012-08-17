@@ -16,11 +16,14 @@ class MapsController < ApplicationController
   # Render a single map
   def show
     @map = Map.find(params[:id])
+    
     if(current_user != nil)
+      #Initializes condition_assignment attribute
       if(current_user.condition_assignment == nil)
         session[:condition] = ['manual-entry', 'user-suggest', 'semantic-tagging', 'semantic-tagging-wiki'].shuffle![0]
         current_user.update_attribute(:condition_assignment, session[:condition])    
       end
+      #Sets up array so you can count number of conditions and ensure selection without replacement
       user_assignment_array = current_user.condition_assignment.split(", ")
       condition_completed = (current_user.annotations.count >= 
       user_assignment_array.count)
@@ -29,29 +32,20 @@ class MapsController < ApplicationController
        condition_array = ['manual-entry', 'user-suggest', 
        'semantic-tagging', 'semantic-tagging-wiki'].shuffle!
        count = 0
+       #Prevents repeat conditions for each set of 4 conditions (selection without replacement)
        while (user_assignment_array.last(user_assignment_array.length%4).include? condition_array[count]) do
        count = count+1
        end
-       logger.debug("LOOK OVER HERE")
-       logger.debug("LAST 4 " + user_assignment_array.last(user_assignment_array.length%4).to_s)
-       logger.debug("CONTAINS?: " + condition_array[count].to_s)
-       logger.debug("CONDITION ARRAY: " + condition_array.to_s)
-       logger.debug("COUNT: " + count.to_s)
        
         session[:condition] = condition_array[count]       
         current_user.update_attribute(:condition_assignment, 
         current_user.condition_assignment + ", " + session[:condition])  
     end
     else
+      #Condition for when user isn't logged in
       session[:condition] = 'semantic-tagging-wiki'
     end
     @current_condition = session[:condition]
-    
-    #logger.debug("ARRAY IS: " + session[:conditions].to_s)
-    #logger.debug("COUNT IS: " + session[:count].to_s)
-    #logger.debug("CONDITION LIST IS: " + current_user.condition_assignment)
-    #logger.debug("CURRENT VALUE IS: " + @current_condition)
-    #logger.debug("COMPLETED IS: " + condition_completed.to_s)
     
     respond_to do |format|
       format.html # show.html.erb
