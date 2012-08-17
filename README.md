@@ -9,5 +9,5 @@ MapHub is powered by Ruby on Rails. You therefore just need a recent Ruby instal
 Please refer to the following Wiki sites for a detailed how-to:
 
 - [How to run Maphub in development mode](https://github.com/maphub/maphub-portal/wiki/Run-Maphub-in-development-mode)
-- [How to deploy Maphub in production mode](https://github.com/maphub/maphub-portal/wiki/Deploying-Maphub-in-production-mode-using-Heroku)
+- [How to deploy Maphub in production mode](https://github.com/maphub/maphub-portal/wiki/Deploying-maphub-in-production-mode)
 
