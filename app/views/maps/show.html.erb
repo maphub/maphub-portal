@@ -226,10 +226,11 @@ $(document).ready(function(){
   </div>
 </div>
 
-<!-- Current Experiment Display -->
+<!-- Current Experiment Display 
 <div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px;">
   <p><%= @current_condition %></p>
 </div>
+-->
 
 <!-- Modal dialogs -->
 
@@ -260,9 +261,9 @@ $(document).ready(function(){
             :style => "width: 500px", :id => "manual-tag-entry" %>
           </p>   
       <% end %> <!--End manual entry conditional-->
-   
+      <% if @current_condition != 'manual-entry' %><!-- Manual entry conditional -->
         <span><%= image_tag "progress-dots.gif", :style => "display: none;", :id => 'loading-tags' %></span>
-
+      <% end %> <!--End manual entry conditional-->
         <div id="modal-annotation-tags" class="tags-list">
           
         </div>
