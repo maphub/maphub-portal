@@ -226,11 +226,20 @@ $(document).ready(function(){
   </div>
 </div>
 
-<!-- Current Experiment Display 
-<div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px;">
-  <p><%= @current_condition %></p>
+<!-- Current Experiment Display -->
+<div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px; z-index: 1000">
+  <% if @current_condition == 'manual-entry' %>
+    <% condition_display = 'Condition A' %>
+  <% elsif @current_condition == 'user-suggest' %>
+    <% condition_display = 'Condition B' %>
+  <% elsif @current_condition == 'semantic-tagging' %>
+    <% condition_display = 'Condition C' %>
+  <% elsif @current_condition == 'semantic-tagging-wiki' %>
+    <% condition_display = 'Condition D' %>
+  <% end %>
+  
+  <p><%= condition_display %></p>
 </div>
--->
 
 <!-- Modal dialogs -->
 
