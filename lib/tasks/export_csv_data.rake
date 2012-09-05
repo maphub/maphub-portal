@@ -7,7 +7,17 @@ namespace :maphub do
       csv << header
       User.all.each do |user|
         user.annotations.all.each do |annotation|
-          line = [user.email, annotation.id, annotation.created_at, annotation.condition, annotation.body]
+          condition = ""
+          if annotation.condition == 'manual-entry'
+            condition = 'Condition A'
+          elsif annotation.condition == 'user-suggest'
+            condition = 'Condition B'
+          elsif annotation.condition == 'semantic-tagging'
+            condition = 'Condition C'
+          elsif annotation.condition == 'semantic-tagging-wiki'
+            condition = 'Condition D'
+          end
+          line = [user.email, annotation.id, annotation.created_at, condition, annotation.body]
           
           tags = annotation.tags.all
           line << tags.select{|tag| tag.accepted?}.collect{|tag| tag.label}.join(";")
