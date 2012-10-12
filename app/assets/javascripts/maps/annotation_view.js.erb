@@ -179,6 +179,9 @@ maphub.AnnotationView = function(parameters) {
     "Annotations created by others", 
     { styleMap: annotationStyleMap }
   );
+
+  /*Default visibility for other users' annotations*/
+  this.annotationLayer.visibility = false
   
   /* The annotation layer for all other's annotations */
   this.annotationLayerOwn = new OpenLayers.Layer.Vector(
@@ -210,12 +213,12 @@ maphub.AnnotationView = function(parameters) {
   // add all layers to the map
   this.map.addLayer(this.baseLayer);
   this.map.addLayer(this.editLayer);
-  this.map.addLayer(this.controlPointEditLayer);
+  //this.map.addLayer(this.controlPointEditLayer);
   this.map.addLayer(this.annotationLayer);
   if (this.editable) {
     this.map.addLayer(this.annotationLayerOwn);
   }
-  this.map.addLayer(this.controlPointsLayer);
+  //this.map.addLayer(this.controlPointsLayer);
 
 
   // remotely load already existing annotations and control points via JSON
