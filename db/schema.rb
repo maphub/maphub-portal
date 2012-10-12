@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521073652) do
+ActiveRecord::Schema.define(:version => 20120801211828) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
     t.string   "wkt_data"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "condition"
   end
 
   create_table "boundaries", :force => true do |t|
@@ -73,11 +74,11 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
 
   create_table "maps", :force => true do |t|
     t.string   "identifier"
-    t.string   "title"
-    t.string   "subject"
+    t.text     "title"
+    t.text     "subject"
     t.integer  "width"
     t.integer  "height"
-    t.string   "author"
+    t.text     "author"
     t.string   "date"
     t.boolean  "overlay_available"
     t.datetime "created_at",        :null => false
@@ -115,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
     t.integer  "control_points_count"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.text     "condition_assignment"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -21,5 +21,9 @@ class Tag < ActiveRecord::Base
   def wikipedia_uri
     "#{dbpedia_uri}".gsub("dbpedia.org/resource", "wikipedia.org/wiki")    
   end
+  
+  def google_that_uri
+    "http://lmgtfy.com/?q=" + "#{label}".gsub(" ", "+") + "&l=1"
+  end
  
 end

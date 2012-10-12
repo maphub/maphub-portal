@@ -48,10 +48,18 @@ function initGoogleEarth(){
 }
 
 function initTaggingView() {
-  window.tagging_view = new maphub.TaggingView(
-    "<%= annotation_tag_find_url(:map => @map.id) %>",
-    1000
-  );
+  <% if @current_condition == 'manual-entry' %>
+    window.tagging_view = new maphub.ManualTaggingView(
+      "<%= annotation_tag_find_url(:map => @map.id) %>",
+      1000
+    );
+  <% else %>
+    window.tagging_view = new maphub.TaggingView(
+      "<%= annotation_tag_find_url(:map => @map.id) %>",
+      1000
+    );
+  <% end %>
+  
 }
 
 $(document).ready(function(){
@@ -218,11 +226,26 @@ $(document).ready(function(){
   </div>
 </div>
 
+<!-- Current Experiment Display -->
+<div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px; z-index: 1000">
+  <% if @current_condition == 'manual-entry' %>
+    <% condition_display = 'Condition A' %>
+  <% elsif @current_condition == 'user-suggest' %>
+    <% condition_display = 'Condition B' %>
+  <% elsif @current_condition == 'semantic-tagging' %>
+    <% condition_display = 'Condition C' %>
+  <% elsif @current_condition == 'semantic-tagging-wiki' %>
+    <% condition_display = 'Condition D' %>
+  <% end %>
+  
+  <p><%= condition_display %></p>
+</div>
+
 <!-- Modal dialogs -->
 
 <div class="modal hide" id="modal-annotation">
   <div class="modal-header">
-      <a class="close" data-dismiss="modal">×</a>
+      <a class="close" data-dismiss="modal" onclick="window.tagging_view.reset();">×</a>
       <h3>Add Annotation</h3>
   </div>
   <% @annotation = Annotation.new %>
@@ -239,17 +262,32 @@ $(document).ready(function(){
         <%= b.text_field :sw_x, :style => "display:none" %>
         <%= b.text_field :sw_y, :style => "display:none" %>
       <% end %>
-      <h4>Tags&nbsp;<span><%= image_tag "progress-dots.gif", :style => "display: none;", :id => 'loading-tags' %></span></h4>
-      <div id="modal-annotation-tags" class="tags-list">
+      <h4>Tags</h4>
+      <% if @current_condition == 'manual-entry' %><!-- Manual entry conditional -->
+          <p>
+            Add tags here (separated by commas)
+            <%= f.text_area :condition, :cols => 80, :rows => 2, 
+            :style => "width: 500px", :id => "manual-tag-entry" %>
+          </p>   
+      <% end %> <!--End manual entry conditional-->
+      <% if @current_condition != 'manual-entry' %><!-- Manual entry conditional -->
+        <span><%= image_tag "progress-dots.gif", :style => "display: none;", :id => 'loading-tags' %></span>
+      <% end %> <!--End manual entry conditional-->
+        <div id="modal-annotation-tags" class="tags-list">
+          
+        </div>
         
-      </div>
-      <br style="clear: both;">
-      <div id="modal-annotation-help">
-        <div id='no-tags' style="display: none;"><em>Add some text to generate matching tags for this annotation &hellip;</em></div>
-        <div id='tagging-help' style="display: none;"><em>Click on a tag to accept it. Click once more to reject it.</em></div>
-        
-      </div>
-    </div>
+        <br style="clear: both;">
+        <% if @current_condition != 'manual-entry' %><!-- Manual entry conditional -->
+          <div id="modal-annotation-help">
+            <div id='no-tags' style="display: none;"><em>Add some text to generate matching tags for this annotation &hellip;</em></div>
+            <div id='tagging-help' style="display: none;"><em>Click on a tag to accept it. Click once more to reject it.</em></div>
+            
+          </div>
+        </div>
+       <% end %>
+       
+    <%= f.hidden_field :condition, :value => @current_condition %>
     <div class="modal-footer">
       <%= f.submit "Save annotation", :class => "btn btn-primary", :id => "annotation-submit-button", :disable_with => 'Saving...' %>
     </div>

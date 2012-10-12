@@ -71,7 +71,7 @@ class AnnotationsController < ApplicationController
 
   # POST /annotations
   # POST /annotations.xml
-  def create
+ def create
     #@boundary = Boundary.new(params[:boundary])
     
     @annotation = Annotation.new(params[:annotation])
@@ -93,15 +93,8 @@ class AnnotationsController < ApplicationController
     @annotation.map = Map.find(params[:map_id])
     @map = @annotation.map # we have to do this so the form is correctly displayed on error
     
-    respond_to do |format|
-      if @annotation.save
-        format.html { redirect_to(@annotation, :notice => 'Annotation was successfully created.') }
-        format.xml  { render :xml => @annotation, :status => :created, :location => @annotation }
-        format.js { }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @annotation.errors, :status => :unprocessable_entity }
-      end
+    if @annotation.save!
+      #redirect_to maps_path
     end
   end
 
@@ -140,13 +133,29 @@ class AnnotationsController < ApplicationController
   
   # GET /maps/1/annotations/tags?text=text&(optional boundaries)
   def tags
-    # 1) find tags from the raw text
-    ret = Annotation.find_tags_from_text(params[:text])
-    
-    # 2) find tags from the boundaries of the annotation, relative to this map
+  
     map = Map.find(params[:map])
-    boundary = Boundary.new(params[:annotation]["boundary"])
-    ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
+    
+    # 1) find tags from the raw text
+    if session[:condition] == 'manual-entry'
+      ret = Annotation.find_tags_from_text_manual(params[:text])
+    elsif session[:condition] == 'user-suggest'
+    
+      mid_x, mid_y = Annotation.find_center(
+      params[:annotation][:boundary][:ne_x].to_f,
+      params[:annotation][:boundary][:ne_y].to_f,
+      params[:annotation][:boundary][:sw_x].to_f,
+      params[:annotation][:boundary][:sw_y].to_f)
+      
+      ret = Annotation.find_tags_from_users(map.annotations, mid_x, mid_y)
+    else
+      ret = Annotation.find_tags_from_text(params[:text], session[:condition])
+      
+      # 2) find tags from the boundaries of the annotation, relative to this map
+      map = Map.find(params[:map])
+      boundary = Boundary.new(params[:annotation]["boundary"])
+      ret = ret.concat Annotation.find_tags_from_boundary(map, boundary)
+    end
     
     # return JSON of tags
     render :json => ret.to_json

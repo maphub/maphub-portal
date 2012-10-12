@@ -1,5 +1,10 @@
-<a href="<%= tag.wikipedia_uri %>" target="_blank" title="<%= tag.description %>">
+<% if tag.annotation.condition == 'manual-entry' %><!--Manual entry conditional-->
+<a href="<%= tag.google_that_uri %>" target="_blank" title="<%= tag.description %>"
+<% else %>
+<a href="<%= tag.wikipedia_uri %>" target="_blank" title="<%= tag.description %>"
+ <% end %> <!--End manual entry conditional-->
   <span class="label label-neutral">
     <%= tag.label %>
   </span>
 </a>
+
