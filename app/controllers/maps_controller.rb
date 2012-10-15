@@ -16,31 +16,27 @@ class MapsController < ApplicationController
   # Render a single map
   def show
     @map = Map.find(params[:id])
-    
+    a = 'manual-entry'
+    b = 'user-suggest'
+    c = 'semantic-tagging'
+    d = 'semantic-tagging-wiki'
+    conditions = [[a, b, d, c], [b, c, a, d], [c, d, b, a], [d, a, c, b]] 
     if(current_user != nil)
-      #Initializes condition_assignment attribute
-      if(current_user.condition_assignment == nil)
-        session[:condition] = ['manual-entry', 'user-suggest', 'semantic-tagging', 'semantic-tagging-wiki'].shuffle![0]
-        current_user.update_attribute(:condition_assignment, session[:condition])    
-      end
-      #Sets up array so you can count number of conditions and ensure selection without replacement
-      user_assignment_array = current_user.condition_assignment.split(", ")
-      condition_completed = (current_user.annotations.count >= 
-      user_assignment_array.count)
 
-      if(condition_completed)
-       condition_array = ['manual-entry', 'user-suggest', 
-       'semantic-tagging', 'semantic-tagging-wiki'].shuffle!
-       count = 0
-       #Prevents repeat conditions for each set of 4 conditions (selection without replacement)
-       while (user_assignment_array.last(user_assignment_array.length%4).include? condition_array[count]) do
-       count = count+1
-       end
-       
-        session[:condition] = condition_array[count]       
-        current_user.update_attribute(:condition_assignment, 
-        current_user.condition_assignment + ", " + session[:condition])  
-    end
+      #Assigns 4 users to each condition treatment
+      condition_num = (current_user.id/4)%4
+      
+      assignment = []
+      (0..3).each do |i|
+        assignment << conditions[condition_num][(i + current_user.id)%4]
+      end      
+     
+      current_user.update_attribute(:condition_assignment, assignment.join(", "))
+
+      #Starts each of the 4 users on a different index in the condition array
+      annotation_num = (current_user.annotations.count + current_user.id)%4
+      session[:condition] = conditions[condition_num][annotation_num]
+     
     else
       #Condition for when user isn't logged in
       session[:condition] = 'semantic-tagging-wiki'
