@@ -153,7 +153,7 @@ $(document).ready(function(){
         <div class="alert alert-info">You need to be <%= link_to 'signed in', new_user_session_path %> in order to create annotations and control points for this map!</div>
         <% end %>
         
-        <% if @map.has_overlay? %>
+        <% if true==false %>
         <div>
 
           <!--A dropdown button to toggle between Regular Map view and Google map view -->
@@ -226,7 +226,7 @@ $(document).ready(function(){
   </div>
 </div>
 
-<!-- Current Experiment Display -->
+<!-- Current Experiment Display 
 <div class="span4 btn btn-inverse" style="position:fixed; left:0px; bottom:0px; z-index: 1000">
   <% if @current_condition == 'manual-entry' %>
     <% condition_display = 'Condition A' %>
@@ -240,7 +240,7 @@ $(document).ready(function(){
   
   <p><%= condition_display %></p>
 </div>
-
+-->
 <!-- Modal dialogs -->
 
 <div class="modal hide" id="modal-annotation">

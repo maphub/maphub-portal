@@ -24,17 +24,17 @@ class MapsController < ApplicationController
     if(current_user != nil)
 
       #Assigns 4 users to each condition treatment
-      condition_num = (current_user.id/4)%4
+      condition_num = ((current_user.id-1)/4)%4
       
       assignment = []
       (0..3).each do |i|
-        assignment << conditions[condition_num][(i + current_user.id)%4]
+        assignment << conditions[condition_num][(i + current_user.id-1)%4]
       end      
      
       current_user.update_attribute(:condition_assignment, assignment.join(", "))
 
       #Starts each of the 4 users on a different index in the condition array
-      annotation_num = (current_user.annotations.count + current_user.id)%4
+      annotation_num = (current_user.annotations.count + current_user.id-1)%4
       session[:condition] = conditions[condition_num][annotation_num]
      
     else
