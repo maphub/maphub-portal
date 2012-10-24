@@ -10,6 +10,8 @@ def seed_dir
     ENV['SEED_DIR'] || File.dirname(__FILE__) + '/seeds'
 end
 
+seed_file = "#{seed_dir}/maps.yaml"
+
 # Create example users
 puts "Creating admins ..."
 Admin.create do |a|
@@ -19,21 +21,22 @@ Admin.create do |a|
   a.email = 'admin@example.com'
 end
 
-puts "Creating users ..."
-for i in 1..3 do
-  User.create do |a|
-    a.username = "user#{i}"
-    a.password = 'test'
-    a.password_confirmation = 'test'
-    a.email = "user#{i}@example.com"
-    a.location = "Vienna, Austria"
-    a.fullname = "Test User #{i}"
+unless File.exists?(seed_file)
+  puts "Creating users ..."
+  for i in 1..3 do
+    User.create do |a|
+      a.username = "user#{i}"
+      a.password = 'test'
+      a.password_confirmation = 'test'
+      a.email = "user#{i}@example.com"
+      a.location = "Vienna, Austria"
+      a.fullname = "Test User #{i}"
+    end
+    puts "Created user #{i}"
   end
-  puts "Created user #{i}"
 end
 
 # Create sample maps, either seed from YAML file in maphub-portal/db/seeds/seeddata.yaml
-seed_file = "#{seed_dir}/maps.yaml"
 if File.exists?(seed_file)
   YAML.load_documents(File.open(seed_file, "r")) do |entry|
     Map.create do |map|
