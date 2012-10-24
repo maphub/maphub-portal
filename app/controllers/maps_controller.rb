@@ -16,6 +16,8 @@ class MapsController < ApplicationController
   # Render a single map
   def show
     @map = Map.find(params[:id])
+
+    #Create 4 possible test cases with a Latin Square model
     a = 'manual-entry'
     b = 'user-suggest'
     c = 'semantic-tagging'
@@ -24,17 +26,21 @@ class MapsController < ApplicationController
     if(current_user != nil)
 
       #Assigns 4 users to each condition treatment
-      condition_num = ((current_user.id-1)/4)%4
+      condition_num = (current_user.id)%4
       
+      #Creates an array to keep track of each of conditions that the user has
+      #completed thus far
       assignment = []
-      (0..3).each do |i|
-        assignment << conditions[condition_num][(i + current_user.id-1)%4]
+      (0..current_user.annotations.count).each do |i|
+        assignment << conditions[condition_num][i%4]
       end      
      
+      #Updates the database with the completed conditions, in order of completion
       current_user.update_attribute(:condition_assignment, assignment.join(", "))
 
-      #Starts each of the 4 users on a different index in the condition array
-      annotation_num = (current_user.annotations.count + current_user.id-1)%4
+      #Starts the user on the correct condition, relative to how many annotations
+      #he has already created
+      annotation_num = (current_user.annotations.count)%4
       session[:condition] = conditions[condition_num][annotation_num]
      
     else
