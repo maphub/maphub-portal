@@ -9,15 +9,15 @@ namespace :maphub do
         user.annotations.all.each do |annotation|
           condition = ""
           if annotation.condition == 'manual-entry'
-            condition = 'Condition A'
+            condition = 'A'
           elsif annotation.condition == 'user-suggest'
-            condition = 'Condition B'
+            condition = 'B'
           elsif annotation.condition == 'semantic-tagging'
-            condition = 'Condition C'
+            condition = 'C'
           elsif annotation.condition == 'semantic-tagging-wiki'
-            condition = 'Condition D'
+            condition = 'D'
           end
-          line = [user.email, annotation.id, annotation.created_at, condition, annotation.body]
+          line = [user.username, annotation.id, annotation.created_at, condition, annotation.body]
           
           tags = annotation.tags.all
           line << tags.select{|tag| tag.accepted?}.collect{|tag| tag.label}.join(";")
