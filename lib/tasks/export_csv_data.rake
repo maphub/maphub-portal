@@ -3,7 +3,8 @@ namespace :maphub do
   desc "Export maphub data to CSV files"
   task :export_csv_data => :environment do
     CSV.open("csv_export_" + Time.now.to_i.to_s + ".csv", "w", {col_sep: "|"}) do |csv|
-      header  = ["userid", "annotationid", "creation_time", "condition", "text", "accepted_tags", "rejected_tags", "neutral_tags"]
+      header  = ["userid", "mapid", "mapidentifier",
+                 "annotationid", "creation_time", "condition", "text", "accepted_tags", "rejected_tags", "neutral_tags"]
       csv << header
       User.all.each do |user|
         user.annotations.all.each do |annotation|
@@ -17,7 +18,7 @@ namespace :maphub do
           elsif annotation.condition == 'semantic-tagging-wiki'
             condition = 'D'
           end
-          line = [user.username, annotation.id, annotation.created_at, condition, annotation.body]
+          line = [user.username, annotation.map_id, annotation.map.identifier, annotation.id, annotation.created_at, condition, annotation.body]
           
           tags = annotation.tags.all
           line << tags.select{|tag| tag.accepted?}.collect{|tag| tag.label}.join(";")
