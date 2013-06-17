@@ -73,11 +73,11 @@ ActiveRecord::Schema.define(:version => 20120521073652) do
 
   create_table "maps", :force => true do |t|
     t.string   "identifier"
-    t.string   "title"
-    t.string   "subject"
+    t.text     "title"
+    t.text     "subject"
     t.integer  "width"
     t.integer  "height"
-    t.string   "author"
+    t.text     "author"
     t.string   "date"
     t.boolean  "overlay_available"
     t.datetime "created_at",        :null => false
